@@ -45,7 +45,7 @@ To run this project locally, follow these steps:
 1.  **Clone the repository:**
 
     ```bash
-    git clone [https://github.com/](https://github.com/)[YOUR_USERNAME]/fittrack.git
+    git clone https://github.com/phmshk/fittrack.git
     cd fittrack
     ```
 
