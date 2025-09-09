@@ -46,10 +46,10 @@
   --background: #f7fcfa;
   --foreground: #0d1a12;
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: 0d1a12;
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #38e07a;
+  --primary: #05fa66;
   --primary-foreground: #0d1a12;
   --secondary: #e8f2ed;
   --secondary-foreground: #52946b;
