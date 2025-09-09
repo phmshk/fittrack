@@ -46,7 +46,7 @@
   --background: #f7fcfa;
   --foreground: #0d1a12;
   --card: oklch(1 0 0);
-  --card-foreground: 0d1a12;
+  --card-foreground: #0d1a12;
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: #05fa66;
@@ -58,8 +58,8 @@
   --accent: #e8f2ed;
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #e8f2ec;
-  --input: oklch(0.922 0 0);
+  --border: #cfe8d9;
+  --input: #cfe8d9;
   --ring: #e8f2ec;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);

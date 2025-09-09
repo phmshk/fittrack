@@ -1,1 +1,1 @@
-export { CaloriesCard } from "./caloriesCard/CaloriesCard";
+export { CaloriesCard } from "./ui/CaloriesCard";
