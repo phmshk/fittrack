@@ -43,7 +43,7 @@ export const Dashboard = () => {
   ];
 
   return (
-    <section className="flex flex-col gap-4 p-4 md:gap-6 ">
+    <section className="flex flex-col gap-4 p-4 md:gap-6">
       {/* Page heading. Date display */}
       <H1>
         Today,{" "}
@@ -56,8 +56,11 @@ export const Dashboard = () => {
         label="Remaining Calories"
         units="kcal"
       />
+
       {/* Macronutrients summary */}
       <MacronutrientsSummary macronutrients={macronutrientsData} />
+
+      {/* Meals summary */}
       <Meals mealsData={mealsData} />
     </section>
   );
