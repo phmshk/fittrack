@@ -1,25 +1,35 @@
+import {
+  selectCarbsProgress,
+  selectFatsProgress,
+  selectProteinsProgress,
+  useDayStore,
+} from "@/entities/day";
 import { H2 } from "@/shared/ui/headings";
 import { ProgressBar } from "@/shared/ui/progressBar";
+import { useMemo } from "react";
 
-interface NutrientData {
-  current: number;
-  goal: number;
-  name: string;
-  units: string;
-}
+export const MacronutrientsSummary = () => {
+  const proteins = useDayStore(selectProteinsProgress);
+  const fats = useDayStore(selectFatsProgress);
+  const carbs = useDayStore(selectCarbsProgress);
 
-interface MacronutrientsSummaryProps {
-  children?: React.ReactNode;
-  macronutrients: NutrientData[];
-}
-
-export const MacronutrientsSummary = (props: MacronutrientsSummaryProps) => {
-  const { macronutrients } = props;
+  const result = useMemo(() => {
+    return [
+      {
+        name: "Proteins",
+        current: proteins.current,
+        goal: proteins.goal,
+        units: "g",
+      },
+      { name: "Fats", current: fats.current, goal: fats.goal, units: "g" },
+      { name: "Carbs", current: carbs.current, goal: carbs.goal, units: "g" },
+    ];
+  }, [proteins, fats, carbs]);
 
   return (
     <>
       <H2>Macronutrients</H2>
-      {macronutrients.map((nutrient) => (
+      {result.map((nutrient) => (
         <ProgressBar
           key={nutrient.name}
           currentValue={nutrient.current}
