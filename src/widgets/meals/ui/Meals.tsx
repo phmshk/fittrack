@@ -7,33 +7,29 @@ import {
   AccordionContent,
 } from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
+import { useDayStore } from "@/entities/day";
+import { useMemo } from "react";
 
-interface FoodItem {
-  id: number;
-  name: string;
-  grams: number;
-  calories: number;
-}
+export const Meals = () => {
+  const mealsData = useDayStore((state) => state.meals);
 
-interface MealData {
-  name: string;
-  foods: FoodItem[];
-}
+  const mealsArray = useMemo(() => {
+    return Object.entries(mealsData).map(([mealName, foods]) => {
+      const totalCalories = foods.reduce((acc, food) => acc + food.calories, 0);
 
-interface MealsProps {
-  mealsData: MealData[];
-}
-
-export const Meals = ({ mealsData }: MealsProps) => {
-  const calculateMealCalories = (foods: FoodItem[]) => {
-    return foods.reduce((acc, food) => acc + food.calories, 0);
-  };
+      return {
+        name: mealName.charAt(0).toUpperCase() + mealName.slice(1),
+        foods,
+        totalCalories,
+      };
+    });
+  }, [mealsData]);
 
   return (
     <>
       <H2>Meals</H2>
       <Accordion type="single" collapsible className="w-full">
-        {mealsData.map((meal) => (
+        {mealsArray.map((meal) => (
           <AccordionItem
             className="mb-2 rounded-md border-2 px-4 py-2 text-sm font-medium"
             key={meal.name}
@@ -42,7 +38,7 @@ export const Meals = ({ mealsData }: MealsProps) => {
             <AccordionTrigger className="flex w-full cursor-pointer justify-between text-left [&[data-state=open]>svg]:rotate-180">
               <div>
                 <span className="font-bold">{meal.name}</span>{" "}
-                <span className="text-secondary-foreground">{`${calculateMealCalories(meal.foods)} kcal`}</span>
+                <span className="text-secondary-foreground">{`${meal.totalCalories} kcal`}</span>
               </div>
               <ChevronDown className="pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200" />
             </AccordionTrigger>
@@ -63,7 +59,7 @@ export const Meals = ({ mealsData }: MealsProps) => {
                   <div className="text-sm font-medium">
                     Total Calories:{" "}
                     <span className="text-secondary-foreground">
-                      {calculateMealCalories(meal.foods)}
+                      {meal.totalCalories} kcal
                     </span>
                   </div>
                 </>
