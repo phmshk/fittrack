@@ -1,3 +1,4 @@
+import { AddFood } from "@/features/addFood";
 import { CaloriesCard } from "@/shared/ui/caloriesCard";
 import { H1 } from "@/shared/ui/headings";
 import { MacronutrientsSummary } from "@/widgets/macronutrientsSummary";
@@ -23,6 +24,9 @@ export const Dashboard = () => {
 
       {/* Meals summary */}
       <Meals />
+
+      {/* Add food form */}
+      <AddFood />
     </section>
   );
 };
