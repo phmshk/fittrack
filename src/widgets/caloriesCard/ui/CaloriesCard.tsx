@@ -42,7 +42,7 @@ export const CaloriesCard = () => {
         </div>
       </div>
       <div className="hidden md:block md:rounded-xl md:bg-primary md:px-3 md:py-2 md:font-bold md:text-primary-foreground">
-        Goal: {goal} | Eaten: {current}| Exercise:{" "}
+        Goal: {goal} | Eaten: {current} | Exercise:{" "}
         {exercise > 0 ? `-${exercise}` : 0}
       </div>
     </CardContent>

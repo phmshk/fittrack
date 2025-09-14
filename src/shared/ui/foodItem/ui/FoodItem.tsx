@@ -1,22 +1,31 @@
+import type { FoodEntry } from "@/entities/day";
+import { cn } from "@/shared/shadcn/lib/utils";
+
 interface FoodItemProps {
-  name: string;
-  calories: number;
-  grams: number;
+  food: FoodEntry;
+  actions?: React.ReactNode;
   className?: string;
 }
 
 export const FoodItem = (props: FoodItemProps) => {
-  const { name, calories, grams, className } = props;
+  const { food, className, actions } = props;
 
   return (
     <div
-      className={`flex items-center justify-between rounded-md px-1 py-2 hover:bg-accent ${className}`}
+      className={cn(
+        "flex items-center justify-between rounded-md px-1 py-2",
+        className,
+      )}
     >
-      <div>
-        <p className="font-medium">{name}</p>
-        <p className="text-sm text-secondary-foreground">{grams} g</p>
+      <div className="flex flex-col">
+        <span className="font-medium">{food.name}</span>
+        <div className="mt-1 flex items-center gap-2">
+          <span className="text-sm text-secondary-foreground">
+            {food.calories} kcal
+          </span>
+        </div>
       </div>
-      <p className="font-medium">{calories} kcal</p>
+      <div className="flex items-center gap-2">{actions}</div>
     </div>
   );
 };
