@@ -10,6 +10,7 @@ import { ChevronDown, Plus } from "lucide-react";
 import { useDayStore, type MealType } from "@/entities/day";
 import { useMemo } from "react";
 import { AddFood } from "@/features/addFood";
+import { DeleteFood } from "@/features/deleteFood";
 
 export const Meals = () => {
   const mealsData = useDayStore((state) => state.meals);
@@ -29,7 +30,10 @@ export const Meals = () => {
   return (
     <>
       <H2>Meals</H2>
+      {/* Accordion for meal types */}
       <Accordion type="single" collapsible className="w-full">
+        {/* Meal Type Sections */}
+        {/* Single Accordion Item for each meal type */}
         {mealsArray.map((meal) => (
           <AccordionItem
             className="mb-2 rounded-md border-2 px-4 py-2 text-sm font-medium"
@@ -46,6 +50,7 @@ export const Meals = () => {
             <AccordionContent className="flex flex-col gap-2 pt-4 transition-all duration-1000">
               {meal.foods.length === 0 ? (
                 <div className="flex items-center justify-between gap-4">
+                  {/* Empty state */}
                   <div className="text-sm">No food added yet.</div>
                   <AddFood
                     mealName={meal.name.toLowerCase() as MealType}
@@ -56,12 +61,19 @@ export const Meals = () => {
                 </div>
               ) : (
                 <>
+                  {/* List of Food Items  */}
                   {meal.foods.map((food) => (
                     <FoodItem
                       key={food.id}
-                      name={food.name}
-                      grams={food.grams}
-                      calories={food.calories}
+                      food={food}
+                      actions={
+                        <>
+                          <DeleteFood
+                            entryId={food.id}
+                            mealType={meal.name.toLowerCase() as MealType}
+                          />
+                        </>
+                      }
                       className="border border-border last:border-0"
                     />
                   ))}

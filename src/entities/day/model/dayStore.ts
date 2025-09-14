@@ -10,10 +10,84 @@ const initialState: DayState = {
     fatGoal: 70,
   },
   meals: {
-    breakfast: [],
+    breakfast: [
+      {
+        id: "1",
+        name: "Oatmeal",
+        grams: 150,
+        calories: 300,
+        proteins: 10,
+        carbs: 54,
+        fats: 5,
+      },
+      {
+        id: "2",
+        name: "Banana",
+        grams: 100,
+        calories: 89,
+        proteins: 1,
+        carbs: 23,
+        fats: 0.3,
+      },
+      {
+        id: "3",
+        name: "Eggs",
+        grams: 100,
+        calories: 155,
+        proteins: 13,
+        carbs: 1,
+        fats: 11,
+      },
+      {
+        id: "4",
+        name: "Chicken Breast",
+        grams: 200,
+        calories: 330,
+        proteins: 62,
+        carbs: 0,
+        fats: 7.4,
+      },
+      {
+        id: "5",
+        name: "Broccoli",
+        grams: 100,
+        calories: 55,
+        proteins: 3.7,
+        carbs: 11,
+        fats: 0.6,
+      },
+    ],
     lunch: [],
     dinner: [],
-    snacks: [],
+    snacks: [
+      {
+        id: "6",
+        name: "Almonds",
+        grams: 28,
+        calories: 164,
+        proteins: 6,
+        carbs: 6,
+        fats: 14,
+      },
+      {
+        id: "7",
+        name: "Apple",
+        grams: 182,
+        calories: 95,
+        proteins: 0.5,
+        carbs: 25,
+        fats: 0.3,
+      },
+      {
+        id: "8",
+        name: "Yogurt",
+        grams: 245,
+        calories: 150,
+        proteins: 8,
+        carbs: 12,
+        fats: 8,
+      },
+    ],
   },
   exerciseCalories: 0,
 };
@@ -34,4 +108,13 @@ export const useDayStore = create<DayStore>()((set) => ({
         },
       };
     }),
+  removeFoodEntry: (mealType, entryId) =>
+    set((state) => ({
+      meals: {
+        ...state.meals,
+        [mealType]: state.meals[mealType].filter(
+          (entry) => entry.id !== entryId,
+        ),
+      },
+    })),
 }));

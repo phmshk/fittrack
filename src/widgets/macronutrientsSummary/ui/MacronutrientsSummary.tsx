@@ -17,12 +17,22 @@ export const MacronutrientsSummary = () => {
     return [
       {
         name: "Proteins",
-        current: proteins.current,
+        current: Number(proteins.current.toFixed(1)),
         goal: proteins.goal,
         units: "g",
       },
-      { name: "Fats", current: fats.current, goal: fats.goal, units: "g" },
-      { name: "Carbs", current: carbs.current, goal: carbs.goal, units: "g" },
+      {
+        name: "Fats",
+        current: Number(fats.current.toFixed(1)),
+        goal: fats.goal,
+        units: "g",
+      },
+      {
+        name: "Carbs",
+        current: Number(carbs.current.toFixed(1)),
+        goal: carbs.goal,
+        units: "g",
+      },
     ];
   }, [proteins, fats, carbs]);
 
