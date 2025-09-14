@@ -5,7 +5,10 @@ export type {
   DayActions,
   DayStore,
   MealsDto,
+  MealType,
 } from "./model/types";
+
+export { MEAL_TYPE } from "./model/types";
 
 export { useDayStore } from "./model/dayStore";
 

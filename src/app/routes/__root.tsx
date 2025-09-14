@@ -6,7 +6,7 @@ import { Container } from "@/shared/ui";
 const RootComponent = () => (
   <>
     <Header />
-    <main className="py-8 min-h-[calc(100vh-65px)]">
+    <main className="py-x min-h-[calc(100vh-65px)]">
       <Container>
         <Outlet />
       </Container>

@@ -1,5 +1,7 @@
 export type MealType = "breakfast" | "lunch" | "dinner" | "snacks";
 
+export const MEAL_TYPE = ["breakfast", "lunch", "dinner", "snacks"] as const;
+
 export interface FoodEntry {
   id: string;
   name: string;
