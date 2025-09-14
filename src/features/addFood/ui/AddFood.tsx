@@ -6,10 +6,11 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/shared/shadcn/components/ui/dialog";
-import { AddFoodForm } from "./AddFoodForm";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useState } from "react";
-import type { MealType } from "@/entities/day";
+import { useDayStore, type MealType } from "@/entities/day";
+import { FoodForm } from "@/entities/foodForm/ui/FoodForm";
+import type { FormOutput } from "@/entities/foodForm";
 
 interface AddFoodProps {
   triggerButtonProps: React.ComponentProps<typeof Button>;
@@ -18,7 +19,17 @@ interface AddFoodProps {
 
 export const AddFood = ({ triggerButtonProps, mealName }: AddFoodProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const handleClose = () => {
+
+  const addFoodEntry = useDayStore((state) => state.addFoodEntry);
+  const handleFormSubmit = (data: FormOutput) => {
+    addFoodEntry(data.mealType!, {
+      name: data.foodName,
+      grams: Number(data.grams),
+      calories: Number(data.calories),
+      proteins: Number(data.proteins),
+      carbs: Number(data.carbs),
+      fats: Number(data.fats),
+    });
     setIsOpen(false);
   };
 
@@ -37,7 +48,11 @@ export const AddFood = ({ triggerButtonProps, mealName }: AddFoodProps) => {
             </span>
           </DialogDescription>
         </DialogHeader>
-        <AddFoodForm onClose={handleClose} mealName={mealName} />
+        <FoodForm
+          onSubmit={handleFormSubmit}
+          initialData={{ mealType: mealName }}
+          submitText="Save changes"
+        />
       </DialogContent>
     </Dialog>
   );

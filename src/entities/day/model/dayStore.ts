@@ -108,12 +108,23 @@ export const useDayStore = create<DayStore>()((set) => ({
         },
       };
     }),
+
   removeFoodEntry: (mealType, entryId) =>
     set((state) => ({
       meals: {
         ...state.meals,
         [mealType]: state.meals[mealType].filter(
           (entry) => entry.id !== entryId,
+        ),
+      },
+    })),
+
+  editFoodEntry: (mealType, updatedEntry) =>
+    set((state) => ({
+      meals: {
+        ...state.meals,
+        [mealType]: state.meals[mealType].map((entry) =>
+          entry.id === updatedEntry.id ? updatedEntry : entry,
         ),
       },
     })),

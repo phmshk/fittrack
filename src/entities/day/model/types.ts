@@ -22,6 +22,7 @@ export interface UserGoals {
 export interface DayActions {
   addFoodEntry: (mealType: MealType, entry: Omit<FoodEntry, "id">) => void;
   removeFoodEntry: (mealType: MealType, entryId: string) => void;
+  editFoodEntry: (mealType: MealType, updatedEntry: FoodEntry) => void;
 }
 export type MealsDto = Record<MealType, FoodEntry[]>;
 

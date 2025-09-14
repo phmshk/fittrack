@@ -5,13 +5,14 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from "@radix-ui/react-accordion";
-import { ChevronDown, Plus } from "lucide-react";
+} from "@/shared/shadcn/components/ui/accordion";
+import { Plus } from "lucide-react";
 import { useDayStore, type MealType } from "@/entities/day";
 import { useMemo } from "react";
 import { AddFood } from "@/features/addFood";
 import { DeleteFood } from "@/features/deleteFood";
-import { FoodDetails } from "@/features/foodDetails/ui/FoodDetails";
+import { FoodDetails } from "@/features/foodDetails";
+import { EditFood } from "@/features/editFood";
 
 export const Meals = () => {
   const mealsData = useDayStore((state) => state.meals);
@@ -37,18 +38,17 @@ export const Meals = () => {
         {/* Single Accordion Item for each meal type */}
         {mealsArray.map((meal) => (
           <AccordionItem
-            className="mb-2 rounded-md border-2 px-4 py-2 text-sm font-medium"
+            className="mb-2 rounded-md border-2 px-4 py-2 text-sm font-medium last:border-2"
             key={meal.name}
             value={meal.name}
           >
-            <AccordionTrigger className="flex w-full cursor-pointer justify-between text-left [&[data-state=open]>svg]:rotate-180">
+            <AccordionTrigger className="cursor-pointer">
               <div>
                 <span className="font-bold">{meal.name}</span>{" "}
                 <span className="text-secondary-foreground">{`${meal.totalCalories} kcal`}</span>
               </div>
-              <ChevronDown className="pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200" />
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-2 pt-4 transition-all duration-1000">
+            <AccordionContent className="flex flex-col gap-2 pt-4">
               {meal.foods.length === 0 ? (
                 <div className="flex items-center justify-between gap-4">
                   {/* Empty state */}
@@ -69,6 +69,10 @@ export const Meals = () => {
                       food={food}
                       actions={
                         <>
+                          <EditFood
+                            mealType={meal.name.toLowerCase() as MealType}
+                            food={food}
+                          />
                           <DeleteFood
                             entryId={food.id}
                             mealType={meal.name.toLowerCase() as MealType}
@@ -76,7 +80,7 @@ export const Meals = () => {
                           <FoodDetails foodEntry={food} />
                         </>
                       }
-                      className="border border-border last:border-0"
+                      className="border border-border"
                     />
                   ))}
                   <div className="flex items-center justify-between text-sm font-medium">
