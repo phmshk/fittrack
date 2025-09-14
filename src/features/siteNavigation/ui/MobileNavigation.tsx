@@ -10,7 +10,7 @@ import {
   SheetTrigger,
 } from "@/shared/shadcn/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { NAV_LINKS_AS_ARRAY } from "../model/links";
+import { NAV_LINKS } from "../model/links";
 import { Link } from "@tanstack/react-router";
 import { AuthActions } from "@/features/authActions";
 
@@ -36,7 +36,7 @@ export const MobileNavigation = () => {
 
         {/* Mobile navigation items */}
         <ul aria-label="Mobile navigation" className="flex flex-col space-y-4">
-          {NAV_LINKS_AS_ARRAY.map((link) => (
+          {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <SheetClose asChild>
                 <Link

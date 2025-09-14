@@ -8,105 +8,105 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './app/routes/__root'
-import { Route as TrainigRouteImport } from './app/routes/trainig'
-import { Route as RecipesRouteImport } from './app/routes/recipes'
-import { Route as DiaryRouteImport } from './app/routes/diary'
-import { Route as IndexRouteImport } from './app/routes/index'
+import { Route as rootRouteImport } from './pages/__root'
+import { Route as TrainingRouteRouteImport } from './pages/training/route'
+import { Route as RecipesRouteRouteImport } from './pages/recipes/route'
+import { Route as DiaryRouteRouteImport } from './pages/diary/route'
+import { Route as DashboardRouteRouteImport } from './pages/dashboard/route'
 
-const TrainigRoute = TrainigRouteImport.update({
-  id: '/trainig',
-  path: '/trainig',
+const TrainingRouteRoute = TrainingRouteRouteImport.update({
+  id: '/training',
+  path: '/training',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RecipesRoute = RecipesRouteImport.update({
+const RecipesRouteRoute = RecipesRouteRouteImport.update({
   id: '/recipes',
   path: '/recipes',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DiaryRoute = DiaryRouteImport.update({
+const DiaryRouteRoute = DiaryRouteRouteImport.update({
   id: '/diary',
   path: '/diary',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const DashboardRouteRoute = DashboardRouteRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/diary': typeof DiaryRoute
-  '/recipes': typeof RecipesRoute
-  '/trainig': typeof TrainigRoute
+  '/dashboard': typeof DashboardRouteRoute
+  '/diary': typeof DiaryRouteRoute
+  '/recipes': typeof RecipesRouteRoute
+  '/training': typeof TrainingRouteRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/diary': typeof DiaryRoute
-  '/recipes': typeof RecipesRoute
-  '/trainig': typeof TrainigRoute
+  '/dashboard': typeof DashboardRouteRoute
+  '/diary': typeof DiaryRouteRoute
+  '/recipes': typeof RecipesRouteRoute
+  '/training': typeof TrainingRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/diary': typeof DiaryRoute
-  '/recipes': typeof RecipesRoute
-  '/trainig': typeof TrainigRoute
+  '/dashboard': typeof DashboardRouteRoute
+  '/diary': typeof DiaryRouteRoute
+  '/recipes': typeof RecipesRouteRoute
+  '/training': typeof TrainingRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/diary' | '/recipes' | '/trainig'
+  fullPaths: '/dashboard' | '/diary' | '/recipes' | '/training'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/diary' | '/recipes' | '/trainig'
-  id: '__root__' | '/' | '/diary' | '/recipes' | '/trainig'
+  to: '/dashboard' | '/diary' | '/recipes' | '/training'
+  id: '__root__' | '/dashboard' | '/diary' | '/recipes' | '/training'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  DiaryRoute: typeof DiaryRoute
-  RecipesRoute: typeof RecipesRoute
-  TrainigRoute: typeof TrainigRoute
+  DashboardRouteRoute: typeof DashboardRouteRoute
+  DiaryRouteRoute: typeof DiaryRouteRoute
+  RecipesRouteRoute: typeof RecipesRouteRoute
+  TrainingRouteRoute: typeof TrainingRouteRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/trainig': {
-      id: '/trainig'
-      path: '/trainig'
-      fullPath: '/trainig'
-      preLoaderRoute: typeof TrainigRouteImport
+    '/training': {
+      id: '/training'
+      path: '/training'
+      fullPath: '/training'
+      preLoaderRoute: typeof TrainingRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes': {
       id: '/recipes'
       path: '/recipes'
       fullPath: '/recipes'
-      preLoaderRoute: typeof RecipesRouteImport
+      preLoaderRoute: typeof RecipesRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/diary': {
       id: '/diary'
       path: '/diary'
       fullPath: '/diary'
-      preLoaderRoute: typeof DiaryRouteImport
+      preLoaderRoute: typeof DiaryRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  DiaryRoute: DiaryRoute,
-  RecipesRoute: RecipesRoute,
-  TrainigRoute: TrainigRoute,
+  DashboardRouteRoute: DashboardRouteRoute,
+  DiaryRouteRoute: DiaryRouteRoute,
+  RecipesRouteRoute: RecipesRouteRoute,
+  TrainingRouteRoute: TrainingRouteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
