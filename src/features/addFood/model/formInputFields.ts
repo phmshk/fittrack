@@ -1,7 +1,7 @@
-import type { FormInputProps } from "../ui/FormInput";
+import type { BaseFormProps } from "@/shared/model/formTypes";
 import type { FormOutput } from "./zodSchema";
 
-type FormInputItem = Omit<FormInputProps<FormOutput>, "control">;
+type FormInputItem = Omit<BaseFormProps<FormOutput>, "control">;
 
 export const FORM_INPUT_ITEMS: FormInputItem[] = [
   {
@@ -19,25 +19,25 @@ export const FORM_INPUT_ITEMS: FormInputItem[] = [
   {
     name: "proteins",
     label: "Proteins (g)",
-    placeholder: "0",
+    placeholder: "Default is 0g",
     srOnly: "Enter the amount of proteins in grams.",
   },
   {
     name: "carbs",
     label: "Carbohydrates (g)",
-    placeholder: "0",
+    placeholder: "Default is 0g",
     srOnly: "Enter the amount of carbohydrates in grams.",
   },
   {
     name: "fats",
     label: "Fats (g)",
-    placeholder: "0",
+    placeholder: "Default is 0g",
     srOnly: "Enter the amount of fats in grams.",
   },
   {
     name: "grams",
     label: "Grams (g)",
-    placeholder: "100",
+    placeholder: "Default is 100g",
     srOnly: "Enter the weight of food in grams.",
   },
 ];

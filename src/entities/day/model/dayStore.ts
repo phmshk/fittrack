@@ -10,59 +10,12 @@ const initialState: DayState = {
     fatGoal: 70,
   },
   meals: {
-    breakfast: [
-      {
-        id: "1",
-        name: "Oatmeal",
-        grams: 150,
-        calories: 210,
-        carbs: 40,
-        proteins: 6,
-        fats: 4,
-      },
-      {
-        id: "2",
-        name: "Apple",
-        grams: 100,
-        calories: 52,
-        carbs: 14,
-        proteins: 0,
-        fats: 0,
-      },
-    ],
-    lunch: [
-      {
-        id: "3",
-        name: "Chicken Breast",
-        grams: 200,
-        calories: 330,
-        carbs: 0,
-        proteins: 62,
-        fats: 7,
-      },
-      {
-        id: "4",
-        name: "Buckwheat",
-        grams: 100,
-        calories: 130,
-        carbs: 28,
-        proteins: 5,
-        fats: 1,
-      },
-      {
-        id: "5",
-        name: "Vegetable Salad",
-        grams: 150,
-        calories: 80,
-        carbs: 12,
-        proteins: 3,
-        fats: 2,
-      },
-    ],
+    breakfast: [],
+    lunch: [],
     dinner: [],
     snacks: [],
   },
-  exerciseCalories: 324,
+  exerciseCalories: 0,
 };
 
 export const useDayStore = create<DayStore>()((set) => ({

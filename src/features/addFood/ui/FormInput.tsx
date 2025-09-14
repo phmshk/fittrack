@@ -7,15 +7,10 @@ import {
   FormDescription,
 } from "@/shared/shadcn/components/ui/form";
 import { Input } from "@/shared/shadcn/components/ui/input";
-import type { FieldValues, Path, Control } from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
+import type { BaseFormProps } from "@/shared/model/formTypes";
 
-export type FormInputProps<T extends FieldValues> = {
-  control: Control<T>;
-  name: Path<T>;
-  label: string;
-  placeholder: string;
-  srOnly: string;
-};
+type FormInputProps<T extends FieldValues> = BaseFormProps<T>;
 
 export const FormInput = <T extends FieldValues>(props: FormInputProps<T>) => {
   const { control, name, label, placeholder, srOnly } = props;

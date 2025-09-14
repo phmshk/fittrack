@@ -6,9 +6,10 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
-import { useDayStore } from "@/entities/day";
+import { ChevronDown, Plus } from "lucide-react";
+import { useDayStore, type MealType } from "@/entities/day";
 import { useMemo } from "react";
+import { AddFood } from "@/features/addFood";
 
 export const Meals = () => {
   const mealsData = useDayStore((state) => state.meals);
@@ -44,7 +45,15 @@ export const Meals = () => {
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-2 pt-4 transition-all duration-1000">
               {meal.foods.length === 0 ? (
-                <div className="text-sm">No foods added.</div>
+                <div className="flex items-center justify-between gap-4">
+                  <div className="text-sm">No food added yet.</div>
+                  <AddFood
+                    mealName={meal.name.toLowerCase() as MealType}
+                    triggerButtonProps={{
+                      children: <Plus className="size-4" />,
+                    }}
+                  />
+                </div>
               ) : (
                 <>
                   {meal.foods.map((food) => (
@@ -56,11 +65,24 @@ export const Meals = () => {
                       className="border border-border last:border-0"
                     />
                   ))}
-                  <div className="text-sm font-medium">
-                    Total Calories:{" "}
-                    <span className="text-secondary-foreground">
-                      {meal.totalCalories} kcal
-                    </span>
+                  <div className="flex items-center justify-between text-sm font-medium">
+                    <div>
+                      Total Calories:{" "}
+                      <span className="text-secondary-foreground">
+                        {meal.totalCalories} kcal
+                      </span>
+                    </div>
+                    <AddFood
+                      mealName={meal.name.toLowerCase() as MealType}
+                      triggerButtonProps={{
+                        children: (
+                          <div className="flex items-center justify-between gap-2">
+                            <Plus className="size-4" />
+                            <span className="hidden sm:block">Add more</span>
+                          </div>
+                        ),
+                      }}
+                    />
                   </div>
                 </>
               )}

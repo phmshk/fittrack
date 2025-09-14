@@ -9,8 +9,14 @@ import {
 import { AddFoodForm } from "./AddFoodForm";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useState } from "react";
+import type { MealType } from "@/entities/day";
 
-export const AddFood = () => {
+interface AddFoodProps {
+  triggerButtonProps: React.ComponentProps<typeof Button>;
+  mealName?: MealType | undefined;
+}
+
+export const AddFood = ({ triggerButtonProps, mealName }: AddFoodProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => {
     setIsOpen(false);
@@ -19,9 +25,9 @@ export const AddFood = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="w-fit cursor-pointer self-end">Add Food</Button>
+        <Button className="w-fit self-end" {...triggerButtonProps} />
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add Food to Meal Plan</DialogTitle>
           <DialogDescription className="mb-4">
@@ -31,7 +37,7 @@ export const AddFood = () => {
             </span>
           </DialogDescription>
         </DialogHeader>
-        <AddFoodForm onClose={handleClose} />
+        <AddFoodForm onClose={handleClose} mealName={mealName} />
       </DialogContent>
     </Dialog>
   );

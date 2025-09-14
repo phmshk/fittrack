@@ -7,19 +7,20 @@ import { FormInput } from "./FormInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { FormOutput } from "../model/zodSchema";
 import { Form } from "@/shared/shadcn/components/ui/form";
-import { MEAL_TYPE, useDayStore } from "@/entities/day";
+import { MEAL_TYPE, useDayStore, type MealType } from "@/entities/day";
 
 interface AddFoodFormProps {
   onClose: () => void;
+  mealName: MealType | undefined;
 }
 
-export const AddFoodForm = ({ onClose }: AddFoodFormProps) => {
+export const AddFoodForm = ({ onClose, mealName }: AddFoodFormProps) => {
   const addFoodEntry = useDayStore((state) => state.addFoodEntry);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      mealType: undefined,
+      mealType: mealName,
       foodName: "",
       calories: "",
       proteins: "",
@@ -38,7 +39,7 @@ export const AddFoodForm = ({ onClose }: AddFoodFormProps) => {
       fats: Number(data.fats),
       grams: data.grams ? Number(data.grams) : 100,
     };
-    addFoodEntry(data.mealType, formattedData);
+    addFoodEntry(data.mealType!, formattedData);
     form.reset();
     onClose();
   };
@@ -50,7 +51,7 @@ export const AddFoodForm = ({ onClose }: AddFoodFormProps) => {
           control={form.control}
           name="mealType"
           label="Meal Type"
-          options={MEAL_TYPE as unknown as string[]}
+          options={[...MEAL_TYPE]}
           placeholder="Select a meal type"
           srOnly="Select a meal type"
         />
@@ -58,7 +59,7 @@ export const AddFoodForm = ({ onClose }: AddFoodFormProps) => {
           <FormInput key={item.name} control={form.control} {...item} />
         ))}
         <Button className="ml-auto block w-fit cursor-pointer" type="submit">
-          Add Food
+          Add Entry
         </Button>
       </form>
     </Form>

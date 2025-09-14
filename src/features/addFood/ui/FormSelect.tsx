@@ -13,16 +13,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/shadcn/components/ui/select";
-import type { Control, FieldValues, Path } from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
+import type { BaseFormProps } from "@/shared/model/formTypes";
 
-type FormSelectProps<T extends FieldValues> = {
-  control: Control<T>;
-  name: Path<T>;
-  label: string;
+interface FormSelectProps<T extends FieldValues> extends BaseFormProps<T> {
   options: string[];
-  placeholder: string;
-  srOnly: string;
-};
+}
 
 export const FormSelect = <T extends FieldValues>(
   props: FormSelectProps<T>,
@@ -37,13 +33,17 @@ export const FormSelect = <T extends FieldValues>(
           <FormLabel>{label}</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger>
+              <SelectTrigger className="cursor-pointer">
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
               {options.map((option) => (
-                <SelectItem key={option} value={option}>
+                <SelectItem
+                  key={option}
+                  value={option}
+                  className="cursor-pointer"
+                >
                   {option.charAt(0).toUpperCase() + option.slice(1)}
                 </SelectItem>
               ))}

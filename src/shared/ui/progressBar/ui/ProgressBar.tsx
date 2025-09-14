@@ -15,15 +15,23 @@ export const ProgressBar = (props: ProgressBarProps) => {
   const progressPercentage =
     goalValue > 0 ? (currentValue / goalValue) * 100 : 0;
 
+  const isOverGoal = currentValue > goalValue;
+
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <div className="flex justify-between items-baseline">
+      <div className="flex items-baseline justify-between">
         <span className="text-base font-medium text-foreground">{label}</span>
         <span className="text-sm text-muted-foreground">
-          {`${currentValue}${units}`} / {`${goalValue}${units}`}
+          <span
+            className={cn(isOverGoal && "text-destructive")}
+          >{`${currentValue}${units}`}</span>{" "}
+          / {`${goalValue}${units}`}
         </span>
       </div>
-      <Progress value={progressPercentage} />
+      <Progress
+        value={isOverGoal ? 100 : progressPercentage}
+        indicatorColor={isOverGoal ? "bg-destructive" : "bg-primary"}
+      />
     </div>
   );
 };
