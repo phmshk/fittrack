@@ -11,6 +11,7 @@ import { useDayStore, type MealType } from "@/entities/day";
 import { useMemo } from "react";
 import { AddFood } from "@/features/addFood";
 import { DeleteFood } from "@/features/deleteFood";
+import { FoodDetails } from "@/features/foodDetails/ui/FoodDetails";
 
 export const Meals = () => {
   const mealsData = useDayStore((state) => state.meals);
@@ -72,6 +73,7 @@ export const Meals = () => {
                             entryId={food.id}
                             mealType={meal.name.toLowerCase() as MealType}
                           />
+                          <FoodDetails foodEntry={food} />
                         </>
                       }
                       className="border border-border last:border-0"
