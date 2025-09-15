@@ -13,6 +13,7 @@ const initialState: DayState = {
     breakfast: [
       {
         id: "1",
+        mealType: "breakfast",
         name: "Oatmeal",
         grams: 150,
         calories: 300,
@@ -22,6 +23,7 @@ const initialState: DayState = {
       },
       {
         id: "2",
+        mealType: "breakfast",
         name: "Banana",
         grams: 100,
         calories: 89,
@@ -31,6 +33,7 @@ const initialState: DayState = {
       },
       {
         id: "3",
+        mealType: "breakfast",
         name: "Eggs",
         grams: 100,
         calories: 155,
@@ -40,6 +43,7 @@ const initialState: DayState = {
       },
       {
         id: "4",
+        mealType: "breakfast",
         name: "Chicken Breast",
         grams: 200,
         calories: 330,
@@ -49,6 +53,7 @@ const initialState: DayState = {
       },
       {
         id: "5",
+        mealType: "breakfast",
         name: "Broccoli",
         grams: 100,
         calories: 55,
@@ -62,6 +67,7 @@ const initialState: DayState = {
     snacks: [
       {
         id: "6",
+        mealType: "snacks",
         name: "Almonds",
         grams: 28,
         calories: 164,
@@ -71,6 +77,7 @@ const initialState: DayState = {
       },
       {
         id: "7",
+        mealType: "snacks",
         name: "Apple",
         grams: 182,
         calories: 95,
@@ -80,6 +87,7 @@ const initialState: DayState = {
       },
       {
         id: "8",
+        mealType: "snacks",
         name: "Yogurt",
         grams: 245,
         calories: 150,

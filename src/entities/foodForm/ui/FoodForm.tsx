@@ -16,7 +16,7 @@ interface FoodFormProps {
 }
 
 export const FoodForm = (props: FoodFormProps) => {
-  const { onSubmit, initialData, submitText = "Save" } = props;
+  const { onSubmit, initialData, submitText } = props;
 
   const form = useForm<FormOutput>({
     resolver: zodResolver(formSchema),

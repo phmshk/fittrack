@@ -1,7 +1,7 @@
+import { Container } from "@/shared/ui/container";
 import { Header } from "@/widgets/header/index";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { Container } from "@/shared/ui";
 
 const RootComponent = () => (
   <>

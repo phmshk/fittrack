@@ -1,11 +1,11 @@
 import { Logo } from "@/entities/brand";
 import { AuthActions } from "@/features/authActions/ui/AuthActions";
 import { SiteNavigation } from "@/features/siteNavigation";
-import { Container } from "@/shared/ui";
+import { Container } from "@/shared/ui/container";
 
 export const Header = () => {
   return (
-    <header className="sticky top-0 w-full border-b shadow-sm z-50 bg-background">
+    <header className="sticky top-0 z-50 w-full border-b bg-background shadow-sm">
       {/* Container component to center and constrain the header content */}
       <Container>
         <div className="flex h-16 items-center justify-between">
@@ -18,7 +18,7 @@ export const Header = () => {
             <SiteNavigation />
 
             {/* Auth Buttons */}
-            <div className="hidden md:block md:ml-4">
+            <div className="hidden md:ml-4 md:block">
               <AuthActions />
             </div>
           </div>

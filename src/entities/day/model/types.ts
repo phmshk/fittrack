@@ -4,7 +4,7 @@ export const MEAL_TYPE = ["breakfast", "lunch", "dinner", "snacks"] as const;
 
 export interface FoodEntry {
   id: string;
-  mealType?: MealType;
+  mealType: MealType;
   name: string;
   grams: number;
   calories: number;
