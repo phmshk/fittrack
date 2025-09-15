@@ -1,4 +1,4 @@
-import { FoodItem } from "@/shared/ui/foodItem/ui/FoodItem";
+import { FoodItem } from "@/shared/ui/foodItem";
 import { H2 } from "@/shared/ui/headings";
 import {
   Accordion,
@@ -10,9 +10,6 @@ import { Plus } from "lucide-react";
 import { useDayStore, type MealType } from "@/entities/day";
 import { useMemo } from "react";
 import { AddFood } from "@/features/addFood";
-import { DeleteFood } from "@/features/deleteFood";
-import { FoodDetails } from "@/features/foodDetails";
-import { EditFood } from "@/features/editFood";
 
 export const Meals = () => {
   const mealsData = useDayStore((state) => state.meals);
@@ -38,7 +35,7 @@ export const Meals = () => {
         {/* Single Accordion Item for each meal type */}
         {mealsArray.map((meal) => (
           <AccordionItem
-            className="mb-2 rounded-md border-2 px-4 py-2 text-sm font-medium last:border-2"
+            className="mb-2 rounded-md border-none bg-white px-4 py-2 text-sm font-medium"
             key={meal.name}
             value={meal.name}
           >
@@ -67,19 +64,6 @@ export const Meals = () => {
                     <FoodItem
                       key={food.id}
                       food={food}
-                      actions={
-                        <>
-                          <EditFood
-                            mealType={meal.name.toLowerCase() as MealType}
-                            food={food}
-                          />
-                          <DeleteFood
-                            entryId={food.id}
-                            mealType={meal.name.toLowerCase() as MealType}
-                          />
-                          <FoodDetails foodEntry={food} />
-                        </>
-                      }
                       className="border border-border"
                     />
                   ))}

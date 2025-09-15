@@ -9,16 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './app/routes/__root'
-import { Route as TrainigRouteImport } from './app/routes/trainig'
 import { Route as RecipesRouteImport } from './app/routes/recipes'
 import { Route as DiaryRouteImport } from './app/routes/diary'
 import { Route as IndexRouteImport } from './app/routes/index'
 
-const TrainigRoute = TrainigRouteImport.update({
-  id: '/trainig',
-  path: '/trainig',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const RecipesRoute = RecipesRouteImport.update({
   id: '/recipes',
   path: '/recipes',
@@ -39,45 +33,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/diary': typeof DiaryRoute
   '/recipes': typeof RecipesRoute
-  '/trainig': typeof TrainigRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/diary': typeof DiaryRoute
   '/recipes': typeof RecipesRoute
-  '/trainig': typeof TrainigRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/diary': typeof DiaryRoute
   '/recipes': typeof RecipesRoute
-  '/trainig': typeof TrainigRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/diary' | '/recipes' | '/trainig'
+  fullPaths: '/' | '/diary' | '/recipes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/diary' | '/recipes' | '/trainig'
-  id: '__root__' | '/' | '/diary' | '/recipes' | '/trainig'
+  to: '/' | '/diary' | '/recipes'
+  id: '__root__' | '/' | '/diary' | '/recipes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DiaryRoute: typeof DiaryRoute
   RecipesRoute: typeof RecipesRoute
-  TrainigRoute: typeof TrainigRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/trainig': {
-      id: '/trainig'
-      path: '/trainig'
-      fullPath: '/trainig'
-      preLoaderRoute: typeof TrainigRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/recipes': {
       id: '/recipes'
       path: '/recipes'
@@ -106,7 +89,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DiaryRoute: DiaryRoute,
   RecipesRoute: RecipesRoute,
-  TrainigRoute: TrainigRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

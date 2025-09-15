@@ -1,7 +1,6 @@
 import { useDayStore } from "@/entities/day";
 import type { MealType } from "@/entities/day";
-import { Button, buttonVariants } from "@/shared/shadcn/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { buttonVariants } from "@/shared/shadcn/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,35 +10,27 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/shared/shadcn/components/ui/alert-dialog";
 import { cn } from "@/shared/shadcn/lib/utils";
 
 interface DeleteFoodProps {
   mealType: MealType;
   entryId: string;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
 }
 
 export const DeleteFood = (props: DeleteFoodProps) => {
-  const { mealType, entryId } = props;
+  const { mealType, entryId, isOpen, setIsOpen } = props;
   const removeFoodEntry = useDayStore((state) => state.removeFoodEntry);
 
   const handleDelete = () => {
     removeFoodEntry(mealType, entryId);
+    setIsOpen(false);
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Delete food entry"
-          className="hover:bg-destructive/10"
-        >
-          <Trash2 className="h-4 w-4 text-destructive" />
-        </Button>
-      </AlertDialogTrigger>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
