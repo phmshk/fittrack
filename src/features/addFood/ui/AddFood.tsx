@@ -24,7 +24,7 @@ export const AddFood = ({ triggerButtonProps, mealType }: AddFoodProps) => {
   const handleFormSubmit = (data: FormOutput) => {
     addFoodEntry(data.mealType!, {
       name: data.foodName,
-      mealType: data.mealType,
+      mealType: data.mealType!,
       grams: Number(data.grams),
       calories: Number(data.calories),
       proteins: Number(data.proteins),

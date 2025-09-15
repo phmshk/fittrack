@@ -26,7 +26,7 @@ export const EditFood = ({ mealType, food }: EditFoodProps) => {
   const handleFormSubmit = (data: FormOutput) => {
     editFoodEntry(mealType, {
       id: food.id,
-      mealType: data.mealType,
+      mealType: data.mealType!,
       name: data.foodName,
       grams: Number(data.grams),
       calories: Number(data.calories),
