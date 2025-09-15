@@ -24,29 +24,9 @@ export const EditFood = ({ mealType, food }: EditFoodProps) => {
   const editFoodEntry = useDayStore((state) => state.editFoodEntry);
 
   const handleFormSubmit = (data: FormOutput) => {
-    //!TODO: Refactor this to do all the logic in the store instead of here
-
-    if (data.mealType !== mealType) {
-      // If meal type has changed, we need to remove from the old meal and add to the new meal
-      // This requires access to removeFoodEntry and addFoodEntry
-      const removeFoodEntry = useDayStore.getState().removeFoodEntry;
-      const addFoodEntry = useDayStore.getState().addFoodEntry;
-
-      removeFoodEntry(mealType, food.id);
-      addFoodEntry(data.mealType!, {
-        name: data.foodName,
-        grams: Number(data.grams),
-        calories: Number(data.calories),
-        proteins: Number(data.proteins),
-        carbs: Number(data.carbs),
-        fats: Number(data.fats),
-      });
-      setIsOpen(false);
-      return;
-    }
-
-    editFoodEntry(data.mealType!, {
+    editFoodEntry(mealType, {
       id: food.id,
+      mealType: data.mealType,
       name: data.foodName,
       grams: Number(data.grams),
       calories: Number(data.calories),

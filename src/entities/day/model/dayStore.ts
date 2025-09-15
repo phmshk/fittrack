@@ -120,12 +120,36 @@ export const useDayStore = create<DayStore>()((set) => ({
     })),
 
   editFoodEntry: (mealType, updatedEntry) =>
-    set((state) => ({
-      meals: {
-        ...state.meals,
-        [mealType]: state.meals[mealType].map((entry) =>
-          entry.id === updatedEntry.id ? updatedEntry : entry,
-        ),
-      },
-    })),
+    set((state) => {
+      const mealTypeChanged = mealType !== updatedEntry.mealType;
+
+      if (mealTypeChanged) {
+        // Remove from original meal
+        const mealLogs = state.meals[mealType].filter(
+          (entry) => entry.id !== updatedEntry.id,
+        );
+
+        // Add to new meal
+        const updatedMeal =
+          state.meals[updatedEntry.mealType!].concat(updatedEntry);
+
+        return {
+          meals: {
+            ...state.meals,
+            [mealType]: mealLogs,
+            [updatedEntry.mealType!]: updatedMeal,
+          },
+        };
+      } else {
+        // Update within the same meal
+        return {
+          meals: {
+            ...state.meals,
+            [mealType]: state.meals[mealType].map((entry) =>
+              entry.id === updatedEntry.id ? updatedEntry : entry,
+            ),
+          },
+        };
+      }
+    }),
 }));

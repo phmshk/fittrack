@@ -14,16 +14,17 @@ import type { FormOutput } from "@/entities/foodForm";
 
 interface AddFoodProps {
   triggerButtonProps: React.ComponentProps<typeof Button>;
-  mealName?: MealType | undefined;
+  mealType?: MealType | undefined;
 }
 
-export const AddFood = ({ triggerButtonProps, mealName }: AddFoodProps) => {
+export const AddFood = ({ triggerButtonProps, mealType }: AddFoodProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const addFoodEntry = useDayStore((state) => state.addFoodEntry);
   const handleFormSubmit = (data: FormOutput) => {
     addFoodEntry(data.mealType!, {
       name: data.foodName,
+      mealType: data.mealType,
       grams: Number(data.grams),
       calories: Number(data.calories),
       proteins: Number(data.proteins),
@@ -50,7 +51,7 @@ export const AddFood = ({ triggerButtonProps, mealName }: AddFoodProps) => {
         </DialogHeader>
         <FoodForm
           onSubmit={handleFormSubmit}
-          initialData={{ mealType: mealName }}
+          initialData={{ mealType }}
           submitText="Save changes"
         />
       </DialogContent>

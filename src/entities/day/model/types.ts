@@ -4,6 +4,7 @@ export const MEAL_TYPE = ["breakfast", "lunch", "dinner", "snacks"] as const;
 
 export interface FoodEntry {
   id: string;
+  mealType?: MealType;
   name: string;
   grams: number;
   calories: number;
@@ -22,7 +23,7 @@ export interface UserGoals {
 export interface DayActions {
   addFoodEntry: (mealType: MealType, entry: Omit<FoodEntry, "id">) => void;
   removeFoodEntry: (mealType: MealType, entryId: string) => void;
-  editFoodEntry: (mealType: MealType, updatedEntry: FoodEntry) => void;
+  editFoodEntry: (originalMealType: MealType, updatedEntry: FoodEntry) => void;
 }
 export type MealsDto = Record<MealType, FoodEntry[]>;
 

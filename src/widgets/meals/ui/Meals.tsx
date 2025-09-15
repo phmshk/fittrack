@@ -54,7 +54,7 @@ export const Meals = () => {
                   {/* Empty state */}
                   <div className="text-sm">No food added yet.</div>
                   <AddFood
-                    mealName={meal.name.toLowerCase() as MealType}
+                    mealType={meal.name.toLowerCase() as MealType}
                     triggerButtonProps={{
                       children: <Plus className="size-4" />,
                     }}
@@ -91,7 +91,7 @@ export const Meals = () => {
                       </span>
                     </div>
                     <AddFood
-                      mealName={meal.name.toLowerCase() as MealType}
+                      mealType={meal.name.toLowerCase() as MealType}
                       triggerButtonProps={{
                         children: (
                           <div className="flex items-center justify-between gap-2">
