@@ -1,11 +1,11 @@
 import { DayNavigator } from "@/widgets/dayNavigator";
-import { DiaryMeals } from "@/widgets/diaryMeals";
 import { H1 } from "@/shared/ui/headings";
 import { useState } from "react";
 import { H2 } from "@/shared/ui/headings";
 import { MacronutrientsSummary } from "@/widgets/macronutrientsSummary";
 import { ProgressBar } from "@/shared/ui/progressBar";
 import { selectCaloriesProgress, useDayStore } from "@/entities/day";
+import { Meals } from "@/widgets/meals";
 
 export const DiaryPage = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -26,7 +26,7 @@ export const DiaryPage = () => {
         units="kcal"
       />
       <MacronutrientsSummary />
-      <DiaryMeals />
+      <Meals />
     </section>
   );
 };

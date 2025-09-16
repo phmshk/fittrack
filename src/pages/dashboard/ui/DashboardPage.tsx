@@ -1,4 +1,3 @@
-import { AddFood } from "@/features/addFood";
 import { CaloriesCard } from "@/widgets/caloriesCard";
 import { H1 } from "@/shared/ui/headings";
 import { MacronutrientsSummary } from "@/widgets/macronutrientsSummary";
@@ -20,9 +19,6 @@ export const DashboardPage = () => {
 
       {/* Meals summary */}
       <Meals />
-
-      {/* Add food form */}
-      <AddFood triggerButtonProps={{ children: "Add Food" }} />
     </section>
   );
 };

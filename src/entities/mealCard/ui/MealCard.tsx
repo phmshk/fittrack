@@ -9,8 +9,10 @@ import {
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
 import { FoodItem } from "@/shared/ui/foodItem";
-import { PlusCircleIcon } from "lucide-react";
+import { PlusCircleIcon, Utensils } from "lucide-react";
 import { FoodOptions } from "./FoodOptions";
+import { useMemo, useState } from "react";
+import { Button } from "@/shared/shadcn/components/ui/button";
 
 interface MealCardProps {
   mealType: string;
@@ -19,8 +21,17 @@ interface MealCardProps {
   imageUrl: string;
 }
 
+const VISIBLE_ITEMS_LIMIT = 3;
+
 export const MealCard = (props: MealCardProps) => {
   const { mealType, foods, totalCalories, imageUrl } = props;
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const visibleFoods = useMemo(() => {
+    if (isExpanded) return foods;
+    return foods.slice(0, VISIBLE_ITEMS_LIMIT);
+  }, [foods, isExpanded]);
+
   return (
     <Card className="w-full max-w-lg border-none shadow-lg">
       <CardHeader className="flex items-center justify-between gap-4 pt-4 pb-2">
@@ -45,13 +56,17 @@ export const MealCard = (props: MealCardProps) => {
       </CardHeader>
       <CardContent className="h-full">
         {foods.length === 0 ? (
-          <div className="text-sm text-secondary-foreground">
-            No food added yet. Add some delicious items to your{" "}
-            {mealType.toLowerCase()}!
+          <div className="flex h-full flex-col items-center justify-center text-secondary-foreground">
+            <div className="mb-4 rounded-full border-4 border-primary/40 p-8">
+              <Utensils className="size-16 text-primary-foreground" />
+            </div>
+            <p className="mb-4 text-center text-sm">
+              No food added yet for {mealType}.
+            </p>
           </div>
         ) : (
           <ul>
-            {foods.map((food) => (
+            {visibleFoods.map((food) => (
               <li
                 key={food.id}
                 className="border-b border-foreground/10 last:border-0"
@@ -64,6 +79,24 @@ export const MealCard = (props: MealCardProps) => {
             ))}
           </ul>
         )}
+        {foods.length > VISIBLE_ITEMS_LIMIT &&
+          (isExpanded ? (
+            <Button
+              variant="link"
+              className="mt-2 w-full text-muted-foreground"
+              onClick={() => setIsExpanded(false)}
+            >
+              Show less foods
+            </Button>
+          ) : (
+            <Button
+              variant="link"
+              className="mt-2 w-full text-muted-foreground"
+              onClick={() => setIsExpanded(true)}
+            >
+              Show all ({foods.length}) foods
+            </Button>
+          ))}
       </CardContent>
       <CardFooter>
         <AddFood
