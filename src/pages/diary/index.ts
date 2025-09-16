@@ -1,1 +1,1 @@
-export { Diary } from "./ui/Diary";
+export { DiaryPage } from "./ui/DiaryPage";

@@ -2,7 +2,10 @@ import { create } from "zustand";
 import type { DayState, DayStore, FoodEntry } from "./types";
 
 const initialState: DayState = {
-  date: new Date().toISOString().split("T")[0],
+  date: new Date().toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+  }),
   userGoals: {
     calorieGoal: 2000,
     proteinGoal: 150,

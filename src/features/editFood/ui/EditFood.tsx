@@ -1,26 +1,27 @@
 import { useDayStore, type FoodEntry, type MealType } from "@/entities/day";
 import type { FormOutput } from "@/entities/foodForm";
-import { useState } from "react";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogTitle,
   DialogHeader,
   DialogDescription,
 } from "@/shared/shadcn/components/ui/dialog";
 import { FoodForm } from "@/entities/foodForm";
-import { Button } from "@/shared/shadcn/components/ui/button";
-import { Pencil } from "lucide-react";
 
 interface EditFoodProps {
   mealType: MealType;
   food: FoodEntry;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
 }
 
-export const EditFood = ({ mealType, food }: EditFoodProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+export const EditFood = ({
+  mealType,
+  food,
+  isOpen,
+  setIsOpen,
+}: EditFoodProps) => {
   const editFoodEntry = useDayStore((state) => state.editFoodEntry);
 
   const handleFormSubmit = (data: FormOutput) => {
@@ -39,11 +40,6 @@ export const EditFood = ({ mealType, food }: EditFoodProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label="Edit food entry">
-          <Pencil className="h-4 w-4" />
-        </Button>
-      </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit food Entry</DialogTitle>

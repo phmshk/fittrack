@@ -1,0 +1,1 @@
+//! DO NOT USE THIS ELEMENT. IT'S DEPRECATED. SEE src/widgets/meals/... INSTEAD.
