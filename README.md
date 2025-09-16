@@ -25,6 +25,7 @@ This project is built with a modern, type-safe, and scalable technology stack, c
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com/) - Beautifully designed, accessible components.
 - **Routing:** [TanStack Router](https://tanstack.com/router/) - A fully type-safe router with a file-based routing paradigm.
 - **State Management:** [Zustand](https://zustand-demo.pmnd.rs/) - A small, fast, and scalable state-management solution.
+- **Server State Management:** [TanStack Query](https://tanstack.com/query/) - Powerful asynchronous state management, server-state utilities and data fetching.
 
 ## 📂 Project Structure
 

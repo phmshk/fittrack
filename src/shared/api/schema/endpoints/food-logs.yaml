@@ -47,24 +47,29 @@ components:
           description: Number of carbs (in grams).
           example: 27
     FoodLogInput:
-    type: object
-    # This model is used for creating and updating food log entries.
-    # It is almost identical to FoodLog, but without id field.
-    properties:
-      date:
-        $ref: "#/components/schemas/FoodLog/properties/date"
-      mealType:
-        $ref: "#/components/schemas/FoodLog/properties/mealType"
-      name:
-        $ref: "#/components/schemas/FoodLog/properties/name"
-      calories:
-        $ref: "#/components/schemas/FoodLog/properties/calories"
-      proteins:
-        $ref: "#/components/schemas/FoodLog/properties/proteins"
-      fats:
-        $ref: "#/components/schemas/FoodLog/properties/fats"
-      carbs:
-        $ref: "#/components/schemas/FoodLog/properties/carbs"
+      type: object
+      required:
+        - date
+        - mealType
+        - name
+        - calories
+      # This model is used for creating and updating food log entries.
+      # It is almost identical to FoodLog, but without id field.
+      properties:
+        date:
+          $ref: "#/components/schemas/FoodLog/properties/date"
+        mealType:
+          $ref: "#/components/schemas/FoodLog/properties/mealType"
+        name:
+          $ref: "#/components/schemas/FoodLog/properties/name"
+        calories:
+          $ref: "#/components/schemas/FoodLog/properties/calories"
+        proteins:
+          $ref: "#/components/schemas/FoodLog/properties/proteins"
+        fats:
+          $ref: "#/components/schemas/FoodLog/properties/fats"
+        carbs:
+          $ref: "#/components/schemas/FoodLog/properties/carbs"
 
   createFoodLog:
     summary: Add a new food log entry
