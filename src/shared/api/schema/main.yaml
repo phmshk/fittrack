@@ -1,0 +1,38 @@
+# --- OpenAPI Specification for FitTrack API ---
+# Specification version
+openapi: 3.0.0
+
+# --- Information about API ---
+info:
+  title: FitTrack API
+  description: API for the FitTrack web application for tracking nutrition.
+  version: "1.0.0"
+
+# --- Servers ---
+# Specify the base path for all our endpoints.
+servers:
+  - url: /api
+    description: Mocked server
+
+# --- Description of endpoints ---
+paths:
+  # --- Endpoints for /food-logs ---
+
+  /food-logs:
+    post:
+      $ref: "./endpoints/food-logs.yaml#/components/createFoodLog"
+
+  # --- Endpoints for /food-logs/{date} ---
+
+  /food-logs/{date}:
+    get:
+      $ref: "./endpoints/food-logs.yaml#/components/getFoodLogsByDate"
+
+  # --- Endpoints for /food-logs/{id} ---
+
+  /food-logs/{id}:
+    put:
+      $ref: "./endpoints/food-logs.yaml#/components/updateFoodLog"
+
+    delete:
+      $ref: "./endpoints/food-logs.yaml#/components/deleteFoodLog"
