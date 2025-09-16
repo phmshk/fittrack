@@ -15,16 +15,18 @@ const db: FoodLog[] = [
     proteins: 10,
     carbs: 54,
     fats: 5,
+    grams: 150,
   },
   {
     id: crypto.randomUUID(),
     date: "2025-09-16",
-    mealType: "snacks",
+    mealType: "breakfast",
     name: "Banana",
     calories: 89,
     proteins: 1,
     carbs: 23,
     fats: 0.3,
+    grams: 100,
   },
   {
     id: crypto.randomUUID(),
@@ -35,6 +37,7 @@ const db: FoodLog[] = [
     proteins: 13,
     carbs: 1,
     fats: 11,
+    grams: 100,
   },
   {
     id: crypto.randomUUID(),
@@ -45,6 +48,7 @@ const db: FoodLog[] = [
     proteins: 62,
     carbs: 0,
     fats: 7.4,
+    grams: 100,
   },
   {
     id: crypto.randomUUID(),
@@ -55,16 +59,18 @@ const db: FoodLog[] = [
     proteins: 3.7,
     carbs: 11,
     fats: 0.6,
+    grams: 80,
   },
   {
     id: crypto.randomUUID(),
     date: "2025-09-16",
-    mealType: "snacks",
+    mealType: "breakfast",
     name: "Quinoa",
     calories: 222,
     proteins: 8,
     carbs: 39,
     fats: 3.6,
+    grams: 100,
   },
   {
     id: crypto.randomUUID(),
@@ -75,6 +81,7 @@ const db: FoodLog[] = [
     proteins: 22,
     carbs: 0,
     fats: 12,
+    grams: 100,
   },
   {
     id: crypto.randomUUID(),
@@ -85,6 +92,7 @@ const db: FoodLog[] = [
     proteins: 1.6,
     carbs: 20,
     fats: 0.1,
+    grams: 100,
   },
 ];
 
@@ -125,6 +133,7 @@ export const handlers = [
       fats: newLogData.fats || 0,
       carbs: newLogData.carbs || 0,
       date: newLogData.date,
+      grams: newLogData.grams || 0,
       mealType: newLogData.mealType,
     };
 

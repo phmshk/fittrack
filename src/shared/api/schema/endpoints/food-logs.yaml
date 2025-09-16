@@ -11,6 +11,7 @@ components:
         - proteins
         - fats
         - carbs
+        - grams
       properties:
         id:
           type: string
@@ -46,6 +47,10 @@ components:
           type: number
           description: Number of carbs (in grams).
           example: 27
+        grams:
+          type: number
+          description: Number of grams (in grams).
+          example: 100
     FoodLogInput:
       type: object
       required:
@@ -70,6 +75,8 @@ components:
           $ref: "#/components/schemas/FoodLog/properties/fats"
         carbs:
           $ref: "#/components/schemas/FoodLog/properties/carbs"
+        grams:
+          $ref: "#/components/schemas/FoodLog/properties/grams"
 
   createFoodLog:
     summary: Add a new food log entry

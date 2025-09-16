@@ -17,3 +17,10 @@ export const MEAL_ORDER: MealType[] = [
   "dinner",
   "snacks",
 ];
+
+export const MEAL_TITLES: Record<MealType, string> = {
+  breakfast: "Breakfast",
+  lunch: "Lunch",
+  dinner: "Dinner",
+  snacks: "Snacks",
+};

@@ -247,6 +247,11 @@ export interface components {
          * @example 27
          */
         carbs: number;
+        /**
+         * @description Number of grams (in grams).
+         * @example 100
+         */
+        grams: number;
         FoodLogInput: {
             date: components["schemas"]["date"];
             mealType: components["schemas"]["mealType"];
@@ -255,6 +260,7 @@ export interface components {
             proteins?: components["schemas"]["proteins"];
             fats?: components["schemas"]["fats"];
             carbs?: components["schemas"]["carbs"];
+            grams?: components["schemas"]["grams"];
         };
         FoodLog: {
             /**
@@ -298,6 +304,11 @@ export interface components {
              * @example 27
              */
             carbs: number;
+            /**
+             * @description Number of grams (in grams).
+             * @example 100
+             */
+            grams: number;
         };
         /** @description Authentication error. The user does not have permission to access this resource. */
         UnauthorizedError: unknown;

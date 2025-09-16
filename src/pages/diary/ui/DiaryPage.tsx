@@ -26,7 +26,7 @@ export const DiaryPage = () => {
         units="kcal"
       />
       <MacronutrientsSummary />
-      <Meals />
+      <Meals date={currentDate} />
     </section>
   );
 };
