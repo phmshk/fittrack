@@ -1,8 +1,5 @@
-import type { ApiComponents } from "@/shared/api/schema";
+import type { FoodLog, FoodLogInput } from "@/shared/api/schema";
 import { http, HttpResponse } from "msw";
-
-type FoodLog = ApiComponents["schemas"]["FoodLog"];
-type FoodLogInput = ApiComponents["schemas"]["FoodLogInput"];
 
 // In-memory database
 const db: FoodLog[] = [
@@ -97,7 +94,7 @@ const db: FoodLog[] = [
 ];
 
 export const handlers = [
-  http.get("/api/food-logs/:date", ({ params }) => {
+  http.get("/api/food-logs/:date", async ({ params }) => {
     const { date } = params;
     const logs = db.filter((log) => log.date === date);
     console.log(`[MSW] GET /api/food-logs/${date}: found ${logs.length} logs`);

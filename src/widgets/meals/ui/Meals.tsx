@@ -3,7 +3,7 @@ import { H2 } from "@/shared/ui/headings";
 import { useMemo } from "react";
 import { MealCard } from "@/entities/mealCard";
 import { MEAL_IMAGES, MEAL_ORDER, MEAL_TITLES } from "../model/types";
-import { useGetFoodsByDate } from "@/entities/day/api/hooks";
+import { useGetFoodsByDate } from "@/entities/day/api/foodApi";
 import { Spinner } from "@/shared/ui/spinner";
 
 interface MealsProps {

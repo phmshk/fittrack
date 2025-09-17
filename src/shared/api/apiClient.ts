@@ -1,6 +1,7 @@
 import createClient from "openapi-fetch";
 import type { ApiPaths } from "./schema";
+import { CONFIG } from "@/shared/model/config";
 
 export const apiClient = createClient<ApiPaths>({
-  baseUrl: "/api",
+  baseUrl: CONFIG.API_BASE_URL,
 });
