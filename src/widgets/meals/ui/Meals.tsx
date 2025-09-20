@@ -53,6 +53,7 @@ export const Meals = ({ date }: MealsProps) => {
       <div className="mt-6 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2">
         {mealsData.map((meal) => (
           <MealCard
+            date={date}
             key={meal.mealType}
             mealType={MEAL_TITLES[meal.mealType]}
             foods={meal.foods}

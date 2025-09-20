@@ -19,12 +19,13 @@ interface MealCardProps {
   foods: FoodEntry[];
   totalCalories: number;
   imageUrl: string;
+  date: Date;
 }
 
 const VISIBLE_ITEMS_LIMIT = 3;
 
 export const MealCard = (props: MealCardProps) => {
-  const { mealType, foods, totalCalories, imageUrl } = props;
+  const { mealType, date, foods, totalCalories, imageUrl } = props;
 
   const [isExpanded, setIsExpanded] = useState(false);
   const visibleFoods = useMemo(() => {
@@ -101,6 +102,7 @@ export const MealCard = (props: MealCardProps) => {
       <CardFooter>
         <AddFood
           mealType={mealType.toLowerCase() as MealType}
+          date={date}
           triggerButtonProps={{
             className: "w-full",
             variant: "default",

@@ -1,17 +1,12 @@
-import {
-  selectCarbsProgress,
-  selectFatsProgress,
-  selectProteinsProgress,
-  useDayStore,
-} from "@/entities/day";
 import { H2 } from "@/shared/ui/headings";
 import { ProgressBar } from "@/shared/ui/progressBar";
 import { useMemo } from "react";
 
 export const MacronutrientsSummary = () => {
-  const proteins = useDayStore(selectProteinsProgress);
-  const fats = useDayStore(selectFatsProgress);
-  const carbs = useDayStore(selectCarbsProgress);
+  // Dummy data for demonstration purposes
+  const proteins = { current: 120, goal: 150 };
+  const fats = { current: 70, goal: 80 };
+  const carbs = { current: 250, goal: 300 };
 
   const result = useMemo(() => {
     return [

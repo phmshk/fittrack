@@ -1,97 +1,6 @@
-import type { FoodLog, FoodLogInput } from "@/shared/api/schema";
+import type { FoodLog, FoodLogInput } from "@/entities/day";
 import { http, HttpResponse } from "msw";
-
-// In-memory database
-const db: FoodLog[] = [
-  {
-    id: crypto.randomUUID(),
-    date: "2025-09-16",
-    mealType: "breakfast",
-    name: "Oatmeal",
-    calories: 300,
-    proteins: 10,
-    carbs: 54,
-    fats: 5,
-    grams: 150,
-  },
-  {
-    id: crypto.randomUUID(),
-    date: "2025-09-16",
-    mealType: "breakfast",
-    name: "Banana",
-    calories: 89,
-    proteins: 1,
-    carbs: 23,
-    fats: 0.3,
-    grams: 100,
-  },
-  {
-    id: crypto.randomUUID(),
-    date: "2025-09-16",
-    mealType: "breakfast",
-    name: "Eggs",
-    calories: 155,
-    proteins: 13,
-    carbs: 1,
-    fats: 11,
-    grams: 100,
-  },
-  {
-    id: crypto.randomUUID(),
-    date: "2025-09-16",
-    mealType: "lunch",
-    name: "Chicken Breast",
-    calories: 330,
-    proteins: 62,
-    carbs: 0,
-    fats: 7.4,
-    grams: 100,
-  },
-  {
-    id: crypto.randomUUID(),
-    date: "2025-09-16",
-    mealType: "lunch",
-    name: "Broccoli",
-    calories: 55,
-    proteins: 3.7,
-    carbs: 11,
-    fats: 0.6,
-    grams: 80,
-  },
-  {
-    id: crypto.randomUUID(),
-    date: "2025-09-16",
-    mealType: "breakfast",
-    name: "Quinoa",
-    calories: 222,
-    proteins: 8,
-    carbs: 39,
-    fats: 3.6,
-    grams: 100,
-  },
-  {
-    id: crypto.randomUUID(),
-    date: "2025-09-16",
-    mealType: "dinner",
-    name: "Salmon",
-    calories: 206,
-    proteins: 22,
-    carbs: 0,
-    fats: 12,
-    grams: 100,
-  },
-  {
-    id: crypto.randomUUID(),
-    date: "2025-09-16",
-    mealType: "dinner",
-    name: "Sweet Potato",
-    calories: 86,
-    proteins: 1.6,
-    carbs: 20,
-    fats: 0.1,
-    grams: 100,
-  },
-];
+import { db } from "@/mocks/db";
 
 export const handlers = [
   http.get("/api/food-logs/:date", async ({ params }) => {
@@ -113,6 +22,7 @@ export const handlers = [
         "[MSW] POST /api/food-logs: Validation error. Required fields are missing:",
         newLogData,
       );
+
       return HttpResponse.json(
         {
           message:
@@ -133,7 +43,6 @@ export const handlers = [
       grams: newLogData.grams || 0,
       mealType: newLogData.mealType,
     };
-
     db.push(newLog);
     console.log("[MSW] POST /api/food-logs: Product added:", newLog);
     return HttpResponse.json(newLog, { status: 201 });
@@ -152,7 +61,7 @@ export const handlers = [
         !updatedData.mealType
       ) {
         console.error(
-          `[MSW] PUT /api/food-logs/${id}: Ошибка валидации.`,
+          `[MSW] PUT /api/food-logs/${id}: Validation error. Required fields are missing:`,
           updatedData,
         );
         return HttpResponse.json(

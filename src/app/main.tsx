@@ -33,7 +33,6 @@ if (!rootElement.innerHTML) {
   enableMocking().then(() => {
     root.render(
       <StrictMode>
-        {/* 2. Оборачиваем роутер в QueryProvider */}
         <QueryProvider>
           <RouterProvider router={router} />
         </QueryProvider>

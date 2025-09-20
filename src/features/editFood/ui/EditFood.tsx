@@ -1,4 +1,3 @@
-import { useDayStore, type FoodEntry, type MealType } from "@/entities/day";
 import type { FormOutput } from "@/entities/foodForm";
 import {
   Dialog,
@@ -8,10 +7,11 @@ import {
   DialogDescription,
 } from "@/shared/shadcn/components/ui/dialog";
 import { FoodForm } from "@/entities/foodForm";
+import type { FoodLog, MealType } from "@/entities/day";
 
 interface EditFoodProps {
   mealType: MealType;
-  food: FoodEntry;
+  food: FoodLog;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }
@@ -22,19 +22,7 @@ export const EditFood = ({
   isOpen,
   setIsOpen,
 }: EditFoodProps) => {
-  const editFoodEntry = useDayStore((state) => state.editFoodEntry);
-
   const handleFormSubmit = (data: FormOutput) => {
-    editFoodEntry(mealType, {
-      id: food.id,
-      mealType: data.mealType!,
-      name: data.foodName,
-      grams: Number(data.grams),
-      calories: Number(data.calories),
-      proteins: Number(data.proteins),
-      carbs: Number(data.carbs),
-      fats: Number(data.fats),
-    });
     setIsOpen(false);
   };
 
@@ -53,12 +41,11 @@ export const EditFood = ({
             onSubmit={handleFormSubmit}
             initialData={{
               mealType: mealType,
-              foodName: food.name,
-              grams: food.grams.toString(),
-              calories: food.calories.toString(),
-              proteins: food.proteins.toString(),
-              carbs: food.carbs.toString(),
-              fats: food.fats.toString(),
+              grams: food.grams,
+              calories: food.calories,
+              proteins: food.proteins,
+              carbs: food.carbs,
+              fats: food.fats,
             }}
             submitText="Save changes"
           />

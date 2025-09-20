@@ -1,4 +1,3 @@
-import { useDayStore } from "@/entities/day";
 import type { MealType } from "@/entities/day";
 import { buttonVariants } from "@/shared/shadcn/components/ui/button";
 import {
@@ -22,10 +21,8 @@ interface DeleteFoodProps {
 
 export const DeleteFood = (props: DeleteFoodProps) => {
   const { mealType, entryId, isOpen, setIsOpen } = props;
-  const removeFoodEntry = useDayStore((state) => state.removeFoodEntry);
 
   const handleDelete = () => {
-    removeFoodEntry(mealType, entryId);
     setIsOpen(false);
   };
 

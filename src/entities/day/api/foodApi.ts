@@ -1,9 +1,8 @@
 import { apiClient } from "@/shared/api/apiClient";
-import type { FoodLog, FoodLogInput } from "@/shared/api/schema";
 import { useMutation, useQuery } from "@tanstack/react-query";
-
-const formatDateForApi = (date: Date): string =>
-  date.toISOString().split("T")[0];
+import { formatDateForApi } from "@/shared/utils";
+import type { FoodLog, FoodLogInput } from "../model/types";
+import { toast } from "sonner";
 
 export const foodKeys = {
   all: ["food-logs"] as const,
@@ -68,11 +67,14 @@ export const useAddFoodLog = () => {
     },
 
     onError: (err, newLog, onMutateResult, context) => {
+      toast.error("Error adding food log");
       context.client.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLogs,
       );
     },
+    onSuccess: (data) =>
+      toast.success(`Successfully added ${data?.name} to ${data?.mealType}`),
 
     onSettled: (data, error, variables, onMutateResult, context) => {
       context.client.invalidateQueries({ queryKey: onMutateResult?.queryKey });

@@ -1,5 +1,3 @@
-import { selectCaloriesProgress, useDayStore } from "@/entities/day";
-import { useShallow } from "zustand/react/shallow";
 import {
   Card,
   CardContent,
@@ -8,11 +6,10 @@ import {
 } from "@/shared/shadcn/components/ui/card";
 
 export const CaloriesCard = () => {
-  const { current, goal, remaining } = useDayStore(
-    useShallow((state) => selectCaloriesProgress(state)),
-  );
-
-  const exercise = useDayStore((state) => state.exerciseCalories);
+  const current = 2000;
+  const goal = 2500;
+  const exercise = 500;
+  const remaining = goal - (current - exercise);
   const isOverGoal = current > goal;
 
   const mobileCard = (

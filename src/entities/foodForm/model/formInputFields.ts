@@ -1,36 +1,34 @@
-import type { BaseFormProps } from "@/shared/model/formTypes";
+import type { BaseFormProps } from "./formTypes";
 import type { FormOutput } from "./zodSchema";
 
-type FormInputItem = Omit<BaseFormProps<FormOutput>, "control">;
-
-export const FORM_INPUT_ITEMS: FormInputItem[] = [
+export const FORM_INPUT_ITEMS: Omit<BaseFormProps<FormOutput>, "control">[] = [
   {
-    name: "foodName",
+    name: "name",
     label: "Food Name",
     placeholder: "e.g., Apple",
     srOnly: "Enter the name of the food item.",
   },
   {
     name: "calories",
-    label: "Calories (kcal)",
+    label: "Calories (kcal) in 100g serving",
     placeholder: "Mandatory field",
     srOnly: "Enter the number of calories.",
   },
   {
     name: "proteins",
-    label: "Proteins (g)",
+    label: "Proteins (g) in 100g serving",
     placeholder: "Default is 0g",
     srOnly: "Enter the amount of proteins in grams.",
   },
   {
     name: "carbs",
-    label: "Carbohydrates (g)",
+    label: "Carbohydrates (g) in 100g serving",
     placeholder: "Default is 0g",
     srOnly: "Enter the amount of carbohydrates in grams.",
   },
   {
     name: "fats",
-    label: "Fats (g)",
+    label: "Fats (g) in 100g serving",
     placeholder: "Default is 0g",
     srOnly: "Enter the amount of fats in grams.",
   },

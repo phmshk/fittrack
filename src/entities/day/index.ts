@@ -1,22 +1,8 @@
-export type {
-  DayState,
-  FoodEntry,
-  UserGoals,
-  DayActions,
-  DayStore,
-  MealsDto,
-  MealType,
-} from "./model/types";
-
-export { MEAL_TYPE } from "./model/types";
-
-export { useDayStore } from "./model/dayStore";
-
+export type { MealType, FoodLogInput, FoodLog } from "./model/types";
 export {
-  selectEatenNutrients,
-  selectRemainingCalories,
-  selectProteinsProgress,
-  selectFatsProgress,
-  selectCarbsProgress,
-  selectCaloriesProgress,
-} from "./model/dayStoreSelectors";
+  useGetFoodsByDate,
+  useAddFoodLog,
+  useUpdateFoodLog,
+  useDeleteFoodLog,
+} from "./api/foodApi";
+export { MEALS } from "./model/types";

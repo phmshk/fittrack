@@ -1,4 +1,4 @@
-import { MEAL_TYPE } from "@/entities/day";
+import { MEALS } from "@/entities/day";
 import { z } from "zod";
 
 const positiveNumberCheck = (fieldName: string) =>
@@ -14,10 +14,10 @@ const positiveNumberCheck = (fieldName: string) =>
 
 export const formSchema = z
   .object({
-    mealType: z
-      .enum(MEAL_TYPE, { error: "Please select a meal type." })
-      .optional(),
-    foodName: z.string().min(1, {
+    mealType: z.enum(Object.values(MEALS), {
+      error: "Please select a meal type.",
+    }),
+    name: z.string().min(1, {
       message: "Name of food can not be empty.",
     }),
     calories: z
@@ -30,6 +30,7 @@ export const formSchema = z
     carbs: z.string().pipe(positiveNumberCheck("Carbs")),
     fats: z.string().pipe(positiveNumberCheck("Fats")),
     grams: z.string().pipe(positiveNumberCheck("Grams")),
+    date: z.string(),
   })
   .refine((data) => !!data.mealType, {
     message: "Please select a meal type.",

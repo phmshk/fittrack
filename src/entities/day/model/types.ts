@@ -1,37 +1,12 @@
-export type MealType = "breakfast" | "lunch" | "dinner" | "snacks";
+import type { ApiComponents } from "@/shared/api/schema";
 
-export const MEAL_TYPE = ["breakfast", "lunch", "dinner", "snacks"] as const;
+export type MealType = ApiComponents["schemas"]["FoodLog"]["mealType"];
+export type FoodLog = ApiComponents["schemas"]["FoodLog"];
+export type FoodLogInput = ApiComponents["schemas"]["FoodLogInput"];
 
-export interface FoodEntry {
-  id: string;
-  mealType: MealType;
-  name: string;
-  grams: number;
-  calories: number;
-  proteins: number;
-  carbs: number;
-  fats: number;
-}
-
-export interface UserGoals {
-  calorieGoal: number;
-  proteinGoal: number;
-  carbGoal: number;
-  fatGoal: number;
-}
-
-export interface DayActions {
-  addFoodEntry: (mealType: MealType, entry: Omit<FoodEntry, "id">) => void;
-  removeFoodEntry: (mealType: MealType, entryId: string) => void;
-  editFoodEntry: (originalMealType: MealType, updatedEntry: FoodEntry) => void;
-}
-export type MealsDto = Record<MealType, FoodEntry[]>;
-
-export interface DayState {
-  date: string; // ISO date string
-  userGoals: UserGoals;
-  meals: MealsDto;
-  exerciseCalories: number;
-}
-
-export type DayStore = DayState & DayActions;
+export const MEALS: Record<string, MealType> = {
+  Breakfast: "breakfast",
+  Lunch: "lunch",
+  Dinner: "dinner",
+  Snacks: "snacks",
+} as const;
