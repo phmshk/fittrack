@@ -2,11 +2,16 @@ import { H2 } from "@/shared/ui/headings";
 import { ProgressBar } from "@/shared/ui/progressBar";
 import { useMemo } from "react";
 
-export const MacronutrientsSummary = () => {
-  // Dummy data for demonstration purposes
-  const proteins = { current: 120, goal: 150 };
-  const fats = { current: 70, goal: 80 };
-  const carbs = { current: 250, goal: 300 };
+interface MacronutrientsSummaryProps {
+  date: Date;
+}
+
+export const MacronutrientsSummary = (props: MacronutrientsSummaryProps) => {
+  const { date } = props;
+
+  const proteins = { current: 75, goal: 150 };
+  const fats = { current: 50, goal: 70 };
+  const carbs = { current: 200, goal: 300 };
 
   const result = useMemo(() => {
     return [
