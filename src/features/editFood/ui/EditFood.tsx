@@ -7,22 +7,24 @@ import {
   DialogDescription,
 } from "@/shared/shadcn/components/ui/dialog";
 import { FoodForm } from "@/entities/foodForm";
-import type { FoodLog, MealType } from "@/entities/day";
+import { useUpdateFoodLog, type FoodLog } from "@/entities/day";
+import {
+  foodLogToZodInput,
+  zodInputToFoodLogInput,
+} from "@/entities/foodForm/model/helpers";
 
 interface EditFoodProps {
-  mealType: MealType;
   food: FoodLog;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }
 
-export const EditFood = ({
-  mealType,
-  food,
-  isOpen,
-  setIsOpen,
-}: EditFoodProps) => {
+export const EditFood = ({ food, isOpen, setIsOpen }: EditFoodProps) => {
+  const { mutate } = useUpdateFoodLog();
+
   const handleFormSubmit = (data: FormOutput) => {
+    const formattedData = zodInputToFoodLogInput(data);
+    mutate({ id: food.id, updatedLog: formattedData });
     setIsOpen(false);
   };
 
@@ -39,14 +41,7 @@ export const EditFood = ({
           </DialogDescription>
           <FoodForm
             onSubmit={handleFormSubmit}
-            initialData={{
-              mealType: mealType,
-              grams: food.grams,
-              calories: food.calories,
-              proteins: food.proteins,
-              carbs: food.carbs,
-              fats: food.fats,
-            }}
+            initialData={foodLogToZodInput(food)}
             submitText="Save changes"
           />
         </DialogHeader>

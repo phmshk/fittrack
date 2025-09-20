@@ -1,4 +1,4 @@
-import type { FoodEntry, MealType } from "@/entities/day";
+import type { FoodLog, MealType } from "@/entities/day";
 import { AddFood } from "@/features/addFood";
 import {
   Card,
@@ -16,7 +16,7 @@ import { Button } from "@/shared/shadcn/components/ui/button";
 
 interface MealCardProps {
   mealType: string;
-  foods: FoodEntry[];
+  foods: FoodLog[];
   totalCalories: number;
   imageUrl: string;
   date: Date;
@@ -34,7 +34,7 @@ export const MealCard = (props: MealCardProps) => {
   }, [foods, isExpanded]);
 
   return (
-    <Card className="w-full max-w-lg border-none shadow-lg">
+    <Card className="w-full max-w-lg border-none">
       <CardHeader className="flex items-center justify-between gap-4 pt-4 pb-2">
         <div>
           <CardTitle className="text-4xl font-bold sm:text-5xl">

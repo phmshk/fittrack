@@ -1,4 +1,4 @@
-import type { MealType } from "@/entities/day";
+import { useDeleteFoodLog, type FoodLog } from "@/entities/day";
 import { buttonVariants } from "@/shared/shadcn/components/ui/button";
 import {
   AlertDialog,
@@ -13,16 +13,18 @@ import {
 import { cn } from "@/shared/shadcn/lib/utils";
 
 interface DeleteFoodProps {
-  mealType: MealType;
-  entryId: string;
+  food: FoodLog;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }
 
 export const DeleteFood = (props: DeleteFoodProps) => {
-  const { mealType, entryId, isOpen, setIsOpen } = props;
+  const { food, isOpen, setIsOpen } = props;
+
+  const { mutate } = useDeleteFoodLog();
 
   const handleDelete = () => {
+    mutate({ id: food.id, date: food.date });
     setIsOpen(false);
   };
 

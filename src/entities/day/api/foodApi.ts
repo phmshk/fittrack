@@ -113,11 +113,15 @@ export const useUpdateFoodLog = () => {
     },
 
     onError: (err, newLog, onMutateResult, context) => {
+      toast.error("Error updating food log");
       context.client.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLogs,
       );
     },
+
+    onSuccess: (data) =>
+      toast.success(`Successfully updated ${data?.name} in ${data?.mealType}`),
 
     onSettled: (newLog, error, variables, onMutateResult, context) =>
       context.client.invalidateQueries({
@@ -150,11 +154,13 @@ export const useDeleteFoodLog = () => {
     },
 
     onError: (err, newLog, onMutateResult, context) => {
+      toast.error("Error deleting food log");
       context.client.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLogs,
       );
     },
+    onSuccess: () => toast.success("Deletion successful"),
     onSettled: (newLog, error, variables, onMutateResult, context) =>
       context.client.invalidateQueries({
         queryKey: [onMutateResult?.queryKey],
