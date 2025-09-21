@@ -7,8 +7,8 @@ import {
   FormDescription,
 } from "@/shared/shadcn/components/ui/form";
 import { Input } from "@/shared/shadcn/components/ui/input";
+import type { BaseFormProps } from "../model/formTypes";
 import type { FieldValues } from "react-hook-form";
-import type { BaseFormProps } from "@/shared/model/formTypes";
 
 type FormInputProps<T extends FieldValues> = BaseFormProps<T>;
 

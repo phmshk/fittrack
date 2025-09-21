@@ -1,4 +1,4 @@
-import type { FoodEntry } from "@/entities/day";
+import type { FoodLog } from "@/entities/day";
 import { DeleteFood } from "@/features/deleteFood";
 import { EditFood } from "@/features/editFood";
 import { FoodDetails } from "@/features/foodDetails";
@@ -13,7 +13,7 @@ import { EllipsisVertical, Eye, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 interface FoodOptionsProps {
-  foodEntry: FoodEntry;
+  foodEntry: FoodLog;
 }
 
 export const FoodOptions = ({ foodEntry }: FoodOptionsProps) => {
@@ -65,20 +65,14 @@ export const FoodOptions = ({ foodEntry }: FoodOptionsProps) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <EditFood
-        food={foodEntry}
-        mealType={foodEntry.mealType}
-        isOpen={isEditOpen}
-        setIsOpen={setEditOpen}
-      />
+      <EditFood food={foodEntry} isOpen={isEditOpen} setIsOpen={setEditOpen} />
       <FoodDetails
         foodEntry={foodEntry}
         isOpen={isDetailsOpen}
         setIsOpen={setDetailsOpen}
       />
       <DeleteFood
-        mealType={foodEntry.mealType}
-        entryId={foodEntry.id}
+        food={foodEntry}
         isOpen={isDeleteOpen}
         setIsOpen={setDeleteOpen}
       />

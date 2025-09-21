@@ -1,4 +1,3 @@
-import { useDayStore, type FoodEntry, type MealType } from "@/entities/day";
 import type { FormOutput } from "@/entities/foodForm";
 import {
   Dialog,
@@ -8,33 +7,24 @@ import {
   DialogDescription,
 } from "@/shared/shadcn/components/ui/dialog";
 import { FoodForm } from "@/entities/foodForm";
+import { useUpdateFoodLog, type FoodLog } from "@/entities/day";
+import {
+  foodLogToZodInput,
+  zodInputToFoodLogInput,
+} from "@/entities/foodForm/model/helpers";
 
 interface EditFoodProps {
-  mealType: MealType;
-  food: FoodEntry;
+  food: FoodLog;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }
 
-export const EditFood = ({
-  mealType,
-  food,
-  isOpen,
-  setIsOpen,
-}: EditFoodProps) => {
-  const editFoodEntry = useDayStore((state) => state.editFoodEntry);
+export const EditFood = ({ food, isOpen, setIsOpen }: EditFoodProps) => {
+  const { mutate } = useUpdateFoodLog();
 
   const handleFormSubmit = (data: FormOutput) => {
-    editFoodEntry(mealType, {
-      id: food.id,
-      mealType: data.mealType!,
-      name: data.foodName,
-      grams: Number(data.grams),
-      calories: Number(data.calories),
-      proteins: Number(data.proteins),
-      carbs: Number(data.carbs),
-      fats: Number(data.fats),
-    });
+    const formattedData = zodInputToFoodLogInput(data);
+    mutate({ id: food.id, updatedLog: formattedData });
     setIsOpen(false);
   };
 
@@ -51,15 +41,7 @@ export const EditFood = ({
           </DialogDescription>
           <FoodForm
             onSubmit={handleFormSubmit}
-            initialData={{
-              mealType: mealType,
-              foodName: food.name,
-              grams: food.grams.toString(),
-              calories: food.calories.toString(),
-              proteins: food.proteins.toString(),
-              carbs: food.carbs.toString(),
-              fats: food.fats.toString(),
-            }}
+            initialData={foodLogToZodInput(food)}
             submitText="Save changes"
           />
         </DialogHeader>

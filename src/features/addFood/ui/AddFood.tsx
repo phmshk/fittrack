@@ -8,29 +8,28 @@ import {
 } from "@/shared/shadcn/components/ui/dialog";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useState } from "react";
-import { useDayStore, type MealType } from "@/entities/day";
+import { type MealType } from "@/entities/day";
 import { FoodForm } from "@/entities/foodForm/ui/FoodForm";
+import { useAddFoodLog } from "@/entities/day/api/foodApi";
+import { zodInputToFoodLogInput } from "@/entities/foodForm/model/helpers";
 import type { FormOutput } from "@/entities/foodForm";
+import { formatDateForApi } from "@/shared/utils";
 
 interface AddFoodProps {
   triggerButtonProps: React.ComponentProps<typeof Button>;
-  mealType?: MealType | undefined;
+  mealType: MealType;
+  date: Date;
 }
 
-export const AddFood = ({ triggerButtonProps, mealType }: AddFoodProps) => {
+export const AddFood = (props: AddFoodProps) => {
+  const { triggerButtonProps, mealType, date } = props;
   const [isOpen, setIsOpen] = useState(false);
 
-  const addFoodEntry = useDayStore((state) => state.addFoodEntry);
+  const { mutate } = useAddFoodLog();
+
   const handleFormSubmit = (data: FormOutput) => {
-    addFoodEntry(data.mealType!, {
-      name: data.foodName,
-      mealType: data.mealType!,
-      grams: Number(data.grams),
-      calories: Number(data.calories),
-      proteins: Number(data.proteins),
-      carbs: Number(data.carbs),
-      fats: Number(data.fats),
-    });
+    const foodLogInput = zodInputToFoodLogInput(data);
+    mutate(foodLogInput);
     setIsOpen(false);
   };
 
@@ -50,8 +49,8 @@ export const AddFood = ({ triggerButtonProps, mealType }: AddFoodProps) => {
           </DialogDescription>
         </DialogHeader>
         <FoodForm
+          initialData={{ mealType, date: formatDateForApi(date) }}
           onSubmit={handleFormSubmit}
-          initialData={{ mealType }}
           submitText="Add Entry"
         />
       </DialogContent>

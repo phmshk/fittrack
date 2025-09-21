@@ -1,0 +1,54 @@
+# --- Standart reusable errors definitions for API ---
+components:
+  # --- Error data schemas ---
+  schemas:
+    # Base structure of the response for any error
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Error description.
+          example: "Entry with such ID not found."
+        errorCode:
+          type: string
+          description: (Optional) Machine-readable error code for the frontend.
+          example: "RESOURCE_NOT_FOUND"
+        details:
+          type: object
+          description: (Optional) Additional details about the error, such as which fields failed validation.
+          example:
+            field: "calories"
+            error: "must be a positive number"
+
+  # --- Reusable responses ---
+  responses:
+    BadRequestError:
+      description: Bad request. The server could not process the request due to a client-side error (e.g., invalid data format).
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+    UnauthorizedError:
+      description: Authentication error. The user does not have permission to access this resource.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+    NotFoundError:
+      description: Resource not found. The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+    InternalServerError:
+      description: Internal Server Error. An unexpected error occurred on the server side.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"

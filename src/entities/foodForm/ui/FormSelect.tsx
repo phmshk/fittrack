@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/shared/shadcn/components/ui/select";
 import type { FieldValues } from "react-hook-form";
-import type { BaseFormProps } from "@/shared/model/formTypes";
+import type { BaseFormProps } from "../model/formTypes";
 
 interface FormSelectProps<T extends FieldValues> extends BaseFormProps<T> {
   options: string[];
@@ -23,7 +23,8 @@ interface FormSelectProps<T extends FieldValues> extends BaseFormProps<T> {
 export const FormSelect = <T extends FieldValues>(
   props: FormSelectProps<T>,
 ) => {
-  const { control, name, label, options, placeholder, srOnly } = props;
+  const { control, options, name, label, placeholder, srOnly } = props;
+
   return (
     <FormField
       control={control}
@@ -41,10 +42,10 @@ export const FormSelect = <T extends FieldValues>(
               {options.map((option) => (
                 <SelectItem
                   key={option}
-                  value={option}
+                  value={option.toLowerCase()}
                   className="cursor-pointer"
                 >
-                  {option.charAt(0).toUpperCase() + option.slice(1)}
+                  {option}
                 </SelectItem>
               ))}
             </SelectContent>

@@ -1,40 +1,45 @@
-import {
-  selectCarbsProgress,
-  selectFatsProgress,
-  selectProteinsProgress,
-  useDayStore,
-} from "@/entities/day";
+import { type DaySummary } from "@/entities/day";
+import type { UserGoals } from "@/entities/user";
 import { H2 } from "@/shared/ui/headings";
 import { ProgressBar } from "@/shared/ui/progressBar";
+import { Spinner } from "@/shared/ui/spinner";
 import { useMemo } from "react";
 
-export const MacronutrientsSummary = () => {
-  const proteins = useDayStore(selectProteinsProgress);
-  const fats = useDayStore(selectFatsProgress);
-  const carbs = useDayStore(selectCarbsProgress);
+interface MacronutrientsSummaryProps {
+  summary: DaySummary;
+  userGoals: UserGoals;
+  isLoading: boolean;
+}
+
+export const MacronutrientsSummary = (props: MacronutrientsSummaryProps) => {
+  const { summary, userGoals, isLoading } = props;
 
   const result = useMemo(() => {
     return [
       {
         name: "Proteins",
-        current: Number(proteins.current.toFixed(1)),
-        goal: proteins.goal,
+        current: summary.consumedProteins,
+        goal: userGoals?.targetProteins || 0,
         units: "g",
       },
       {
         name: "Fats",
-        current: Number(fats.current.toFixed(1)),
-        goal: fats.goal,
+        current: summary.consumedFats,
+        goal: userGoals?.targetFats || 0,
         units: "g",
       },
       {
         name: "Carbs",
-        current: Number(carbs.current.toFixed(1)),
-        goal: carbs.goal,
+        current: summary.consumedCarbs,
+        goal: userGoals?.targetCarbs || 0,
         units: "g",
       },
     ];
-  }, [proteins, fats, carbs]);
+  }, [summary, userGoals]);
+
+  if (isLoading) {
+    return <Spinner text="Loading..." className="h-64" />;
+  }
 
   return (
     <>

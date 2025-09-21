@@ -1,36 +1,57 @@
-import { useDayStore, type MealType } from "@/entities/day";
+import { type FoodLog, type MealType } from "@/entities/day";
 import { H2 } from "@/shared/ui/headings";
 import { useMemo } from "react";
 import { MealCard } from "@/entities/mealCard";
-import { MEAL_IMAGES, MEAL_ORDER } from "../model/types";
+import { MEAL_IMAGES, MEAL_ORDER, MEAL_TITLES } from "../model/types";
+import { Spinner } from "@/shared/ui/spinner";
 
-export const Meals = () => {
-  const mealsData = useDayStore((state) => state.meals);
+interface MealsProps {
+  foodLogs: FoodLog[] | undefined;
+  isLoading: boolean;
+  date: Date;
+}
 
-  const mealsArray = useMemo(() => {
-    return MEAL_ORDER.map((mealName) => {
-      const foods = mealsData[mealName] || [];
-      const totalCalories = foods.reduce((acc, food) => acc + food.calories, 0);
+export const Meals = (props: MealsProps) => {
+  const { foodLogs, isLoading, date } = props;
 
+  const mealsData = useMemo(() => {
+    if (!foodLogs || foodLogs.length === 0) {
+      return MEAL_ORDER.map((mealType) => ({
+        mealType,
+        foods: [],
+        totalCalories: 0,
+      }));
+    }
+    return MEAL_ORDER.map((mealType) => {
+      const foodsForMeal = foodLogs.filter((log) => log.mealType === mealType);
+      const totalCalories = foodsForMeal.reduce(
+        (acc, food) => acc + food.calories,
+        0,
+      );
       return {
-        name: mealName.charAt(0).toUpperCase() + mealName.slice(1),
-        foods,
+        mealType,
+        foods: foodsForMeal,
         totalCalories,
       };
     });
-  }, [mealsData]);
+  }, [foodLogs]);
+
+  if (isLoading) {
+    return <Spinner text="Loading..." className="h-64" />;
+  }
 
   return (
     <div>
       <H2>Meals</H2>
       <div className="mt-6 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2">
-        {mealsArray.map((meal) => (
+        {mealsData.map((meal) => (
           <MealCard
-            key={meal.name}
-            mealType={meal.name}
+            date={date}
+            key={meal.mealType}
+            mealType={MEAL_TITLES[meal.mealType]}
             foods={meal.foods}
             totalCalories={meal.totalCalories}
-            imageUrl={MEAL_IMAGES[meal.name.toLowerCase() as MealType]}
+            imageUrl={MEAL_IMAGES[meal.mealType.toLowerCase() as MealType]}
           />
         ))}
       </div>

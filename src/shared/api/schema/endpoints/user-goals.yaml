@@ -1,0 +1,72 @@
+components:
+  schemas:
+    UserGoals:
+      type: object
+      required:
+        - targetCalories
+        - targetProteins
+        - targetCarbs
+        - targetFats
+      properties:
+        targetCalories:
+          type: number
+          description: "Target number of calories per day."
+          example: 2200
+        targetProteins:
+          type: number
+          description: "Target number of proteins in grams per day."
+          example: 160
+        targetCarbs:
+          type: number
+          description: "Target number of carbs in grams per day."
+          example: 200
+        targetFats:
+          type: number
+          description: "Target number of fats in grams per day."
+          example: 80
+
+    UserGoalsInput:
+      type: object
+      properties:
+        targetCalories:
+          $ref: "#/components/schemas/UserGoals/properties/targetCalories"
+        targetProteins:
+          $ref: "#/components/schemas/UserGoals/properties/targetProteins"
+        targetCarbs:
+          $ref: "#/components/schemas/UserGoals/properties/targetCarbs"
+        targetFats:
+          $ref: "#/components/schemas/UserGoals/properties/targetFats"
+
+  getUserGoals:
+    summary: Get user goals
+    description: Retrieves the current nutritional goals for the user.
+    responses:
+      "200": # OK
+        description: Successful response with user goals.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserGoals"
+      "401": # Unauthorized
+        $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
+
+  updateUserGoals:
+    summary: Update user goals
+    description: Updates one or more nutritional goals for the user.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserGoalsInput"
+    responses:
+      "200": # OK
+        description: Goals successfully updated.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserGoals"
+      "400": # Bad Request
+        $ref: "../shared/responses.yaml#/components/responses/BadRequestError"
+      "401": # Unauthorized
+        $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
