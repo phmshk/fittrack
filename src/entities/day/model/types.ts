@@ -10,3 +10,18 @@ export const MEALS: Record<string, MealType> = {
   Dinner: "dinner",
   Snacks: "snacks",
 } as const;
+
+export interface DaySummary {
+  consumedCalories: number;
+  consumedProteins: number;
+  consumedFats: number;
+  consumedCarbs: number;
+  remainingCalories: number;
+  remainingProteins: number;
+  remainingFats: number;
+  remainingCarbs: number;
+  caloriesProgress: number;
+  proteinsProgress: number;
+  fatsProgress: number;
+  carbsProgress: number;
+}

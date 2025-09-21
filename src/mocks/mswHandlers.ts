@@ -8,6 +8,8 @@ export const handlers = [
   http.get("/api/food-logs/:date", async ({ params }) => {
     const { date } = params as { date: string };
     const logs = db.getFoodLogsByDate(date);
+    // simulate network delay
+    await new Promise((res) => setTimeout(res, 1000));
     console.log(`[MSW] GET /api/food-logs/${date}: found ${logs.length} logs`);
     return HttpResponse.json(logs);
   }),

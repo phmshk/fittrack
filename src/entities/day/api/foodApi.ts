@@ -24,9 +24,7 @@ export const useGetFoodsByDate = (date: Date) => {
         },
       });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
       return data;
     },
   });

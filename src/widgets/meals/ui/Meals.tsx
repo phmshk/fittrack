@@ -1,20 +1,21 @@
-import { type MealType } from "@/entities/day";
+import { type FoodLog, type MealType } from "@/entities/day";
 import { H2 } from "@/shared/ui/headings";
 import { useMemo } from "react";
 import { MealCard } from "@/entities/mealCard";
 import { MEAL_IMAGES, MEAL_ORDER, MEAL_TITLES } from "../model/types";
-import { useGetFoodsByDate } from "@/entities/day/api/foodApi";
 import { Spinner } from "@/shared/ui/spinner";
 
 interface MealsProps {
+  foodLogs: FoodLog[] | undefined;
+  isLoading: boolean;
   date: Date;
 }
 
-export const Meals = ({ date }: MealsProps) => {
-  const { data, isLoading, isError, error } = useGetFoodsByDate(date);
+export const Meals = (props: MealsProps) => {
+  const { foodLogs, isLoading, date } = props;
 
   const mealsData = useMemo(() => {
-    if (!data) {
+    if (!foodLogs || foodLogs.length === 0) {
       return MEAL_ORDER.map((mealType) => ({
         mealType,
         foods: [],
@@ -22,7 +23,7 @@ export const Meals = ({ date }: MealsProps) => {
       }));
     }
     return MEAL_ORDER.map((mealType) => {
-      const foodsForMeal = data.filter((log) => log.mealType === mealType);
+      const foodsForMeal = foodLogs.filter((log) => log.mealType === mealType);
       const totalCalories = foodsForMeal.reduce(
         (acc, food) => acc + food.calories,
         0,
@@ -33,18 +34,10 @@ export const Meals = ({ date }: MealsProps) => {
         totalCalories,
       };
     });
-  }, [data]);
+  }, [foodLogs]);
 
   if (isLoading) {
     return <Spinner text="Loading..." className="h-64" />;
-  }
-
-  if (isError) {
-    return (
-      <div className="text-center text-destructive">
-        Error: {(error as Error).message}
-      </div>
-    );
   }
 
   return (
