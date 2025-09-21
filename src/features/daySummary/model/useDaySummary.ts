@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import type { DaySummary, FoodLog } from "./types";
 import type { UserGoals } from "@/entities/user";
+import type { DaySummary, FoodLog } from "@/entities/day";
 
 /**
  * Custom hook for calculating daily summary of food intake against user goals.
