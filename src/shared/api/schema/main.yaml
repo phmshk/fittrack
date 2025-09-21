@@ -36,3 +36,10 @@ paths:
 
     delete:
       $ref: "./endpoints/food-logs.yaml#/components/deleteFoodLog"
+
+  # --- Endpoints for /user-goals ---
+  /user-goals:
+    get:
+      $ref: "./endpoints/user-goals.yaml#/components/getUserGoals"
+    put:
+      $ref: "./endpoints/user-goals.yaml#/components/updateUserGoals"

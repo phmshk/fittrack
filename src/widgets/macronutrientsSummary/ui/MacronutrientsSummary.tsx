@@ -8,6 +8,7 @@ interface MacronutrientsSummaryProps {
 
 export const MacronutrientsSummary = (props: MacronutrientsSummaryProps) => {
   const { date } = props;
+  console.log(date);
 
   const proteins = { current: 75, goal: 150 };
   const fats = { current: 50, goal: 70 };

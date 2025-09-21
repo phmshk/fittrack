@@ -207,6 +207,75 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user-goals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get user goals
+         * @description Retrieves the current nutritional goals for the user.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful response with user goals. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["UserGoals"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        /**
+         * Update user goals
+         * @description Updates one or more nutritional goals for the user.
+         */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["UserGoalsInput"];
+                };
+            };
+            responses: {
+                /** @description Goals successfully updated. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["UserGoals"];
+                    };
+                };
+                400: components["responses"]["BadRequestError"];
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -314,8 +383,95 @@ export interface components {
         UnauthorizedError: unknown;
         /** @description Resource not found. The requested resource does not exist. */
         NotFoundError: unknown;
+        UserGoals: {
+            /**
+             * @description Target number of calories per day.
+             * @example 2200
+             */
+            targetCalories: number;
+            /**
+             * @description Target number of proteins in grams per day.
+             * @example 160
+             */
+            targetProteins: number;
+            /**
+             * @description Target number of carbs in grams per day.
+             * @example 200
+             */
+            targetCarbs: number;
+            /**
+             * @description Target number of fats in grams per day.
+             * @example 80
+             */
+            targetFats: number;
+        };
+        ErrorResponse: {
+            /**
+             * @description Error description.
+             * @example Entry with such ID not found.
+             */
+            message: string;
+            /**
+             * @description (Optional) Machine-readable error code for the frontend.
+             * @example RESOURCE_NOT_FOUND
+             */
+            errorCode?: string;
+            /**
+             * @description (Optional) Additional details about the error, such as which fields failed validation.
+             * @example {
+             *       "field": "calories",
+             *       "error": "must be a positive number"
+             *     }
+             */
+            details?: Record<string, never>;
+        };
+        /**
+         * @description Target number of calories per day.
+         * @example 2200
+         */
+        targetCalories: number;
+        /**
+         * @description Target number of proteins in grams per day.
+         * @example 160
+         */
+        targetProteins: number;
+        /**
+         * @description Target number of carbs in grams per day.
+         * @example 200
+         */
+        targetCarbs: number;
+        /**
+         * @description Target number of fats in grams per day.
+         * @example 80
+         */
+        targetFats: number;
+        UserGoalsInput: {
+            targetCalories?: components["schemas"]["targetCalories"];
+            targetProteins?: components["schemas"]["targetProteins"];
+            targetCarbs?: components["schemas"]["targetCarbs"];
+            targetFats?: components["schemas"]["targetFats"];
+        };
     };
-    responses: never;
+    responses: {
+        /** @description Authentication error. The user does not have permission to access this resource. */
+        UnauthorizedError: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ErrorResponse"];
+            };
+        };
+        /** @description Bad request. The server could not process the request due to a client-side error (e.g., invalid data format). */
+        BadRequestError: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ErrorResponse"];
+            };
+        };
+    };
     parameters: never;
     requestBodies: never;
     headers: never;

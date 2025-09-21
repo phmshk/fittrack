@@ -1,15 +1,17 @@
 import { apiClient } from "@/shared/api/apiClient";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { formatDateForApi } from "@/shared/utils";
 import type { FoodLog, FoodLogInput } from "../model/types";
 import { toast } from "sonner";
 
+// --- Keys for food logs ---
 export const foodKeys = {
   all: ["food-logs"] as const,
   lists: () => [...foodKeys.all, "list"] as const,
   list: (date: string) => [...foodKeys.lists(), { date }] as const,
 };
 
+// --- Hooks for food logs ---
 export const useGetFoodsByDate = (date: Date) => {
   const dateString = formatDateForApi(date);
 
@@ -31,6 +33,8 @@ export const useGetFoodsByDate = (date: Date) => {
 };
 
 export const useAddFoodLog = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (newLog: FoodLogInput) => {
       const { data, error } = await apiClient.POST("/food-logs", {
@@ -39,12 +43,12 @@ export const useAddFoodLog = () => {
       if (error) throw error;
       return data;
     },
-    onMutate: async (newLog, context) => {
+    onMutate: async (newLog) => {
       const queryKey = foodKeys.list(newLog.date);
 
-      await context.client.cancelQueries({ queryKey });
+      await queryClient.cancelQueries({ queryKey });
 
-      const previousLogs = context.client.getQueryData<FoodLog[]>(queryKey);
+      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey);
 
       const optimisticLog: FoodLog = {
         id: crypto.randomUUID(),
@@ -58,7 +62,7 @@ export const useAddFoodLog = () => {
         mealType: newLog.mealType,
       };
 
-      context.client.setQueryData<FoodLog[]>(queryKey, (old) => [
+      queryClient.setQueryData<FoodLog[]>(queryKey, (old) => [
         ...(old || []),
         optimisticLog,
       ]);
@@ -66,9 +70,9 @@ export const useAddFoodLog = () => {
       return { previousLogs, queryKey };
     },
 
-    onError: (err, newLog, onMutateResult, context) => {
+    onError: (err, newLog, onMutateResult) => {
       toast.error("Error adding food log");
-      context.client.setQueryData(
+      queryClient.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLogs,
       );
@@ -76,13 +80,14 @@ export const useAddFoodLog = () => {
     onSuccess: (data) =>
       toast.success(`Successfully added ${data?.name} to ${data?.mealType}`),
 
-    onSettled: (data, error, variables, onMutateResult, context) => {
-      context.client.invalidateQueries({ queryKey: onMutateResult?.queryKey });
+    onSettled: (data, error, variables, onMutateResult) => {
+      queryClient.invalidateQueries({ queryKey: onMutateResult?.queryKey });
     },
   });
 };
 
 export const useUpdateFoodLog = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (params: { id: string; updatedLog: FoodLogInput }) => {
       const { id, updatedLog } = params;
@@ -94,14 +99,14 @@ export const useUpdateFoodLog = () => {
       return data;
     },
 
-    onMutate: async (newLog, context) => {
+    onMutate: async (newLog) => {
       const queryKey = foodKeys.list(newLog.updatedLog.date);
 
-      await context.client.cancelQueries({ queryKey });
+      await queryClient.cancelQueries({ queryKey });
 
-      const previousLogs = context.client.getQueryData<FoodLog[]>(queryKey);
+      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey);
 
-      context.client.setQueryData<FoodLog[]>(queryKey, (old) =>
+      queryClient.setQueryData<FoodLog[]>(queryKey, (old) =>
         old
           ? old.map((log) =>
               log.id === newLog.id ? { ...log, ...newLog.updatedLog } : log,
@@ -112,9 +117,9 @@ export const useUpdateFoodLog = () => {
       return { previousLogs, newLog, queryKey };
     },
 
-    onError: (err, newLog, onMutateResult, context) => {
+    onError: (err, newLog, onMutateResult) => {
       toast.error("Error updating food log");
-      context.client.setQueryData(
+      queryClient.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLogs,
       );
@@ -123,14 +128,15 @@ export const useUpdateFoodLog = () => {
     onSuccess: (data) =>
       toast.success(`Successfully updated ${data?.name} in ${data?.mealType}`),
 
-    onSettled: (newLog, error, variables, onMutateResult, context) =>
-      context.client.invalidateQueries({
+    onSettled: (newLog, error, variables, onMutateResult) =>
+      queryClient.invalidateQueries({
         queryKey: [onMutateResult?.queryKey],
       }),
   });
 };
 
 export const useDeleteFoodLog = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (params: { id: string; date: string }) => {
       const { id } = params;
@@ -139,30 +145,30 @@ export const useDeleteFoodLog = () => {
       });
       if (error) throw error;
     },
-    onMutate: async (newLog, context) => {
+    onMutate: async (newLog) => {
       const queryKey = foodKeys.list(newLog.date);
 
-      await context.client.cancelQueries({ queryKey });
+      await queryClient.cancelQueries({ queryKey });
 
-      const previousLogs = context.client.getQueryData<FoodLog[]>(queryKey);
+      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey);
 
-      context.client.setQueryData<FoodLog[]>(queryKey, (old) =>
+      queryClient.setQueryData<FoodLog[]>(queryKey, (old) =>
         old ? old.filter((log) => log.id !== newLog.id) : [],
       );
 
       return { previousLogs, queryKey };
     },
 
-    onError: (err, newLog, onMutateResult, context) => {
+    onError: (err, newLog, onMutateResult) => {
       toast.error("Error deleting food log");
-      context.client.setQueryData(
+      queryClient.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLogs,
       );
     },
     onSuccess: () => toast.success("Deletion successful"),
-    onSettled: (newLog, error, variables, onMutateResult, context) =>
-      context.client.invalidateQueries({
+    onSettled: (newLog, error, variables, onMutateResult) =>
+      queryClient.invalidateQueries({
         queryKey: [onMutateResult?.queryKey],
       }),
   });

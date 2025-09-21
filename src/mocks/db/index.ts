@@ -1,6 +1,5 @@
-// src/mocks/db.ts
-
 import type { FoodLog } from "@/entities/day";
+import type { UserGoals } from "@/entities/user";
 
 // --- Type Definitions for our Fitness App ---
 
@@ -33,13 +32,6 @@ export interface UserProfile {
   birthDate: string; // Format: "YYYY-MM-DD"
   heightCm: number;
   activityLevel: ActivityLevel;
-}
-
-export interface UserGoals {
-  targetCalories: number;
-  targetProteins: number;
-  targetCarbs: number;
-  targetFats: number;
 }
 
 // --- "Tables" for our in-memory database ---
