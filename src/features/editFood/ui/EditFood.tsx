@@ -1,4 +1,3 @@
-import type { FormOutput } from "@/entities/foodForm";
 import {
   Dialog,
   DialogContent,
@@ -6,12 +5,14 @@ import {
   DialogHeader,
   DialogDescription,
 } from "@/shared/shadcn/components/ui/dialog";
-import { FoodForm } from "@/entities/foodForm";
-import { useUpdateFoodLog, type FoodLog } from "@/entities/day";
 import {
+  FoodForm,
   foodLogToZodInput,
+  useUpdateFoodLog,
   zodInputToFoodLogInput,
-} from "@/entities/foodForm/model/helpers";
+  type FoodLog,
+  type FormOutput,
+} from "@/entities/day";
 
 interface EditFoodProps {
   food: FoodLog;

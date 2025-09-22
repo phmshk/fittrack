@@ -1,5 +1,5 @@
-import type { FoodLog, FoodLogInput } from "@/entities/day";
-import type { FormOutput } from "./zodSchema";
+import type { FoodLog, FoodLogInput } from "../model/types";
+import type { FormOutput } from "../model/zodFoodSchema";
 
 export const zodInputToFoodLogInput = (data: FormOutput): FoodLogInput => ({
   date: data.date,

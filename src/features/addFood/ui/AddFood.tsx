@@ -8,11 +8,13 @@ import {
 } from "@/shared/shadcn/components/ui/dialog";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useState } from "react";
-import { type MealType } from "@/entities/day";
-import { FoodForm } from "@/entities/foodForm/ui/FoodForm";
-import { useAddFoodLog } from "@/entities/day/api/foodApi";
-import { zodInputToFoodLogInput } from "@/entities/foodForm/model/helpers";
-import type { FormOutput } from "@/entities/foodForm";
+import {
+  FoodForm,
+  useAddFoodLog,
+  zodInputToFoodLogInput,
+  type FormOutput,
+  type MealType,
+} from "@/entities/day";
 import { formatDateForApi } from "@/shared/utils";
 
 interface AddFoodProps {

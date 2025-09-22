@@ -2,8 +2,9 @@ import { CaloriesCard } from "@/widgets/caloriesCard";
 import { H1 } from "@/shared/ui/headings";
 import { Meals } from "@/widgets/meals";
 import { useState } from "react";
-import { useDaySummary, useGetFoodsByDate } from "@/entities/day";
+import { useGetFoodsByDate } from "@/entities/day";
 import { useGetUserGoals } from "@/entities/user";
+import { useDaySummary } from "@/features/getDaySummary";
 
 export const DashboardPage = () => {
   const [currentDate] = useState(new Date());

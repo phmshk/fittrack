@@ -4,9 +4,10 @@ import { useState } from "react";
 import { H2 } from "@/shared/ui/headings";
 import { Meals } from "@/widgets/meals";
 import { MacronutrientsSummary } from "@/widgets/macronutrientsSummary";
-import { useGetFoodsByDate, useDaySummary } from "@/entities/day";
+import { useGetFoodsByDate } from "@/entities/day";
 import { useGetUserGoals } from "@/entities/user";
 import { ProgressBar } from "@/shared/ui/progressBar";
+import { useDaySummary } from "@/features/getDaySummary";
 
 export const DiaryPage = () => {
   const [currentDate, setCurrentDate] = useState(new Date());

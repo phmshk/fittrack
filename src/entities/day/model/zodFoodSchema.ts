@@ -1,5 +1,5 @@
-import { MEALS } from "@/entities/day";
 import { z } from "zod";
+import { MEALS } from "./types";
 
 const positiveNumberCheck = (fieldName: string) =>
   z.string().refine(

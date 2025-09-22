@@ -1,7 +1,7 @@
 import { type FoodLog, type MealType } from "@/entities/day";
 import { H2 } from "@/shared/ui/headings";
 import { useMemo } from "react";
-import { MealCard } from "@/entities/mealCard";
+import { MealCard } from "@/widgets/mealCard";
 import { MEAL_IMAGES, MEAL_ORDER, MEAL_TITLES } from "../model/types";
 import { Spinner } from "@/shared/ui/spinner";
 
