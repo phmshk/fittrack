@@ -1,8 +1,10 @@
 import { apiClient } from "@/shared/api/apiClient";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { formatDateForApi } from "@/shared/utils";
-import type { FoodLog, FoodLogInput } from "../model/types";
+import type { FoodLog } from "../model/types";
 import { toast } from "sonner";
+import { calculateFinalNutrientsValues } from "../lib/helpers";
+import type { FormOutput } from "../model/zodFoodSchema";
 
 // --- Keys for food logs ---
 export const foodKeys = {
@@ -34,15 +36,17 @@ export const useAddFoodLog = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (newLog: FoodLogInput) => {
+    mutationFn: async (newLog: FormOutput) => {
+      const finalLog = calculateFinalNutrientsValues(newLog);
       const { data, error } = await apiClient.POST("/food-logs", {
-        body: newLog,
+        body: finalLog,
       });
       if (error) throw error;
       return data;
     },
     onMutate: async (newLog) => {
-      const queryKey = foodKeys.list(newLog.date);
+      const finalLog = calculateFinalNutrientsValues(newLog);
+      const queryKey = foodKeys.list(finalLog.date);
 
       await queryClient.cancelQueries({ queryKey });
 
@@ -50,14 +54,7 @@ export const useAddFoodLog = () => {
 
       const optimisticLog: FoodLog = {
         id: crypto.randomUUID(),
-        name: newLog.name,
-        calories: newLog.calories,
-        proteins: newLog.proteins || 0,
-        fats: newLog.fats || 0,
-        carbs: newLog.carbs || 0,
-        date: newLog.date,
-        grams: newLog.grams || 0,
-        mealType: newLog.mealType,
+        ...finalLog,
       };
 
       queryClient.setQueryData<FoodLog[]>(queryKey, (old) => [
@@ -87,18 +84,23 @@ export const useAddFoodLog = () => {
 export const useUpdateFoodLog = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (params: { id: string; updatedLog: FoodLogInput }) => {
-      const { id, updatedLog } = params;
+    mutationFn: async (params: { id: string; updatedLog: FormOutput }) => {
+      const finalLog = calculateFinalNutrientsValues(params.updatedLog);
+      const { id } = params;
       const { data, error } = await apiClient.PUT("/food-logs/{id}", {
         params: { path: { id } },
-        body: updatedLog,
+        body: finalLog,
       });
       if (error) throw error;
       return data;
     },
 
     onMutate: async (newLog) => {
-      const queryKey = foodKeys.list(newLog.updatedLog.date);
+      const finalLog = {
+        id: newLog.id,
+        ...calculateFinalNutrientsValues(newLog.updatedLog),
+      };
+      const queryKey = foodKeys.list(finalLog.date);
 
       await queryClient.cancelQueries({ queryKey });
 
@@ -107,7 +109,7 @@ export const useUpdateFoodLog = () => {
       queryClient.setQueryData<FoodLog[]>(queryKey, (old) =>
         old
           ? old.map((log) =>
-              log.id === newLog.id ? { ...log, ...newLog.updatedLog } : log,
+              log.id === finalLog.id ? { ...log, ...finalLog } : log,
             )
           : [],
       );

@@ -22,3 +22,19 @@ export const foodLogToZodInput = (data: FoodLog): FormOutput => ({
   fats: data.fats.toString(),
   grams: data.grams.toString(),
 });
+
+export const calculateFinalNutrientsValues = (
+  data: FormOutput,
+): FoodLogInput => {
+  const convertedData = zodInputToFoodLogInput(data);
+
+  const factor = convertedData.grams / 100;
+
+  return {
+    ...convertedData,
+    calories: Math.round(convertedData.calories * factor),
+    proteins: Number((convertedData.proteins * factor).toFixed(1)),
+    carbs: Number((convertedData.carbs * factor).toFixed(1)),
+    fats: Number((convertedData.fats * factor).toFixed(1)),
+  };
+};

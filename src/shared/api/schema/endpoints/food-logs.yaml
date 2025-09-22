@@ -58,6 +58,10 @@ components:
         - mealType
         - name
         - calories
+        - proteins
+        - fats
+        - carbs
+        - grams
       # This model is used for creating and updating food log entries.
       # It is almost identical to FoodLog, but without id field.
       properties:

@@ -11,7 +11,6 @@ import { useState } from "react";
 import {
   FoodForm,
   useAddFoodLog,
-  zodInputToFoodLogInput,
   type FormOutput,
   type MealType,
 } from "@/entities/day";
@@ -30,8 +29,7 @@ export const AddFood = (props: AddFoodProps) => {
   const { mutate } = useAddFoodLog();
 
   const handleFormSubmit = (data: FormOutput) => {
-    const foodLogInput = zodInputToFoodLogInput(data);
-    mutate(foodLogInput);
+    mutate(data);
     setIsOpen(false);
   };
 

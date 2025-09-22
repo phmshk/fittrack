@@ -1,18 +1,17 @@
 import {
+  FoodForm,
+  foodLogToZodInput,
+  useUpdateFoodLog,
+  type FoodLog,
+  type FormOutput,
+} from "@/entities/day";
+import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogHeader,
   DialogDescription,
 } from "@/shared/shadcn/components/ui/dialog";
-import {
-  FoodForm,
-  foodLogToZodInput,
-  useUpdateFoodLog,
-  zodInputToFoodLogInput,
-  type FoodLog,
-  type FormOutput,
-} from "@/entities/day";
 
 interface EditFoodProps {
   food: FoodLog;
@@ -24,8 +23,7 @@ export const EditFood = ({ food, isOpen, setIsOpen }: EditFoodProps) => {
   const { mutate } = useUpdateFoodLog();
 
   const handleFormSubmit = (data: FormOutput) => {
-    const formattedData = zodInputToFoodLogInput(data);
-    mutate({ id: food.id, updatedLog: formattedData });
+    mutate({ id: food.id, updatedLog: data });
     setIsOpen(false);
   };
 
