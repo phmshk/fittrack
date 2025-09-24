@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/shared/shadcn/components/ui/form";
 import { Button } from "@/shared/shadcn/components/ui/button";
-import { formatDateForApi } from "@/shared/utils";
+import { formatDateForApi } from "@/shared/lib/utils";
 import { formSchema, type FormOutput } from "../model/zodFoodSchema";
 import { MEALS } from "../model/types";
 import { FORM_INPUT_ITEMS } from "../model/formInputFields";
@@ -16,7 +16,6 @@ interface FoodFormProps {
 
 export const FoodForm = (props: FoodFormProps) => {
   const { submitText = "Save Changes", initialData, onSubmit } = props;
-
   const form = useForm<FormOutput>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -25,7 +24,9 @@ export const FoodForm = (props: FoodFormProps) => {
       calories: "",
       proteins: "",
       carbs: "",
+      sugars: "",
       fats: "",
+      saturatedFats: "",
       grams: "",
       date: formatDateForApi(new Date()),
       ...initialData,

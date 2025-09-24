@@ -1,0 +1,143 @@
+# --- Schemas and Endpoints for Open Food Facts API ---
+components:
+  # --- Data Schemas ---
+  schemas:
+    # --- Nutriments Schema ---
+    Nutriments:
+      type: object
+      description: "Core nutritional information per 100g."
+      properties:
+        energy-kcal_100g:
+          type: number
+          description: "Energy in kilocalories per 100g."
+          example: 42
+        proteins_100g:
+          type: number
+          description: "Proteins per 100g."
+          example: 0
+        fat_100g:
+          type: number
+          description: "Total fat per 100g."
+          example: 0
+        saturated-fat_100g:
+          type: number
+          description: "Saturated fat per 100g."
+          example: 0
+        carbohydrates_100g:
+          type: number
+          description: "Carbohydrates per 100g."
+          example: 10.6
+        sugars_100g:
+          type: number
+          description: "Sugars per 100g."
+          example: 10.6
+      additionalProperties: true
+
+    # --- Product Schema ---
+    Product:
+      type: object
+      description: "Represents a food product from Open Food Facts."
+      properties:
+        code:
+          type: string
+          description: "The barcode of the product."
+          example: "3017620422003"
+        product_name:
+          type: string
+          description: "The name of the product."
+          example: "Coca-Cola"
+        nutriments:
+          $ref: "#/components/schemas/Nutriments"
+
+    # --- API Response for Product Search ---
+    SearchResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: "Total number of products found."
+        page_size:
+          type: integer
+          description: "Number of products per page."
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+
+    # --- API Response for getting a single Product by barcode ---
+    ProductResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: "Status of the request (1 for success)."
+          example: 1
+        code:
+          type: string
+          description: "The requested barcode."
+        product:
+          $ref: "#/components/schemas/Product"
+
+  # --- Endpoint Definitions ---
+  searchProducts:
+    summary: Search for products by name
+    description: Retrieves a list of products matching the search query.
+    parameters:
+      - name: search_terms
+        in: query
+        required: true
+        description: "The name of the product to search for (e.g., 'Tilsiter')."
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        required: true
+        description: "Number of results to return."
+        schema:
+          type: integer
+          default: 10
+      - name: json
+        in: query
+        required: true
+        description: "Must be set to 1 to receive a JSON response."
+        schema:
+          type: integer
+          enum: [1]
+          default: 1
+      - name: search_simple
+        in: query
+        required: true
+        description: "Must be set to 1 to enable simple search."
+        schema:
+          type: integer
+          enum: [1]
+          default: 1
+    responses:
+      "200":
+        description: "A list of products found."
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchResponse"
+      "400":
+        $ref: "../shared/responses.yaml#/components/responses/BadRequestError"
+
+  getProductByBarcode:
+    summary: Get a product by its barcode
+    description: Retrieves detailed information for a single product using its barcode.
+    parameters:
+      - name: barcode
+        in: path
+        required: true
+        description: "The barcode of the product."
+        schema:
+          type: string
+    responses:
+      "200":
+        description: "Detailed information about the product."
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductResponse"
+      "404":
+        $ref: "../shared/responses.yaml#/components/responses/NotFoundError"

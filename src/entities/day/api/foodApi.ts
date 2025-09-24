@@ -1,6 +1,6 @@
 import { apiClient } from "@/shared/api/apiClient";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { formatDateForApi } from "@/shared/utils";
+import { formatDateForApi } from "@/shared/lib/utils";
 import type { FoodLog } from "../model/types";
 import { toast } from "sonner";
 import { calculateFinalNutrientsValues } from "../lib/helpers";

@@ -27,10 +27,22 @@ export const FORM_INPUT_ITEMS: Omit<BaseFormProps<FormOutput>, "control">[] = [
     srOnly: "Enter the amount of carbohydrates in grams.",
   },
   {
+    name: "sugars",
+    label: "Sugars (g) in 100g serving",
+    placeholder: "Default is 0g",
+    srOnly: "Enter the amount of sugars in grams.",
+  },
+  {
     name: "fats",
     label: "Fats (g) in 100g serving",
     placeholder: "Default is 0g",
     srOnly: "Enter the amount of fats in grams.",
+  },
+  {
+    name: "saturatedFats",
+    label: "Saturated Fats (g) in 100g serving",
+    placeholder: "Default is 0g",
+    srOnly: "Enter the amount of saturated fats in grams.",
   },
   {
     name: "grams",

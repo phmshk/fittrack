@@ -43,10 +43,28 @@ export const FoodDetails = (props: FoodDetailsProps) => {
           <div className="grid grid-cols-2 items-center gap-4">
             <span className="text-muted-foreground">Fats</span>
             <span className="text-right font-medium">{foodEntry.fats} g</span>
+            {foodEntry.saturatedFats > 0 && (
+              <>
+                <span className="ml-4 text-muted-foreground">
+                  Saturated Fats
+                </span>
+                <span className="text-right font-medium">
+                  {foodEntry.saturatedFats} g
+                </span>
+              </>
+            )}
           </div>
           <div className="grid grid-cols-2 items-center gap-4">
             <span className="text-muted-foreground">Carbs</span>
             <span className="text-right font-medium">{foodEntry.carbs} g</span>
+            {foodEntry.sugars > 0 && (
+              <>
+                <span className="ml-4 text-muted-foreground">Sugars</span>
+                <span className="text-right font-medium">
+                  {foodEntry.sugars} g
+                </span>
+              </>
+            )}
           </div>
         </div>
       </DialogContent>

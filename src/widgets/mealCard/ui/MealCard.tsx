@@ -9,10 +9,16 @@ import {
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
 import { FoodItem } from "@/shared/ui/foodItem";
-import { PlusCircleIcon, Utensils } from "lucide-react";
+import { Database, PlusCircleIcon, ScanBarcode, Utensils } from "lucide-react";
 import { FoodOptions } from "./FoodOptions";
 import { useMemo, useState } from "react";
 import { Button } from "@/shared/shadcn/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/shared/shadcn/components/ui/tooltip";
 
 interface MealCardProps {
   mealType: string;
@@ -99,21 +105,46 @@ export const MealCard = (props: MealCardProps) => {
             </Button>
           ))}
       </CardContent>
-      <CardFooter>
-        <AddFood
-          mealType={mealType.toLowerCase() as MealType}
-          date={date}
-          triggerButtonProps={{
-            className: "w-full",
-            variant: "default",
-            children: (
-              <span className="flex items-center gap-2 text-primary-foreground">
-                <PlusCircleIcon className="size-4" />
-                Add Food
-              </span>
-            ),
-          }}
-        />
+
+      <CardFooter className="flex flex-col items-center gap-3 pt-2">
+        <div className="flex w-full items-center gap-2">
+          <AddFood
+            mealType={mealType.toLowerCase() as MealType}
+            date={date}
+            triggerButtonProps={{
+              className: "flex-grow",
+              children: (
+                <span className="flex items-center gap-2 text-primary-foreground">
+                  <PlusCircleIcon className="size-4" />
+                  Add Food
+                </span>
+              ),
+            }}
+          />
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon" onClick={() => {}}>
+                  <ScanBarcode className="size-5" />
+                  <span className="sr-only">Scan Barcode</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Scan Barcode</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+
+        <Button
+          variant="link"
+          className="text-muted-foreground"
+          onClick={() => {}}
+        >
+          <Database className="mr-2 size-4" />
+          Add from Open Food Facts
+        </Button>
       </CardFooter>
     </Card>
   );

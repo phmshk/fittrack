@@ -15,7 +15,9 @@ export interface DaySummary {
   consumedCalories: number;
   consumedProteins: number;
   consumedFats: number;
+  consumedSaturatedFats: number;
   consumedCarbs: number;
+  consumedSugars: number;
   remainingCalories: number;
   remainingProteins: number;
   remainingFats: number;

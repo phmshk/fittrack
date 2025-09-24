@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './app/routes/__root'
 import { Route as DiaryRouteImport } from './app/routes/diary'
+import { Route as AddFoodRouteImport } from './app/routes/addFood'
 import { Route as IndexRouteImport } from './app/routes/index'
 
 const DiaryRoute = DiaryRouteImport.update({
   id: '/diary',
   path: '/diary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AddFoodRoute = AddFoodRouteImport.update({
+  id: '/addFood',
+  path: '/addFood',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/addFood': typeof AddFoodRoute
   '/diary': typeof DiaryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/addFood': typeof AddFoodRoute
   '/diary': typeof DiaryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/addFood': typeof AddFoodRoute
   '/diary': typeof DiaryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/diary'
+  fullPaths: '/' | '/addFood' | '/diary'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/diary'
-  id: '__root__' | '/' | '/diary'
+  to: '/' | '/addFood' | '/diary'
+  id: '__root__' | '/' | '/addFood' | '/diary'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AddFoodRoute: typeof AddFoodRoute
   DiaryRoute: typeof DiaryRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/diary'
       fullPath: '/diary'
       preLoaderRoute: typeof DiaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/addFood': {
+      id: '/addFood'
+      path: '/addFood'
+      fullPath: '/addFood'
+      preLoaderRoute: typeof AddFoodRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AddFoodRoute: AddFoodRoute,
   DiaryRoute: DiaryRoute,
 }
 export const routeTree = rootRouteImport

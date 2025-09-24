@@ -28,7 +28,9 @@ export const formSchema = z
       .pipe(positiveNumberCheck("Calories")),
     proteins: z.string().pipe(positiveNumberCheck("Proteins")),
     carbs: z.string().pipe(positiveNumberCheck("Carbs")),
+    sugars: z.string().pipe(positiveNumberCheck("Sugars")),
     fats: z.string().pipe(positiveNumberCheck("Fats")),
+    saturatedFats: z.string().pipe(positiveNumberCheck("Saturated Fats")),
     grams: z.string().pipe(positiveNumberCheck("Grams")),
     date: z.string(),
   })
