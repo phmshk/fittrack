@@ -1,4 +1,4 @@
-import type { FoodEntry } from "@/entities/day";
+import type { FoodLog } from "@/entities/day";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
 } from "@/shared/shadcn/components/ui/dialog";
 
 interface FoodDetailsProps {
-  foodEntry: FoodEntry;
+  foodEntry: FoodLog;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
 }

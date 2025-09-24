@@ -1,8 +1,8 @@
-import type { FoodEntry } from "@/entities/day";
+import type { FoodLog } from "@/entities/day";
 import { cn } from "@/shared/shadcn/lib/utils";
 
 interface FoodItemProps {
-  food: FoodEntry;
+  food: FoodLog;
   actions?: React.ReactNode;
   className?: string;
 }

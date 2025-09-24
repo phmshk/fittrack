@@ -13,4 +13,7 @@ export {
 } from "./api/foodApi";
 
 export { MEALS } from "./model/types";
-export { useDaySummary } from "./model/hooks";
+
+export { zodInputToFoodLogInput, foodLogToZodInput } from "./lib/helpers";
+export type { FormOutput } from "./model/zodFoodSchema";
+export { FoodForm } from "./ui/FoodForm";

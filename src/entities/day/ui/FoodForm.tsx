@@ -2,13 +2,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/shared/shadcn/components/ui/form";
 import { Button } from "@/shared/shadcn/components/ui/button";
-
-import { FormSelect } from "./FormSelect";
-import { formSchema, type FormOutput } from "../model/zodSchema";
-import { MEALS } from "@/entities/day";
-import { FORM_INPUT_ITEMS } from "../model/formInputFields";
-import { FormInput } from "./FormInput";
 import { formatDateForApi } from "@/shared/utils";
+import { formSchema, type FormOutput } from "../model/zodFoodSchema";
+import { MEALS } from "../model/types";
+import { FORM_INPUT_ITEMS } from "../model/formInputFields";
+import { FormInput, FormSelect } from "@/shared/ui/form";
 
 interface FoodFormProps {
   submitText?: string;

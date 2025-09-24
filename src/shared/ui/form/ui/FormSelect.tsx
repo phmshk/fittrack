@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/shared/shadcn/components/ui/select";
 import type { FieldValues } from "react-hook-form";
-import type { BaseFormProps } from "../model/formTypes";
+import type { BaseFormProps } from "../types/formTypes";
 
 interface FormSelectProps<T extends FieldValues> extends BaseFormProps<T> {
   options: string[];

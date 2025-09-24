@@ -326,10 +326,10 @@ export interface components {
             mealType: components["schemas"]["mealType"];
             name: components["schemas"]["name"];
             calories: components["schemas"]["calories"];
-            proteins?: components["schemas"]["proteins"];
-            fats?: components["schemas"]["fats"];
-            carbs?: components["schemas"]["carbs"];
-            grams?: components["schemas"]["grams"];
+            proteins: components["schemas"]["proteins"];
+            fats: components["schemas"]["fats"];
+            carbs: components["schemas"]["carbs"];
+            grams: components["schemas"]["grams"];
         };
         FoodLog: {
             /**

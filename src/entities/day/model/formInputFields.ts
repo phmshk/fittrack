@@ -1,5 +1,5 @@
-import type { BaseFormProps } from "./formTypes";
-import type { FormOutput } from "./zodSchema";
+import type { BaseFormProps } from "@/shared/ui/form/types/formTypes";
+import type { FormOutput } from "./zodFoodSchema";
 
 export const FORM_INPUT_ITEMS: Omit<BaseFormProps<FormOutput>, "control">[] = [
   {
