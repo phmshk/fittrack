@@ -1,10 +1,10 @@
-import { CONFIG } from "@/shared/model/config";
 import { useQuery } from "@tanstack/react-query";
 import {
   type ProductResponse,
   type SearchParams,
   type SearchResponse,
 } from "../model/types";
+import { CONFIG } from "@/shared/model";
 
 // --- Keys for product logs ---
 export const productKeys = {

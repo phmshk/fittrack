@@ -19,6 +19,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/shared/shadcn/components/ui/tooltip";
+import { Link } from "@tanstack/react-router";
+import { useDateStore } from "@/shared/model";
 
 interface MealCardProps {
   mealType: string;
@@ -32,7 +34,7 @@ const VISIBLE_ITEMS_LIMIT = 3;
 
 export const MealCard = (props: MealCardProps) => {
   const { mealType, date, foods, totalCalories, imageUrl } = props;
-
+  const setSelectedDate = useDateStore((state) => state.setSelectedDate);
   const [isExpanded, setIsExpanded] = useState(false);
   const visibleFoods = useMemo(() => {
     if (isExpanded) return foods;
@@ -125,7 +127,7 @@ export const MealCard = (props: MealCardProps) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" onClick={() => {}}>
+                <Button variant="outline" size="icon">
                   <ScanBarcode className="size-5" />
                   <span className="sr-only">Scan Barcode</span>
                 </Button>
@@ -140,10 +142,15 @@ export const MealCard = (props: MealCardProps) => {
         <Button
           variant="link"
           className="text-muted-foreground"
-          onClick={() => {}}
+          onClick={() => {
+            setSelectedDate(date);
+          }}
+          asChild
         >
-          <Database className="mr-2 size-4" />
-          Add from Open Food Facts
+          <Link to="/addFood">
+            <Database className="mr-2 size-4" />
+            Add from Open Food Facts
+          </Link>
         </Button>
       </CardFooter>
     </Card>

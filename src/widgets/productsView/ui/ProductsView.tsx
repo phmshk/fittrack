@@ -8,6 +8,7 @@ import {
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { AddFood } from "@/features/addFood";
 import type { FormOutput } from "@/entities/day";
+import { useDateStore } from "@/shared/model";
 
 interface ProductViewProps {
   products: Product[];
@@ -15,6 +16,7 @@ interface ProductViewProps {
 
 export const ProductsView = ({ products }: ProductViewProps) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const selectedDate = useDateStore((state) => state.selectedDate);
 
   // Map product fields to form output structure
   const productToFormOutput = (product: Product): Partial<FormOutput> => ({
@@ -74,7 +76,7 @@ export const ProductsView = ({ products }: ProductViewProps) => {
               additionalClasses="mx-auto"
               action={
                 <AddFood
-                  date={new Date()}
+                  date={selectedDate}
                   initialData={productToFormOutput(selectedProduct)}
                   triggerButtonProps={{
                     className: "flex-grow",

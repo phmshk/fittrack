@@ -30,7 +30,6 @@ export const AddFood = (props: AddFoodProps) => {
   const { mutate } = useAddFoodLog();
 
   const handleFormSubmit = (data: FormOutput) => {
-    console.log("Submitting form data:", data);
     mutate(data);
     setIsOpen(false);
   };
