@@ -43,3 +43,16 @@ paths:
       $ref: "./endpoints/user-goals.yaml#/components/getUserGoals"
     put:
       $ref: "./endpoints/user-goals.yaml#/components/updateUserGoals"
+
+  # --- Open Food Facts Endpoints ---
+  /cgi/search.pl:
+    get:
+      tags:
+        - Open Food Facts
+      $ref: "./endpoints/open-food-facts.yaml#/components/searchProducts"
+
+  /api/v2/product/{barcode}:
+    get:
+      tags:
+        - Open Food Facts
+      $ref: "./endpoints/open-food-facts.yaml#/components/getProductByBarcode"

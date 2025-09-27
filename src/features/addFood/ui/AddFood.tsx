@@ -14,16 +14,17 @@ import {
   type FormOutput,
   type MealType,
 } from "@/entities/day";
-import { formatDateForApi } from "@/shared/utils";
+import { formatDateForApi } from "@/shared/lib/utils";
 
 interface AddFoodProps {
   triggerButtonProps: React.ComponentProps<typeof Button>;
-  mealType: MealType;
+  mealType?: MealType;
   date: Date;
+  initialData?: Partial<FormOutput>;
 }
 
 export const AddFood = (props: AddFoodProps) => {
-  const { triggerButtonProps, mealType, date } = props;
+  const { triggerButtonProps, mealType, date, initialData } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate } = useAddFoodLog();
@@ -36,7 +37,7 @@ export const AddFood = (props: AddFoodProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="w-fit self-end" {...triggerButtonProps} />
+        <Button className="w-fit" {...triggerButtonProps} />
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
@@ -49,7 +50,11 @@ export const AddFood = (props: AddFoodProps) => {
           </DialogDescription>
         </DialogHeader>
         <FoodForm
-          initialData={{ mealType, date: formatDateForApi(date) }}
+          initialData={{
+            mealType,
+            date: formatDateForApi(date),
+            ...initialData,
+          }}
           onSubmit={handleFormSubmit}
           submitText="Add Entry"
         />

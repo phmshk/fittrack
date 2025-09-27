@@ -276,6 +276,98 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cgi/search.pl": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search for products by name
+         * @description Retrieves a list of products matching the search query.
+         */
+        get: {
+            parameters: {
+                query: {
+                    /** @description The name of the product to search for (e.g., 'Tilsiter'). */
+                    search_terms: string;
+                    /** @description Number of results to return. */
+                    page_size: number;
+                    /** @description Must be set to 1 to receive a JSON response. */
+                    json: 1;
+                    /** @description Must be set to 1 to enable simple search. */
+                    search_simple: 1;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description A list of products found. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SearchResponse"];
+                    };
+                };
+                400: components["responses"]["BadRequestError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/product/{barcode}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a product by its barcode
+         * @description Retrieves detailed information for a single product using its barcode.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The barcode of the product. */
+                    barcode: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Detailed information about the product. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProductResponse"];
+                    };
+                };
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -312,10 +404,20 @@ export interface components {
          */
         fats: number;
         /**
+         * @description Number of saturated fats (in grams).
+         * @example 1
+         */
+        saturatedFats: number;
+        /**
          * @description Number of carbs (in grams).
          * @example 27
          */
         carbs: number;
+        /**
+         * @description Number of sugars (in grams).
+         * @example 10
+         */
+        sugars: number;
         /**
          * @description Number of grams (in grams).
          * @example 100
@@ -328,7 +430,9 @@ export interface components {
             calories: components["schemas"]["calories"];
             proteins: components["schemas"]["proteins"];
             fats: components["schemas"]["fats"];
+            saturatedFats: components["schemas"]["saturatedFats"];
             carbs: components["schemas"]["carbs"];
+            sugars: components["schemas"]["sugars"];
             grams: components["schemas"]["grams"];
         };
         FoodLog: {
@@ -369,10 +473,20 @@ export interface components {
              */
             fats: number;
             /**
+             * @description Number of saturated fats (in grams).
+             * @example 1
+             */
+            saturatedFats: number;
+            /**
              * @description Number of carbs (in grams).
              * @example 27
              */
             carbs: number;
+            /**
+             * @description Number of sugars (in grams).
+             * @example 10
+             */
+            sugars: number;
             /**
              * @description Number of grams (in grams).
              * @example 100
@@ -451,6 +565,72 @@ export interface components {
             targetCarbs?: components["schemas"]["targetCarbs"];
             targetFats?: components["schemas"]["targetFats"];
         };
+        /** @description Core nutritional information per 100g. */
+        Nutriments: {
+            /**
+             * @description Energy in kilocalories per 100g.
+             * @example 42
+             */
+            "energy-kcal_100g"?: number;
+            /**
+             * @description Proteins per 100g.
+             * @example 0
+             */
+            proteins_100g?: number;
+            /**
+             * @description Total fat per 100g.
+             * @example 0
+             */
+            fat_100g?: number;
+            /**
+             * @description Saturated fat per 100g.
+             * @example 0
+             */
+            "saturated-fat_100g"?: number;
+            /**
+             * @description Carbohydrates per 100g.
+             * @example 10.6
+             */
+            carbohydrates_100g?: number;
+            /**
+             * @description Sugars per 100g.
+             * @example 10.6
+             */
+            sugars_100g?: number;
+        } & {
+            [key: string]: unknown;
+        };
+        /** @description Represents a food product from Open Food Facts. */
+        Product: {
+            /**
+             * @description The barcode of the product.
+             * @example 3017620422003
+             */
+            code?: string;
+            /**
+             * @description The name of the product.
+             * @example Coca-Cola
+             */
+            product_name?: string;
+            nutriments?: components["schemas"]["Nutriments"];
+        };
+        SearchResponse: {
+            /** @description Total number of products found. */
+            count?: number;
+            /** @description Number of products per page. */
+            page_size?: number;
+            products?: components["schemas"]["Product"][];
+        };
+        ProductResponse: {
+            /**
+             * @description Status of the request (1 for success).
+             * @example 1
+             */
+            status?: number;
+            /** @description The requested barcode. */
+            code?: string;
+            product?: components["schemas"]["Product"];
+        };
     };
     responses: {
         /** @description Authentication error. The user does not have permission to access this resource. */
@@ -464,6 +644,15 @@ export interface components {
         };
         /** @description Bad request. The server could not process the request due to a client-side error (e.g., invalid data format). */
         BadRequestError: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ErrorResponse"];
+            };
+        };
+        /** @description Resource not found. The requested resource does not exist. */
+        NotFoundError: {
             headers: {
                 [name: string]: unknown;
             };

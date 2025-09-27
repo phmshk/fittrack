@@ -10,7 +10,9 @@ components:
         - calories
         - proteins
         - fats
+        - saturatedFats
         - carbs
+        - sugars
         - grams
       properties:
         id:
@@ -43,10 +45,18 @@ components:
           type: number
           description: Number of fats (in grams).
           example: 3
+        saturatedFats:
+          type: number
+          description: "Number of saturated fats (in grams)."
+          example: 1
         carbs:
           type: number
           description: Number of carbs (in grams).
           example: 27
+        sugars:
+          type: number
+          description: "Number of sugars (in grams)."
+          example: 10
         grams:
           type: number
           description: Number of grams (in grams).
@@ -60,7 +70,9 @@ components:
         - calories
         - proteins
         - fats
+        - saturatedFats
         - carbs
+        - sugars
         - grams
       # This model is used for creating and updating food log entries.
       # It is almost identical to FoodLog, but without id field.
@@ -77,8 +89,12 @@ components:
           $ref: "#/components/schemas/FoodLog/properties/proteins"
         fats:
           $ref: "#/components/schemas/FoodLog/properties/fats"
+        saturatedFats:
+          $ref: "#/components/schemas/FoodLog/properties/saturatedFats"
         carbs:
           $ref: "#/components/schemas/FoodLog/properties/carbs"
+        sugars:
+          $ref: "#/components/schemas/FoodLog/properties/sugars"
         grams:
           $ref: "#/components/schemas/FoodLog/properties/grams"
 

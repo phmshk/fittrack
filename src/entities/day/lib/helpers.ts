@@ -8,7 +8,9 @@ export const zodInputToFoodLogInput = (data: FormOutput): FoodLogInput => ({
   calories: Number(data.calories),
   proteins: Number(data.proteins) || 0,
   carbs: Number(data.carbs) || 0,
+  sugars: Number(data.sugars) || 0,
   fats: Number(data.fats) || 0,
+  saturatedFats: Number(data.saturatedFats) || 0,
   grams: Number(data.grams) || 100,
 });
 
@@ -19,7 +21,9 @@ export const foodLogToZodInput = (data: FoodLog): FormOutput => ({
   calories: data.calories.toString(),
   proteins: data.proteins.toString(),
   carbs: data.carbs.toString(),
+  sugars: data.sugars.toString(),
   fats: data.fats.toString(),
+  saturatedFats: data.saturatedFats.toString(),
   grams: data.grams.toString(),
 });
 
@@ -36,5 +40,7 @@ export const calculateFinalNutrientsValues = (
     proteins: Number((convertedData.proteins * factor).toFixed(1)),
     carbs: Number((convertedData.carbs * factor).toFixed(1)),
     fats: Number((convertedData.fats * factor).toFixed(1)),
+    saturatedFats: Number((convertedData.saturatedFats * factor).toFixed(1)),
+    sugars: Number((convertedData.sugars * factor).toFixed(1)),
   };
 };

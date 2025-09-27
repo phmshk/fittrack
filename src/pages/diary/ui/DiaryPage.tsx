@@ -1,6 +1,5 @@
 import { DayNavigator } from "@/widgets/dayNavigator";
 import { H1 } from "@/shared/ui/headings";
-import { useState } from "react";
 import { H2 } from "@/shared/ui/headings";
 import { Meals } from "@/widgets/meals";
 import { MacronutrientsSummary } from "@/widgets/macronutrientsSummary";
@@ -8,12 +7,15 @@ import { useGetFoodsByDate } from "@/entities/day";
 import { useGetUserGoals } from "@/entities/user";
 import { ProgressBar } from "@/shared/ui/progressBar";
 import { useDaySummary } from "@/features/getDaySummary";
+import { useDateStore } from "@/shared/model";
 
 export const DiaryPage = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const selectedDate = useDateStore((state) => state.selectedDate);
+  const setSelectedDate = useDateStore((state) => state.setSelectedDate);
+  console.log(selectedDate);
 
   const { data: foodLogs, isLoading: isLoadingLogs } =
-    useGetFoodsByDate(currentDate);
+    useGetFoodsByDate(selectedDate);
   const { data: userGoals, isLoading: isLoadingGoals } = useGetUserGoals();
   const summary = useDaySummary(foodLogs, userGoals);
   const isLoading = isLoadingLogs || isLoadingGoals;
@@ -24,7 +26,7 @@ export const DiaryPage = () => {
       <span className="text-secondary-foreground">
         Track your nutrition and calories.
       </span>
-      <DayNavigator date={currentDate} onDateChange={setCurrentDate} />
+      <DayNavigator date={selectedDate} onDateChange={setSelectedDate} />
 
       <H2>Calories</H2>
       <ProgressBar
@@ -40,7 +42,7 @@ export const DiaryPage = () => {
         isLoading={isLoading}
       />
 
-      <Meals foodLogs={foodLogs} isLoading={isLoading} date={currentDate} />
+      <Meals foodLogs={foodLogs} isLoading={isLoading} date={selectedDate} />
     </section>
   );
 };

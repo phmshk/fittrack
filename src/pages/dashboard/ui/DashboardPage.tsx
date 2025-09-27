@@ -1,15 +1,14 @@
 import { CaloriesCard } from "@/widgets/caloriesCard";
 import { H1 } from "@/shared/ui/headings";
 import { Meals } from "@/widgets/meals";
-import { useState } from "react";
 import { useGetFoodsByDate } from "@/entities/day";
 import { useGetUserGoals } from "@/entities/user";
 import { useDaySummary } from "@/features/getDaySummary";
+import { useDateStore } from "@/shared/model";
 
 export const DashboardPage = () => {
-  const [currentDate] = useState(new Date());
-  const { data: foodLogs, isLoading: isLoadingLogs } =
-    useGetFoodsByDate(currentDate);
+  const today = useDateStore((state) => state.today);
+  const { data: foodLogs, isLoading: isLoadingLogs } = useGetFoodsByDate(today);
   const { data: userGoals, isLoading: isLoadingGoals } = useGetUserGoals();
   const summary = useDaySummary(foodLogs, userGoals);
   const isLoading = isLoadingLogs || isLoadingGoals;
@@ -19,7 +18,7 @@ export const DashboardPage = () => {
       {/* Page heading. Date display */}
       <H1>
         Today,{" "}
-        {currentDate.toLocaleString("en-US", {
+        {today.toLocaleString("en-US", {
           month: "long",
           day: "numeric",
         })}
@@ -28,7 +27,7 @@ export const DashboardPage = () => {
       <CaloriesCard userGoals={userGoals!} summary={summary} />
 
       {/* Meals summary */}
-      <Meals date={currentDate} foodLogs={foodLogs} isLoading={isLoading} />
+      <Meals date={today} foodLogs={foodLogs} isLoading={isLoading} />
     </section>
   );
 };
