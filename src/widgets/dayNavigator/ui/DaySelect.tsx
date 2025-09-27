@@ -7,10 +7,11 @@ interface DaySelectProps {
   date: Date;
   onDateChange: (newDate: Date) => void;
   locale?: string;
+  additionalClasses?: string;
 }
 
 export const DaySelect = (props: DaySelectProps) => {
-  const { date, onDateChange, locale } = props;
+  const { date, onDateChange, locale, additionalClasses } = props;
 
   const handlePreviousDay = () => {
     const newDate = new Date(date);
@@ -25,7 +26,9 @@ export const DaySelect = (props: DaySelectProps) => {
   };
 
   return (
-    <div className="flex flex-1 items-center justify-between gap-2 text-nowrap">
+    <div
+      className={`flex flex-1 items-center justify-between gap-2 text-nowrap ${additionalClasses}`}
+    >
       <Button variant="outline" size="icon" onClick={handlePreviousDay}>
         <ChevronLeft className="h-4 w-4" />
       </Button>

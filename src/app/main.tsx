@@ -13,6 +13,11 @@ declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }
+  // Define custom state for accessing the addFood route only from the mealCard
+  interface HistoryState {
+    // Optional state to track navigation source for /addFood route so it can only be accessed from mealCard
+    from?: "mealCard";
+  }
 }
 
 async function enableMocking() {

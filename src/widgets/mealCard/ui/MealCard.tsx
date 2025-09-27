@@ -21,6 +21,7 @@ import {
 } from "@/shared/shadcn/components/ui/tooltip";
 import { Link } from "@tanstack/react-router";
 import { useDateStore } from "@/shared/model";
+import { useDayEditStore } from "@/features/editDay";
 
 interface MealCardProps {
   mealType: string;
@@ -35,11 +36,16 @@ const VISIBLE_ITEMS_LIMIT = 3;
 export const MealCard = (props: MealCardProps) => {
   const { mealType, date, foods, totalCalories, imageUrl } = props;
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
+  const today = useDateStore((state) => state.today);
   const [isExpanded, setIsExpanded] = useState(false);
   const visibleFoods = useMemo(() => {
     if (isExpanded) return foods;
     return foods.slice(0, VISIBLE_ITEMS_LIMIT);
   }, [foods, isExpanded]);
+
+  const editingEnabled =
+    useDayEditStore((state) => state.isEditing) ||
+    date.toDateString() === today.toDateString();
 
   return (
     <Card className="w-full max-w-lg border-none">
@@ -108,7 +114,9 @@ export const MealCard = (props: MealCardProps) => {
           ))}
       </CardContent>
 
-      <CardFooter className="flex flex-col items-center gap-3 pt-2">
+      <CardFooter
+        className={`${editingEnabled ? "flex" : "hidden"} flex-col items-center gap-3 pt-2`}
+      >
         <div className="flex w-full items-center gap-2">
           <AddFood
             mealType={mealType.toLowerCase() as MealType}
@@ -147,7 +155,7 @@ export const MealCard = (props: MealCardProps) => {
           }}
           asChild
         >
-          <Link to="/addFood">
+          <Link to="/addFood" state={{ from: "mealCard" }}>
             <Database className="mr-2 size-4" />
             Add from Open Food Facts
           </Link>

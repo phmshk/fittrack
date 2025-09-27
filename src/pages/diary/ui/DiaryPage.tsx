@@ -12,7 +12,6 @@ import { useDateStore } from "@/shared/model";
 export const DiaryPage = () => {
   const selectedDate = useDateStore((state) => state.selectedDate);
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
-  console.log(selectedDate);
 
   const { data: foodLogs, isLoading: isLoadingLogs } =
     useGetFoodsByDate(selectedDate);

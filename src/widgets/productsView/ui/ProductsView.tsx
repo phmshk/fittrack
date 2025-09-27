@@ -10,11 +10,11 @@ import { AddFood } from "@/features/addFood";
 import type { FormOutput } from "@/entities/day";
 import { useDateStore } from "@/shared/model";
 
-interface ProductViewProps {
+interface ProductsViewProps {
   products: Product[];
 }
 
-export const ProductsView = ({ products }: ProductViewProps) => {
+export const ProductsView = ({ products }: ProductsViewProps) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const selectedDate = useDateStore((state) => state.selectedDate);
 

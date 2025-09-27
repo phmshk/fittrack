@@ -1,2 +1,2 @@
-export { useDateStore, useSelectedDateApiString } from "./dateStore/dateStore";
+export { useDateStore } from "./dateStore/dateStore";
 export { CONFIG } from "./config";
