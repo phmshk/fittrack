@@ -8,6 +8,7 @@ import { useDateStore } from "@/shared/model";
 
 export const DashboardPage = () => {
   const today = useDateStore((state) => state.today);
+
   const { data: foodLogs, isLoading: isLoadingLogs } = useGetFoodsByDate(today);
   const { data: userGoals, isLoading: isLoadingGoals } = useGetUserGoals();
   const summary = useDaySummary(foodLogs, userGoals);
