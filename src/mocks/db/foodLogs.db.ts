@@ -1,63 +1,10 @@
 import type { FoodLog } from "@/entities/day";
-import type { UserGoals } from "@/entities/user";
-
-// --- Type Definitions for our Fitness App ---
-
-export type Gender = "male" | "female";
-export type ActivityLevel =
-  | "sedentary"
-  | "light"
-  | "moderate"
-  | "active"
-  | "very_active";
-export type ActivityType = "weightlifting" | "running" | "yoga" | "cycling";
-
-export interface ActivityLog {
-  id: string;
-  date: string; // Format: "YYYY-MM-DD"
-  activityType: ActivityType;
-  durationMinutes: number;
-  caloriesBurned: number;
-  notes?: string; // Optional notes
-}
-
-export interface WeightEntry {
-  date: string; // Format: "YYYY-MM-DD"
-  weightKg: number;
-}
-
-export interface UserProfile {
-  name: string;
-  gender: Gender;
-  birthDate: string; // Format: "YYYY-MM-DD"
-  heightCm: number;
-  activityLevel: ActivityLevel;
-}
 
 // --- "Tables" for our in-memory database ---
 let foodLogs: Map<string, FoodLog> = new Map();
-let activityLogs: Map<string, ActivityLog> = new Map();
-let weightHistory: Map<string, WeightEntry> = new Map();
-let userProfile: UserProfile | null = null;
-let userGoals: UserGoals | null = null;
 
 // --- Initial seed data for development ---
 const seedData = {
-  userProfile: {
-    name: "Alex Doe",
-    gender: "male",
-    birthDate: "1995-05-15",
-    heightCm: 180,
-    activityLevel: "moderate",
-  } as UserProfile,
-
-  userGoals: {
-    targetCalories: 2500,
-    targetProteins: 180,
-    targetCarbs: 250,
-    targetFats: 80,
-  } as UserGoals,
-
   foodLogs: [
     {
       id: crypto.randomUUID(),
@@ -112,41 +59,11 @@ const seedData = {
       grams: 100,
     },
   ] as FoodLog[],
-
-  activityLogs: [
-    {
-      id: crypto.randomUUID(),
-      date: "2025-09-19",
-      activityType: "weightlifting",
-      durationMinutes: 60,
-      caloriesBurned: 450,
-      notes: "Chest and Triceps day",
-    },
-    {
-      id: crypto.randomUUID(),
-      date: "2025-09-20",
-      activityType: "running",
-      durationMinutes: 30,
-      caloriesBurned: 350,
-      notes: "5k run in the park",
-    },
-  ] as ActivityLog[],
-
-  weightHistory: [
-    { date: "2025-09-01", weightKg: 85.5 },
-    { date: "2025-09-15", weightKg: 84.8 },
-  ] as WeightEntry[],
 };
 
 // --- Function to populate and reset the database ---
 const seed = (): void => {
   foodLogs = new Map(seedData.foodLogs.map((log) => [log.id, log]));
-  activityLogs = new Map(seedData.activityLogs.map((log) => [log.id, log]));
-  weightHistory = new Map(
-    seedData.weightHistory.map((entry) => [entry.date, entry]),
-  );
-  userProfile = { ...seedData.userProfile };
-  userGoals = { ...seedData.userGoals };
 };
 
 // Initial seeding of the database
@@ -171,43 +88,6 @@ export const db = {
     const updatedLog = { ...existingLog, ...updates };
     foodLogs.set(id, updatedLog);
     return updatedLog;
-  },
-
-  // --- ActivityLog Methods ---
-  getActivitiesByDate: (date: string): ActivityLog[] =>
-    Array.from(activityLogs.values()).filter((log) => log.date === date),
-  addActivity: (activityData: Omit<ActivityLog, "id">): ActivityLog => {
-    const newActivity = { id: crypto.randomUUID(), ...activityData };
-    activityLogs.set(newActivity.id, newActivity);
-    return newActivity;
-  },
-
-  // --- WeightHistory Methods ---
-  getWeightHistory: (): WeightEntry[] =>
-    Array.from(weightHistory.values()).sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    ),
-  addWeightEntry: (entry: WeightEntry): WeightEntry => {
-    weightHistory.set(entry.date, entry);
-    return entry;
-  },
-
-  // --- UserProfile Methods ---
-  getProfile: (): UserProfile | null => userProfile,
-  updateProfile: (newProfileData: Partial<UserProfile>): UserProfile | null => {
-    if (userProfile) {
-      userProfile = { ...userProfile, ...newProfileData };
-    }
-    return userProfile;
-  },
-
-  // --- UserGoals Methods ---
-  getGoals: (): UserGoals | null => userGoals,
-  updateGoals: (newGoalsData: Partial<UserGoals>): UserGoals | null => {
-    if (userGoals) {
-      userGoals = { ...userGoals, ...newGoalsData };
-    }
-    return userGoals;
   },
 
   // --- Reset Method (useful for testing) ---

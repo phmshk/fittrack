@@ -1,4 +1,4 @@
-# --- Standart reusable errors definitions for API ---
+# --- Standard reusable errors definitions for API ---
 components:
   # --- Error data schemas ---
   schemas:

@@ -13,7 +13,7 @@ export const EditDayButton = (props: EditDayButtonProps) => {
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
 
   const handleEdit = () => {
-    startEditing(date);
+    startEditing();
     setSelectedDate(date);
   };
 

@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './app/routes/__root'
 import { Route as DiaryRouteImport } from './app/routes/diary'
+import { Route as AuthRouteImport } from './app/routes/auth'
 import { Route as AddFoodRouteImport } from './app/routes/addFood'
 import { Route as IndexRouteImport } from './app/routes/index'
 
 const DiaryRoute = DiaryRouteImport.update({
   id: '/diary',
   path: '/diary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AddFoodRoute = AddFoodRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/addFood': typeof AddFoodRoute
+  '/auth': typeof AuthRoute
   '/diary': typeof DiaryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/addFood': typeof AddFoodRoute
+  '/auth': typeof AuthRoute
   '/diary': typeof DiaryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/addFood': typeof AddFoodRoute
+  '/auth': typeof AuthRoute
   '/diary': typeof DiaryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/addFood' | '/diary'
+  fullPaths: '/' | '/addFood' | '/auth' | '/diary'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/addFood' | '/diary'
-  id: '__root__' | '/' | '/addFood' | '/diary'
+  to: '/' | '/addFood' | '/auth' | '/diary'
+  id: '__root__' | '/' | '/addFood' | '/auth' | '/diary'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddFoodRoute: typeof AddFoodRoute
+  AuthRoute: typeof AuthRoute
   DiaryRoute: typeof DiaryRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/diary'
       fullPath: '/diary'
       preLoaderRoute: typeof DiaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/addFood': {
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddFoodRoute: AddFoodRoute,
+  AuthRoute: AuthRoute,
   DiaryRoute: DiaryRoute,
 }
 export const routeTree = rootRouteImport

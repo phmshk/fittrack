@@ -14,7 +14,7 @@ export const AddFromDatabase = () => {
   const debouncedSearchQuery = useDebounce(searchQuery, DEBOUNCE_DELAY);
 
   return (
-    <section className="container mx-auto flex max-w-6xl flex-col gap-4 p-4 md:gap-6">
+    <section className="container mx-auto flex min-h-screen max-w-6xl flex-col gap-4 p-4 md:gap-6">
       <Button
         variant="ghost"
         onClick={() => {}}

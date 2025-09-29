@@ -16,8 +16,16 @@ servers:
 
 # --- Description of endpoints ---
 paths:
-  # --- Endpoints for /food-logs ---
+  # --- Endpoints for /auth ---
+  /auth/register:
+    post:
+      $ref: "./endpoints/auth.yaml#/components/register"
 
+  /auth/login:
+    post:
+      $ref: "./endpoints/auth.yaml#/components/login"
+
+  # --- Endpoints for /food-logs ---
   /food-logs:
     post:
       $ref: "./endpoints/food-logs.yaml#/components/createFoodLog"

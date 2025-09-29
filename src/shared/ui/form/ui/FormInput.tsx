@@ -10,10 +10,12 @@ import { Input } from "@/shared/shadcn/components/ui/input";
 import type { BaseFormProps } from "../types/formTypes";
 import type { FieldValues } from "react-hook-form";
 
-type FormInputProps<T extends FieldValues> = BaseFormProps<T>;
+interface FormInputProps<T extends FieldValues> extends BaseFormProps<T> {
+  type?: string;
+}
 
 export const FormInput = <T extends FieldValues>(props: FormInputProps<T>) => {
-  const { control, name, label, placeholder, srOnly } = props;
+  const { control, name, label, placeholder, srOnly, type = "text" } = props;
   return (
     <FormField
       control={control}
@@ -22,7 +24,7 @@ export const FormInput = <T extends FieldValues>(props: FormInputProps<T>) => {
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} {...field} />
+            <Input placeholder={placeholder} type={type} {...field} />
           </FormControl>
           <FormDescription className="sr-only">{srOnly}</FormDescription>
           <FormMessage />

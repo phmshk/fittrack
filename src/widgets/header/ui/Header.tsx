@@ -1,5 +1,4 @@
 import { Logo } from "@/entities/brand";
-import { AuthActions } from "@/features/authActions/ui/AuthActions";
 import { SiteNavigation } from "@/features/siteNavigation";
 import { Container } from "@/shared/ui/container";
 
@@ -17,10 +16,10 @@ export const Header = () => {
             {/* Navigation Menu. Both Desktop and Mobile versions. */}
             <SiteNavigation />
 
-            {/* Auth Buttons */}
+            {/* Auth Buttons
             <div className="hidden md:ml-4 md:block">
               <AuthActions />
-            </div>
+            </div> */}
           </div>
         </div>
       </Container>
