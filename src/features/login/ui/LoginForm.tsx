@@ -41,6 +41,11 @@ export const LoginForm = () => {
           label="Password"
           srOnly={"Password input"}
         />
+        {loginMutation.isError && (
+          <p className="text-sm text-destructive">
+            {loginMutation.error?.message || "An error occurred during login."}
+          </p>
+        )}
         <Button
           type="submit"
           className="w-full"

@@ -1,13 +1,44 @@
-import type { User, UserGoals, UserSession } from "@/entities/user";
+import type { User, UserGoals } from "@/entities/user";
 import type { ApiComponents } from "@/shared/api/schema";
+import { jwtVerify, SignJWT } from "jose";
+
+type StoredUser = User & { password?: string };
+
+// --- JWT Configuration ---
+const JWT_SECRET = new TextEncoder().encode("secret-key-for-jwt-signing");
+const ACCESS_TOKEN_EXPIRY = "15m";
+const REFRESH_TOKEN_EXPIRY = "7d";
+const ALGORITHM = "HS256";
+
+// Function to generate access and refresh tokens
+const generateTokens = async (userId: string) => {
+  const accessToken = await new SignJWT({ role: "user" })
+    .setProtectedHeader({ alg: ALGORITHM })
+    .setSubject(userId)
+    .setIssuedAt()
+    .setExpirationTime(ACCESS_TOKEN_EXPIRY)
+    .sign(JWT_SECRET);
+
+  const refreshToken = await new SignJWT({})
+    .setProtectedHeader({ alg: ALGORITHM })
+    .setSubject(userId)
+    .setIssuedAt()
+    .setExpirationTime(REFRESH_TOKEN_EXPIRY)
+    .sign(JWT_SECRET);
+
+  return { accessToken, refreshToken };
+};
 
 // --- "Tables" for our in-memory database ---
-const users = new Map<string, User>();
-const sessions = new Map<
-  string,
-  Omit<UserSession, "user"> & { userId: string }
->(); // Store only token and userId
-let userGoals: UserGoals | null = null;
+const users = new Map<string, StoredUser>();
+const userGoals = new Map<string, UserGoals>();
+
+// --- Helper function to strip password for client-side responses ---
+const stripPassword = (user: StoredUser): User => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password, ...userWithoutPassword } = user;
+  return userWithoutPassword;
+};
 
 // --- Initial data for development ---
 const seedData = {
@@ -28,19 +59,12 @@ const seedData = {
 // --- Function to seed initial data ---
 const seed = (): void => {
   users.clear();
-  sessions.clear();
+  userGoals.clear();
+  const mockUser: StoredUser = { ...seedData.user };
+  const mockUserGoals: UserGoals = { ...seedData.userGoals };
 
-  const mockUser = { ...seedData.user };
-  users.set(mockUser.id, {
-    id: mockUser.id,
-    name: mockUser.name,
-    email: mockUser.email,
-  });
-  // Add password separately
-  (users.get(mockUser.id) as User & { password?: string }).password =
-    mockUser.password;
-
-  userGoals = { ...seedData.userGoals };
+  users.set(mockUser.id, mockUser);
+  userGoals.set(mockUser.id, mockUserGoals);
 };
 
 // Initial seeding
@@ -54,32 +78,41 @@ export const userDb = {
   ): (User & { password?: string }) | undefined =>
     Array.from(users.values()).find((user) => user.email === email),
 
-  findUserById: (id: string): User | undefined => users.get(id),
+  findUserById: (id: string): User | undefined => {
+    const user = users.get(id);
+    return user ? stripPassword(user) : undefined;
+  },
 
   createUser: (data: ApiComponents["schemas"]["RegisterRequest"]): User => {
-    const newUser = { id: crypto.randomUUID(), ...data };
+    const newUser: StoredUser = { id: crypto.randomUUID(), ...data };
     users.set(newUser.id, newUser);
-    return newUser;
+    return stripPassword(newUser);
   },
 
-  createSession: (userId: string): Omit<UserSession, "user"> => {
-    const session = { token: `mock_token_${crypto.randomUUID()}` };
-    sessions.set(session.token, { userId, ...session });
-    return session;
+  createSession: async (userId: string) => await generateTokens(userId),
+  verifyToken: async (token: string) => {
+    try {
+      const { payload } = await jwtVerify(token, JWT_SECRET);
+      return { valid: true, payload };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      return { valid: false, payload: null };
+    }
   },
-
-  findSessionByToken: (
-    token: string,
-  ): (Omit<UserSession, "user"> & { userId: string }) | undefined =>
-    sessions.get(token),
 
   // --- UserGoals Methods ---
-  getGoals: (): UserGoals | null => userGoals,
-  updateGoals: (newGoalsData: Partial<UserGoals>): UserGoals | null => {
-    if (userGoals) {
-      userGoals = { ...userGoals, ...newGoalsData };
+  getGoals: (userId: string): UserGoals | undefined => userGoals.get(userId),
+  updateGoals: (
+    userId: string,
+    newGoalsData: Partial<UserGoals>,
+  ): UserGoals | null => {
+    const currentGoals = userGoals.get(userId);
+    if (currentGoals) {
+      const updatedGoals = { ...currentGoals, ...newGoalsData };
+      userGoals.set(userId, updatedGoals);
+      return updatedGoals;
     }
-    return userGoals;
+    return null;
   },
 
   // --- Reset Method (useful for testing) ---

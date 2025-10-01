@@ -1,12 +1,18 @@
 import type { FoodLog } from "@/entities/day";
 import { http, HttpResponse } from "msw";
 import { db } from "@/mocks/db/foodLogs.db";
+import { verifyAuth } from "../lib/helpers";
 
 export const foodLogsHandlers = [
   // --- Handlers for food logs ---
 
   // Get food logs for a specific date
-  http.get("/api/food-logs/:date", async ({ params }) => {
+  http.get("/api/food-logs/:date", async ({ params, request }) => {
+    const authResult = await verifyAuth(request);
+    if (!authResult.success) {
+      return authResult.response;
+    }
+
     const { date } = params as { date: string };
     const logs = db.getFoodLogsByDate(date);
     // simulate network delay
@@ -17,6 +23,10 @@ export const foodLogsHandlers = [
 
   // Add a new food log
   http.post("/api/food-logs", async ({ request }) => {
+    const authResult = await verifyAuth(request);
+    if (!authResult.success) {
+      return authResult.response;
+    }
     const newLogData = (await request.json()) as FoodLog;
     if (
       !newLogData.name ||
@@ -44,6 +54,10 @@ export const foodLogsHandlers = [
 
   // Update an existing food log
   http.put("/api/food-logs/:id", async ({ params, request }) => {
+    const authResult = await verifyAuth(request);
+    if (!authResult.success) {
+      return authResult.response;
+    }
     const { id } = params as { id: string };
     const updatedData = (await request.json()) as FoodLog;
     if (
@@ -80,7 +94,11 @@ export const foodLogsHandlers = [
   }),
 
   // Delete a food log
-  http.delete("/api/food-logs/:id", ({ params }) => {
+  http.delete("/api/food-logs/:id", async ({ params, request }) => {
+    const authResult = await verifyAuth(request);
+    if (!authResult.success) {
+      return authResult.response;
+    }
     const { id } = params as { id: string };
     const deleted = db.deleteFoodLog(id);
 

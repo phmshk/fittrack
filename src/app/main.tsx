@@ -2,11 +2,15 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles/index.css";
 import { routeTree } from "@/routeTree.gen";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { createRouter } from "@tanstack/react-router";
 import { QueryProvider } from "./providers/queryProvider";
+import { App } from "./App";
 
 // Create a new router instance
-const router = createRouter({ routeTree });
+export const router = createRouter({
+  routeTree,
+  context: { auth: undefined! },
+});
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -31,17 +35,14 @@ async function enableMocking() {
 }
 
 const rootElement = document.getElementById("root")!;
-
 if (!rootElement.innerHTML) {
   const root = createRoot(rootElement);
 
   enableMocking().then(() => {
     root.render(
-      <StrictMode>
-        <QueryProvider>
-          <RouterProvider router={router} />
-        </QueryProvider>
-      </StrictMode>,
+      <QueryProvider>
+        <App />
+      </QueryProvider>,
     );
   });
 }

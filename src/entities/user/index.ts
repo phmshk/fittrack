@@ -5,5 +5,5 @@ export {
   useCurrentUser,
   useIsAuthenticated,
   useAuthToken,
-} from "./model/userStore";
+} from "./model/useSession";
 export type { User, UserSession } from "./model/types";

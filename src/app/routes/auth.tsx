@@ -1,5 +1,5 @@
 import { AuthPage } from "@/pages/authPage";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import z from "zod";
 
 const authSearchSchema = z.object({
@@ -9,4 +9,9 @@ const authSearchSchema = z.object({
 export const Route = createFileRoute("/auth")({
   component: AuthPage,
   validateSearch: authSearchSchema,
+  beforeLoad: ({ context }) => {
+    if (context.auth.isAuthenticated) {
+      throw redirect({ to: "/", replace: true });
+    }
+  },
 });

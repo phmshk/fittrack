@@ -1,4 +1,5 @@
 import { Logo } from "@/entities/brand";
+import { LogoutButton } from "@/features/logout";
 import { SiteNavigation } from "@/features/siteNavigation";
 import { Container } from "@/shared/ui/container";
 
@@ -15,11 +16,9 @@ export const Header = () => {
           <div className="flex items-center">
             {/* Navigation Menu. Both Desktop and Mobile versions. */}
             <SiteNavigation />
-
-            {/* Auth Buttons
             <div className="hidden md:ml-4 md:block">
-              <AuthActions />
-            </div> */}
+              <LogoutButton />
+            </div>
           </div>
         </div>
       </Container>

@@ -124,6 +124,8 @@ components:
   getFoodLogsByDate:
     summary: Get entries for a specific day
     description: Retrieves all food log entries for the specified date.
+    security:
+      - bearerAuth: []
     parameters:
       - name: date
         in: path
@@ -150,6 +152,8 @@ components:
 
   updateFoodLog:
     summary: Update an existing entry
+    security:
+      - bearerAuth: []
     parameters:
       - name: id
         in: path
@@ -186,6 +190,8 @@ components:
 
   deleteFoodLog:
     summary: Delete an entry
+    security:
+      - bearerAuth: []
     parameters:
       - name: id
         in: path

@@ -8,7 +8,7 @@ const seedData = {
   foodLogs: [
     {
       id: crypto.randomUUID(),
-      date: "2025-09-19",
+      date: "2025-09-30",
       mealType: "breakfast",
       name: "Scrambled Eggs",
       calories: 220,
@@ -21,7 +21,7 @@ const seedData = {
     },
     {
       id: crypto.randomUUID(),
-      date: "2025-09-19",
+      date: "2025-09-30",
       mealType: "lunch",
       name: "Chicken Salad",
       calories: 350,
@@ -34,7 +34,7 @@ const seedData = {
     },
     {
       id: crypto.randomUUID(),
-      date: "2025-09-20",
+      date: "2025-09-30",
       mealType: "lunch",
       name: "Grilled Chicken Breast",
       calories: 220,
@@ -47,7 +47,7 @@ const seedData = {
     },
     {
       id: crypto.randomUUID(),
-      date: "2025-09-21",
+      date: "2025-09-30",
       mealType: "dinner",
       name: "Steak and Sweet Potato",
       calories: 700,

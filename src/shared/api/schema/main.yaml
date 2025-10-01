@@ -14,6 +14,17 @@ servers:
   - url: /api
     description: Mocked server
 
+# --- Global components ---
+components:
+  # --- Schemas ---
+  securitySchemes:
+    # --- JWT Bearer Authentication Scheme ---
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JWT Authorization header using the Bearer scheme."
+
 # --- Description of endpoints ---
 paths:
   # --- Endpoints for /auth ---
@@ -24,6 +35,10 @@ paths:
   /auth/login:
     post:
       $ref: "./endpoints/auth.yaml#/components/login"
+
+  /auth/refresh-token:
+    post:
+      $ref: "./endpoints/auth.yaml#/components/refreshToken"
 
   # --- Endpoints for /food-logs ---
   /food-logs:

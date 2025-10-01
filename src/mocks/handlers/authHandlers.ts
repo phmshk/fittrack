@@ -10,18 +10,25 @@ export const authHandlers = [
     if (userDb.findUserByEmail(email)) {
       return HttpResponse.json(
         { message: "User with this email already exists" },
-        { status: 409 }, // 409 Conflict
+        { status: 409 },
       );
     }
     const user = userDb.createUser({ email, password, name });
     console.log("[MSW] POST /api/auth/register: User created", user);
-    const session = userDb.createSession(user.id);
+
+    const { accessToken, refreshToken } = await userDb.createSession(user.id);
+
     return HttpResponse.json(
       {
-        token: session.token,
+        accessToken,
         user: { id: user.id, email: user.email, name: user.name },
       },
-      { status: 201 },
+      {
+        status: 201,
+        headers: {
+          "Set-Cookie": `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict; Max-Age=604800`,
+        },
+      },
     );
   }),
 
@@ -34,48 +41,59 @@ export const authHandlers = [
     if (!user || user.password !== password) {
       return HttpResponse.json(
         { message: "Invalid email or password" },
-        { status: 401 }, // 401 Unauthorized
-      );
-    }
-
-    const session = userDb.createSession(user.id);
-    console.log(
-      `[MSW] POST /api/auth/login: Session created for ${user.email}`,
-    );
-    return HttpResponse.json({
-      token: session.token,
-      user: { id: user.id, email: user.email, name: user.name },
-    });
-  }),
-
-  // --- Get current user (protected route) ---
-  http.get("/api/auth/me", ({ request }) => {
-    const authHeader = request.headers.get("Authorization");
-    const token = authHeader?.split(" ")[1];
-
-    if (!token) {
-      return HttpResponse.json(
-        { message: "No token provided" },
         { status: 401 },
       );
     }
 
-    const session = userDb.findSessionByToken(token);
-    if (!session) {
-      return HttpResponse.json({ message: "Invalid token" }, { status: 401 });
+    const { accessToken, refreshToken } = await userDb.createSession(user.id);
+
+    return HttpResponse.json(
+      {
+        accessToken,
+        user: { id: user.id, email: user.email, name: user.name },
+      },
+      {
+        status: 200,
+        headers: {
+          "Set-Cookie": `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict; Max-Age=604800`,
+        },
+      },
+    );
+  }),
+
+  // --- Refresh Token ---
+  http.post("/api/auth/refresh", async ({ cookies }) => {
+    const { refreshToken: oldRefreshToken } = cookies;
+
+    if (!oldRefreshToken) {
+      return HttpResponse.json(
+        { message: "Refresh token not found" },
+        { status: 401 },
+      );
     }
 
-    const user = userDb.findUserById(session.userId);
-    console.log(`[MSW] GET /api/auth/me: User found for token`, user);
+    const { valid, payload } = await userDb.verifyToken(oldRefreshToken);
+    if (!valid || !payload?.sub) {
+      return HttpResponse.json(
+        { message: "Invalid refresh token" },
+        { status: 401 },
+      );
+    }
 
+    const user = userDb.findUserById(payload.sub);
     if (!user) {
-      return HttpResponse.json({ message: "User not found" }, { status: 404 });
+      return HttpResponse.json({ message: "User not found" }, { status: 401 });
     }
 
-    return HttpResponse.json({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-    });
+    const { accessToken, refreshToken } = await userDb.createSession(user.id);
+
+    console.log("[MSW] Tokens refreshed for:", user.email);
+
+    const response = HttpResponse.json({ accessToken, user }, { status: 200 });
+    response.headers.set(
+      "Set-Cookie",
+      `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict; Max-Age=604800`,
+    );
+    return response;
   }),
 ];

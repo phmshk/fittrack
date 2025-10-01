@@ -82,6 +82,8 @@ components:
   searchProducts:
     summary: Search for products by name
     description: Retrieves a list of products matching the search query.
+    security:
+      - bearerAuth: []
     parameters:
       - name: search_terms
         in: query
@@ -125,6 +127,8 @@ components:
   getProductByBarcode:
     summary: Get a product by its barcode
     description: Retrieves detailed information for a single product using its barcode.
+    security:
+      - bearerAuth: []
     parameters:
       - name: barcode
         in: path

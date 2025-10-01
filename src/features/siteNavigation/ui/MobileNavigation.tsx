@@ -12,7 +12,7 @@ import {
 import { Menu } from "lucide-react";
 import { NAV_LINKS_AS_ARRAY } from "../model/links";
 import { Link } from "@tanstack/react-router";
-import { AuthActions } from "@/features/authActions";
+import { LogoutButton } from "@/features/logout";
 
 export const MobileNavigation = () => {
   return (
@@ -41,7 +41,7 @@ export const MobileNavigation = () => {
               <SheetClose asChild>
                 <Link
                   to={link.href}
-                  className="block p-3 text-lg font-medium rounded-md transition-colors"
+                  className="block rounded-md p-3 text-lg font-medium transition-colors"
                   activeProps={{
                     className: "bg-accent font-bold text-accent-foreground",
                   }}
@@ -56,7 +56,7 @@ export const MobileNavigation = () => {
         {/* Authentication actions */}
         <SheetFooter>
           <SheetClose asChild>
-            <AuthActions classes="justify-end" />
+            <LogoutButton />
           </SheetClose>
         </SheetFooter>
       </SheetContent>

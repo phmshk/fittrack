@@ -16,7 +16,6 @@ components:
           format: password
           description: "User's password."
           example: "strongPassword123"
-
     RegisterRequest:
       type: object
       required:
@@ -38,20 +37,21 @@ components:
           format: password
           description: "User's password. Must be at least 8 characters long."
           example: "strongPassword123"
-
     AuthResponse:
       type: object
       required:
-        - token
+        - accessToken
+        - refreshToken
         - user
       properties:
-        token:
+        accessToken:
           type: string
-          description: "JWT token for authenticating subsequent requests."
-          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          description: "JWT access token for authentication."
+        refreshToken:
+          type: string
+          description: "JWT refresh token for obtaining new access tokens."
         user:
           $ref: "./user.yaml#/components/schemas/User"
-
   login:
     summary: User login
     description: Authenticates a user and returns a JWT token.
@@ -95,3 +95,25 @@ components:
               $ref: "#/components/schemas/AuthResponse"
       "400": # Bad Request for validation errors like email already exists
         $ref: "../shared/responses.yaml#/components/responses/BadRequestError"
+
+    refreshToken:
+      summary: Refresh JWT tokens
+      description: "Refreshes the JWT access and refresh tokens using a valid refresh token."
+      tags:
+        - Authentication
+      parameters:
+        - in: cookie
+          name: refreshToken
+          required: true
+          schema:
+            type: string
+          description: "JWT refresh token stored in an HTTP-only cookie."
+      responses:
+        "200":
+          description: "Tokens successfully refreshed. Returns new access and refresh tokens."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
