@@ -1,67 +1,18 @@
 import type { FoodLog } from "@/entities/day";
-import type { UserGoals } from "@/entities/user";
 
-// --- Type Definitions for our Fitness App ---
-
-export type Gender = "male" | "female";
-export type ActivityLevel =
-  | "sedentary"
-  | "light"
-  | "moderate"
-  | "active"
-  | "very_active";
-export type ActivityType = "weightlifting" | "running" | "yoga" | "cycling";
-
-export interface ActivityLog {
-  id: string;
-  date: string; // Format: "YYYY-MM-DD"
-  activityType: ActivityType;
-  durationMinutes: number;
-  caloriesBurned: number;
-  notes?: string; // Optional notes
-}
-
-export interface WeightEntry {
-  date: string; // Format: "YYYY-MM-DD"
-  weightKg: number;
-}
-
-export interface UserProfile {
-  name: string;
-  gender: Gender;
-  birthDate: string; // Format: "YYYY-MM-DD"
-  heightCm: number;
-  activityLevel: ActivityLevel;
-}
+type StoredFoodLog = FoodLog & { userId: string };
 
 // --- "Tables" for our in-memory database ---
-let foodLogs: Map<string, FoodLog> = new Map();
-let activityLogs: Map<string, ActivityLog> = new Map();
-let weightHistory: Map<string, WeightEntry> = new Map();
-let userProfile: UserProfile | null = null;
-let userGoals: UserGoals | null = null;
+let foodLogs: Map<string, StoredFoodLog> = new Map();
 
+const MOCK_USER_ID = "a1b2-c3d4-e5f6-g7h8";
 // --- Initial seed data for development ---
 const seedData = {
-  userProfile: {
-    name: "Alex Doe",
-    gender: "male",
-    birthDate: "1995-05-15",
-    heightCm: 180,
-    activityLevel: "moderate",
-  } as UserProfile,
-
-  userGoals: {
-    targetCalories: 2500,
-    targetProteins: 180,
-    targetCarbs: 250,
-    targetFats: 80,
-  } as UserGoals,
-
   foodLogs: [
     {
       id: crypto.randomUUID(),
-      date: "2025-09-19",
+      userId: MOCK_USER_ID,
+      date: "2025-09-30",
       mealType: "breakfast",
       name: "Scrambled Eggs",
       calories: 220,
@@ -74,7 +25,8 @@ const seedData = {
     },
     {
       id: crypto.randomUUID(),
-      date: "2025-09-19",
+      userId: MOCK_USER_ID,
+      date: "2025-09-30",
       mealType: "lunch",
       name: "Chicken Salad",
       calories: 350,
@@ -86,8 +38,9 @@ const seedData = {
       grams: 100,
     },
     {
+      userId: MOCK_USER_ID,
       id: crypto.randomUUID(),
-      date: "2025-09-20",
+      date: "2025-09-30",
       mealType: "lunch",
       name: "Grilled Chicken Breast",
       calories: 220,
@@ -100,7 +53,8 @@ const seedData = {
     },
     {
       id: crypto.randomUUID(),
-      date: "2025-09-21",
+      userId: MOCK_USER_ID,
+      date: "2025-09-30",
       mealType: "dinner",
       name: "Steak and Sweet Potato",
       calories: 700,
@@ -111,42 +65,12 @@ const seedData = {
       saturatedFats: 10,
       grams: 100,
     },
-  ] as FoodLog[],
-
-  activityLogs: [
-    {
-      id: crypto.randomUUID(),
-      date: "2025-09-19",
-      activityType: "weightlifting",
-      durationMinutes: 60,
-      caloriesBurned: 450,
-      notes: "Chest and Triceps day",
-    },
-    {
-      id: crypto.randomUUID(),
-      date: "2025-09-20",
-      activityType: "running",
-      durationMinutes: 30,
-      caloriesBurned: 350,
-      notes: "5k run in the park",
-    },
-  ] as ActivityLog[],
-
-  weightHistory: [
-    { date: "2025-09-01", weightKg: 85.5 },
-    { date: "2025-09-15", weightKg: 84.8 },
-  ] as WeightEntry[],
+  ] as StoredFoodLog[],
 };
 
 // --- Function to populate and reset the database ---
 const seed = (): void => {
   foodLogs = new Map(seedData.foodLogs.map((log) => [log.id, log]));
-  activityLogs = new Map(seedData.activityLogs.map((log) => [log.id, log]));
-  weightHistory = new Map(
-    seedData.weightHistory.map((entry) => [entry.date, entry]),
-  );
-  userProfile = { ...seedData.userProfile };
-  userGoals = { ...seedData.userGoals };
 };
 
 // Initial seeding of the database
@@ -155,59 +79,36 @@ seed();
 // --- Exported object with methods to manage the DB ---
 export const db = {
   // --- FoodLog Methods ---
-  getFoodLogsByDate: (date: string): FoodLog[] =>
-    Array.from(foodLogs.values()).filter((log) => log.date === date),
-  addFoodLog: (logData: Omit<FoodLog, "id">): FoodLog => {
-    const newLog = { id: crypto.randomUUID(), ...logData };
+  getFoodLogsByDate: (userId: string, date: string): StoredFoodLog[] =>
+    Array.from(foodLogs.values()).filter(
+      (log) => log.userId === userId && log.date === date,
+    ),
+
+  addFoodLog: (userId: string, logData: Omit<FoodLog, "id">): StoredFoodLog => {
+    const newLog = { id: crypto.randomUUID(), ...logData, userId };
     foodLogs.set(newLog.id, newLog);
     return newLog;
   },
-  deleteFoodLog: (id: string): boolean => foodLogs.delete(id),
-  updateFoodLog: (id: string, updates: Omit<FoodLog, "id">): FoodLog | null => {
-    if (!foodLogs.has(id)) {
-      return null;
+  deleteFoodLog: (userId: string, logId: string): boolean => {
+    if (foodLogs.has(logId) && foodLogs.get(logId)?.userId === userId) {
+      return foodLogs.delete(logId);
     }
-    const existingLog = foodLogs.get(id)!; // We know it exists
-    const updatedLog = { ...existingLog, ...updates };
-    foodLogs.set(id, updatedLog);
-    return updatedLog;
+    return false;
   },
+  updateFoodLog: (
+    userId: string,
+    logId: string,
+    updates: Omit<FoodLog, "id">,
+  ): StoredFoodLog | null => {
+    const existingLog = foodLogs.get(logId);
 
-  // --- ActivityLog Methods ---
-  getActivitiesByDate: (date: string): ActivityLog[] =>
-    Array.from(activityLogs.values()).filter((log) => log.date === date),
-  addActivity: (activityData: Omit<ActivityLog, "id">): ActivityLog => {
-    const newActivity = { id: crypto.randomUUID(), ...activityData };
-    activityLogs.set(newActivity.id, newActivity);
-    return newActivity;
-  },
+    if (existingLog && existingLog.userId === userId) {
+      const updatedLog = { ...existingLog, ...updates };
+      foodLogs.set(logId, updatedLog);
 
-  // --- WeightHistory Methods ---
-  getWeightHistory: (): WeightEntry[] =>
-    Array.from(weightHistory.values()).sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    ),
-  addWeightEntry: (entry: WeightEntry): WeightEntry => {
-    weightHistory.set(entry.date, entry);
-    return entry;
-  },
-
-  // --- UserProfile Methods ---
-  getProfile: (): UserProfile | null => userProfile,
-  updateProfile: (newProfileData: Partial<UserProfile>): UserProfile | null => {
-    if (userProfile) {
-      userProfile = { ...userProfile, ...newProfileData };
+      return updatedLog;
     }
-    return userProfile;
-  },
-
-  // --- UserGoals Methods ---
-  getGoals: (): UserGoals | null => userGoals,
-  updateGoals: (newGoalsData: Partial<UserGoals>): UserGoals | null => {
-    if (userGoals) {
-      userGoals = { ...userGoals, ...newGoalsData };
-    }
-    return userGoals;
+    return null;
   },
 
   // --- Reset Method (useful for testing) ---

@@ -18,19 +18,19 @@ export const MacronutrientsSummary = (props: MacronutrientsSummaryProps) => {
     return [
       {
         name: "Proteins",
-        current: summary.consumedProteins,
+        current: Number(summary.consumedProteins.toFixed(1)),
         goal: userGoals?.targetProteins || 0,
         units: "g",
       },
       {
         name: "Fats",
-        current: summary.consumedFats,
+        current: Number(summary.consumedFats.toFixed(1)),
         goal: userGoals?.targetFats || 0,
         units: "g",
       },
       {
         name: "Carbs",
-        current: summary.consumedCarbs,
+        current: Number(summary.consumedCarbs.toFixed(1)),
         goal: userGoals?.targetCarbs || 0,
         units: "g",
       },

@@ -1,0 +1,119 @@
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: "User's email address."
+          example: "user@example.com"
+        password:
+          type: string
+          format: password
+          description: "User's password."
+          example: "strongPassword123"
+    RegisterRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          description: "User's full name."
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          description: "User's email address."
+          example: "user@example.com"
+        password:
+          type: string
+          format: password
+          description: "User's password. Must be at least 8 characters long."
+          example: "strongPassword123"
+    AuthResponse:
+      type: object
+      required:
+        - accessToken
+        - refreshToken
+        - user
+      properties:
+        accessToken:
+          type: string
+          description: "JWT access token for authentication."
+        refreshToken:
+          type: string
+          description: "JWT refresh token for obtaining new access tokens."
+        user:
+          $ref: "./user.yaml#/components/schemas/User"
+  login:
+    summary: User login
+    description: Authenticates a user and returns a JWT token.
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/LoginRequest"
+    responses:
+      "200":
+        description: "Successfully authenticated. Returns a JWT token."
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthResponse"
+      "400":
+        $ref: "../shared/responses.yaml#/components/responses/BadRequestError"
+      "401":
+        $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
+
+  register:
+    summary: User registration
+    description: "Creates a new user account and returns a JWT token."
+    tags:
+      - Authentication
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterRequest"
+    responses:
+      "201":
+        description: "User account successfully created. Returns a JWT token."
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthResponse"
+      "400": # Bad Request for validation errors like email already exists
+        $ref: "../shared/responses.yaml#/components/responses/BadRequestError"
+
+    refreshToken:
+      summary: Refresh JWT tokens
+      description: "Refreshes the JWT access and refresh tokens using a valid refresh token."
+      tags:
+        - Authentication
+      parameters:
+        - in: cookie
+          name: refreshToken
+          required: true
+          schema:
+            type: string
+          description: "JWT refresh token stored in an HTTP-only cookie."
+      responses:
+        "200":
+          description: "Tokens successfully refreshed. Returns new access and refresh tokens."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"

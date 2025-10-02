@@ -4,6 +4,95 @@
  */
 
 export interface paths {
+    "/auth/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * User registration
+         * @description Creates a new user account and returns a JWT token.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["RegisterRequest"];
+                };
+            };
+            responses: {
+                /** @description User account successfully created. Returns a JWT token. */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["AuthResponse"];
+                    };
+                };
+                400: components["responses"]["BadRequestError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * User login
+         * @description Authenticates a user and returns a JWT token.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["LoginRequest"];
+                };
+            };
+            responses: {
+                /** @description Successfully authenticated. Returns a JWT token. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["AuthResponse"];
+                    };
+                };
+                400: components["responses"]["BadRequestError"];
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/food-logs": {
         parameters: {
             query?: never;
@@ -372,6 +461,85 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        RegisterRequest: {
+            /**
+             * @description User's full name.
+             * @example John Doe
+             */
+            name: string;
+            /**
+             * Format: email
+             * @description User's email address.
+             * @example user@example.com
+             */
+            email: string;
+            /**
+             * Format: password
+             * @description User's password. Must be at least 8 characters long.
+             * @example strongPassword123
+             */
+            password: string;
+        };
+        User: {
+            /**
+             * Format: uuid
+             * @description User's unique identifier (server-generated).
+             */
+            readonly id: string;
+            /**
+             * @description User's full name.
+             * @example John Doe
+             */
+            name: string;
+            /**
+             * Format: email
+             * @description User's email address.
+             * @example user@example.com
+             */
+            email: string;
+        };
+        AuthResponse: {
+            /**
+             * @description JWT token for authenticating subsequent requests.
+             * @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+             */
+            token: string;
+            user: components["schemas"]["User"];
+        };
+        ErrorResponse: {
+            /**
+             * @description Error description.
+             * @example Entry with such ID not found.
+             */
+            message: string;
+            /**
+             * @description (Optional) Machine-readable error code for the frontend.
+             * @example RESOURCE_NOT_FOUND
+             */
+            errorCode?: string;
+            /**
+             * @description (Optional) Additional details about the error, such as which fields failed validation.
+             * @example {
+             *       "field": "calories",
+             *       "error": "must be a positive number"
+             *     }
+             */
+            details?: Record<string, never>;
+        };
+        LoginRequest: {
+            /**
+             * Format: email
+             * @description User's email address.
+             * @example user@example.com
+             */
+            email: string;
+            /**
+             * Format: password
+             * @description User's password.
+             * @example strongPassword123
+             */
+            password: string;
+        };
         /**
          * Format: date
          * @description Date of the entry in YYYY-MM-DD format.
@@ -519,26 +687,6 @@ export interface components {
              */
             targetFats: number;
         };
-        ErrorResponse: {
-            /**
-             * @description Error description.
-             * @example Entry with such ID not found.
-             */
-            message: string;
-            /**
-             * @description (Optional) Machine-readable error code for the frontend.
-             * @example RESOURCE_NOT_FOUND
-             */
-            errorCode?: string;
-            /**
-             * @description (Optional) Additional details about the error, such as which fields failed validation.
-             * @example {
-             *       "field": "calories",
-             *       "error": "must be a positive number"
-             *     }
-             */
-            details?: Record<string, never>;
-        };
         /**
          * @description Target number of calories per day.
          * @example 2200
@@ -633,8 +781,8 @@ export interface components {
         };
     };
     responses: {
-        /** @description Authentication error. The user does not have permission to access this resource. */
-        UnauthorizedError: {
+        /** @description Bad request. The server could not process the request due to a client-side error (e.g., invalid data format). */
+        BadRequestError: {
             headers: {
                 [name: string]: unknown;
             };
@@ -642,8 +790,8 @@ export interface components {
                 "application/json": components["schemas"]["ErrorResponse"];
             };
         };
-        /** @description Bad request. The server could not process the request due to a client-side error (e.g., invalid data format). */
-        BadRequestError: {
+        /** @description Authentication error. The user does not have permission to access this resource. */
+        UnauthorizedError: {
             headers: {
                 [name: string]: unknown;
             };
