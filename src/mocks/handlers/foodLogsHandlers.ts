@@ -12,9 +12,10 @@ export const foodLogsHandlers = [
     if (!authResult.success) {
       return authResult.response;
     }
+    const { sub: userId } = authResult.payload!;
 
     const { date } = params as { date: string };
-    const logs = db.getFoodLogsByDate(date);
+    const logs = db.getFoodLogsByDate(userId, date);
     // simulate network delay
     await new Promise((res) => setTimeout(res, 1000));
     console.log(`[MSW] GET /api/food-logs/${date}: found ${logs.length} logs`);
@@ -47,7 +48,9 @@ export const foodLogsHandlers = [
         { status: 400 },
       );
     }
-    const newLog = db.addFoodLog(newLogData);
+
+    const { sub: userId } = authResult.payload!;
+    const newLog = db.addFoodLog(userId, newLogData);
     console.log("[MSW] POST /api/food-logs: Product added:", newLog);
     return HttpResponse.json(newLog, { status: 201 });
   }),
@@ -79,7 +82,8 @@ export const foodLogsHandlers = [
       );
     }
 
-    const updatedLog = db.updateFoodLog(id, updatedData);
+    const { sub: userId } = authResult.payload!;
+    const updatedLog = db.updateFoodLog(userId, id, updatedData);
 
     if (updatedLog) {
       console.log(`[MSW] PUT /api/food-logs/${id}: Log updated`, updatedLog);
@@ -100,7 +104,9 @@ export const foodLogsHandlers = [
       return authResult.response;
     }
     const { id } = params as { id: string };
-    const deleted = db.deleteFoodLog(id);
+    const { sub: userId } = authResult.payload!;
+
+    const deleted = db.deleteFoodLog(userId, id);
 
     if (deleted) {
       console.log(`[MSW] DELETE /api/food-logs/${id}: Log deleted`);

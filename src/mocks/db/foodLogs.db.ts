@@ -1,13 +1,17 @@
 import type { FoodLog } from "@/entities/day";
 
-// --- "Tables" for our in-memory database ---
-let foodLogs: Map<string, FoodLog> = new Map();
+type StoredFoodLog = FoodLog & { userId: string };
 
+// --- "Tables" for our in-memory database ---
+let foodLogs: Map<string, StoredFoodLog> = new Map();
+
+const MOCK_USER_ID = "a1b2-c3d4-e5f6-g7h8";
 // --- Initial seed data for development ---
 const seedData = {
   foodLogs: [
     {
       id: crypto.randomUUID(),
+      userId: MOCK_USER_ID,
       date: "2025-09-30",
       mealType: "breakfast",
       name: "Scrambled Eggs",
@@ -21,6 +25,7 @@ const seedData = {
     },
     {
       id: crypto.randomUUID(),
+      userId: MOCK_USER_ID,
       date: "2025-09-30",
       mealType: "lunch",
       name: "Chicken Salad",
@@ -33,6 +38,7 @@ const seedData = {
       grams: 100,
     },
     {
+      userId: MOCK_USER_ID,
       id: crypto.randomUUID(),
       date: "2025-09-30",
       mealType: "lunch",
@@ -47,6 +53,7 @@ const seedData = {
     },
     {
       id: crypto.randomUUID(),
+      userId: MOCK_USER_ID,
       date: "2025-09-30",
       mealType: "dinner",
       name: "Steak and Sweet Potato",
@@ -58,7 +65,7 @@ const seedData = {
       saturatedFats: 10,
       grams: 100,
     },
-  ] as FoodLog[],
+  ] as StoredFoodLog[],
 };
 
 // --- Function to populate and reset the database ---
@@ -72,22 +79,36 @@ seed();
 // --- Exported object with methods to manage the DB ---
 export const db = {
   // --- FoodLog Methods ---
-  getFoodLogsByDate: (date: string): FoodLog[] =>
-    Array.from(foodLogs.values()).filter((log) => log.date === date),
-  addFoodLog: (logData: Omit<FoodLog, "id">): FoodLog => {
-    const newLog = { id: crypto.randomUUID(), ...logData };
+  getFoodLogsByDate: (userId: string, date: string): StoredFoodLog[] =>
+    Array.from(foodLogs.values()).filter(
+      (log) => log.userId === userId && log.date === date,
+    ),
+
+  addFoodLog: (userId: string, logData: Omit<FoodLog, "id">): StoredFoodLog => {
+    const newLog = { id: crypto.randomUUID(), ...logData, userId };
     foodLogs.set(newLog.id, newLog);
     return newLog;
   },
-  deleteFoodLog: (id: string): boolean => foodLogs.delete(id),
-  updateFoodLog: (id: string, updates: Omit<FoodLog, "id">): FoodLog | null => {
-    if (!foodLogs.has(id)) {
-      return null;
+  deleteFoodLog: (userId: string, logId: string): boolean => {
+    if (foodLogs.has(logId) && foodLogs.get(logId)?.userId === userId) {
+      return foodLogs.delete(logId);
     }
-    const existingLog = foodLogs.get(id)!; // We know it exists
-    const updatedLog = { ...existingLog, ...updates };
-    foodLogs.set(id, updatedLog);
-    return updatedLog;
+    return false;
+  },
+  updateFoodLog: (
+    userId: string,
+    logId: string,
+    updates: Omit<FoodLog, "id">,
+  ): StoredFoodLog | null => {
+    const existingLog = foodLogs.get(logId);
+
+    if (existingLog && existingLog.userId === userId) {
+      const updatedLog = { ...existingLog, ...updates };
+      foodLogs.set(logId, updatedLog);
+
+      return updatedLog;
+    }
+    return null;
   },
 
   // --- Reset Method (useful for testing) ---

@@ -54,7 +54,7 @@ export const MobileNavigation = () => {
         </ul>
 
         {/* Authentication actions */}
-        <SheetFooter>
+        <SheetFooter className="ml-auto">
           <SheetClose asChild>
             <LogoutButton />
           </SheetClose>

@@ -30,12 +30,16 @@ const customFetch: typeof fetch = async (input, init) => {
     console.log("[API Client] Access token expired, attempting to refresh...");
 
     if (!refreshTokenPromise) {
-      console.log("[API Client] Initiating token refresh...");
       refreshTokenPromise = fetch("/api/auth/refresh", {
         method: "POST",
         credentials: "include",
       })
-        .then((res) => res.json() ?? null)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to refresh token");
+          }
+          return res.json();
+        })
         .then((session) => {
           console.log("[API Client] Token refreshed successfully");
           const { accessToken: token, user } = session;
@@ -45,6 +49,7 @@ const customFetch: typeof fetch = async (input, init) => {
         .catch((err) => {
           console.error("[API Client] Token refresh failed:", err);
           useSessionStore.getState().clearSession();
+          window.location.href = "/auth";
           throw err;
         })
         .finally(() => {
@@ -52,22 +57,18 @@ const customFetch: typeof fetch = async (input, init) => {
         });
     }
 
-    const newToken = await refreshTokenPromise;
-
-    if (newToken) {
-      console.log("[API Client] Retrying original request with new token...");
-
-      headers.set("Authorization", `Bearer ${newToken}`);
-      const retryResponse = await fetch(input, {
-        ...init,
-        headers,
-      });
-      return retryResponse;
-    } else {
-      console.log(
-        "[API Client] Redirecting to login due to failed token refresh",
-      );
-      useSessionStore.getState().clearSession();
+    try {
+      const newToken = await refreshTokenPromise;
+      if (newToken) {
+        headers.set("Authorization", `Bearer ${newToken}`);
+        return fetch(input, {
+          ...init,
+          headers,
+        });
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      return response;
     }
   }
 
