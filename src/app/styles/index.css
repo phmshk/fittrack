@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@/shared/ui/calcAnimation/ui/CalcAnimation.css";
 
 @custom-variant dark (&:is(.dark *));
 

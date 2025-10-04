@@ -5,6 +5,7 @@ import { useGetFoodsByDate } from "@/entities/day";
 import { useGetUserGoals } from "@/entities/user";
 import { useDaySummary } from "@/features/getDaySummary";
 import { useDateStore } from "@/shared/model";
+import { Container } from "@/shared/ui/container/ui/Container";
 
 export const DashboardPage = () => {
   const today = useDateStore((state) => state.today);
@@ -15,7 +16,7 @@ export const DashboardPage = () => {
   const isLoading = isLoadingLogs || isLoadingGoals;
 
   return (
-    <section className="container mx-auto flex max-w-6xl flex-col gap-4 p-4 md:gap-6">
+    <Container>
       {/* Page heading. Date display */}
       <H1>
         Today,{" "}
@@ -29,6 +30,6 @@ export const DashboardPage = () => {
 
       {/* Meals summary */}
       <Meals date={today} foodLogs={foodLogs} isLoading={isLoading} />
-    </section>
+    </Container>
   );
 };

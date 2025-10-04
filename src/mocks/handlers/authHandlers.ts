@@ -89,7 +89,10 @@ export const authHandlers = [
 
     console.log("[MSW] Tokens refreshed for:", user.email);
 
-    const response = HttpResponse.json({ accessToken, user }, { status: 200 });
+    const response = HttpResponse.json(
+      { accessToken, refreshToken, user },
+      { status: 200 },
+    );
     response.headers.set(
       "Set-Cookie",
       `refreshToken=${refreshToken}; HttpOnly; Path=/; SameSite=Strict; Max-Age=604800`,

@@ -40,9 +40,11 @@ if (!rootElement.innerHTML) {
 
   enableMocking().then(() => {
     root.render(
-      <QueryProvider>
-        <App />
-      </QueryProvider>,
+      <StrictMode>
+        <QueryProvider>
+          <App />
+        </QueryProvider>
+      </StrictMode>,
     );
   });
 }

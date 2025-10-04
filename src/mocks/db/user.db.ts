@@ -53,6 +53,14 @@ const seedData = {
     targetProteins: 180,
     targetCarbs: 250,
     targetFats: 80,
+    targetWaterIntake: 2500,
+  } as UserGoals,
+  defaultUserGoals: {
+    targetCalories: 2000,
+    targetProteins: 150,
+    targetCarbs: 200,
+    targetFats: 60,
+    targetWaterIntake: 2000,
   } as UserGoals,
 };
 
@@ -86,6 +94,7 @@ export const userDb = {
   createUser: (data: ApiComponents["schemas"]["RegisterRequest"]): User => {
     const newUser: StoredUser = { id: crypto.randomUUID(), ...data };
     users.set(newUser.id, newUser);
+    userGoals.set(newUser.id, { ...seedData.defaultUserGoals }); // Set default goals
     return stripPassword(newUser);
   },
 

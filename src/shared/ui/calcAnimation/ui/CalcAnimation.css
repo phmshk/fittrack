@@ -1,0 +1,63 @@
+.calculation-container-fade {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculation-container-fade .icon {
+  position: absolute;
+  opacity: 0;
+  animation: fadeInOut 3s infinite;
+}
+
+.calculation-container-fade .icon-1 {
+  top: -20px;
+  animation-delay: 0s;
+}
+.calculation-container-fade .icon-2 {
+  right: -20px;
+  top: 20px;
+  animation-delay: 0.5s;
+}
+.calculation-container-fade .icon-3 {
+  right: -20px;
+  bottom: 20px;
+  animation-delay: 1s;
+}
+.calculation-container-fade .icon-4 {
+  bottom: -20px;
+
+  animation-delay: 1.5s;
+}
+.calculation-container-fade .icon-5 {
+  left: -20px;
+  bottom: 20px;
+  animation-delay: 2s;
+}
+
+.calculation-container-fade .icon-6 {
+  left: -20px;
+  top: 20px;
+  animation-delay: 2.5s;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  40% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -14,12 +14,16 @@ interface RouterContext {
 
 const RootComponent = () => {
   const location = useLocation();
+
   const isAuthPage = location.pathname.startsWith("/auth");
   const isAddFoodPage = location.pathname.startsWith("/addFood");
+  const isProfileSetupPage = location.pathname.startsWith("/setup");
+
+  const showHeader = !isAuthPage && !isAddFoodPage && !isProfileSetupPage;
 
   return (
     <>
-      {!isAuthPage && !isAddFoodPage && <Header />}
+      {showHeader && <Header />}
       <main className="min-h-[calc(100vh-65px)]">
         <Outlet />
       </main>

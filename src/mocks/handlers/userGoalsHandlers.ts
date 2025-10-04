@@ -34,13 +34,14 @@ export const userGoalsHandlers = [
     }
     const { sub: userId } = authResult.payload!;
 
-    const updatedGoalsData = (await request.json()) as Partial<UserGoalsInput>;
+    const updatedGoalsData = (await request.json()) as UserGoalsInput;
 
     if (
       updatedGoalsData.targetCalories === undefined &&
       updatedGoalsData.targetProteins === undefined &&
       updatedGoalsData.targetFats === undefined &&
-      updatedGoalsData.targetCarbs === undefined
+      updatedGoalsData.targetCarbs === undefined &&
+      updatedGoalsData.targetWaterIntake === undefined
     ) {
       console.error(
         "[MSW] PUT /api/user-goals: Validation error. At least one field must be provided",
@@ -49,7 +50,7 @@ export const userGoalsHandlers = [
       return HttpResponse.json(
         {
           message:
-            "At least one field must be provided: dailyCalories, proteinRatio, fatRatio, carbRatio",
+            "At least one field must be provided: dailyCalories, proteinRatio, fatRatio, carbRatio, waterIntake",
         },
         { status: 400 },
       );

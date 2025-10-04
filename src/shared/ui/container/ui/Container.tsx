@@ -12,10 +12,13 @@ interface ContainerProps {
  */
 export function Container({ children, className }: ContainerProps) {
   return (
-    <div
-      className={cn("w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", className)}
+    <section
+      className={cn(
+        "container mx-auto flex max-w-6xl flex-col gap-4 p-4 md:gap-6",
+        className,
+      )}
     >
       {children}
-    </div>
+    </section>
   );
 }

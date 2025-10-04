@@ -93,6 +93,49 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/auth/refresh-token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh JWT tokens
+         * @description Refreshes the JWT access and refresh tokens using a valid refresh token.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie: {
+                    /** @description JWT refresh token stored in an HTTP-only cookie. */
+                    refreshToken: string;
+                };
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Tokens successfully refreshed. Returns new access and refresh tokens. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["AuthResponse"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/food-logs": {
         parameters: {
             query?: never;
@@ -497,13 +540,43 @@ export interface components {
              * @example user@example.com
              */
             email: string;
+            /**
+             * @description User's gender.
+             * @enum {string}
+             */
+            gender?: "male" | "female";
+            /**
+             * @description User's age in years.
+             * @example 30
+             */
+            age?: number;
+            /**
+             * @description User's height in centimeters.
+             * @example 180
+             */
+            height?: number;
+            /**
+             * Format: float
+             * @description User's weight in kilograms.
+             * @example 75.5
+             */
+            weight?: number;
+            /**
+             * @description User's physical activity level.
+             * @enum {string}
+             */
+            activityLevel?: "sedentary" | "light" | "moderate" | "active" | "extra_active";
+            /**
+             * @description User's fitness goal.
+             * @enum {string}
+             */
+            goal?: "lose_weight" | "maintain_weight" | "gain_weight";
         };
         AuthResponse: {
-            /**
-             * @description JWT token for authenticating subsequent requests.
-             * @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-             */
-            token: string;
+            /** @description JWT access token for authentication. */
+            accessToken: string;
+            /** @description JWT refresh token for obtaining new access tokens. */
+            refreshToken: string;
             user: components["schemas"]["User"];
         };
         ErrorResponse: {
@@ -686,6 +759,11 @@ export interface components {
              * @example 80
              */
             targetFats: number;
+            /**
+             * @description Target water intake in milliliters per day.
+             * @example 2000
+             */
+            targetWaterIntake: number;
         };
         /**
          * @description Target number of calories per day.
@@ -707,11 +785,17 @@ export interface components {
          * @example 80
          */
         targetFats: number;
+        /**
+         * @description Target water intake in milliliters per day.
+         * @example 2000
+         */
+        targetWaterIntake: number;
         UserGoalsInput: {
             targetCalories?: components["schemas"]["targetCalories"];
             targetProteins?: components["schemas"]["targetProteins"];
             targetCarbs?: components["schemas"]["targetCarbs"];
             targetFats?: components["schemas"]["targetFats"];
+            targetWaterIntake?: components["schemas"]["targetWaterIntake"];
         };
         /** @description Core nutritional information per 100g. */
         Nutriments: {

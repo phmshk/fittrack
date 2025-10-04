@@ -21,3 +21,28 @@ components:
           format: email
           description: "User's email address."
           example: "user@example.com"
+        gender:
+          type: string
+          enum: [male, female]
+          description: "User's gender."
+        age:
+          type: integer
+          description: "User's age in years."
+          example: 30
+        height:
+          type: integer
+          description: "User's height in centimeters."
+          example: 180
+        weight:
+          type: number
+          format: float
+          description: "User's weight in kilograms."
+          example: 75.5
+        activityLevel:
+          type: string
+          enum: [sedentary, light, moderate, active, extra_active]
+          description: "User's physical activity level."
+        goal:
+          type: string
+          enum: [lose_weight, maintain_weight, gain_weight]
+          description: "User's fitness goal."

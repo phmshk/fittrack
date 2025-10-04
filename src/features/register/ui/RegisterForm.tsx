@@ -24,8 +24,6 @@ export const RegisterForm = () => {
     registerMutation.mutate(credentials);
   };
 
-  console.log();
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -45,7 +43,7 @@ export const RegisterForm = () => {
           srOnly={"Email input"}
         />
         {registerMutation.error && (
-          <p className="text-sm text-destructive">
+          <p className="text-destructive text-sm">
             {registerMutation.error.message}
           </p>
         )}

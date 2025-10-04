@@ -7,6 +7,7 @@ components:
         - targetProteins
         - targetCarbs
         - targetFats
+        - targetWaterIntake
       properties:
         targetCalories:
           type: number
@@ -24,6 +25,10 @@ components:
           type: number
           description: "Target number of fats in grams per day."
           example: 80
+        targetWaterIntake:
+          type: number
+          description: "Target water intake in milliliters per day."
+          example: 2000
 
     UserGoalsInput:
       type: object
@@ -36,6 +41,8 @@ components:
           $ref: "#/components/schemas/UserGoals/properties/targetCarbs"
         targetFats:
           $ref: "#/components/schemas/UserGoals/properties/targetFats"
+        targetWaterIntake:
+          $ref: "#/components/schemas/UserGoals/properties/targetWaterIntake"
 
   getUserGoals:
     summary: Get user goals

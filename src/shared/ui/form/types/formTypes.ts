@@ -4,6 +4,7 @@ export interface BaseFormProps<T extends FieldValues> {
   control: Control<T>;
   name: Path<T>;
   label: string;
-  placeholder: string;
+  placeholder?: string;
+  description?: string;
   srOnly: string;
 }
