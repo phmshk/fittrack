@@ -7,7 +7,7 @@ export const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background shadow-sm">
       {/* Container component to center and constrain the header content */}
-      <Container>
+      <Container className="p-0">
         <div className="flex h-16 items-center justify-between">
           {/* Left side: Logo and Title */}
           <Logo />

@@ -8,6 +8,7 @@ import { useGetUserGoals } from "@/entities/user";
 import { ProgressBar } from "@/shared/ui/progressBar";
 import { useDaySummary } from "@/features/getDaySummary";
 import { useDateStore } from "@/shared/model";
+import { Container } from "@/shared/ui/container";
 
 export const DiaryPage = () => {
   const selectedDate = useDateStore((state) => state.selectedDate);
@@ -20,7 +21,7 @@ export const DiaryPage = () => {
   const isLoading = isLoadingLogs || isLoadingGoals;
 
   return (
-    <section className="container mx-auto flex max-w-6xl flex-col gap-4 p-4 md:gap-6">
+    <Container>
       <H1>Diary</H1>
       <span className="text-secondary-foreground">
         Track your nutrition and calories.
@@ -42,6 +43,6 @@ export const DiaryPage = () => {
       />
 
       <Meals foodLogs={foodLogs} isLoading={isLoading} date={selectedDate} />
-    </section>
+    </Container>
   );
 };

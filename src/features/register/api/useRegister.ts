@@ -27,7 +27,7 @@ export const useRegister = () => {
     onSuccess: (data) => {
       setSession(data);
       toast.success("Account created successfully!");
-      navigate({ to: "/", replace: true });
+      navigate({ to: "/setup", replace: true });
     },
     onError: (error: ApiError) => {
       toast.error(error.message || "Registration failed. Please try again.");

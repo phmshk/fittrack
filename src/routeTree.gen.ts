@@ -9,12 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './app/routes/__root'
+import { Route as SetupRouteImport } from './app/routes/setup'
 import { Route as AuthRouteImport } from './app/routes/auth'
 import { Route as ProtectedRoutesRouteImport } from './app/routes/_protectedRoutes'
 import { Route as ProtectedRoutesIndexRouteImport } from './app/routes/_protectedRoutes/index'
 import { Route as ProtectedRoutesDiaryRouteImport } from './app/routes/_protectedRoutes/diary'
 import { Route as ProtectedRoutesAddFoodRouteImport } from './app/routes/_protectedRoutes/addFood'
+import { Route as ProtectedRoutesProfileIndexRouteImport } from './app/routes/_protectedRoutes/profile/index'
 
+const SetupRoute = SetupRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -39,48 +46,70 @@ const ProtectedRoutesAddFoodRoute = ProtectedRoutesAddFoodRouteImport.update({
   path: '/addFood',
   getParentRoute: () => ProtectedRoutesRoute,
 } as any)
+const ProtectedRoutesProfileIndexRoute =
+  ProtectedRoutesProfileIndexRouteImport.update({
+    id: '/profile/',
+    path: '/profile/',
+    getParentRoute: () => ProtectedRoutesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
+  '/setup': typeof SetupRoute
   '/addFood': typeof ProtectedRoutesAddFoodRoute
   '/diary': typeof ProtectedRoutesDiaryRoute
   '/': typeof ProtectedRoutesIndexRoute
+  '/profile': typeof ProtectedRoutesProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
+  '/setup': typeof SetupRoute
   '/addFood': typeof ProtectedRoutesAddFoodRoute
   '/diary': typeof ProtectedRoutesDiaryRoute
   '/': typeof ProtectedRoutesIndexRoute
+  '/profile': typeof ProtectedRoutesProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_protectedRoutes': typeof ProtectedRoutesRouteWithChildren
   '/auth': typeof AuthRoute
+  '/setup': typeof SetupRoute
   '/_protectedRoutes/addFood': typeof ProtectedRoutesAddFoodRoute
   '/_protectedRoutes/diary': typeof ProtectedRoutesDiaryRoute
   '/_protectedRoutes/': typeof ProtectedRoutesIndexRoute
+  '/_protectedRoutes/profile/': typeof ProtectedRoutesProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/auth' | '/addFood' | '/diary' | '/'
+  fullPaths: '/auth' | '/setup' | '/addFood' | '/diary' | '/' | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/auth' | '/addFood' | '/diary' | '/'
+  to: '/auth' | '/setup' | '/addFood' | '/diary' | '/' | '/profile'
   id:
     | '__root__'
     | '/_protectedRoutes'
     | '/auth'
+    | '/setup'
     | '/_protectedRoutes/addFood'
     | '/_protectedRoutes/diary'
     | '/_protectedRoutes/'
+    | '/_protectedRoutes/profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   ProtectedRoutesRoute: typeof ProtectedRoutesRouteWithChildren
   AuthRoute: typeof AuthRoute
+  SetupRoute: typeof SetupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/setup': {
+      id: '/setup'
+      path: '/setup'
+      fullPath: '/setup'
+      preLoaderRoute: typeof SetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -116,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedRoutesAddFoodRouteImport
       parentRoute: typeof ProtectedRoutesRoute
     }
+    '/_protectedRoutes/profile/': {
+      id: '/_protectedRoutes/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProtectedRoutesProfileIndexRouteImport
+      parentRoute: typeof ProtectedRoutesRoute
+    }
   }
 }
 
@@ -123,12 +159,14 @@ interface ProtectedRoutesRouteChildren {
   ProtectedRoutesAddFoodRoute: typeof ProtectedRoutesAddFoodRoute
   ProtectedRoutesDiaryRoute: typeof ProtectedRoutesDiaryRoute
   ProtectedRoutesIndexRoute: typeof ProtectedRoutesIndexRoute
+  ProtectedRoutesProfileIndexRoute: typeof ProtectedRoutesProfileIndexRoute
 }
 
 const ProtectedRoutesRouteChildren: ProtectedRoutesRouteChildren = {
   ProtectedRoutesAddFoodRoute: ProtectedRoutesAddFoodRoute,
   ProtectedRoutesDiaryRoute: ProtectedRoutesDiaryRoute,
   ProtectedRoutesIndexRoute: ProtectedRoutesIndexRoute,
+  ProtectedRoutesProfileIndexRoute: ProtectedRoutesProfileIndexRoute,
 }
 
 const ProtectedRoutesRouteWithChildren = ProtectedRoutesRoute._addFileChildren(
@@ -138,6 +176,7 @@ const ProtectedRoutesRouteWithChildren = ProtectedRoutesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   ProtectedRoutesRoute: ProtectedRoutesRouteWithChildren,
   AuthRoute: AuthRoute,
+  SetupRoute: SetupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

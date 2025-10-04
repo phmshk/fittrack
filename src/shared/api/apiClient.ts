@@ -42,9 +42,8 @@ const customFetch: typeof fetch = async (input, init) => {
         })
         .then((session) => {
           console.log("[API Client] Token refreshed successfully");
-          const { accessToken: token, user } = session;
-          useSessionStore.getState().setSession({ token, user });
-          return token;
+          useSessionStore.getState().setSession(session);
+          return session.accessToken;
         })
         .catch((err) => {
           console.error("[API Client] Token refresh failed:", err);

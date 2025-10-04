@@ -15,7 +15,15 @@ interface FormInputProps<T extends FieldValues> extends BaseFormProps<T> {
 }
 
 export const FormInput = <T extends FieldValues>(props: FormInputProps<T>) => {
-  const { control, name, label, placeholder, srOnly, type = "text" } = props;
+  const {
+    control,
+    name,
+    label,
+    placeholder,
+    srOnly,
+    type = "text",
+    description,
+  } = props;
   return (
     <FormField
       control={control}
@@ -26,7 +34,10 @@ export const FormInput = <T extends FieldValues>(props: FormInputProps<T>) => {
           <FormControl>
             <Input placeholder={placeholder} type={type} {...field} />
           </FormControl>
-          <FormDescription className="sr-only">{srOnly}</FormDescription>
+          <FormDescription>
+            {description ?? description}
+            {<span className="sr-only">{srOnly}</span>}
+          </FormDescription>
           <FormMessage />
         </FormItem>
       )}

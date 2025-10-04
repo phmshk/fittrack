@@ -22,7 +22,7 @@ export const useSessionStore = create<SessionState>()(
         set({
           session,
           user: session.user,
-          token: session.token,
+          token: session.accessToken,
           isAuthenticated: true,
         }),
       clearSession: () =>

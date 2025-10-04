@@ -30,6 +30,10 @@ export const useUpdateUserGoals = () => {
       const { data, error } = await apiClient.PUT("/user-goals", {
         body: updatedGoals,
       });
+      console.log(
+        "[MSW] PUT /api/user-goals: Received update request",
+        updatedGoals,
+      );
 
       if (error) throw error;
       return data;

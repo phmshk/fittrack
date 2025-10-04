@@ -1,6 +1,7 @@
 import { SearchProduct } from "@/features/searchProduct";
 import { useDebounce } from "@/shared/lib";
 import { Button } from "@/shared/shadcn/components/ui/button";
+import { Container } from "@/shared/ui/container";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
@@ -14,7 +15,7 @@ export const AddFromDatabase = () => {
   const debouncedSearchQuery = useDebounce(searchQuery, DEBOUNCE_DELAY);
 
   return (
-    <section className="container mx-auto flex min-h-screen max-w-6xl flex-col gap-4 p-4 md:gap-6">
+    <Container className="min-h-screen">
       <Button
         variant="ghost"
         onClick={() => {}}
@@ -30,6 +31,6 @@ export const AddFromDatabase = () => {
         onInputChange={setSearchQuery}
         searchQuery={debouncedSearchQuery}
       />
-    </section>
+    </Container>
   );
 };
