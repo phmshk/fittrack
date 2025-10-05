@@ -10,15 +10,15 @@ import { Goals } from "./Step3_Goals";
 import { ResultsDisplay } from "./Step4_ResultsDisplay";
 import { CalculationAnimation } from "@/shared/ui/calcAnimation";
 import { Button } from "@/shared/shadcn/components/ui/button";
-import { useUpdateUserGoals } from "@/entities/user";
+import { useUpdateUserData } from "@/entities/user";
 
 const TOTAL_STEPS = 4;
 
 export const UserProfileForm = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const { mutate: updateUserGoals, isPending: isUpdatingGoals } =
-    useUpdateUserGoals();
+  const { mutate: updateUserData, isPending: isUpdatingGoals } =
+    useUpdateUserData();
   const [isCalculating, setIsCalculating] = useState(false);
 
   const form = useForm<UserProfileFormValues>({
@@ -66,13 +66,15 @@ export const UserProfileForm = () => {
   };
 
   const onSubmit = (data: UserProfileFormValues) => {
-    updateUserGoals(
+    updateUserData(
       {
-        targetCalories: Number(data.targetCalories),
-        targetProteins: Number(data.targetProteins),
-        targetCarbs: Number(data.targetCarbs),
-        targetFats: Number(data.targetFats),
-        targetWaterIntake: Number(data.targetWaterIntake),
+        dailyTargets: {
+          targetCalories: Number(data.targetCalories),
+          targetProteins: Number(data.targetProteins),
+          targetCarbs: Number(data.targetCarbs),
+          targetFats: Number(data.targetFats),
+          targetWaterIntake: Number(data.targetWaterIntake),
+        },
       },
       {
         onSuccess: () => {

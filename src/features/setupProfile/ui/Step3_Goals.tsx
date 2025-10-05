@@ -33,7 +33,7 @@ export const Goals = () => {
                     <FormItem key={goal.value} className="flex-1">
                       <FormControl>
                         <RadioGroupItem
-                          value={goal.value}
+                          value={goal.value!}
                           className="sr-only"
                         />
                       </FormControl>

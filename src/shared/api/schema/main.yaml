@@ -60,12 +60,12 @@ paths:
     delete:
       $ref: "./endpoints/food-logs.yaml#/components/deleteFoodLog"
 
-  # --- Endpoints for /user-goals ---
-  /user-goals:
+  # --- Endpoints for /user ---
+  /user:
     get:
-      $ref: "./endpoints/user-goals.yaml#/components/getUserGoals"
+      $ref: "./endpoints/user.yaml#/components/getUser"
     put:
-      $ref: "./endpoints/user-goals.yaml#/components/updateUserGoals"
+      $ref: "./endpoints/user.yaml#/components/updateUser"
 
   # --- Open Food Facts Endpoints ---
   /cgi/search.pl:

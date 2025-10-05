@@ -1,7 +1,7 @@
 import { http, passthrough } from "msw";
 import { openFoodFactsHandlers } from "./openFoodFactsHandlers";
 import { foodLogsHandlers } from "./foodLogsHandlers";
-import { userGoalsHandlers } from "./userGoalsHandlers";
+import { usersHandlers } from "./userHandlers";
 import { authHandlers } from "./authHandlers";
 
 export const handlers = [
@@ -11,6 +11,6 @@ export const handlers = [
   }),
   ...openFoodFactsHandlers,
   ...foodLogsHandlers,
-  ...userGoalsHandlers,
+  ...usersHandlers,
   ...authHandlers,
 ];
