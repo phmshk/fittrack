@@ -1,21 +1,18 @@
-import { useSessionStore } from "@/entities/user";
 import { Button } from "@/shared/shadcn/components/ui/button";
-import { useNavigate } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
+import { useLogout } from "../model/useLogout";
 
 export const LogoutButton = () => {
-  const clearSession = useSessionStore((state) => state.clearSession);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    clearSession();
-    navigate({ to: "/auth", search: { tab: "login" }, replace: true });
-    console.log("User logged out and redirected to /auth");
-  };
+  const handleLogout = useLogout();
 
   return (
-    <Button onClick={handleLogout} variant="ghost" className="rounded-full">
-      <LogOut className="h-4 w-4" />
+    <Button
+      onClick={handleLogout}
+      variant="ghost"
+      className="w-full justify-start hover:bg-inherit"
+    >
+      <LogOut className="text-destructive h-4 w-4" />
+      Logout
       <span className="sr-only">Logout</span>
     </Button>
   );

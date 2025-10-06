@@ -74,6 +74,10 @@ components:
           format: email
           description: "User's email address."
           example: "user@example.com"
+        hasCompletedSetup:
+          type: boolean
+          description: "Indicates if the user has completed the initial profile setup."
+          example: true
         personalData:
           $ref: "#/components/schemas/PersonalData"
         activityLevel:

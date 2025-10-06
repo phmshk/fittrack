@@ -1,5 +1,10 @@
 import { apiClient } from "@/shared/api/apiClient";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  type UndefinedInitialDataOptions,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
 import type { User } from "../model/types";
 import { useSessionStore } from "../model/useSession";
@@ -10,16 +15,22 @@ export const userKeys = {
   details: () => [...userKeys.all, "details"] as const,
 };
 
+const fetchUserData = async (): Promise<User> => {
+  const { data, error } = await apiClient.GET("/user");
+  if (error) throw error;
+  return data;
+};
+
+export const userQueryOptions: UndefinedInitialDataOptions<User> = {
+  queryKey: userKeys.details(),
+  queryFn: fetchUserData,
+};
+
 // --- Hook for fetching user data ---
 export const useGetUserData = () => {
   const { isAuthenticated } = useSessionStore.getState();
   return useQuery({
-    queryKey: userKeys.details(),
-    queryFn: async () => {
-      const { data, error } = await apiClient.GET("/user");
-      if (error) throw error;
-      return data;
-    },
+    ...userQueryOptions,
     enabled: isAuthenticated,
   });
 };

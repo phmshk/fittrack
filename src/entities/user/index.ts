@@ -1,4 +1,8 @@
-export { useGetUserData, useUpdateUserData } from "./api/userApi";
+export {
+  useGetUserData,
+  useUpdateUserData,
+  userQueryOptions,
+} from "./api/userApi";
 export {
   useSessionStore,
   useCurrentUser,

@@ -51,6 +51,7 @@ const seedData = {
     email: "test@example.com",
     name: "Alex Doe",
     password: "password123",
+    hasCompletedSetup: true,
   },
   personalData: {
     age: 30,
@@ -126,6 +127,7 @@ export const userDb = {
     const newUser: Omit<StoredUser, "dailyTargets" | "personalData"> = {
       id: crypto.randomUUID(),
       ...data,
+      hasCompletedSetup: false,
     };
     users.set(newUser.id, newUser);
 

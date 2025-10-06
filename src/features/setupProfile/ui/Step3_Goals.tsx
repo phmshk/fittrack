@@ -27,7 +27,7 @@ export const Goals = () => {
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className="flex flex-col sm:flex-row sm:gap-4"
+                  className="flex flex-col gap-4 sm:flex-row"
                 >
                   {goals.map((goal) => (
                     <FormItem key={goal.value} className="flex-1">

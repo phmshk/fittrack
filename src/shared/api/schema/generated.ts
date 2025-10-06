@@ -573,6 +573,11 @@ export interface components {
              * @example user@example.com
              */
             email: string;
+            /**
+             * @description Indicates if the user has completed the initial profile setup.
+             * @example true
+             */
+            hasCompletedSetup?: boolean;
             personalData?: components["schemas"]["PersonalData"];
             /** @enum {string} */
             activityLevel?: "sedentary" | "light" | "moderate" | "active" | "extra_active";

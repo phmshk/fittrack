@@ -12,11 +12,13 @@ import {
 import { Menu } from "lucide-react";
 import { NAV_LINKS_AS_ARRAY } from "../model/links";
 import { Link } from "@tanstack/react-router";
-import { LogoutButton } from "@/features/logout";
+import { UserMenu } from "@/widgets/userMenu";
+import { useState } from "react";
 
 export const MobileNavigation = () => {
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   return (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       {/* Button to open the burger menu */}
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon">
@@ -29,10 +31,10 @@ export const MobileNavigation = () => {
       <SheetContent side="right">
         <SheetHeader>
           <SheetTitle className="text-lg font-bold">Menu</SheetTitle>
+          <SheetDescription className="sr-only">
+            Navigation for mobile devices.
+          </SheetDescription>
         </SheetHeader>
-        <SheetDescription className="sr-only">
-          Navigation for mobile devices.
-        </SheetDescription>
 
         {/* Mobile navigation items */}
         <ul aria-label="Mobile navigation" className="flex flex-col space-y-4">
@@ -56,7 +58,7 @@ export const MobileNavigation = () => {
         {/* Authentication actions */}
         <SheetFooter className="ml-auto">
           <SheetClose asChild>
-            <LogoutButton />
+            <UserMenu handleClose={() => setIsSheetOpen(false)} />
           </SheetClose>
         </SheetFooter>
       </SheetContent>

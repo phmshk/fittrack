@@ -68,6 +68,7 @@ export const UserProfileForm = () => {
   const onSubmit = (data: UserProfileFormValues) => {
     updateUserData(
       {
+        hasCompletedSetup: true,
         dailyTargets: {
           targetCalories: Number(data.targetCalories),
           targetProteins: Number(data.targetProteins),

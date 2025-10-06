@@ -15,8 +15,11 @@ export const usersHandlers = [
 
     const user = userDb.findUserById(userId);
     if (user) {
-      console.log("[MSW] GET /api/user: User retrieved", user);
-      return HttpResponse.json(user);
+      console.log("[MSW] GET /api/user: User retrieved", {
+        ...user,
+        password: undefined,
+      });
+      return HttpResponse.json({ ...user, password: undefined });
     } else {
       console.error("[MSW] GET /api/user: User not found");
       return HttpResponse.json({ message: "User not found" }, { status: 404 });

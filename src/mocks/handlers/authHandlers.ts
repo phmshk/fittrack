@@ -38,7 +38,10 @@ export const authHandlers = [
       (await request.json()) as ApiComponents["schemas"]["LoginRequest"];
 
     const user = userDb._findUserByEmailWithPassword(email);
-    console.log("[MSW] POST /api/auth/login: Found user", user);
+    console.log("[MSW] POST /api/auth/login: Found user", {
+      ...user,
+      password: undefined,
+    });
 
     if (!user || user.password !== password) {
       return HttpResponse.json(
