@@ -26,4 +26,10 @@ export const Route = createFileRoute("/setup")({
       });
     }
   },
+  staticData: {
+    showHeader: false,
+    title: "",
+    showBackButton: false,
+    isNavRoute: false,
+  },
 });

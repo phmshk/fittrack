@@ -10,13 +10,14 @@ import {
   SheetTrigger,
 } from "@/shared/shadcn/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { NAV_LINKS_AS_ARRAY } from "../model/links";
 import { Link } from "@tanstack/react-router";
 import { UserMenu } from "@/widgets/userMenu";
 import { useState } from "react";
+import { useNavLinks } from "@/shared/lib";
 
 export const MobileNavigation = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const routes = useNavLinks();
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       {/* Button to open the burger menu */}
@@ -38,7 +39,7 @@ export const MobileNavigation = () => {
 
         {/* Mobile navigation items */}
         <ul aria-label="Mobile navigation" className="flex flex-col space-y-4">
-          {NAV_LINKS_AS_ARRAY.map((link) => (
+          {routes.map((link) => (
             <li key={link.href}>
               <SheetClose asChild>
                 <Link

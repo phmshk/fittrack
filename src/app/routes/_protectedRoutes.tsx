@@ -13,6 +13,12 @@ export const Route = createFileRoute("/_protectedRoutes")({
       });
     }
   },
+  staticData: {
+    showHeader: false,
+    title: "",
+    showBackButton: false,
+    isNavRoute: false,
+  },
 });
 
 function RouteComponent() {

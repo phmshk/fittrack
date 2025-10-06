@@ -4,8 +4,8 @@ import {
   createRootRouteWithContext,
   Outlet,
   redirect,
-  useLocation,
   isRedirect,
+  useMatches,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
@@ -17,20 +17,22 @@ interface RouterContext {
 }
 
 const RootComponent = () => {
-  const location = useLocation();
-
-  const isAuthPage = location.pathname.startsWith("/auth");
-  const isAddFoodPage = location.pathname.startsWith("/addFood");
-  const isProfileSetupPage = location.pathname.startsWith("/setup");
-
-  const showHeader = !isAuthPage && !isAddFoodPage && !isProfileSetupPage;
+  const matches = useMatches();
+  const currentPage = matches.at(-1);
+  const showHeader = currentPage?.staticData.showHeader;
+  const showBackButton = currentPage?.staticData.showBackButton;
+  const title = showBackButton ? currentPage?.staticData.title : "";
 
   return (
     <>
-      {showHeader && <Header />}
-      <main className="min-h-[calc(100vh-65px)]">
+      {showHeader && <Header title={title} showBackButton={showBackButton} />}
+      <main className="md:min-h-[calc(100vh-65px)]">
         <Outlet />
       </main>
+      <div className="md:hidden">
+        {/** Placeholder for bottom navigation */}
+        {/** <MobileBottomNav /> */}
+      </div>
       <Toaster duration={2000} position="top-center" />
       <TanStackRouterDevtools position="bottom-left" />
     </>
@@ -60,5 +62,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         replace: true,
       });
     }
+  },
+  staticData: {
+    showHeader: false,
+    title: "",
+    showBackButton: false,
+    isNavRoute: false,
   },
 });

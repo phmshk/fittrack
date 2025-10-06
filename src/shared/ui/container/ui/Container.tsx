@@ -7,14 +7,18 @@ interface ContainerProps {
 }
 
 /**
- * A responsive container component that centers its content and applies horizontal padding.
- * It adjusts its padding based on the screen size to ensure optimal spacing.
+ * A responsive container that provides a full-width, mobile-first layout
+ * and switches to a traditional centered, max-width layout on desktop.
  */
 export function Container({ children, className }: ContainerProps) {
   return (
     <div
       className={cn(
-        "container mx-auto flex max-w-6xl flex-col gap-4 p-4 md:gap-6",
+        // Mobile (default) styles
+        "flex w-full flex-col gap-4 p-4",
+        // Desktop styles (md and up)
+        "md:container md:mx-auto md:max-w-6xl md:gap-6",
+        // Additional custom classes
         className,
       )}
     >
