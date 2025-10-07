@@ -14,5 +14,6 @@ export const Route = createFileRoute("/auth")({
     title: "",
     showBackButton: false,
     isNavRoute: false,
+    showFooter: false,
   },
 });

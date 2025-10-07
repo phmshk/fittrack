@@ -5,6 +5,7 @@ import { routeTree } from "@/routeTree.gen";
 import { createRouter } from "@tanstack/react-router";
 import { QueryProvider } from "./providers/queryProvider";
 import { App } from "./App";
+import type { LucideIcon } from "lucide-react";
 
 // Create a new router instance
 export const router = createRouter({
@@ -19,22 +20,26 @@ declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }
-  // Define custom state for accessing the addFood route only from the mealCard
+  // Define custom state for history entries
   interface HistoryState {
-    // Optional state to track navigation source for /addFood route so it can only be accessed from mealCard
-    from?: "mealCard";
+    // Optional state to track navigation source for /addFood route so it can only be accessed from a link which sets state { from: "allowedToAddFood" }
+    from?: "allowedToAddFood";
   }
 
   // Define custom static data for routes
   interface StaticDataRouteOption {
     // Whether to show the header for this route
     showHeader: boolean;
+    // Whether to show the footer for this route
+    showFooter: boolean;
     // Title to display in the header for this route empty string to show app logo
     title: string;
     // Whether to show a back button in the header for this route
     showBackButton: boolean;
     // Whether this route is part of the main navigation (e.g., Dashboard, Diary)
     isNavRoute: boolean;
+    // Optional icon for the navigation link
+    icon?: LucideIcon;
   }
 }
 

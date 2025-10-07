@@ -8,7 +8,6 @@ import { Link } from "@tanstack/react-router";
 
 export const DesktopNavigation = () => {
   const routes = useNavLinks();
-  console.log("Routes:", routes);
   return (
     <NavigationMenu>
       <NavigationMenuList className="space-x-4">

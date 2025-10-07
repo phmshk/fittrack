@@ -11,30 +11,37 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
 import { userQueryOptions } from "@/entities/user";
 import { queryClient } from "../providers/queryClient";
+import { Footer } from "@/widgets/footer";
+import { useBreakpoint } from "@/shared/lib";
 
 interface RouterContext {
   auth: ReturnType<typeof useSessionStore.getState>;
 }
 
 const RootComponent = () => {
+  const isMobile = useBreakpoint();
   const matches = useMatches();
   const currentPage = matches.at(-1);
+
   const showHeader = currentPage?.staticData.showHeader;
+  const showFooter = currentPage?.staticData.showFooter;
   const showBackButton = currentPage?.staticData.showBackButton;
   const title = showBackButton ? currentPage?.staticData.title : "";
 
   return (
     <>
-      {showHeader && <Header title={title} showBackButton={showBackButton} />}
-      <main className="md:min-h-[calc(100vh-65px)]">
+      {showHeader && (
+        <Header
+          title={title}
+          showBackButton={showBackButton}
+          isMobile={isMobile}
+        />
+      )}
+      <main>
         <Outlet />
       </main>
-      <div className="md:hidden">
-        {/** Placeholder for bottom navigation */}
-        {/** <MobileBottomNav /> */}
-      </div>
+      {showFooter && <Footer isMobile={isMobile} />}
       <Toaster duration={2000} position="top-center" />
-      <TanStackRouterDevtools position="bottom-left" />
     </>
   );
 };
@@ -68,5 +75,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     title: "",
     showBackButton: false,
     isNavRoute: false,
+    showFooter: false,
   },
 });

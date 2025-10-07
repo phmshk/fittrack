@@ -31,5 +31,6 @@ export const Route = createFileRoute("/setup")({
     title: "",
     showBackButton: false,
     isNavRoute: false,
+    showFooter: false,
   },
 });

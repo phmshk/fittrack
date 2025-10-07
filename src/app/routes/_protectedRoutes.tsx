@@ -18,6 +18,7 @@ export const Route = createFileRoute("/_protectedRoutes")({
     title: "",
     showBackButton: false,
     isNavRoute: false,
+    showFooter: false,
   },
 });
 

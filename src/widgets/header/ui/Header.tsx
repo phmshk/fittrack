@@ -1,19 +1,18 @@
 import { Container } from "@/shared/ui/container";
 import { MobileHeader } from "./MobileHeader";
 import { DesktopHeader } from "./DesktopHeader";
-import { useBreakpoint } from "@/shared/lib";
 
 interface HeaderProps {
   title?: string;
   showBackButton?: boolean;
+  isMobile: boolean;
 }
 
 export const Header = (props: HeaderProps) => {
-  const { showBackButton = false, title } = props;
-  const { isMobile } = useBreakpoint();
+  const { showBackButton = false, title, isMobile } = props;
 
   return (
-    <header className="bg-background sticky top-0 z-50 w-full border-b shadow-sm">
+    <header className="bg-background sticky top-0 z-50 w-full rounded-b-md border-b shadow-sm md:rounded-none">
       <Container className="md:py-0">
         {isMobile ? (
           <MobileHeader showBackButton={showBackButton} title={title} />

@@ -1,5 +1,6 @@
 import { useRouter } from "@tanstack/react-router";
 import { useMemo } from "react";
+import { type LucideIcon } from "lucide-react";
 
 /**
  * A custom hook to generate navigation links based on the router's routes.
@@ -7,7 +8,11 @@ import { useMemo } from "react";
  * Each link contains an `href` and `text` property.
  * @returns An array of navigation links derived from the router's routes.
  */
-export const useNavLinks = () => {
+export const useNavLinks = (): Array<{
+  href: string;
+  text: string;
+  Icon: LucideIcon;
+}> => {
   const router = useRouter();
 
   const routes = useMemo(() => {
@@ -16,10 +21,11 @@ export const useNavLinks = () => {
       .sort((a, b) =>
         a.options.staticData.title.localeCompare(b.options.staticData.title),
       )
-      .map((route) => {
+      .map((route): { href: string; text: string; Icon: LucideIcon } => {
         return {
           href: route.fullPath,
           text: route.options.staticData.title,
+          Icon: route.options.staticData.icon,
         };
       });
   }, [router.routesByPath]);

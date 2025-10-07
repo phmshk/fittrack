@@ -28,7 +28,7 @@ export const MobileHeader = (props: MobileHeaderProps) => {
       {title ? <H2>{title}</H2> : <Logo />}
       <div>
         <Link to="/profile" search={{ tab: "overview" }} aria-label="Profile">
-          <User2Icon className="size-5" />
+          <User2Icon className="size-5" strokeWidth={2} />
         </Link>
       </div>
     </div>
