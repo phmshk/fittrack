@@ -5,12 +5,11 @@ export const MobileBottomNav = () => {
   const navLinks = useNavLinks();
   const location = useLocation();
   return (
-    <footer className="bg-background fixed bottom-0 z-50 w-full rounded-t-md border-t shadow-md md:rounded-none">
+    <footer className="bg-background sticky bottom-0 z-50 w-full rounded-t-md border-t shadow-md md:rounded-none">
       <nav className="relative p-2">
-        <ul className="grid h-full grid-cols-2">
+        <ul className="flex justify-around">
           {navLinks.map(({ href, text, Icon }) => {
             const isActive = location.pathname === href;
-
             return (
               <li
                 key={href}

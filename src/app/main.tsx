@@ -5,7 +5,7 @@ import { routeTree } from "@/routeTree.gen";
 import { createRouter } from "@tanstack/react-router";
 import { QueryProvider } from "./providers/queryProvider";
 import { App } from "./App";
-import type { LucideIcon } from "lucide-react";
+import type { NavTab } from "@/shared/model";
 
 // Create a new router instance
 export const router = createRouter({
@@ -39,7 +39,9 @@ declare module "@tanstack/react-router" {
     // Whether this route is part of the main navigation (e.g., Dashboard, Diary)
     isNavRoute: boolean;
     // Optional icon for the navigation link
-    icon?: LucideIcon;
+    icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    // Optional tabs for the navigation link
+    navTabs?: Array<NavTab>;
   }
 }
 
