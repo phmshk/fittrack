@@ -1,26 +1,24 @@
-import { Logo } from "@/entities/brand";
-import { LogoutButton } from "@/features/logout";
-import { SiteNavigation } from "@/features/siteNavigation";
 import { Container } from "@/shared/ui/container";
+import { MobileHeader } from "./MobileHeader";
+import { DesktopHeader } from "./DesktopHeader";
 
-export const Header = () => {
+interface HeaderProps {
+  title?: string;
+  showBackButton?: boolean;
+  isMobile: boolean;
+}
+
+export const Header = (props: HeaderProps) => {
+  const { showBackButton = false, title, isMobile } = props;
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background shadow-sm">
-      {/* Container component to center and constrain the header content */}
-      <Container className="p-0">
-        <div className="flex h-16 items-center justify-between">
-          {/* Left side: Logo and Title */}
-          <Logo />
-
-          {/* Right side: Navigation Menu and Auth Buttons */}
-          <div className="flex items-center">
-            {/* Navigation Menu. Both Desktop and Mobile versions. */}
-            <SiteNavigation />
-            <div className="hidden md:ml-4 md:block">
-              <LogoutButton />
-            </div>
-          </div>
-        </div>
+    <header className="bg-background sticky top-0 z-50 w-full rounded-b-md border-b shadow-sm md:rounded-none">
+      <Container className="md:py-0">
+        {isMobile ? (
+          <MobileHeader showBackButton={showBackButton} title={title} />
+        ) : (
+          <DesktopHeader />
+        )}
       </Container>
     </header>
   );

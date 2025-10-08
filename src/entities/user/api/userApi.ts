@@ -1,64 +1,81 @@
 import { apiClient } from "@/shared/api/apiClient";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  type UndefinedInitialDataOptions,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { UserGoals, UserGoalsInput } from "../model/types";
+import type { User } from "../model/types";
+import { useSessionStore } from "../model/useSession";
 
-// --- Keys for user profile and goals ---
-export const userGoalsKeys = {
-  all: ["user-goals"] as const,
-  details: () => [...userGoalsKeys.all, "details"] as const,
+// --- Keys for user data ---
+export const userKeys = {
+  all: ["user"] as const,
+  details: () => [...userKeys.all, "details"] as const,
 };
 
-// --- Hooks for fetching user goals ---
-export const useGetUserGoals = () => {
+const fetchUserData = async (): Promise<User> => {
+  const { data, error } = await apiClient.GET("/user");
+  if (error) throw error;
+  return data;
+};
+
+export const userQueryOptions: UndefinedInitialDataOptions<User> = {
+  queryKey: userKeys.details(),
+  queryFn: fetchUserData,
+};
+
+// --- Hook for fetching user data ---
+export const useGetUserData = () => {
+  const { isAuthenticated } = useSessionStore.getState();
   return useQuery({
-    queryKey: userGoalsKeys.details(),
-    queryFn: async () => {
-      const { data, error } = await apiClient.GET("/user-goals");
-      if (error) throw error;
-      return data;
-    },
+    ...userQueryOptions,
+    enabled: isAuthenticated,
   });
 };
 
-/// --- Hooks for updating user goals ---
-export const useUpdateUserGoals = () => {
+// --- Hook for updating user data ---
+export const useUpdateUserData = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (updatedGoals: UserGoalsInput) => {
-      const { data, error } = await apiClient.PUT("/user-goals", {
-        body: updatedGoals,
+    mutationFn: async (updatedData: Partial<User>) => {
+      const { data, error } = await apiClient.PUT("/user", {
+        body: updatedData,
       });
-      console.log(
-        "[MSW] PUT /api/user-goals: Received update request",
-        updatedGoals,
-      );
-
+      console.log("[MSW] PUT /api/user: Received update request", updatedData);
       if (error) throw error;
       return data;
     },
-    onMutate: async (newGoals) => {
-      const queryKey = userGoalsKeys.details();
+    onMutate: async (newData) => {
+      const queryKey = userKeys.details();
       await queryClient.cancelQueries({ queryKey });
 
-      const previousGoals = queryClient.getQueryData<UserGoals>(queryKey);
+      const previousData = queryClient.getQueryData<User>(queryKey);
 
-      queryClient.setQueryData<UserGoals>(queryKey, (old) =>
-        old ? { ...old, ...newGoals } : undefined,
+      queryClient.setQueryData<User>(queryKey, (old) =>
+        old ? { ...old, ...newData } : undefined,
       );
 
-      return { previousGoals, queryKey };
+      const sessionUser = useSessionStore.getState().user;
+      if (sessionUser) {
+        useSessionStore.setState({
+          user: { ...sessionUser, ...newData },
+        });
+      }
+
+      return { previousData, queryKey };
     },
-    onError: (err, newGoals, onMutateResult) => {
-      toast.error("Error updating user goals");
+    onError: (err, newData, onMutateResult) => {
+      toast.error("Error updating user data");
       queryClient.setQueryData(
         [onMutateResult?.queryKey],
-        onMutateResult?.previousGoals,
+        onMutateResult?.previousData,
       );
     },
     onSuccess: () => {
-      toast.success("Goals updated successfully!");
+      toast.success("User data updated successfully!");
     },
     onSettled: (newLog, error, variables, onMutateResult) =>
       queryClient.invalidateQueries({

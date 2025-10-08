@@ -4,11 +4,11 @@ import { H2 } from "@/shared/ui/headings";
 import { Meals } from "@/widgets/meals";
 import { MacronutrientsSummary } from "@/widgets/macronutrientsSummary";
 import { useGetFoodsByDate } from "@/entities/day";
-import { useGetUserGoals } from "@/entities/user";
 import { ProgressBar } from "@/shared/ui/progressBar";
 import { useDaySummary } from "@/features/getDaySummary";
 import { useDateStore } from "@/shared/model";
 import { Container } from "@/shared/ui/container";
+import { useGetUserData } from "@/entities/user";
 
 export const DiaryPage = () => {
   const selectedDate = useDateStore((state) => state.selectedDate);
@@ -16,8 +16,8 @@ export const DiaryPage = () => {
 
   const { data: foodLogs, isLoading: isLoadingLogs } =
     useGetFoodsByDate(selectedDate);
-  const { data: userGoals, isLoading: isLoadingGoals } = useGetUserGoals();
-  const summary = useDaySummary(foodLogs, userGoals);
+  const { data: userData, isLoading: isLoadingGoals } = useGetUserData();
+  const summary = useDaySummary(foodLogs, userData?.dailyTargets);
   const isLoading = isLoadingLogs || isLoadingGoals;
 
   return (
@@ -31,13 +31,13 @@ export const DiaryPage = () => {
       <H2>Calories</H2>
       <ProgressBar
         currentValue={summary.consumedCalories}
-        goalValue={userGoals?.targetCalories || 0}
+        goalValue={userData?.dailyTargets?.targetCalories || 0}
         label="Calories"
         units="kcal"
       />
 
       <MacronutrientsSummary
-        userGoals={userGoals!}
+        userGoals={userData?.dailyTargets}
         summary={summary}
         isLoading={isLoading}
       />

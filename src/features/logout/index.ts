@@ -1,1 +1,2 @@
-export { LogoutButton } from "@/features/logout/ui/LogoutButton";
+export { LogoutButton } from "./ui/LogoutButton";
+export { useLogout } from "./model/useLogout";

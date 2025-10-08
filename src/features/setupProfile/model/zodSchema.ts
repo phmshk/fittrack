@@ -27,12 +27,9 @@ export const formSchema = z.object({
   ),
 
   // Step 3
-  goal: z.enum(
-    goals.map((goal) => goal.value),
-    {
-      error: "Goal is required for correct calculation.",
-    },
-  ),
+  goal: z.enum([...goals.map((goal) => goal.value)] as [string, ...string[]], {
+    error: "Goal is required for correct calculation.",
+  }),
 
   // Step 4 - Readonly fields to display results
   targetCalories: numericString("Target calories is required."),

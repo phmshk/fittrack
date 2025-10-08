@@ -1,4 +1,4 @@
-import type { User, UserGoals } from "@/entities/user";
+import type { DailyTargets, PersonalData, User } from "@/entities/user";
 import type { ApiComponents } from "@/shared/api/schema";
 import { jwtVerify, SignJWT } from "jose";
 
@@ -30,8 +30,12 @@ const generateTokens = async (userId: string) => {
 };
 
 // --- "Tables" for our in-memory database ---
-const users = new Map<string, StoredUser>();
-const userGoals = new Map<string, UserGoals>();
+const users = new Map<
+  string,
+  Omit<StoredUser, "dailyTargets" | "personalData">
+>();
+const userPersonalData = new Map<string, PersonalData>();
+const userDailyTargets = new Map<string, DailyTargets>();
 
 // --- Helper function to strip password for client-side responses ---
 const stripPassword = (user: StoredUser): User => {
@@ -47,32 +51,39 @@ const seedData = {
     email: "test@example.com",
     name: "Alex Doe",
     password: "password123",
+    hasCompletedSetup: true,
   },
-  userGoals: {
+  personalData: {
+    age: 30,
+    height: 180,
+    weight: 75,
+    gender: "male",
+  } as PersonalData,
+  dailyTargets: {
     targetCalories: 2500,
     targetProteins: 180,
     targetCarbs: 250,
     targetFats: 80,
     targetWaterIntake: 2500,
-  } as UserGoals,
-  defaultUserGoals: {
-    targetCalories: 2000,
-    targetProteins: 150,
-    targetCarbs: 200,
-    targetFats: 60,
-    targetWaterIntake: 2000,
-  } as UserGoals,
+  } as DailyTargets,
 };
 
 // --- Function to seed initial data ---
 const seed = (): void => {
   users.clear();
-  userGoals.clear();
-  const mockUser: StoredUser = { ...seedData.user };
-  const mockUserGoals: UserGoals = { ...seedData.userGoals };
+  userPersonalData.clear();
+  userDailyTargets.clear();
+  const mockUser: StoredUser = {
+    ...seedData.user,
+    activityLevel: "moderate",
+    goal: "maintain_weight",
+  };
+  const mockUserPersonalData: PersonalData = { ...seedData.personalData };
+  const mockUserDailyTargets: DailyTargets = { ...seedData.dailyTargets };
 
   users.set(mockUser.id, mockUser);
-  userGoals.set(mockUser.id, mockUserGoals);
+  userPersonalData.set(mockUser.id, mockUserPersonalData);
+  userDailyTargets.set(mockUser.id, mockUserDailyTargets);
 };
 
 // Initial seeding
@@ -81,21 +92,83 @@ seed();
 // --- Exported object with methods for managing the database ---
 export const userDb = {
   // --- Auth Methods ---
-  findUserByEmail: (
-    email: string,
-  ): (User & { password?: string }) | undefined =>
-    Array.from(users.values()).find((user) => user.email === email),
+  // This function is for internal use by auth handlers. It returns the user WITH the password.
+  _findUserByEmailWithPassword: (email: string): StoredUser | undefined => {
+    const userBase = Array.from(users.values()).find(
+      (user) => user.email === email,
+    );
+    if (!userBase) return undefined;
 
-  findUserById: (id: string): User | undefined => {
-    const user = users.get(id);
-    return user ? stripPassword(user) : undefined;
+    return {
+      ...userBase,
+      personalData: userPersonalData.get(userBase.id),
+      dailyTargets: userDailyTargets.get(userBase.id),
+    };
   },
 
+  // This function is safe to use elsewhere as it strips the password.
+  findUserByEmail: (email: string): User | undefined => {
+    const user = userDb._findUserByEmailWithPassword(email);
+    if (!user) return undefined;
+    return stripPassword(user);
+  },
+
+  findUserById: (id: string): StoredUser | undefined => {
+    const userBase = users.get(id);
+    if (!userBase) return undefined;
+
+    return {
+      ...userBase,
+      personalData: userPersonalData.get(id),
+      dailyTargets: userDailyTargets.get(id),
+    };
+  },
   createUser: (data: ApiComponents["schemas"]["RegisterRequest"]): User => {
-    const newUser: StoredUser = { id: crypto.randomUUID(), ...data };
+    const newUser: Omit<StoredUser, "dailyTargets" | "personalData"> = {
+      id: crypto.randomUUID(),
+      ...data,
+      hasCompletedSetup: false,
+    };
     users.set(newUser.id, newUser);
-    userGoals.set(newUser.id, { ...seedData.defaultUserGoals }); // Set default goals
-    return stripPassword(newUser);
+
+    // Create default empty entries for personal data and goals
+    userPersonalData.set(newUser.id, {});
+    userDailyTargets.set(newUser.id, {});
+
+    const fullUser = userDb.findUserById(newUser.id);
+    return stripPassword(fullUser!);
+  },
+
+  updateUser: (userId: string, updates: Partial<User>): User | null => {
+    const user = users.get(userId);
+    if (user) {
+      const { personalData, ...otherUpdates } = updates;
+      const updatedUser = { ...user, ...otherUpdates };
+      users.set(userId, updatedUser);
+
+      if (personalData) {
+        const currentPersonalData = userPersonalData.get(userId) || {};
+        userPersonalData.set(userId, {
+          ...currentPersonalData,
+          ...personalData,
+        });
+      }
+    }
+    return userDb.findUserById(userId) || null;
+  },
+
+  updateGoals: (
+    userId: string,
+    updates: Partial<User>,
+  ): DailyTargets | null => {
+    const { dailyTargets: newGoalsData } = updates;
+    const currentGoals = userDailyTargets.get(userId);
+    if (currentGoals) {
+      const updatedGoals = { ...currentGoals, ...newGoalsData };
+      userDailyTargets.set(userId, updatedGoals);
+      return updatedGoals;
+    }
+    return null;
   },
 
   createSession: async (userId: string) => await generateTokens(userId),
@@ -107,21 +180,6 @@ export const userDb = {
     } catch (e) {
       return { valid: false, payload: null };
     }
-  },
-
-  // --- UserGoals Methods ---
-  getGoals: (userId: string): UserGoals | undefined => userGoals.get(userId),
-  updateGoals: (
-    userId: string,
-    newGoalsData: Partial<UserGoals>,
-  ): UserGoals | null => {
-    const currentGoals = userGoals.get(userId);
-    if (currentGoals) {
-      const updatedGoals = { ...currentGoals, ...newGoalsData };
-      userGoals.set(userId, updatedGoals);
-      return updatedGoals;
-    }
-    return null;
   },
 
   // --- Reset Method (useful for testing) ---

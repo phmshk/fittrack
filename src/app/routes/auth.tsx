@@ -9,4 +9,11 @@ const authSearchSchema = z.object({
 export const Route = createFileRoute("/auth")({
   component: AuthPage,
   validateSearch: authSearchSchema,
+  staticData: {
+    showHeader: false,
+    title: "",
+    showBackButton: false,
+    isNavRoute: false,
+    showFooter: false,
+  },
 });

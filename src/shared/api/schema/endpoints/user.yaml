@@ -1,5 +1,58 @@
 components:
   schemas:
+    PersonalData:
+      type: object
+      properties:
+        gender:
+          type: string
+          enum: [male, female]
+        age:
+          type: number
+        height:
+          type: number
+        weight:
+          type: number
+    DailyTargets:
+      type: object
+      properties:
+        targetCalories:
+          type: number
+          description: "Target number of calories per day."
+          example: 2200
+        targetProteins:
+          type: number
+          description: "Target number of proteins in grams per day."
+          example: 160
+        targetCarbs:
+          type: number
+          description: "Target number of carbs in grams per day."
+          example: 200
+        targetFats:
+          type: number
+          description: "Target number of fats in grams per day."
+          example: 80
+        targetWaterIntake:
+          type: number
+          description: "Target water intake in milliliters per day."
+          example: 2000
+    UserInput:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        personalData:
+          $ref: "#/components/schemas/PersonalData"
+        activityLevel:
+          type: string
+          enum: [sedentary, light, moderate, active, extra_active]
+        goal:
+          type: string
+          enum: [lose_weight, maintain_weight, gain_weight]
+        dailyTargets:
+          $ref: "#/components/schemas/DailyTargets"
     User:
       type: object
       required:
@@ -21,28 +74,53 @@ components:
           format: email
           description: "User's email address."
           example: "user@example.com"
-        gender:
-          type: string
-          enum: [male, female]
-          description: "User's gender."
-        age:
-          type: integer
-          description: "User's age in years."
-          example: 30
-        height:
-          type: integer
-          description: "User's height in centimeters."
-          example: 180
-        weight:
-          type: number
-          format: float
-          description: "User's weight in kilograms."
-          example: 75.5
+        hasCompletedSetup:
+          type: boolean
+          description: "Indicates if the user has completed the initial profile setup."
+          example: true
+        personalData:
+          $ref: "#/components/schemas/PersonalData"
         activityLevel:
           type: string
           enum: [sedentary, light, moderate, active, extra_active]
-          description: "User's physical activity level."
         goal:
           type: string
           enum: [lose_weight, maintain_weight, gain_weight]
-          description: "User's fitness goal."
+        dailyTargets:
+          $ref: "#/components/schemas/DailyTargets"
+
+  getUser:
+    summary: Get current user data
+    description: Retrieves all profile and goal data for the currently authenticated user.
+    security:
+      - bearerAuth: []
+    responses:
+      "200":
+        description: Successful response with user data.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      "401":
+        $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
+
+  updateUser:
+    summary: Update current user data
+    description: Updates profile and/or goal data for the currently authenticated user.
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserInput"
+    responses:
+      "200":
+        description: User data successfully updated.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      "401":
+        $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"

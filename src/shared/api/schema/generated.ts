@@ -339,7 +339,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/user-goals": {
+    "/user": {
         parameters: {
             query?: never;
             header?: never;
@@ -347,8 +347,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get user goals
-         * @description Retrieves the current nutritional goals for the user.
+         * Get current user data
+         * @description Retrieves all profile and goal data for the currently authenticated user.
          */
         get: {
             parameters: {
@@ -359,21 +359,21 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Successful response with user goals. */
+                /** @description Successful response with user data. */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["UserGoals"];
+                        "application/json": components["schemas"]["User"];
                     };
                 };
                 401: components["responses"]["UnauthorizedError"];
             };
         };
         /**
-         * Update user goals
-         * @description Updates one or more nutritional goals for the user.
+         * Update current user data
+         * @description Updates profile and/or goal data for the currently authenticated user.
          */
         put: {
             parameters: {
@@ -384,20 +384,19 @@ export interface paths {
             };
             requestBody: {
                 content: {
-                    "application/json": components["schemas"]["UserGoalsInput"];
+                    "application/json": components["schemas"]["UserInput"];
                 };
             };
             responses: {
-                /** @description Goals successfully updated. */
+                /** @description User data successfully updated. */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["UserGoals"];
+                        "application/json": components["schemas"]["User"];
                     };
                 };
-                400: components["responses"]["BadRequestError"];
                 401: components["responses"]["UnauthorizedError"];
             };
         };
@@ -523,6 +522,40 @@ export interface components {
              */
             password: string;
         };
+        PersonalData: {
+            /** @enum {string} */
+            gender?: "male" | "female";
+            age?: number;
+            height?: number;
+            weight?: number;
+        };
+        DailyTargets: {
+            /**
+             * @description Target number of calories per day.
+             * @example 2200
+             */
+            targetCalories?: number;
+            /**
+             * @description Target number of proteins in grams per day.
+             * @example 160
+             */
+            targetProteins?: number;
+            /**
+             * @description Target number of carbs in grams per day.
+             * @example 200
+             */
+            targetCarbs?: number;
+            /**
+             * @description Target number of fats in grams per day.
+             * @example 80
+             */
+            targetFats?: number;
+            /**
+             * @description Target water intake in milliliters per day.
+             * @example 2000
+             */
+            targetWaterIntake?: number;
+        };
         User: {
             /**
              * Format: uuid
@@ -541,36 +574,16 @@ export interface components {
              */
             email: string;
             /**
-             * @description User's gender.
-             * @enum {string}
+             * @description Indicates if the user has completed the initial profile setup.
+             * @example true
              */
-            gender?: "male" | "female";
-            /**
-             * @description User's age in years.
-             * @example 30
-             */
-            age?: number;
-            /**
-             * @description User's height in centimeters.
-             * @example 180
-             */
-            height?: number;
-            /**
-             * Format: float
-             * @description User's weight in kilograms.
-             * @example 75.5
-             */
-            weight?: number;
-            /**
-             * @description User's physical activity level.
-             * @enum {string}
-             */
+            hasCompletedSetup?: boolean;
+            personalData?: components["schemas"]["PersonalData"];
+            /** @enum {string} */
             activityLevel?: "sedentary" | "light" | "moderate" | "active" | "extra_active";
-            /**
-             * @description User's fitness goal.
-             * @enum {string}
-             */
+            /** @enum {string} */
             goal?: "lose_weight" | "maintain_weight" | "gain_weight";
+            dailyTargets?: components["schemas"]["DailyTargets"];
         };
         AuthResponse: {
             /** @description JWT access token for authentication. */
@@ -738,64 +751,16 @@ export interface components {
         UnauthorizedError: unknown;
         /** @description Resource not found. The requested resource does not exist. */
         NotFoundError: unknown;
-        UserGoals: {
-            /**
-             * @description Target number of calories per day.
-             * @example 2200
-             */
-            targetCalories: number;
-            /**
-             * @description Target number of proteins in grams per day.
-             * @example 160
-             */
-            targetProteins: number;
-            /**
-             * @description Target number of carbs in grams per day.
-             * @example 200
-             */
-            targetCarbs: number;
-            /**
-             * @description Target number of fats in grams per day.
-             * @example 80
-             */
-            targetFats: number;
-            /**
-             * @description Target water intake in milliliters per day.
-             * @example 2000
-             */
-            targetWaterIntake: number;
-        };
-        /**
-         * @description Target number of calories per day.
-         * @example 2200
-         */
-        targetCalories: number;
-        /**
-         * @description Target number of proteins in grams per day.
-         * @example 160
-         */
-        targetProteins: number;
-        /**
-         * @description Target number of carbs in grams per day.
-         * @example 200
-         */
-        targetCarbs: number;
-        /**
-         * @description Target number of fats in grams per day.
-         * @example 80
-         */
-        targetFats: number;
-        /**
-         * @description Target water intake in milliliters per day.
-         * @example 2000
-         */
-        targetWaterIntake: number;
-        UserGoalsInput: {
-            targetCalories?: components["schemas"]["targetCalories"];
-            targetProteins?: components["schemas"]["targetProteins"];
-            targetCarbs?: components["schemas"]["targetCarbs"];
-            targetFats?: components["schemas"]["targetFats"];
-            targetWaterIntake?: components["schemas"]["targetWaterIntake"];
+        UserInput: {
+            name?: string;
+            /** Format: email */
+            email?: string;
+            personalData?: components["schemas"]["PersonalData"];
+            /** @enum {string} */
+            activityLevel?: "sedentary" | "light" | "moderate" | "active" | "extra_active";
+            /** @enum {string} */
+            goal?: "lose_weight" | "maintain_weight" | "gain_weight";
+            dailyTargets?: components["schemas"]["DailyTargets"];
         };
         /** @description Core nutritional information per 100g. */
         Nutriments: {

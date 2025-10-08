@@ -1,6 +1,6 @@
 import type { ApiComponents } from "@/shared/api/schema";
 
-export type Gender = ApiComponents["schemas"]["User"]["gender"];
+export type Gender = "male" | "female";
 export type ActivityLevel = ApiComponents["schemas"]["User"]["activityLevel"];
 export type Goal = ApiComponents["schemas"]["User"]["goal"];
 
