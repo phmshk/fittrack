@@ -1,4 +1,4 @@
-import { BarChart3, Cog, LayoutGrid, Target, UserIcon } from "lucide-react";
+import { Cog, LayoutGrid, Target, UserIcon } from "lucide-react";
 import type { ProfileSearchSchema } from "./zodSchema";
 
 export type ProfileTab = {
@@ -21,12 +21,6 @@ export const profileTabs: Record<string, ProfileTab> = {
     href: "personal-info",
     Icon: UserIcon,
     isNavRoute: false,
-  },
-  PROGRESS: {
-    title: "Progress",
-    href: "progress",
-    Icon: BarChart3,
-    isNavRoute: true,
   },
   SETTINGS: {
     title: "Settings",
