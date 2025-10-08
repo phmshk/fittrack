@@ -1,1 +1,2 @@
-export { SiteNavigation } from "./ui/SiteNavigation";
+export { DesktopNavigation } from "./ui/DesktopNavigation";
+export { MobileNavigation } from "./ui/MobileNavigation";

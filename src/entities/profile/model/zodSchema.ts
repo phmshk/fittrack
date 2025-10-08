@@ -2,7 +2,7 @@ import z from "zod";
 
 export const profileSchema = z.object({
   tab: z
-    .enum(["overview", "goals", "personal-info", "progress", "settings"])
+    .enum(["overview", "goals", "personal-info", "settings"])
     .catch("overview"),
 });
 

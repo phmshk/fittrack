@@ -1,29 +1,12 @@
 import { useGetUserData } from "@/entities/user";
 import { Container } from "@/shared/ui/container";
 import { Spinner } from "@/shared/ui/spinner";
-import { useSearch } from "@tanstack/react-router";
-import { OverviewTab } from "./tabs/OverviewTab";
-import { GoalsTab } from "./tabs/GoalsTab";
-import { PersonalInfoTab } from "./tabs/PersonalInfoTab";
-import { ProgressTab } from "./tabs/ProgressTab";
-import { SettingsTab } from "./tabs/SettingsTab";
-import type { ProfileSearchSchema } from "../model/zodSchema";
 import { ProfileSidebar } from "@/widgets/profileSidebar";
 import { H1 } from "@/shared/ui/headings";
-
-const tabComponents: Record<ProfileSearchSchema["tab"], React.ComponentType> = {
-  overview: OverviewTab,
-  goals: GoalsTab,
-  "personal-info": PersonalInfoTab,
-  progress: ProgressTab,
-  settings: SettingsTab,
-};
+import { ActiveTabComponent } from "@/widgets/profileTabs";
 
 export const ProfilePage = () => {
   const { data: user, isLoading } = useGetUserData();
-  const { tab } = useSearch({ from: "/_protectedRoutes/profile/" });
-
-  const ActiveTabComponent = tabComponents[tab] || OverviewTab;
 
   if (isLoading || !user) {
     return (

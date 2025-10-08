@@ -49,7 +49,7 @@ export const MealCard = (props: MealCardProps) => {
 
   return (
     <Card className="w-full max-w-lg border-none">
-      <CardHeader className="flex items-center justify-between gap-4 pt-4 pb-2">
+      <CardHeader className="flex items-center justify-between gap-4 pb-2 pt-4">
         <div>
           <CardTitle className="text-4xl font-bold sm:text-5xl">
             {mealType}
@@ -71,9 +71,9 @@ export const MealCard = (props: MealCardProps) => {
       </CardHeader>
       <CardContent className="h-full">
         {foods.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center text-secondary-foreground">
-            <div className="mb-4 rounded-full border-4 border-primary/40 p-8">
-              <Utensils className="size-16 text-primary-foreground" />
+          <div className="text-secondary-foreground flex h-full flex-col items-center justify-center">
+            <div className="border-primary/40 mb-4 rounded-full border-4 p-8">
+              <Utensils className="text-primary-foreground size-16" />
             </div>
             <p className="mb-4 text-center text-sm">
               No food added yet for {mealType}.
@@ -84,7 +84,7 @@ export const MealCard = (props: MealCardProps) => {
             {visibleFoods.map((food) => (
               <li
                 key={food.id}
-                className="border-b border-foreground/10 last:border-0"
+                className="border-foreground/10 border-b last:border-0"
               >
                 <FoodItem
                   food={food}
@@ -98,7 +98,7 @@ export const MealCard = (props: MealCardProps) => {
           (isExpanded ? (
             <Button
               variant="link"
-              className="mt-2 w-full text-muted-foreground"
+              className="text-muted-foreground mt-2 w-full"
               onClick={() => setIsExpanded(false)}
             >
               Show less foods
@@ -106,7 +106,7 @@ export const MealCard = (props: MealCardProps) => {
           ) : (
             <Button
               variant="link"
-              className="mt-2 w-full text-muted-foreground"
+              className="text-muted-foreground mt-2 w-full"
               onClick={() => setIsExpanded(true)}
             >
               Show all ({foods.length}) foods
@@ -124,7 +124,7 @@ export const MealCard = (props: MealCardProps) => {
             triggerButtonProps={{
               className: "flex-grow",
               children: (
-                <span className="flex items-center gap-2 text-primary-foreground">
+                <span className="text-primary-foreground flex items-center gap-2">
                   <PlusCircleIcon className="size-4" />
                   Add Food
                 </span>
@@ -155,7 +155,7 @@ export const MealCard = (props: MealCardProps) => {
           }}
           asChild
         >
-          <Link to="/addFood" state={{ from: "mealCard" }}>
+          <Link to="/addFood" state={{ from: "allowedToAddFood" }}>
             <Database className="mr-2 size-4" />
             Add from Open Food Facts
           </Link>

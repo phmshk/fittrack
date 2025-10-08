@@ -5,7 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
-import { Target } from "lucide-react";
 
 export const GoalsTab = () => {
   return (
@@ -17,7 +16,6 @@ export const GoalsTab = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="text-muted-foreground flex h-64 flex-col items-center justify-center space-y-4 text-center">
-        <Target className="h-12 w-12" />
         <p>Goals will be available here in a future update.</p>
       </CardContent>
     </Card>
