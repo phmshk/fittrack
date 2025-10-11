@@ -3,6 +3,7 @@ import { openFoodFactsHandlers } from "./openFoodFactsHandlers";
 import { foodLogsHandlers } from "./foodLogsHandlers";
 import { usersHandlers } from "./userHandlers";
 import { authHandlers } from "./authHandlers";
+import { weightLogHandlers } from "./weightLogsHandlers";
 
 export const handlers = [
   // Allow passthrough for image requests to avoid blocking images
@@ -13,4 +14,5 @@ export const handlers = [
   ...foodLogsHandlers,
   ...usersHandlers,
   ...authHandlers,
+  ...weightLogHandlers,
 ];

@@ -13,3 +13,7 @@ export type DailyTargets = ApiComponents["schemas"]["DailyTargets"];
 
 // --- User Session Types ---
 export type UserSession = ApiComponents["schemas"]["AuthResponse"];
+
+// --- User Progress Types ---
+export type WeightLog = ApiComponents["schemas"]["WeightLog"];
+export type WeightLogInput = ApiComponents["schemas"]["WeightLogInput"];

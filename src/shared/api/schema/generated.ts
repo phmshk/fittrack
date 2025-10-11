@@ -407,6 +407,124 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user/weight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add a new weight log entry
+         * @description Creates a new entry for the user's weight on a specific date.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["WeightLogInput"];
+                };
+            };
+            responses: {
+                /** @description Successfully created. */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["User"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/weight/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update a weight log entry
+         * @description Updates an existing weight log entry for the user.
+         */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The ID of the weight log entry to update. */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["WeightLogInput"];
+                };
+            };
+            responses: {
+                /** @description Weight log entry successfully updated. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["User"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        post?: never;
+        /**
+         * Delete a weight log entry
+         * @description Deletes a specific weight log entry for the user.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The ID of the weight log entry to delete. */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Weight log entry successfully deleted. */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/cgi/search.pl": {
         parameters: {
             query?: never;
@@ -556,6 +674,24 @@ export interface components {
              */
             targetWaterIntake?: number;
         };
+        WeightLog: {
+            /**
+             * Format: uuid
+             * @description Unique identifier for the weight log entry.
+             */
+            readonly id: string;
+            /**
+             * Format: date
+             * @description The date of the weight entry.
+             * @example 2025-10-08
+             */
+            date: string;
+            /**
+             * @description Weight in kilograms.
+             * @example 74.5
+             */
+            weight: number;
+        };
         User: {
             /**
              * Format: uuid
@@ -584,6 +720,7 @@ export interface components {
             /** @enum {string} */
             goal?: "lose_weight" | "maintain_weight" | "gain_weight";
             dailyTargets?: components["schemas"]["DailyTargets"];
+            weightHistory?: components["schemas"]["WeightLog"][];
         };
         AuthResponse: {
             /** @description JWT access token for authentication. */
@@ -761,6 +898,20 @@ export interface components {
             /** @enum {string} */
             goal?: "lose_weight" | "maintain_weight" | "gain_weight";
             dailyTargets?: components["schemas"]["DailyTargets"];
+            weightHistory?: components["schemas"]["WeightLog"][];
+        };
+        WeightLogInput: {
+            /**
+             * Format: date
+             * @description The date of the weight entry.
+             * @example 2025-10-08
+             */
+            date: string;
+            /**
+             * @description Weight in kilograms.
+             * @example 74.5
+             */
+            weight: number;
         };
         /** @description Core nutritional information per 100g. */
         Nutriments: {

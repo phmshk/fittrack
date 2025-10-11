@@ -66,6 +66,14 @@ paths:
       $ref: "./endpoints/user.yaml#/components/getUser"
     put:
       $ref: "./endpoints/user.yaml#/components/updateUser"
+  /user/weight:
+    post:
+      $ref: "./endpoints/user.yaml#/components/addWeightLog"
+  /user/weight/{id}:
+    put:
+      $ref: "./endpoints/user.yaml#/components/updateWeightLog"
+    delete:
+      $ref: "./endpoints/user.yaml#/components/deleteWeightLog"
 
   # --- Open Food Facts Endpoints ---
   /cgi/search.pl:

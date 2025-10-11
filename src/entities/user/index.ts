@@ -4,6 +4,11 @@ export {
   userQueryOptions,
 } from "./api/userApi";
 export {
+  useAddWeightLog,
+  useUpdateWeightLog,
+  useDeleteWeightLog,
+} from "./api/weightLogApi";
+export {
   useSessionStore,
   useCurrentUser,
   useIsAuthenticated,
@@ -14,4 +19,7 @@ export type {
   UserSession,
   PersonalData,
   DailyTargets,
+  WeightLog,
+  WeightLogInput,
 } from "./model/types";
+export { type WeightLogFormValues, formSchema } from "./model/zodWeightSchema";

@@ -13,6 +13,7 @@ import { Route as SetupRouteImport } from './app/routes/setup'
 import { Route as AuthRouteImport } from './app/routes/auth'
 import { Route as ProtectedRoutesRouteImport } from './app/routes/_protectedRoutes'
 import { Route as ProtectedRoutesIndexRouteImport } from './app/routes/_protectedRoutes/index'
+import { Route as ProtectedRoutesProgressRouteImport } from './app/routes/_protectedRoutes/progress'
 import { Route as ProtectedRoutesDiaryRouteImport } from './app/routes/_protectedRoutes/diary'
 import { Route as ProtectedRoutesAddFoodRouteImport } from './app/routes/_protectedRoutes/addFood'
 import { Route as ProtectedRoutesProfileIndexRouteImport } from './app/routes/_protectedRoutes/profile/index'
@@ -34,6 +35,11 @@ const ProtectedRoutesRoute = ProtectedRoutesRouteImport.update({
 const ProtectedRoutesIndexRoute = ProtectedRoutesIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => ProtectedRoutesRoute,
+} as any)
+const ProtectedRoutesProgressRoute = ProtectedRoutesProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
   getParentRoute: () => ProtectedRoutesRoute,
 } as any)
 const ProtectedRoutesDiaryRoute = ProtectedRoutesDiaryRouteImport.update({
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/setup': typeof SetupRoute
   '/addFood': typeof ProtectedRoutesAddFoodRoute
   '/diary': typeof ProtectedRoutesDiaryRoute
+  '/progress': typeof ProtectedRoutesProgressRoute
   '/': typeof ProtectedRoutesIndexRoute
   '/profile': typeof ProtectedRoutesProfileIndexRoute
 }
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/setup': typeof SetupRoute
   '/addFood': typeof ProtectedRoutesAddFoodRoute
   '/diary': typeof ProtectedRoutesDiaryRoute
+  '/progress': typeof ProtectedRoutesProgressRoute
   '/': typeof ProtectedRoutesIndexRoute
   '/profile': typeof ProtectedRoutesProfileIndexRoute
 }
@@ -76,14 +84,29 @@ export interface FileRoutesById {
   '/setup': typeof SetupRoute
   '/_protectedRoutes/addFood': typeof ProtectedRoutesAddFoodRoute
   '/_protectedRoutes/diary': typeof ProtectedRoutesDiaryRoute
+  '/_protectedRoutes/progress': typeof ProtectedRoutesProgressRoute
   '/_protectedRoutes/': typeof ProtectedRoutesIndexRoute
   '/_protectedRoutes/profile/': typeof ProtectedRoutesProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/auth' | '/setup' | '/addFood' | '/diary' | '/' | '/profile'
+  fullPaths:
+    | '/auth'
+    | '/setup'
+    | '/addFood'
+    | '/diary'
+    | '/progress'
+    | '/'
+    | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/auth' | '/setup' | '/addFood' | '/diary' | '/' | '/profile'
+  to:
+    | '/auth'
+    | '/setup'
+    | '/addFood'
+    | '/diary'
+    | '/progress'
+    | '/'
+    | '/profile'
   id:
     | '__root__'
     | '/_protectedRoutes'
@@ -91,6 +114,7 @@ export interface FileRouteTypes {
     | '/setup'
     | '/_protectedRoutes/addFood'
     | '/_protectedRoutes/diary'
+    | '/_protectedRoutes/progress'
     | '/_protectedRoutes/'
     | '/_protectedRoutes/profile/'
   fileRoutesById: FileRoutesById
@@ -131,6 +155,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedRoutesIndexRouteImport
       parentRoute: typeof ProtectedRoutesRoute
     }
+    '/_protectedRoutes/progress': {
+      id: '/_protectedRoutes/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProtectedRoutesProgressRouteImport
+      parentRoute: typeof ProtectedRoutesRoute
+    }
     '/_protectedRoutes/diary': {
       id: '/_protectedRoutes/diary'
       path: '/diary'
@@ -158,6 +189,7 @@ declare module '@tanstack/react-router' {
 interface ProtectedRoutesRouteChildren {
   ProtectedRoutesAddFoodRoute: typeof ProtectedRoutesAddFoodRoute
   ProtectedRoutesDiaryRoute: typeof ProtectedRoutesDiaryRoute
+  ProtectedRoutesProgressRoute: typeof ProtectedRoutesProgressRoute
   ProtectedRoutesIndexRoute: typeof ProtectedRoutesIndexRoute
   ProtectedRoutesProfileIndexRoute: typeof ProtectedRoutesProfileIndexRoute
 }
@@ -165,6 +197,7 @@ interface ProtectedRoutesRouteChildren {
 const ProtectedRoutesRouteChildren: ProtectedRoutesRouteChildren = {
   ProtectedRoutesAddFoodRoute: ProtectedRoutesAddFoodRoute,
   ProtectedRoutesDiaryRoute: ProtectedRoutesDiaryRoute,
+  ProtectedRoutesProgressRoute: ProtectedRoutesProgressRoute,
   ProtectedRoutesIndexRoute: ProtectedRoutesIndexRoute,
   ProtectedRoutesProfileIndexRoute: ProtectedRoutesProfileIndexRoute,
 }

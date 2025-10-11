@@ -29,7 +29,7 @@ const RootComponent = () => {
   const title = showBackButton ? currentPage?.staticData.title : "";
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       {showHeader && (
         <Header
           title={title}
@@ -37,12 +37,12 @@ const RootComponent = () => {
           isMobile={isMobile}
         />
       )}
-      <main>
+      <main className="flex-grow">
         <Outlet />
       </main>
       {showFooter && <Footer isMobile={isMobile} />}
       <Toaster duration={2000} position="top-center" />
-    </>
+    </div>
   );
 };
 
