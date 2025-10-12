@@ -48,7 +48,7 @@ export const WeightChart = (props: WeightChartProps) => {
 
   if (data.length < 2) {
     return (
-      <Card className="mb-6">
+      <Card className="mb-6 border-none">
         <CardHeader>
           <CardTitle>Weight Trend</CardTitle>
           <CardDescription>
