@@ -339,6 +339,141 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/water-logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add a new water log entry
+         * @description Creates a new entry for consumed water on a specific date.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["WaterLogInput"];
+                };
+            };
+            responses: {
+                /** @description Successfully created. */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["WaterLog"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/water-logs/{date}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get water entry for a specific day
+         * @description Retrieves the water log entry for the specified date.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Date in YYYY-MM-DD format */
+                    date: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful response with the water log entry. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["WaterLog"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/water-logs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update an existing water entry */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Entry ID to update */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        amount?: number;
+                    };
+                };
+            };
+            responses: {
+                /** @description Entry successfully updated. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["WaterLog"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user": {
         parameters: {
             query?: never;
@@ -677,18 +812,18 @@ export interface components {
         WeightLog: {
             /**
              * Format: uuid
-             * @description Unique identifier for the weight log entry.
+             * @description Unique identifier for the weight entry.
              */
             readonly id: string;
             /**
              * Format: date
-             * @description The date of the weight entry.
-             * @example 2025-10-08
+             * @description Date of the weight entry in YYYY-MM-DD format.
+             * @example 2025-10-12
              */
             date: string;
             /**
-             * @description Weight in kilograms.
-             * @example 74.5
+             * @description User's weight in kilograms.
+             * @example 75.5
              */
             weight: number;
         };
@@ -888,6 +1023,33 @@ export interface components {
         UnauthorizedError: unknown;
         /** @description Resource not found. The requested resource does not exist. */
         NotFoundError: unknown;
+        /**
+         * @description Total amount of water consumed in milliliters.
+         * @example 1500
+         */
+        amount: number;
+        WaterLogInput: {
+            date: components["schemas"]["date"];
+            amount: components["schemas"]["amount"];
+        };
+        WaterLog: {
+            /**
+             * Format: uuid
+             * @description Unique identifier (generated by the server).
+             */
+            readonly id: string;
+            /**
+             * Format: date
+             * @description Date of the entry in YYYY-MM-DD format.
+             * @example 2025-09-16
+             */
+            date: string;
+            /**
+             * @description Total amount of water consumed in milliliters.
+             * @example 1500
+             */
+            amount: number;
+        };
         UserInput: {
             name?: string;
             /** Format: email */
@@ -900,18 +1062,20 @@ export interface components {
             dailyTargets?: components["schemas"]["DailyTargets"];
             weightHistory?: components["schemas"]["WeightLog"][];
         };
+        /**
+         * Format: date
+         * @description Date of the weight entry in YYYY-MM-DD format.
+         * @example 2025-10-12
+         */
+        "properties-date": string;
+        /**
+         * @description User's weight in kilograms.
+         * @example 75.5
+         */
+        weight: number;
         WeightLogInput: {
-            /**
-             * Format: date
-             * @description The date of the weight entry.
-             * @example 2025-10-08
-             */
-            date: string;
-            /**
-             * @description Weight in kilograms.
-             * @example 74.5
-             */
-            weight: number;
+            date: components["schemas"]["properties-date"];
+            weight: components["schemas"]["weight"];
         };
         /** @description Core nutritional information per 100g. */
         Nutriments: {

@@ -1,41 +1,5 @@
 components:
   schemas:
-    WeightLog:
-      type: object
-      required:
-        - id
-        - date
-        - weight
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: "Unique identifier for the weight log entry."
-          readOnly: true
-        date:
-          type: string
-          format: date
-          description: "The date of the weight entry."
-          example: "2025-10-08"
-        weight:
-          type: number
-          description: "Weight in kilograms."
-          example: 74.5
-    WeightLogInput:
-      type: object
-      required:
-        - date
-        - weight
-      properties:
-        date:
-          type: string
-          format: date
-          description: "The date of the weight entry."
-          example: "2025-10-08"
-        weight:
-          type: number
-          description: "Weight in kilograms."
-          example: 74.5
     PersonalData:
       type: object
       properties:
@@ -92,7 +56,7 @@ components:
         weightHistory:
           type: array
           items:
-            $ref: "#/components/schemas/WeightLog"
+            $ref: "./weight-logs.yaml#/components/schemas/WeightLog"
     User:
       type: object
       required:
@@ -131,7 +95,7 @@ components:
         weightHistory:
           type: array
           items:
-            $ref: "#/components/schemas/WeightLog"
+            $ref: "./weight-logs.yaml#/components/schemas/WeightLog"
 
   getUser:
     summary: Get current user data
@@ -168,74 +132,3 @@ components:
               $ref: "#/components/schemas/User"
       "401":
         $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
-
-  addWeightLog:
-    summary: Add a new weight log entry
-    description: Creates a new entry for the user's weight on a specific date.
-    security:
-      - bearerAuth: []
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/WeightLogInput"
-    responses:
-      "201": # Created
-        description: Successfully created.
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User" # Return the updated user object
-      "401": # Unauthorized
-        $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
-  updateWeightLog:
-    summary: Update a weight log entry
-    description: Updates an existing weight log entry for the user.
-    security:
-      - bearerAuth: []
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: The ID of the weight log entry to update.
-        schema:
-          type: string
-          format: uuid
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/WeightLogInput"
-    responses:
-      "200":
-        description: Weight log entry successfully updated.
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
-      "401":
-        $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
-      "404":
-        $ref: "../shared/responses.yaml#/components/responses/NotFoundError"
-  deleteWeightLog:
-    summary: Delete a weight log entry
-    description: Deletes a specific weight log entry for the user.
-    security:
-      - bearerAuth: []
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: The ID of the weight log entry to delete.
-        schema:
-          type: string
-          format: uuid
-    responses:
-      "204":
-        description: Weight log entry successfully deleted.
-      "401":
-        $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
-      "404":
-        $ref: "../shared/responses.yaml#/components/responses/NotFoundError"

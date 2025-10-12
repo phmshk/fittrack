@@ -45,17 +45,14 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
       {
         name: "Proteins",
         value: daySummary.consumedProteins,
-        grams: daySummary.consumedProteins,
       },
       {
         name: "Carbs",
         value: daySummary.consumedCarbs,
-        grams: daySummary.consumedCarbs,
       },
       {
         name: "Fats",
         value: daySummary.consumedFats,
-        grams: daySummary.consumedFats,
       },
     ].filter((item) => item.value > 0);
   }, [daySummary]);
@@ -64,7 +61,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
 
   if (totalCalories === 0) {
     return (
-      <Card className="border-none">
+      <Card className="h-full border-none">
         <CardHeader>
           <CardTitle>Macronutrient Distribution</CardTitle>
           <CardDescription>
@@ -81,7 +78,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
   }
 
   return (
-    <Card className="mb-6 border-none">
+    <Card className="h-full border-none">
       <CardHeader>
         <CardTitle>Macronutrient Distribution</CardTitle>
         <CardDescription>
@@ -91,7 +88,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
       <CardContent className="px-6">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square h-full"
         >
           <PieChart>
             <ChartTooltip
