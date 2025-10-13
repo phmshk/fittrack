@@ -8,6 +8,8 @@ import { Container } from "@/shared/ui/container/ui/Container";
 import { useGetUserData } from "@/entities/user";
 import { MacronutrientsChart } from "@/widgets/macronutrientsSummary";
 import { WaterTracker } from "@/widgets/waterTracker";
+import { Spinner } from "@/shared/ui/spinner";
+import { Card, CardContent } from "@/shared/shadcn/components/ui/card";
 
 export const DashboardPage = () => {
   const today = useDateStore((state) => state.today);
@@ -15,7 +17,16 @@ export const DashboardPage = () => {
   const { data: foodLogs, isLoading: isLoadingLogs } = useGetFoodsByDate(today);
   const { data: userData, isLoading: isLoadingGoals } = useGetUserData();
   const summary = useDaySummary(foodLogs, userData?.dailyTargets);
+  const waterTarget = userData?.dailyTargets?.targetWaterIntake;
   const isLoading = isLoadingLogs || isLoadingGoals;
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Spinner text="Loading user data..." />
+      </Container>
+    );
+  }
 
   return (
     <Container>
@@ -35,7 +46,17 @@ export const DashboardPage = () => {
           <MacronutrientsChart daySummary={summary} />
         </div>
         <div className="col-span-1 md:col-span-2 md:row-span-1">
-          <WaterTracker date={today} />
+          {waterTarget ? (
+            <WaterTracker date={today} targetWaterIntake={waterTarget} />
+          ) : (
+            <Card className="border-none">
+              <CardContent className="flex h-48 items-center justify-center">
+                <span className="text-muted-foreground">
+                  No water intake goal set
+                </span>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
 

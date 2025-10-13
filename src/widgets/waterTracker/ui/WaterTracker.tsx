@@ -1,4 +1,3 @@
-import { useGetUserData } from "@/entities/user";
 import { useGetWaterByDate } from "@/entities/water";
 import {
   Card,
@@ -14,19 +13,22 @@ import { HandleWater } from "@/features/handleWater";
 
 interface WaterTrackerProps {
   date: Date;
+  targetWaterIntake: number;
 }
 
 const WATER_PORTION_ML = 250;
 
-export const WaterTracker = ({ date }: WaterTrackerProps) => {
-  const { data: user, isLoading: isLoadingUser } = useGetUserData();
-  const { data: waterLog, isLoading: isLoadingWater } = useGetWaterByDate(date);
+export const WaterTracker = (props: WaterTrackerProps) => {
+  const { date, targetWaterIntake } = props;
+  const { data: waterLog, isLoading } = useGetWaterByDate(date);
 
-  const isLoading = isLoadingUser || isLoadingWater;
-
-  const targetWater = user?.dailyTargets?.targetWaterIntake || 2000;
+  const targetWater = targetWaterIntake;
   const currentWater = waterLog?.amount || 0;
-  const [currentAmount, setCurrentAmount] = useState(currentWater / 250);
+  const [currentAmount, setCurrentAmount] = useState(
+    currentWater / WATER_PORTION_ML,
+  );
+
+  console.log("RERENDER!!!!!!");
 
   if (isLoading) {
     return (
@@ -48,11 +50,7 @@ export const WaterTracker = ({ date }: WaterTrackerProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-col justify-center gap-2 pt-2">
-          <WaterWithIcons
-            target={targetWater}
-            numberOfItems={currentAmount}
-            setIconsAmount={setCurrentAmount}
-          />
+          <WaterWithIcons target={targetWater} numberOfItems={currentAmount} />
 
           <div className="mt-4 flex items-center justify-center gap-4">
             <HandleWater

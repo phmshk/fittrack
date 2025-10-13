@@ -121,6 +121,7 @@
   }
 }
 
+/* Custom Animations */
 @theme {
   --animate-fill-from-bottom: fill-from-bottom 0.7s ease-out forwards;
   --animate-fill-to-bottom: fill-to-bottom 0.7s ease-out forwards;
@@ -142,8 +143,4 @@
       clip-path: inset(100% 0 0 0);
     }
   }
-}
-
-.is-icon-hidden {
-  clip-path: inset(100% 0 0 0);
 }
