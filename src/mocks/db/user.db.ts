@@ -67,7 +67,7 @@ const seedData = {
     gender: "male",
   } as PersonalData,
   dailyTargets: {
-    targetCalories: 2500,
+    targetCalories: 2000,
     targetProteins: 180,
     targetCarbs: 250,
     targetFats: 80,

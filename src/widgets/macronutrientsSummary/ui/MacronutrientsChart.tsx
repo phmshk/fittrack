@@ -20,15 +20,15 @@ import { Cell, Label, Pie, PieChart } from "recharts";
 const chartConfig = {
   proteins: {
     label: "Proteins",
-    color: "var(--chart-1)",
+    color: "var(--proteins-color)",
   },
   carbs: {
     label: "Carbs",
-    color: "var(--chart-2)",
+    color: "var(--carbs-color)",
   },
   fats: {
     label: "Fats",
-    color: "var(--chart-3)",
+    color: "var(--fats-color)",
   },
 } satisfies ChartConfig;
 

@@ -98,6 +98,38 @@ components:
         grams:
           $ref: "#/components/schemas/FoodLog/properties/grams"
 
+  getFoodLogs:
+    summary: Get food log entries for a date range
+    description: Retrieves all food log entries within a specified date range.
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: from
+        in: query
+        required: true
+        description: Start date in YYYY-MM-DD format
+        schema:
+          type: string
+          format: date
+      - name: to
+        in: query
+        required: true
+        description: End date in YYYY-MM-DD format
+        schema:
+          type: string
+          format: date
+    responses:
+      "200":
+        description: Successful response with a list of entries.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/FoodLog"
+      "401":
+        $ref: "../shared/responses.yaml#/components/responses/UnauthorizedError"
+
   createFoodLog:
     summary: Add a new food log entry
     description: Creates a new entry for a consumed food item.

@@ -42,6 +42,8 @@ paths:
 
   # --- Endpoints for /food-logs ---
   /food-logs:
+    get:
+      $ref: "./endpoints/food-logs.yaml#/components/getFoodLogs"
     post:
       $ref: "./endpoints/food-logs.yaml#/components/createFoodLog"
 

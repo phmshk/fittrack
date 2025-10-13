@@ -6,6 +6,34 @@ import { verifyAuth } from "../lib/helpers";
 export const foodLogsHandlers = [
   // --- Handlers for food logs ---
 
+  // Get food logs for a date range
+  http.get("/api/food-logs", async ({ request }) => {
+    const authResult = await verifyAuth(request);
+    if (!authResult.success) {
+      return authResult.response;
+    }
+    const { sub: userId } = authResult.payload!;
+
+    const url = new URL(request.url);
+    const from = url.searchParams.get("from");
+    const to = url.searchParams.get("to");
+
+    if (!from || !to) {
+      return HttpResponse.json(
+        { message: "Missing 'from' or 'to' date parameters" },
+        { status: 400 },
+      );
+    }
+
+    const logs = db.getFoodLogsByDateRange(userId, from, to);
+    // simulate network delay
+    await new Promise((res) => setTimeout(res, 1000));
+    console.log(
+      `[MSW] GET /api/food-logs?from=${from}&to=${to}: found ${logs.length} logs`,
+    );
+    return HttpResponse.json(logs);
+  }),
+
   // Get food logs for a specific date
   http.get("/api/food-logs/:date", async ({ params, request }) => {
     const authResult = await verifyAuth(request);

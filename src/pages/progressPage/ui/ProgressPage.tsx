@@ -2,11 +2,15 @@ import { useGetUserData } from "@/entities/user";
 import { Container } from "@/shared/ui/container";
 import { H1 } from "@/shared/ui/headings";
 import { Spinner } from "@/shared/ui/spinner";
+import { ProgressSummary } from "@/widgets/progressSummary";
+import { RangeTabs, type DaysRange } from "@/widgets/rangeTabs";
 import { WeightHistory } from "@/widgets/weightHistory";
+import { useState } from "react";
 
 export const ProgressPage = () => {
   const { data: user, isLoading: isLoadingUser } = useGetUserData();
   const weightHistory = user?.weightHistory || [];
+  const [range, setRange] = useState<DaysRange>("30d");
 
   const isLoading = isLoadingUser;
 
@@ -26,9 +30,9 @@ export const ProgressPage = () => {
           Track and manage your weight and nutrition over time.
         </p>
       </div>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <WeightHistory weightHistory={weightHistory} />
-      </div>
+      <RangeTabs value={range} setRange={setRange} />
+      <WeightHistory weightHistory={weightHistory} range={range} />
+      <ProgressSummary range={range} />
     </Container>
   );
 };

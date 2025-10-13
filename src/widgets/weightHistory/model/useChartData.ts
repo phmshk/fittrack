@@ -1,8 +1,8 @@
 import type { WeightLog } from "@/entities/user";
 import { formatDateForApi } from "@/shared/lib/utils";
+import type { DaysRange } from "@/widgets/rangeTabs";
 import { startOfWeek, subDays } from "date-fns";
 import { useMemo } from "react";
-import type { DaysRange } from "./types";
 
 /**
  * Aggregate weight log data by week.

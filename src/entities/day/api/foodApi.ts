@@ -10,7 +10,8 @@ import type { FormOutput } from "../model/zodFoodSchema";
 export const foodKeys = {
   all: ["food-logs"] as const,
   lists: () => [...foodKeys.all, "list"] as const,
-  list: (date: string) => [...foodKeys.lists(), { date }] as const,
+  list: (date: string | { from: string; to: string }) =>
+    [...foodKeys.lists(), { date }] as const,
 };
 
 // --- Hooks for food logs ---
@@ -29,6 +30,30 @@ export const useGetFoodsByDate = (date: Date) => {
       if (error) throw error;
       return data;
     },
+  });
+};
+
+export const useGetFoodsByDateRange = (params: { from: Date; to: Date }) => {
+  const { from, to } = params;
+  const fromString = formatDateForApi(from);
+  const toString = formatDateForApi(to);
+
+  return useQuery({
+    queryKey: foodKeys.list({ from: fromString, to: toString }),
+    queryFn: async () => {
+      const { data, error } = await apiClient.GET("/food-logs", {
+        params: {
+          query: {
+            from: fromString,
+            to: toString,
+          },
+        },
+      });
+
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!(from && to),
   });
 };
 

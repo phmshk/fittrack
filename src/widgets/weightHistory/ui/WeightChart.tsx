@@ -1,11 +1,5 @@
 import type { WeightLog } from "@/entities/user";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/shared/shadcn/components/ui/card";
+import { Card, CardContent } from "@/shared/shadcn/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
@@ -14,9 +8,9 @@ import {
 } from "@/shared/shadcn/components/ui/chart";
 import { useMemo } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-import { useBreakpoint } from "@/shared/lib";
-import type { DaysRange } from "../model/types";
+import { useBreakpoint, useCalculateTicksForXAxis } from "@/shared/lib";
 import { useChartData } from "../model/useChartData";
+import type { DaysRange } from "@/widgets/rangeTabs";
 
 const chartConfig = {
   weight: {
@@ -45,16 +39,12 @@ export const WeightChart = (props: WeightChartProps) => {
 
     return [Math.floor(minWeight - padding), Math.ceil(maxWeight + padding)];
   }, [data]);
+  // Dynamically generate ticks for the XAxis to prevent cluttering and ensure the last tick is always visible.
+  const xAxisTicks = useCalculateTicksForXAxis(chartData, isMobile);
 
   if (data.length < 2) {
     return (
       <Card className="mb-6 border-none">
-        <CardHeader>
-          <CardTitle>Weight Trend</CardTitle>
-          <CardDescription>
-            A chart showing your weight progress over time.
-          </CardDescription>
-        </CardHeader>
         <CardContent>
           <div className="text-muted-foreground flex h-64 items-center justify-center">
             <p>Add at least two weight entries to see a chart.</p>
@@ -66,10 +56,6 @@ export const WeightChart = (props: WeightChartProps) => {
 
   return (
     <Card className="mb-6 border-none">
-      <CardHeader>
-        <CardTitle>Weight Trend</CardTitle>
-        <CardDescription>Your weight progress over time.</CardDescription>
-      </CardHeader>
       <CardContent className="px-6">
         <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
           <LineChart accessibilityLayer data={chartData} margin={{ right: 20 }}>
@@ -81,7 +67,7 @@ export const WeightChart = (props: WeightChartProps) => {
               axisLine={false}
               stroke="var(--muted-foreground)"
               fontSize={12}
-              interval={isMobile ? Math.floor(chartData.length / 4) : 0} // Adjust interval based on screen size avg. 4 items for mobile screen
+              ticks={xAxisTicks}
             />
             <YAxis
               unit="kg"

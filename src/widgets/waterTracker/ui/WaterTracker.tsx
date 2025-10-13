@@ -28,8 +28,6 @@ export const WaterTracker = (props: WaterTrackerProps) => {
     currentWater / WATER_PORTION_ML,
   );
 
-  console.log("RERENDER!!!!!!");
-
   if (isLoading) {
     return (
       <Card className="border-none">

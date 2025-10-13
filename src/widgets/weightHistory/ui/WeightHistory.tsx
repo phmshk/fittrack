@@ -1,47 +1,27 @@
 import type { WeightLog } from "@/entities/user";
 import { WeightChart } from "./WeightChart";
-import { useState } from "react";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "@/shared/shadcn/components/ui/tabs";
-import type { DaysRange } from "../model/types";
+import type { DaysRange } from "@/widgets/rangeTabs";
+import { H2 } from "@/shared/ui/headings";
 
 interface WeightHistoryProps {
   weightHistory: WeightLog[];
+  range: DaysRange;
 }
 
 export const WeightHistory = (props: WeightHistoryProps) => {
-  const { weightHistory } = props;
-  const [range, setRange] = useState<DaysRange>("30d");
+  const { weightHistory, range } = props;
   return (
-    <div>
-      <WeightChart data={weightHistory} range={range} />
-      <div className="flex justify-center">
-        <Tabs
-          defaultValue="30d"
-          onValueChange={(value) => setRange(value as DaysRange)}
-        >
-          <TabsList>
-            <TabsTrigger className="cursor-pointer" value="7d">
-              7 days
-            </TabsTrigger>
-            <TabsTrigger className="cursor-pointer" value="30d">
-              30 days
-            </TabsTrigger>
-            <TabsTrigger className="cursor-pointer" value="90d">
-              90 days
-            </TabsTrigger>
-            <TabsTrigger className="cursor-pointer" value="1y">
-              1 year
-            </TabsTrigger>
-            <TabsTrigger className="cursor-pointer" value="all">
-              All time
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+    <>
+      <div>
+        <H2>Your Weight Trend</H2>
+        <p className="text-muted-foreground">
+          A chart showing your weight progress over time.
+        </p>
       </div>
-    </div>
+
+      <div className="max-w-2xl">
+        <WeightChart data={weightHistory} range={range} />
+      </div>
+    </>
   );
 };

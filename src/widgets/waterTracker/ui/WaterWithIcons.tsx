@@ -17,8 +17,8 @@ export const WaterWithIcons = (props: WaterWithIconsProps) => {
 
           <div className="absolute left-0 top-0">
             <GlassWater
-              className={`size-10 ${isVisible ? "text-blue-600" : "text-muted"}`}
-              stroke="currentColor"
+              className={`size-10`}
+              stroke={isVisible ? "var(--water-color)" : "transparent"}
               strokeWidth={1.5}
             />
           </div>
