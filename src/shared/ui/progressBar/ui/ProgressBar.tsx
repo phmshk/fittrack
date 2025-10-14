@@ -16,6 +16,7 @@ export const ProgressBar = (props: ProgressBarProps) => {
     goalValue > 0 ? (currentValue / goalValue) * 100 : 0;
 
   const isOverGoal = currentValue > goalValue;
+  const color = isOverGoal ? "var(--destructive)" : "var(--primary)";
 
   return (
     <div className={cn("flex flex-col gap-2", className)}>
@@ -28,10 +29,9 @@ export const ProgressBar = (props: ProgressBarProps) => {
           / {`${goalValue}${units}`}
         </span>
       </div>
-      <Progress
-        value={isOverGoal ? 100 : progressPercentage}
-        indicatorColor={isOverGoal ? "bg-destructive/80" : "bg-primary"}
-      />
+      <div style={{ "--progress-color": color } as React.CSSProperties}>
+        <Progress value={isOverGoal ? 100 : progressPercentage} />
+      </div>
     </div>
   );
 };

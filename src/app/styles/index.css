@@ -64,8 +64,8 @@
   --ring: #e8f2ec;
   --calories-color: oklch(70% 0.15 145);
   --proteins-color: oklch(65% 0.18 20);
-  --carbs-color: oklch(65% 0.16 300);
-  --fats-color: oklch(85% 0.2 90);
+  --fats-color: oklch(65% 0.16 300);
+  --carbs-color: oklch(85% 0.2 90);
   --water-color: oklch(75% 0.15 250);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);

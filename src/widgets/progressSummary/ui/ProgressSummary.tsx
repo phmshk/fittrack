@@ -76,14 +76,14 @@ export const ProgressSummary = (props: ProgressSummaryProps) => {
             Track your intake of calories, proteins, carbs, and fats over time.
           </CardDescription>
         </CardHeader>
-        <CardContent className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <CardContent className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {Array.from({ length: 4 }).map((_, i) => (
             <Card key={i}>
               <CardHeader className="pb-2">
                 <Skeleton className="h-4 w-2/3" />
               </CardHeader>
               <CardContent>
-                <Skeleton className="h-8 w-1/2" />
+                <Skeleton className="h-[150px] w-full" />
               </CardContent>
             </Card>
           ))}

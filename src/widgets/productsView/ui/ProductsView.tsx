@@ -9,6 +9,7 @@ import { Button } from "@/shared/shadcn/components/ui/button";
 import { AddFood } from "@/features/addFood";
 import type { FormOutput } from "@/entities/day";
 import { useDateStore } from "@/shared/model";
+import { useSearch } from "@tanstack/react-router";
 
 interface ProductsViewProps {
   products: Product[];
@@ -17,9 +18,11 @@ interface ProductsViewProps {
 export const ProductsView = ({ products }: ProductsViewProps) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const selectedDate = useDateStore((state) => state.selectedDate);
+  const { tab } = useSearch({ from: "/_protectedRoutes/addFood" });
 
   // Map product fields to form output structure
   const productToFormOutput = (product: Product): Partial<FormOutput> => ({
+    mealType: tab,
     name: product.product_name || "",
     calories: product.nutriments?.["energy-kcal_100g"]?.toString() || "",
     proteins: product.nutriments?.proteins_100g?.toString() || "",
@@ -81,7 +84,7 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
                   triggerButtonProps={{
                     className: "flex-grow",
                     children: (
-                      <span className="flex items-center gap-2 text-primary-foreground">
+                      <span className="text-primary-foreground flex items-center gap-2">
                         Add item to diary
                       </span>
                     ),
@@ -91,8 +94,8 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
             />
           </div>
         ) : (
-          <div className="sticky top-20 hidden h-2/3 items-center justify-center rounded-lg border-2 border-dashed bg-muted md:flex">
-            <div className="flex h-full items-center justify-center text-muted-foreground">
+          <div className="bg-muted sticky top-20 hidden h-2/3 items-center justify-center rounded-lg border-2 border-dashed md:flex">
+            <div className="text-muted-foreground flex h-full items-center justify-center">
               Select a product to see details
             </div>
           </div>

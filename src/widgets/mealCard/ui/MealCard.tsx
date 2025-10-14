@@ -22,6 +22,7 @@ import {
 import { Link } from "@tanstack/react-router";
 import { useDateStore } from "@/shared/model";
 import { useDayEditStore } from "@/features/editDay";
+import { useBreakpoint } from "@/shared/lib";
 
 interface MealCardProps {
   mealType: string;
@@ -35,6 +36,7 @@ const VISIBLE_ITEMS_LIMIT = 3;
 
 export const MealCard = (props: MealCardProps) => {
   const { mealType, date, foods, totalCalories, imageUrl } = props;
+  const isMobile = useBreakpoint();
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
   const today = useDateStore((state) => state.today);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -48,7 +50,7 @@ export const MealCard = (props: MealCardProps) => {
     date.toDateString() === today.toDateString();
 
   return (
-    <Card className="w-full max-w-lg border-none">
+    <Card className="w-full max-w-xl border-none">
       <CardHeader className="flex items-center justify-between gap-4 pb-2 pt-4">
         <div>
           <CardTitle className="text-4xl font-bold sm:text-5xl">
@@ -132,19 +134,21 @@ export const MealCard = (props: MealCardProps) => {
             }}
           />
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <ScanBarcode className="size-5" />
-                  <span className="sr-only">Scan Barcode</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Scan Barcode</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {isMobile && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <ScanBarcode className="size-5" />
+                    <span className="sr-only">Scan Barcode</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Scan Barcode</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
         </div>
 
         <Button
@@ -155,7 +159,11 @@ export const MealCard = (props: MealCardProps) => {
           }}
           asChild
         >
-          <Link to="/addFood" state={{ from: "allowedToAddFood" }}>
+          <Link
+            to="/addFood"
+            search={{ tab: `${mealType.toLowerCase() as MealType}` }}
+            state={{ from: "allowedToAddFood" }}
+          >
             <Database className="mr-2 size-4" />
             Add from Open Food Facts
           </Link>

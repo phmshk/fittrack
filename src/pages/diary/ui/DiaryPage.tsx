@@ -9,6 +9,7 @@ import { useDaySummary } from "@/features/getDaySummary";
 import { useDateStore } from "@/shared/model";
 import { Container } from "@/shared/ui/container";
 import { useGetUserData } from "@/entities/user";
+import { Spinner } from "@/shared/ui/spinner";
 
 export const DiaryPage = () => {
   const selectedDate = useDateStore((state) => state.selectedDate);
@@ -18,7 +19,12 @@ export const DiaryPage = () => {
     useGetFoodsByDate(selectedDate);
   const { data: userData, isLoading: isLoadingGoals } = useGetUserData();
   const summary = useDaySummary(foodLogs, userData?.dailyTargets);
+  const dailyTargets = userData?.dailyTargets;
   const isLoading = isLoadingLogs || isLoadingGoals;
+
+  if (isLoading) {
+    return <Spinner text="Loading data..." />;
+  }
 
   return (
     <Container>
@@ -36,13 +42,26 @@ export const DiaryPage = () => {
         units="kcal"
       />
 
-      <MacronutrientsSummary
-        userGoals={userData?.dailyTargets}
-        summary={summary}
-        isLoading={isLoading}
-      />
+      {dailyTargets ? (
+        <MacronutrientsSummary
+          userGoals={dailyTargets}
+          summary={summary}
+          isLoading={isLoading}
+        />
+      ) : (
+        <div>No macronutrient summary available</div>
+      )}
 
-      <Meals foodLogs={foodLogs} isLoading={isLoading} date={selectedDate} />
+      {foodLogs ? (
+        <Meals
+          foodLogs={foodLogs}
+          isLoading={isLoading}
+          date={selectedDate}
+          variant="full"
+        />
+      ) : (
+        <div>No food logs available</div>
+      )}
     </Container>
   );
 };

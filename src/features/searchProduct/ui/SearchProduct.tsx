@@ -13,10 +13,11 @@ interface SearchProductProps {
   inputValue: string;
   onInputChange: (value: string) => void;
   searchQuery: string;
+  isMobile: boolean;
 }
 
 export const SearchProduct = (props: SearchProductProps) => {
-  const { searchQuery, onInputChange, inputValue } = props;
+  const { searchQuery, onInputChange, inputValue, isMobile } = props;
 
   const { data, error, isLoading } = useGetProductByQuery({
     search_terms: searchQuery,
@@ -35,7 +36,7 @@ export const SearchProduct = (props: SearchProductProps) => {
     }
     if (error) {
       return (
-        <div className="p-4 text-center text-destructive">
+        <div className="text-destructive p-4 text-center">
           An error occurred
         </div>
       );
@@ -48,7 +49,7 @@ export const SearchProduct = (props: SearchProductProps) => {
     ) {
       return (
         <div className="p-4 text-center">
-          <Frown className="mx-auto size-10 text-foreground" />
+          <Frown className="text-foreground mx-auto size-10" />
           <p>No products matching the search found</p>
         </div>
       );
@@ -59,7 +60,7 @@ export const SearchProduct = (props: SearchProductProps) => {
     }
     // Initial state
     return (
-      <div className="p-4 text-center text-muted-foreground">
+      <div className="text-muted-foreground p-4 text-center">
         Start typing to search for products
       </div>
     );
@@ -67,23 +68,25 @@ export const SearchProduct = (props: SearchProductProps) => {
 
   return (
     <div>
-      <div className="sticky top-0 z-10 bg-background p-4">
+      <div className="bg-background sticky top-0 z-10 p-4">
         <div className="relative">
-          <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+          <Search className="text-muted-foreground absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2" />
           <Input
             type="text"
             placeholder="Search products by name"
-            className="h-12 pl-10 text-foreground"
+            className="text-foreground h-12 pl-10"
             value={inputValue}
             onChange={(e) => onInputChange(e.target.value)}
           />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute top-1/2 right-2 -translate-y-1/2"
-          >
-            <ScanBarcode className="h-6 w-6" />
-          </Button>
+          {isMobile && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-2 top-1/2 -translate-y-1/2"
+            >
+              <ScanBarcode className="h-6 w-6" />
+            </Button>
+          )}
         </div>
       </div>
       {renderContent()}
