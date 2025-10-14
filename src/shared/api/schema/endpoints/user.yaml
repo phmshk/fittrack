@@ -53,6 +53,10 @@ components:
           enum: [lose_weight, maintain_weight, gain_weight]
         dailyTargets:
           $ref: "#/components/schemas/DailyTargets"
+        weightHistory:
+          type: array
+          items:
+            $ref: "./weight-logs.yaml#/components/schemas/WeightLog"
     User:
       type: object
       required:
@@ -88,6 +92,10 @@ components:
           enum: [lose_weight, maintain_weight, gain_weight]
         dailyTargets:
           $ref: "#/components/schemas/DailyTargets"
+        weightHistory:
+          type: array
+          items:
+            $ref: "./weight-logs.yaml#/components/schemas/WeightLog"
 
   getUser:
     summary: Get current user data

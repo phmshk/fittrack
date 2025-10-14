@@ -1,4 +1,10 @@
-import type { DailyTargets, PersonalData, User } from "@/entities/user";
+import type {
+  DailyTargets,
+  PersonalData,
+  User,
+  WeightLog,
+  WeightLogInput,
+} from "@/entities/user";
 import type { ApiComponents } from "@/shared/api/schema";
 import { jwtVerify, SignJWT } from "jose";
 
@@ -36,6 +42,7 @@ const users = new Map<
 >();
 const userPersonalData = new Map<string, PersonalData>();
 const userDailyTargets = new Map<string, DailyTargets>();
+const userWeightHistory = new Map<string, WeightLog[]>();
 
 // --- Helper function to strip password for client-side responses ---
 const stripPassword = (user: StoredUser): User => {
@@ -60,12 +67,19 @@ const seedData = {
     gender: "male",
   } as PersonalData,
   dailyTargets: {
-    targetCalories: 2500,
+    targetCalories: 2000,
     targetProteins: 180,
     targetCarbs: 250,
     targetFats: 80,
     targetWaterIntake: 2500,
   } as DailyTargets,
+  weightHistory: [
+    { id: "w1", date: "2025-09-01", weight: 75.0 },
+    { id: "w2", date: "2025-09-08", weight: 74.5 },
+    { id: "w3", date: "2025-09-15", weight: 74.2 },
+    { id: "w4", date: "2025-09-22", weight: 74.0 },
+    { id: "w5", date: "2025-09-29", weight: 73.5 },
+  ] as WeightLog[],
 };
 
 // --- Function to seed initial data ---
@@ -80,10 +94,12 @@ const seed = (): void => {
   };
   const mockUserPersonalData: PersonalData = { ...seedData.personalData };
   const mockUserDailyTargets: DailyTargets = { ...seedData.dailyTargets };
+  const mockWeightHistory: WeightLog[] = [...seedData.weightHistory];
 
   users.set(mockUser.id, mockUser);
   userPersonalData.set(mockUser.id, mockUserPersonalData);
   userDailyTargets.set(mockUser.id, mockUserDailyTargets);
+  userWeightHistory.set(mockUser.id, mockWeightHistory);
 };
 
 // Initial seeding
@@ -103,6 +119,7 @@ export const userDb = {
       ...userBase,
       personalData: userPersonalData.get(userBase.id),
       dailyTargets: userDailyTargets.get(userBase.id),
+      weightHistory: userWeightHistory.get(userBase.id),
     };
   },
 
@@ -121,10 +138,14 @@ export const userDb = {
       ...userBase,
       personalData: userPersonalData.get(id),
       dailyTargets: userDailyTargets.get(id),
+      weightHistory: userWeightHistory.get(id),
     };
   },
   createUser: (data: ApiComponents["schemas"]["RegisterRequest"]): User => {
-    const newUser: Omit<StoredUser, "dailyTargets" | "personalData"> = {
+    const newUser: Omit<
+      StoredUser,
+      "dailyTargets" | "personalData" | "weightHistory"
+    > = {
       id: crypto.randomUUID(),
       ...data,
       hasCompletedSetup: false,
@@ -134,6 +155,7 @@ export const userDb = {
     // Create default empty entries for personal data and goals
     userPersonalData.set(newUser.id, {});
     userDailyTargets.set(newUser.id, {});
+    userWeightHistory.set(newUser.id, []);
 
     const fullUser = userDb.findUserById(newUser.id);
     return stripPassword(fullUser!);
@@ -169,6 +191,36 @@ export const userDb = {
       return updatedGoals;
     }
     return null;
+  },
+
+  // --- Weight Log Methods ---
+  addWeightLog: (userId: string, newLog: WeightLogInput) => {
+    const history = userWeightHistory.get(userId) || [];
+    const newEntry: WeightLog = { ...newLog, id: crypto.randomUUID() };
+    history.push(newEntry);
+    userWeightHistory.set(userId, history);
+    return userDb.findUserById(userId);
+  },
+
+  updateWeightLog: (userId: string, logId: string, updates: WeightLogInput) => {
+    const history = userWeightHistory.get(userId) || [];
+    const logIndex = history.findIndex((log) => log.id === logId);
+    if (logIndex > -1) {
+      history[logIndex] = { ...history[logIndex], ...updates };
+      userWeightHistory.set(userId, history);
+      return userDb.findUserById(userId);
+    }
+    return null;
+  },
+
+  deleteWeightLog: (userId: string, logId: string) => {
+    const history = userWeightHistory.get(userId) || [];
+    const newHistory = history.filter((log) => log.id !== logId);
+    if (newHistory.length < history.length) {
+      userWeightHistory.set(userId, newHistory);
+      return true;
+    }
+    return false;
   },
 
   createSession: async (userId: string) => await generateTokens(userId),

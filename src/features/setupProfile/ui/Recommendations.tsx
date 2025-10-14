@@ -19,27 +19,27 @@ export const Recommendations = ({ dailyNeeds }: RecommendationsProps) => {
     {
       title: "Calories",
       value: `${dailyNeeds.caloriesForGoal} kcal`,
-      icon: <Flame className="size-6 text-rose-500" />,
+      icon: <Flame stroke="var(--calories-color)" className="size-6" />,
     },
     {
       title: "Water",
       value: `${dailyNeeds.waterIntake.totalIntakeLiters.toFixed(1)} L`,
-      icon: <Droplet className="size-6 text-blue-500" />,
+      icon: <Droplet stroke="var(--water-color)" className="size-6" />,
     },
     {
       title: "Protein",
       value: `${dailyNeeds.macronutrients.proteins} g`,
-      icon: <Beef className="size-6 text-red-500" />,
+      icon: <Beef stroke="var(--proteins-color)" className="size-6" />,
     },
     {
       title: "Carbs",
       value: `${dailyNeeds.macronutrients.carbs} g`,
-      icon: <Wheat className="size-6 text-yellow-500" />,
+      icon: <Wheat stroke="var(--carbs-color)" className="size-6" />,
     },
     {
       title: "Fats",
       value: `${dailyNeeds.macronutrients.fats} g`,
-      icon: <Zap className="size-6 text-orange-500" />,
+      icon: <Zap stroke="var(--fats-color)" className="size-6" />,
     },
   ];
   return (

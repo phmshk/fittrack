@@ -10,6 +10,7 @@ export {
   useAddFoodLog,
   useUpdateFoodLog,
   useDeleteFoodLog,
+  useGetFoodsByDateRange,
 } from "./api/foodApi";
 
 export { MEALS } from "./model/types";

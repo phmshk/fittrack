@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import type { UserGoals } from "@/entities/user";
 import type { DaySummary, FoodLog } from "@/entities/day";
+import type { DailyTargets } from "@/entities/user";
 
 /**
  * Custom hook for calculating daily summary of food intake against user goals.
@@ -10,7 +10,7 @@ import type { DaySummary, FoodLog } from "@/entities/day";
  */
 export const useDaySummary = (
   foodLogs: FoodLog[] | undefined,
-  goals: UserGoals | undefined,
+  goals: DailyTargets | undefined,
 ): DaySummary => {
   const summary = useMemo(() => {
     //Initial values for the summary
@@ -46,10 +46,10 @@ export const useDaySummary = (
 
     return {
       ...summary,
-      remainingCalories: targetCalories - consumedCalories,
-      remainingProteins: targetProteins - consumedProteins,
-      remainingFats: targetFats - consumedFats,
-      remainingCarbs: targetCarbs - consumedCarbs,
+      remainingCalories: Number((targetCalories - consumedCalories).toFixed(1)),
+      remainingProteins: Number((targetProteins - consumedProteins).toFixed(1)),
+      remainingFats: Number((targetFats - consumedFats).toFixed(1)),
+      remainingCarbs: Number((targetCarbs - consumedCarbs).toFixed(1)),
 
       caloriesProgress:
         targetCalories > 0

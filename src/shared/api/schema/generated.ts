@@ -143,7 +143,36 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * Get food log entries for a date range
+         * @description Retrieves all food log entries within a specified date range.
+         */
+        get: {
+            parameters: {
+                query: {
+                    /** @description Start date in YYYY-MM-DD format */
+                    from: string;
+                    /** @description End date in YYYY-MM-DD format */
+                    to: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful response with a list of entries. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["FoodLog"][];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
         put?: never;
         /**
          * Add a new food log entry
@@ -339,6 +368,141 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/water-logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add a new water log entry
+         * @description Creates a new entry for consumed water on a specific date.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["WaterLogInput"];
+                };
+            };
+            responses: {
+                /** @description Successfully created. */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["WaterLog"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/water-logs/{date}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get water entry for a specific day
+         * @description Retrieves the water log entry for the specified date.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Date in YYYY-MM-DD format */
+                    date: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful response with the water log entry. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["WaterLog"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/water-logs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update an existing water entry */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Entry ID to update */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        amount?: number;
+                    };
+                };
+            };
+            responses: {
+                /** @description Entry successfully updated. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["WaterLog"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user": {
         parameters: {
             query?: never;
@@ -402,6 +566,124 @@ export interface paths {
         };
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/weight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add a new weight log entry
+         * @description Creates a new entry for the user's weight on a specific date.
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["WeightLogInput"];
+                };
+            };
+            responses: {
+                /** @description Successfully created. */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["User"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/weight/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update a weight log entry
+         * @description Updates an existing weight log entry for the user.
+         */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The ID of the weight log entry to update. */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["WeightLogInput"];
+                };
+            };
+            responses: {
+                /** @description Weight log entry successfully updated. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["User"];
+                    };
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
+        post?: never;
+        /**
+         * Delete a weight log entry
+         * @description Deletes a specific weight log entry for the user.
+         */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The ID of the weight log entry to delete. */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Weight log entry successfully deleted. */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                401: components["responses"]["UnauthorizedError"];
+                404: components["responses"]["NotFoundError"];
+            };
+        };
         options?: never;
         head?: never;
         patch?: never;
@@ -556,6 +838,24 @@ export interface components {
              */
             targetWaterIntake?: number;
         };
+        WeightLog: {
+            /**
+             * Format: uuid
+             * @description Unique identifier for the weight entry.
+             */
+            readonly id: string;
+            /**
+             * Format: date
+             * @description Date of the weight entry in YYYY-MM-DD format.
+             * @example 2025-10-12
+             */
+            date: string;
+            /**
+             * @description User's weight in kilograms.
+             * @example 75.5
+             */
+            weight: number;
+        };
         User: {
             /**
              * Format: uuid
@@ -584,6 +884,7 @@ export interface components {
             /** @enum {string} */
             goal?: "lose_weight" | "maintain_weight" | "gain_weight";
             dailyTargets?: components["schemas"]["DailyTargets"];
+            weightHistory?: components["schemas"]["WeightLog"][];
         };
         AuthResponse: {
             /** @description JWT access token for authentication. */
@@ -625,6 +926,64 @@ export interface components {
              * @example strongPassword123
              */
             password: string;
+        };
+        FoodLog: {
+            /**
+             * Format: uuid
+             * @description Unique identifier (generated by the server).
+             */
+            readonly id: string;
+            /**
+             * Format: date
+             * @description Date of the entry in YYYY-MM-DD format.
+             * @example 2025-09-16
+             */
+            date: string;
+            /**
+             * @description Meal type.
+             * @enum {string}
+             */
+            mealType: "breakfast" | "lunch" | "dinner" | "snacks";
+            /**
+             * @description Name of the food item.
+             * @example Chicken Salad
+             */
+            name: string;
+            /**
+             * @description Number of calories.
+             * @example 150
+             */
+            calories: number;
+            /**
+             * @description Number of proteins (in grams).
+             * @example 5
+             */
+            proteins: number;
+            /**
+             * @description Number of fats (in grams).
+             * @example 3
+             */
+            fats: number;
+            /**
+             * @description Number of saturated fats (in grams).
+             * @example 1
+             */
+            saturatedFats: number;
+            /**
+             * @description Number of carbs (in grams).
+             * @example 27
+             */
+            carbs: number;
+            /**
+             * @description Number of sugars (in grams).
+             * @example 10
+             */
+            sugars: number;
+            /**
+             * @description Number of grams (in grams).
+             * @example 100
+             */
+            grams: number;
         };
         /**
          * Format: date
@@ -689,7 +1048,20 @@ export interface components {
             sugars: components["schemas"]["sugars"];
             grams: components["schemas"]["grams"];
         };
-        FoodLog: {
+        /** @description Authentication error. The user does not have permission to access this resource. */
+        UnauthorizedError: unknown;
+        /** @description Resource not found. The requested resource does not exist. */
+        NotFoundError: unknown;
+        /**
+         * @description Total amount of water consumed in milliliters.
+         * @example 1500
+         */
+        amount: number;
+        WaterLogInput: {
+            date: components["schemas"]["date"];
+            amount: components["schemas"]["amount"];
+        };
+        WaterLog: {
             /**
              * Format: uuid
              * @description Unique identifier (generated by the server).
@@ -702,55 +1074,11 @@ export interface components {
              */
             date: string;
             /**
-             * @description Meal type.
-             * @enum {string}
+             * @description Total amount of water consumed in milliliters.
+             * @example 1500
              */
-            mealType: "breakfast" | "lunch" | "dinner" | "snacks";
-            /**
-             * @description Name of the food item.
-             * @example Chicken Salad
-             */
-            name: string;
-            /**
-             * @description Number of calories.
-             * @example 150
-             */
-            calories: number;
-            /**
-             * @description Number of proteins (in grams).
-             * @example 5
-             */
-            proteins: number;
-            /**
-             * @description Number of fats (in grams).
-             * @example 3
-             */
-            fats: number;
-            /**
-             * @description Number of saturated fats (in grams).
-             * @example 1
-             */
-            saturatedFats: number;
-            /**
-             * @description Number of carbs (in grams).
-             * @example 27
-             */
-            carbs: number;
-            /**
-             * @description Number of sugars (in grams).
-             * @example 10
-             */
-            sugars: number;
-            /**
-             * @description Number of grams (in grams).
-             * @example 100
-             */
-            grams: number;
+            amount: number;
         };
-        /** @description Authentication error. The user does not have permission to access this resource. */
-        UnauthorizedError: unknown;
-        /** @description Resource not found. The requested resource does not exist. */
-        NotFoundError: unknown;
         UserInput: {
             name?: string;
             /** Format: email */
@@ -761,6 +1089,22 @@ export interface components {
             /** @enum {string} */
             goal?: "lose_weight" | "maintain_weight" | "gain_weight";
             dailyTargets?: components["schemas"]["DailyTargets"];
+            weightHistory?: components["schemas"]["WeightLog"][];
+        };
+        /**
+         * Format: date
+         * @description Date of the weight entry in YYYY-MM-DD format.
+         * @example 2025-10-12
+         */
+        "properties-date": string;
+        /**
+         * @description User's weight in kilograms.
+         * @example 75.5
+         */
+        weight: number;
+        WeightLogInput: {
+            date: components["schemas"]["properties-date"];
+            weight: components["schemas"]["weight"];
         };
         /** @description Core nutritional information per 100g. */
         Nutriments: {

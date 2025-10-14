@@ -42,6 +42,8 @@ paths:
 
   # --- Endpoints for /food-logs ---
   /food-logs:
+    get:
+      $ref: "./endpoints/food-logs.yaml#/components/getFoodLogs"
     post:
       $ref: "./endpoints/food-logs.yaml#/components/createFoodLog"
 
@@ -60,12 +62,33 @@ paths:
     delete:
       $ref: "./endpoints/food-logs.yaml#/components/deleteFoodLog"
 
+  # --- Endpoints for /water-logs ---
+  /water-logs:
+    post:
+      $ref: "./endpoints/water-logs.yaml#/components/createWaterLog"
+
+  /water-logs/{date}:
+    get:
+      $ref: "./endpoints/water-logs.yaml#/components/getWaterLogByDate"
+
+  /water-logs/{id}:
+    put:
+      $ref: "./endpoints/water-logs.yaml#/components/updateWaterLog"
+
   # --- Endpoints for /user ---
   /user:
     get:
       $ref: "./endpoints/user.yaml#/components/getUser"
     put:
       $ref: "./endpoints/user.yaml#/components/updateUser"
+  /user/weight:
+    post:
+      $ref: "./endpoints/weight-logs.yaml#/components/addWeightLog"
+  /user/weight/{id}:
+    put:
+      $ref: "./endpoints/weight-logs.yaml#/components/updateWeightLog"
+    delete:
+      $ref: "./endpoints/weight-logs.yaml#/components/deleteWeightLog"
 
   # --- Open Food Facts Endpoints ---
   /cgi/search.pl:

@@ -26,15 +26,19 @@ declare module "@tanstack/react-router" {
     from?: "allowedToAddFood";
   }
 
-  // Define custom static data for routes
+  /**
+   * Static data options for each route
+   * This can be used to control layout and navigation behavior based on the route
+   * for mobile layout
+   */
   interface StaticDataRouteOption {
-    // Whether to show the header for this route
+    // Whether to show the header for this route for mobile devices
     showHeader: boolean;
-    // Whether to show the footer for this route
+    // Whether to show the footer for this route for mobile devices
     showFooter: boolean;
-    // Title to display in the header for this route empty string to show app logo
+    // Title to display in the header for this route on mobile devices. Empty string to show app logo.
     title: string;
-    // Whether to show a back button in the header for this route
+    // Whether to show a back button in the header for this route on mobile devices
     showBackButton: boolean;
     // Whether this route is part of the main navigation (e.g., Dashboard, Diary)
     isNavRoute: boolean;

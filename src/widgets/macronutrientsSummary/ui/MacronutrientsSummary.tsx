@@ -1,5 +1,5 @@
 import { type DaySummary } from "@/entities/day";
-import type { UserGoals } from "@/entities/user";
+import type { DailyTargets } from "@/entities/user";
 import { H2 } from "@/shared/ui/headings";
 import { ProgressBar } from "@/shared/ui/progressBar";
 import { Spinner } from "@/shared/ui/spinner";
@@ -7,7 +7,7 @@ import { useMemo } from "react";
 
 interface MacronutrientsSummaryProps {
   summary: DaySummary;
-  userGoals: UserGoals;
+  userGoals: DailyTargets;
   isLoading: boolean;
 }
 
