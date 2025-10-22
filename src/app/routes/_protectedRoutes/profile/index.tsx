@@ -10,6 +10,7 @@ export const Route = createFileRoute("/_protectedRoutes/profile/")({
   staticData: {
     title: "Profile",
     showHeader: true,
+    showMobileHeaderNav: true,
     showFooter: false,
     showBackButton: true,
     isNavRoute: false,

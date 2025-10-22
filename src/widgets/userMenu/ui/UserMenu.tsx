@@ -62,7 +62,7 @@ export const UserMenu = ({ handleClose }: UserMenuProps) => {
         <DropdownMenuItem onClick={handleClose} asChild>
           <Link
             to="/profile"
-            search={{ tab: "overview" }}
+            search={{ tab: "personal-info" }}
             className="cursor-pointer"
           >
             My Profile

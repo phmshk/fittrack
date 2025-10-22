@@ -34,6 +34,8 @@ declare module "@tanstack/react-router" {
   interface StaticDataRouteOption {
     // Whether to show the header for this route for mobile devices
     showHeader: boolean;
+    // Whether to show the mobile header navigation (hamburger menu) for this route
+    showMobileHeaderNav?: boolean;
     // Whether to show the footer for this route for mobile devices
     showFooter: boolean;
     // Title to display in the header for this route on mobile devices. Empty string to show app logo.

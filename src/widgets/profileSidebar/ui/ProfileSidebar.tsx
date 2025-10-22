@@ -6,7 +6,7 @@ export const ProfileSidebar = () => {
   const { tab } = useSearch({ from: "/_protectedRoutes/profile/" });
 
   return (
-    <nav className="flex flex-col space-y-1">
+    <nav className="flex flex-col gap-2">
       {Object.values(profileTabs).map(({ href, title, Icon }) => (
         <Link
           key={href}

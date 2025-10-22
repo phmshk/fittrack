@@ -1,3 +1,4 @@
+import type { User } from "@/entities/user";
 import {
   Card,
   CardContent,
@@ -6,7 +7,12 @@ import {
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
 
-export const GoalsTab = () => {
+interface GoalsTabProps {
+  userData: User;
+}
+
+export const GoalsTab = (props: GoalsTabProps) => {
+  const { userData } = props;
   return (
     <Card>
       <CardHeader>

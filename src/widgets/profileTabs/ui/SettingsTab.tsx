@@ -1,3 +1,4 @@
+import type { User } from "@/entities/user";
 import {
   Card,
   CardContent,
@@ -7,7 +8,12 @@ import {
 } from "@/shared/shadcn/components/ui/card";
 import { Cog } from "lucide-react";
 
-export const SettingsTab = () => {
+interface SettingsTabProps {
+  userData: User;
+}
+
+export const SettingsTab = (props: SettingsTabProps) => {
+  const { userData } = props;
   return (
     <Card>
       <CardHeader>
