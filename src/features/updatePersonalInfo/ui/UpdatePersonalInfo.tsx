@@ -115,12 +115,17 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
                   <SelectTrigger
                     id={`${FORM_ID}-gender`}
                     aria-invalid={fieldState.invalid}
+                    className="cursor-pointer"
                   >
                     <SelectValue placeholder="Select your gender" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="male">Male</SelectItem>
-                    <SelectItem value="female">Female</SelectItem>
+                    <SelectItem className="cursor-pointer" value="male">
+                      Male
+                    </SelectItem>
+                    <SelectItem className="cursor-pointer" value="female">
+                      Female
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -138,7 +143,7 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={`${FORM_ID}-weight`}>Weight</FieldLabel>
+              <FieldLabel htmlFor={`${FORM_ID}-weight`}>Weight (kg)</FieldLabel>
               <Input
                 {...field}
                 id={`${FORM_ID}-weight`}
@@ -155,7 +160,7 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={`${FORM_ID}-height`}>Height</FieldLabel>
+              <FieldLabel htmlFor={`${FORM_ID}-height`}>Height (cm)</FieldLabel>
               <Input
                 {...field}
                 id={`${FORM_ID}-height`}
@@ -172,7 +177,7 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={`${FORM_ID}-age`}>Age</FieldLabel>
+              <FieldLabel htmlFor={`${FORM_ID}-age`}>Age (years)</FieldLabel>
               <Input
                 {...field}
                 id={`${FORM_ID}-age`}
