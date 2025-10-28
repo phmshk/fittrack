@@ -44,34 +44,44 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #f9faf9;
-  --foreground: #1d1d1f;
+  --background: oklch(0.97 0 0);
+  --foreground: oklch(0.205 0.003 277.5); /* #1d1d1f */
   --card: oklch(1 0 0);
-  --card-foreground: #0d1a12;
+  --card-foreground: oklch(0.145 0.006 160.2); /* #0d1a12 */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #28a745;
-  --primary-foreground: #fff;
-  --secondary: #e9f1ea;
-  --secondary-foreground: #52946b;
-  --muted: #f5f5f5;
+
+  --primary: oklch(0.536 0.134 145.3); /* #1e7e34 */
+  --primary-foreground: oklch(1 0 0); /* #fff */
+
+  --secondary: oklch(0.95 0.009 143.7); /* #e9f1ea */
+  --secondary-foreground: oklch(0.578 0.077 151.7); /* #52946b */
+
+  --muted: oklch(0.966 0.001 277.5); /* #f5f5f5 */
   --muted-foreground: oklch(0.556 0 0);
-  --accent: #e8f2ed;
+
+  --accent: oklch(0.952 0.01 160.2); /* #e8f2ed */
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: #dc2626;
-  --border: #cfe8d9;
-  --input: #cfe8d9;
-  --ring: #e8f2ec;
-  --calories-color: oklch(70% 0.15 145);
+
+  --destructive: oklch(0.538 0.177 26.6); /* #dc2626 */
+
+  --border: oklch(0.922 0 0); /* var(--sidebar-border) */
+  --input: oklch(0.922 0 0); /* var(--sidebar-border) */
+  --ring: var(--primary) /* Nutrients Colors */
+    --calories-color: oklch(70% 0.15 145);
   --proteins-color: oklch(65% 0.18 20);
   --fats-color: oklch(65% 0.16 300);
   --carbs-color: oklch(85% 0.2 90);
   --water-color: oklch(75% 0.15 250);
+  /* Charts Colors */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.828 0.189 84.429);
   --chart-4: oklch(0.398 0.07 227.392);
   --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+
+  /* Sidebar Colors */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -80,41 +90,61 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --tw-shadow-color: red;
+  --tw-shadow-color: oklch(0.145 0 0 / 0.1);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --radius: 0.625rem;
+  --background: oklch(0.2 0.015 145);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.25 0.018 145);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.25 0.018 145);
+  --popover-foreground: var(--foreground);
+
+  --primary: oklch(0.67 0.16 145.3);
+  --primary-foreground: oklch(0.2 0 0);
+
+  --secondary: oklch(0.28 0.01 143.7);
+  --secondary-foreground: oklch(0.85 0.04 151.7);
+
+  --muted: oklch(0.23 0.01 145);
+  --muted-foreground: oklch(0.65 0 0);
+
+  --accent: oklch(0.3 0.012 160.2);
+  --accent-foreground: var(--foreground);
+
+  --destructive: oklch(0.6 0.19 26.6);
+
+  --border: oklch(0.35 0 0);
+  --input: oklch(0.35 0 0);
+  --ring: var(--primary);
+
+  /* Nutrients Colors */
+  --calories-color: oklch(70% 0.15 145);
+  --proteins-color: oklch(65% 0.18 20);
+  --fats-color: oklch(65% 0.16 300);
+  --carbs-color: oklch(85% 0.2 90);
+  --water-color: oklch(75% 0.15 250);
+
+  /* Chart Colors */
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.828 0.189 84.429);
+  --chart-4: oklch(0.55 0.07 227.392);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  /*  Sidebar inverted  */
+
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: oklch(0.985 0 0);
+  --sidebar-primary-foreground: oklch(0.205 0 0);
+  --sidebar-accent: oklch(0.28 0 0);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: oklch(0.3 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  --tw-shadow-color: oklch(1 0 0 / 0.1);
 }
 
 @layer base {

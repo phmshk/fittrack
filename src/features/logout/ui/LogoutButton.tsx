@@ -9,7 +9,7 @@ export const LogoutButton = () => {
     <Button
       onClick={handleLogout}
       variant="ghost"
-      className="w-full justify-start hover:bg-inherit"
+      className="w-full hover:bg-inherit"
     >
       <LogOut className="text-destructive h-4 w-4" />
       Logout

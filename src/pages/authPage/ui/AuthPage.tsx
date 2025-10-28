@@ -6,7 +6,7 @@ const AUTH_IMAGE_URL = auth_image;
 export const AuthPage = () => {
   return (
     <Container className="min-h-screen grow items-center justify-center">
-      <div className="bg-background mx-auto flex h-4/5 w-full max-w-4xl flex-col overflow-hidden rounded-xl shadow-2xl md:flex-row">
+      <div className="bg-card mx-auto flex h-4/5 w-full max-w-4xl flex-col overflow-hidden rounded-xl shadow-2xl md:flex-row">
         <div className="flex w-full flex-col items-center justify-center p-8 md:w-1/2">
           <AuthForm />
         </div>

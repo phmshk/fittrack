@@ -6,6 +6,7 @@ import { createRouter } from "@tanstack/react-router";
 import { QueryProvider } from "./providers/queryProvider";
 import { App } from "./App";
 import type { NavTab } from "@/shared/model";
+import { ThemeEffect } from "@/entities/theme";
 
 // Create a new router instance
 export const router = createRouter({
@@ -70,6 +71,7 @@ if (!rootElement.innerHTML) {
       <StrictMode>
         <QueryProvider>
           <App />
+          <ThemeEffect />
         </QueryProvider>
       </StrictMode>,
     );

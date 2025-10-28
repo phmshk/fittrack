@@ -47,7 +47,7 @@ export const WeightChart = (props: WeightChartProps) => {
       <Card className="mb-6 border-none">
         <CardContent>
           <div className="text-muted-foreground flex h-64 items-center justify-center">
-            <p>Add at least two weight entries to see a chart.</p>
+            <p>Add at least one weight entry to see a chart.</p>
           </div>
         </CardContent>
       </Card>

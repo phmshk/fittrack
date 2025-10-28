@@ -51,9 +51,6 @@ export const useAddWeightLog = () => {
         );
       }
     },
-    onSuccess: () => {
-      toast.success("Successfully added new weight entry");
-    },
     onSettled: (newLog, error, variables, onMutateResult) =>
       queryClient.invalidateQueries({
         queryKey: [onMutateResult?.queryKey],
