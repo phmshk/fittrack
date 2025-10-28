@@ -50,8 +50,8 @@
   --card-foreground: #0d1a12;
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #05fa66;
-  --primary-foreground: #0d1a12;
+  --primary: #28a745;
+  --primary-foreground: #fff;
   --secondary: #e9f1ea;
   --secondary-foreground: #52946b;
   --muted: #f5f5f5;
@@ -64,8 +64,8 @@
   --ring: #e8f2ec;
   --calories-color: oklch(70% 0.15 145);
   --proteins-color: oklch(65% 0.18 20);
-  --carbs-color: oklch(65% 0.16 300);
-  --fats-color: oklch(85% 0.2 90);
+  --fats-color: oklch(65% 0.16 300);
+  --carbs-color: oklch(85% 0.2 90);
   --water-color: oklch(75% 0.15 250);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);

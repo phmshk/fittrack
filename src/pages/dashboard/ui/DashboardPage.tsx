@@ -1,6 +1,5 @@
 import { CaloriesCard } from "@/widgets/caloriesCard";
 import { H1 } from "@/shared/ui/headings";
-import { Meals } from "@/widgets/meals";
 import { useGetFoodsByDate } from "@/entities/day";
 import { useDaySummary } from "@/features/getDaySummary";
 import { useDateStore } from "@/shared/model";
@@ -10,6 +9,7 @@ import { MacronutrientsChart } from "@/widgets/macronutrientsSummary";
 import { WaterTracker } from "@/widgets/waterTracker";
 import { Spinner } from "@/shared/ui/spinner";
 import { Card, CardContent } from "@/shared/shadcn/components/ui/card";
+import { Meals } from "@/widgets/meals";
 
 export const DashboardPage = () => {
   const today = useDateStore((state) => state.today);
@@ -38,6 +38,7 @@ export const DashboardPage = () => {
           day: "numeric",
         })}
       </H1>
+      {/* Water and Macronutrients intake summary */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:grid-rows-2">
         <div className="col-span-1 md:col-span-2 md:row-span-2">
           <CaloriesCard userGoals={userData?.dailyTargets} summary={summary} />
@@ -59,9 +60,18 @@ export const DashboardPage = () => {
           )}
         </div>
       </div>
-
       {/* Meals summary */}
-      <Meals date={today} foodLogs={foodLogs} isLoading={isLoading} />
+      {foodLogs ? (
+        <Meals
+          foodLogs={foodLogs}
+          isLoading={isLoading}
+          date={today}
+          variant="collapsed"
+          dailyTargets={userData?.dailyTargets}
+        />
+      ) : (
+        <div>No food logs available</div>
+      )}
     </Container>
   );
 };

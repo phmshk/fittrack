@@ -1,8 +1,15 @@
+import type { MealType } from "@/entities/day";
 import { AddFromDatabase } from "@/pages/addFoodPage";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import z from "zod";
+
+const schema = z.object({
+  tab: z.enum(new Array<MealType>("breakfast", "lunch", "dinner", "snacks")),
+});
 
 export const Route = createFileRoute("/_protectedRoutes/addFood")({
   component: AddFromDatabase,
+  validateSearch: schema,
   staticData: {
     title: "Add Food",
     showHeader: true,

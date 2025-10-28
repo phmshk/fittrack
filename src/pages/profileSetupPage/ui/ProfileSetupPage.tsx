@@ -1,4 +1,3 @@
-import { UserProfileForm } from "@/features/setupProfile";
 import {
   Card,
   CardContent,
@@ -7,6 +6,7 @@ import {
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
 import { Container } from "@/shared/ui/container";
+import { ProfileSetupForm } from "@/widgets/profileSetupForm";
 
 export const ProfileSetupPage = () => {
   return (
@@ -22,7 +22,7 @@ export const ProfileSetupPage = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <UserProfileForm />
+          <ProfileSetupForm />
         </CardContent>
       </Card>
     </Container>

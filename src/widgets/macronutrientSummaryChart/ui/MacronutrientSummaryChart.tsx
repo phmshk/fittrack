@@ -8,6 +8,7 @@ import {
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import type { DailyData } from "../model/types";
 
+
 interface MacronutrientSummaryChartProps {
   chartConfig: ChartConfig;
   chartData: DailyData[];
@@ -21,8 +22,9 @@ export const MacronutrientSummaryChart = (
   const isMobile = useBreakpoint();
   // Dynamically generate ticks for the XAxis to prevent cluttering and ensure the last tick is always visible.
   const xAxisTicks = useCalculateTicksForXAxis(chartData, isMobile);
+
   return (
-    <ChartContainer className="h-[120px] w-full" config={chartConfig}>
+    <ChartContainer className="h-[150px] w-full" config={chartConfig}>
       <AreaChart accessibilityLayer data={chartData} margin={{ left: 12 }}>
         <CartesianGrid vertical={false} />
         <XAxis

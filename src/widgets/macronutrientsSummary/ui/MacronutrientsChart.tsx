@@ -1,5 +1,4 @@
 import type { DaySummary } from "@/entities/day";
-import { useBreakpoint } from "@/shared/lib";
 import {
   Card,
   CardContent,
@@ -14,6 +13,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/shared/shadcn/components/ui/chart";
+import { Progress } from "@/shared/shadcn/components/ui/progress";
 import { useMemo } from "react";
 import { Cell, Label, Pie, PieChart } from "recharts";
 
@@ -38,7 +38,6 @@ interface MacronutrientsChartProps {
 
 export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
   const { daySummary } = props;
-  const isMobile = useBreakpoint();
 
   const chartData = useMemo(() => {
     return [
@@ -78,7 +77,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
   }
 
   return (
-    <Card className="h-full border-none">
+    <Card className="h-full justify-around border-none">
       <CardHeader>
         <CardTitle>Macronutrient Distribution</CardTitle>
         <CardDescription>
@@ -88,7 +87,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
       <CardContent className="px-6">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square h-full"
+          className="mx-auto h-[170px] md:aspect-square"
         >
           <PieChart>
             <ChartTooltip
@@ -97,12 +96,10 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
             />
             <Pie
               data={chartData}
-              label={isMobile}
               dataKey="value"
               nameKey="name"
               innerRadius={60}
               outerRadius={80}
-              strokeWidth={3}
               paddingAngle={5}
             >
               <Label
@@ -148,23 +145,50 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="text-muted-foreground flex justify-center gap-4">
-          {chartData.map((entry) => (
-            <div key={entry.name} className="flex items-center gap-1">
-              <div
-                className="h-2 w-2 rounded-full"
-                style={{
-                  backgroundColor:
-                    chartConfig[
-                      entry.name.toLowerCase() as keyof typeof chartConfig
-                    ].color,
-                }}
+      <CardFooter className="text-muted-foreground flex flex-row flex-wrap justify-center gap-2 text-sm">
+        {chartData.map((entry) => {
+          let max;
+          switch (entry.name) {
+            case "Proteins":
+              max = daySummary.consumedProteins + daySummary.remainingProteins;
+              break;
+            case "Carbs":
+              max = daySummary.consumedCarbs + daySummary.remainingCarbs;
+              break;
+            case "Fats":
+              max = daySummary.consumedFats + daySummary.remainingFats;
+              break;
+            default:
+              max = 1;
+          }
+          const progressPercentage = Number(
+            ((entry.value / max) * 100).toFixed(0),
+          );
+
+          return (
+            <div
+              key={entry.name}
+              className="flex flex-1 flex-col items-center gap-1"
+            >
+              {entry.name}
+              <Progress
+                value={progressPercentage}
+                style={
+                  {
+                    "--progress-color":
+                      chartConfig[
+                        entry.name.toLowerCase() as keyof typeof chartConfig
+                      ].color,
+                  } as React.CSSProperties
+                }
               />
-              {entry.name + " (g)"}
+              <span className="text-center font-medium">
+                {progressPercentage.toFixed(0)}% ({entry.value}
+                g)
+              </span>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </CardFooter>
     </Card>
   );

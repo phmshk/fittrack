@@ -26,6 +26,7 @@ const RootComponent = () => {
   const showHeader = currentPage?.staticData.showHeader;
   const showFooter = currentPage?.staticData.showFooter;
   const showBackButton = currentPage?.staticData.showBackButton;
+  const showMobileHeaderNav = currentPage?.staticData.showMobileHeaderNav;
   const title = showBackButton ? currentPage?.staticData.title : "";
 
   return (
@@ -35,6 +36,7 @@ const RootComponent = () => {
           title={title}
           showBackButton={showBackButton}
           isMobile={isMobile}
+          showMobileHeaderNav={showMobileHeaderNav}
         />
       )}
       <main className="flex-grow">

@@ -352,7 +352,7 @@ for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
     { mealType: "breakfast", data: getNextMeal(breakfastType) },
     { mealType: "lunch", data: lunch },
     { mealType: "dinner", data: getNextMeal(dinnerType) },
-    { mealType: "snack", data: snack },
+    { mealType: "snacks", data: snack },
   ];
 
   // --- Add snack with some probability ---
@@ -360,7 +360,7 @@ for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
     // 60% chance of a snack
     const snackData =
       date === "2025-10-31" ? meals.snacks[4] : getNextMeal("snacks");
-    mealEntries.push({ mealType: "snack", data: snackData });
+    mealEntries.push({ mealType: "snacks", data: snackData });
   }
 
   // --- Create final log objects with variations ---

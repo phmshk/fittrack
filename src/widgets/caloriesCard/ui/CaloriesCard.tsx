@@ -45,7 +45,7 @@ export const CaloriesCard = (props: CaloriesCardProps) => {
           )}
         </div>
       </div>
-      <div className="md:text-primary-foreground md:bg-secondary/80 hidden md:block md:rounded-xl md:px-3 md:py-2 md:font-bold">
+      <div className="md:bg-secondary/80 hidden md:block md:rounded-xl md:px-3 md:py-2 md:font-bold">
         Goal: {userGoals?.targetCalories} | Eaten: {summary.consumedCalories} |
         Exercise: {exercise > 0 ? `-${exercise}` : 0}
       </div>

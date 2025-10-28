@@ -33,6 +33,7 @@ export const AddFromDatabase = () => {
         inputValue={searchQuery}
         onInputChange={setSearchQuery}
         searchQuery={debouncedSearchQuery}
+        isMobile={isMobile}
       />
     </Container>
   );
