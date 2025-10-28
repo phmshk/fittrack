@@ -28,10 +28,12 @@ export const DiaryPage = () => {
 
   return (
     <Container>
-      <H1>Diary</H1>
-      <span className="text-secondary-foreground">
-        Track your nutrition and calories.
-      </span>
+      <div className="mb-6">
+        <H1>Diary</H1>
+        <p className="text-muted-foreground">
+          Track your nutrition and calories.
+        </p>
+      </div>
       <DayNavigator date={selectedDate} onDateChange={setSelectedDate} />
 
       <H2>Calories</H2>

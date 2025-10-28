@@ -48,7 +48,7 @@ export const ProgressSummary = (props: ProgressSummaryProps) => {
       dataKey: "calories",
     },
     {
-      title: "Average Protein",
+      title: "Average Proteins",
       value: `${summary.averageProteins} g`,
       icon: <Beef stroke="var(--proteins-color)" className="size-6" />,
       dataKey: "proteins",
@@ -113,11 +113,16 @@ export const ProgressSummary = (props: ProgressSummaryProps) => {
               <div className="text-2xl font-bold">{card.value}</div>
             </CardContent>
             <CardFooter>
+              {summary.dailyData.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No data available for the selected range.
+                </p>
+              ) : ( 
               <MacronutrientSummaryChart
                 chartConfig={chartConfig}
                 chartData={summary.dailyData}
                 dataKey={card.dataKey}
-              />
+              />)}
             </CardFooter>
           </Card>
         ))}

@@ -15,7 +15,7 @@ export const WeightHistory = (props: WeightHistoryProps) => {
       <div>
         <H2>Your Weight Trend</H2>
         <p className="text-muted-foreground">
-          A chart showing your weight progress over time.
+          Track your weight changes over time.
         </p>
       </div>
 

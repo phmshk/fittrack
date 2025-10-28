@@ -74,8 +74,8 @@ export const MealCard = (props: MealCardProps) => {
       <CardContent className="h-full">
         {foods.length === 0 ? (
           <div className="text-secondary-foreground flex h-full flex-col items-center justify-center">
-            <div className="border-primary/40 mb-4 rounded-full border-4 p-8">
-              <Utensils className="text-primary-foreground size-16" />
+            <div className="border-primary/80 mb-4 rounded-full border-4 p-8">
+              <Utensils className="text-primary/80 size-16" />
             </div>
             <p className="mb-4 text-center text-sm">
               No food added yet for {mealType}.
