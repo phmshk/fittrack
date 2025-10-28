@@ -1,34 +1,51 @@
-import type { User } from "@/entities/user";
+import { ThemeToggle } from "@/features/changeTheme";
+import { LogoutButton } from "@/features/logout";
+import { useBreakpoint } from "@/shared/lib";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
-import { Cog } from "lucide-react";
+import { InfoRow, SettingRow } from "@/shared/ui/row";
 
-interface SettingsTabProps {
-  userData: User;
-}
-
-export const SettingsTab = (props: SettingsTabProps) => {
-  const { userData } = props;
+export const SettingsTab = () => {
+  const isMobile = useBreakpoint();
   return (
-    <Card>
+    <Card className="mx-auto w-full max-w-2xl border-0 shadow-none md:border md:shadow">
       <CardHeader>
         <CardTitle>Settings</CardTitle>
         <CardDescription>
-          Manage your account settings and preferences.
+          Manage your account and application settings.
         </CardDescription>
       </CardHeader>
-      <CardContent className="text-muted-foreground flex h-64 flex-col items-center justify-center space-y-4 text-center">
-        <Cog className="h-12 w-12" />
-        <p>
-          Account settings and preferences will be available here in a future
-          update.
-        </p>
+      <CardContent>
+        <div className="grid gap-4">
+          <SettingRow
+            id="theme-toggle"
+            label="Application Theme"
+            description="Choose between light, dark, or system default theme."
+            control={<ThemeToggle />}
+          />
+
+          {/**To be implemented */}
+          {/* <SettingRow
+            id="notifications-switch"
+            label="Push Notifications"
+            description="Receive notifications about new events."
+            control={<Switch id="notifications-switch" />}
+          /> */}
+          <InfoRow label="Application Version" value="0.0.1-beta" />
+        </div>
       </CardContent>
+
+      {isMobile && (
+        <CardFooter className="mt-4">
+          <LogoutButton />
+        </CardFooter>
+      )}
     </Card>
   );
 };

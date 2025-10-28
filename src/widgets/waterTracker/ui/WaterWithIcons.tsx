@@ -13,7 +13,7 @@ export const WaterWithIcons = (props: WaterWithIconsProps) => {
     return (
       <div key={crypto.randomUUID()}>
         <div className="relative inline-block">
-          <GlassWater className={`text-muted size-10`} strokeWidth={1.5} />
+          <GlassWater className={`text-background size-10`} strokeWidth={1.5} />
 
           <div className="absolute left-0 top-0">
             <GlassWater
