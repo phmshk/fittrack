@@ -52,9 +52,9 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
 
   const onSubmit = (data: GoalFormValues) => {
     updateUserData({
-      ...userData,
       goal: data.goal,
     });
+    form.reset(data);
   };
 
   const FormContent = (

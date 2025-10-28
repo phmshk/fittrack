@@ -12,6 +12,10 @@ export const useAddWeightLog = () => {
       const { data, error } = await apiClient.POST("/user/weight", {
         body: newLog,
       });
+      console.log(
+        "[MSW] POST /api/user/weight: Received new weight log",
+        newLog,
+      );
       if (error) throw error;
       return data;
     },

@@ -16,6 +16,7 @@ export {
 } from "./model/useSession";
 export type {
   User,
+  UserInput,
   UserSession,
   PersonalData,
   DailyTargets,

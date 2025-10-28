@@ -58,9 +58,9 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
 
   const onSubmit = (data: ActivityFormValues) => {
     updateUserData({
-      ...userData,
       activityLevel: data.activityLevel,
     });
+    form.reset(data);
   };
 
   const FormContent = (

@@ -1,4 +1,4 @@
-import { useGetUserData, useUpdateUserData } from "@/entities/user";
+import { useGetUserData, useUpdateUserData, type UserInput } from "@/entities/user";
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import {
   personalInfoSchema,
@@ -59,16 +59,48 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
   const form = isStandalone ? standaloneForm : contextForm;
 
   const onSubmit = (data: PersonalInfoFormValues) => {
-    updateUserData({
-      name: data.name,
-      personalData: {
-        gender: data.gender === "" ? undefined : data.gender,
-        age: Number(data.age),
-        height: Number(data.height),
-        weight: Number(data.weight),
-      },
-    });
-    form.reset(data);
+    const dirtyFields = form.formState.dirtyFields;
+    if (Object.keys(dirtyFields).length === 0) {
+      return;
+    }
+    // Collect changes, so that unchanged fields won't be sent to the API
+    const changes: Partial<UserInput> = {};
+    const personalDataChanges: Partial<UserInput["personalData"]> = {};
+    let hasPersonalDataChanges = false;
+
+    if (dirtyFields.name && data.name !== userData?.name) {
+      changes.name = data.name;
+    }
+
+    if (dirtyFields.age && Number(data.age) !== userData?.personalData?.age) {
+      personalDataChanges.age = Number(data.age);
+      hasPersonalDataChanges = true;
+    }
+
+    if (
+      dirtyFields.height &&
+      Number(data.height) !== userData?.personalData?.height
+    ) {
+      personalDataChanges.height = Number(data.height);
+      hasPersonalDataChanges = true;
+    }
+
+    if (
+      dirtyFields.weight &&
+      Number(data.weight) !== userData?.personalData?.weight
+    ) {
+      personalDataChanges.weight = Number(data.weight);
+      hasPersonalDataChanges = true;
+    }
+
+    if (hasPersonalDataChanges) {
+      changes.personalData = personalDataChanges;
+    }
+
+    if (Object.keys(changes).length > 0) {
+      updateUserData(changes);
+      form.reset(data);
+    }
   };
 
   const FormContent = (
