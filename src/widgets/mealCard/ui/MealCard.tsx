@@ -65,6 +65,7 @@ export const MealCard = (props: MealCardProps) => {
             </span>
           </CardDescription>
         </div>
+
         <img
           src={imageUrl}
           alt={`${mealType} illustration`}

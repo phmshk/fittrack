@@ -1,6 +1,7 @@
 import { ThemeToggle } from "@/features/changeTheme";
 import { LogoutButton } from "@/features/logout";
 import { useBreakpoint } from "@/shared/lib";
+import { CONFIG } from "@/shared/model";
 import {
   Card,
   CardContent,
@@ -37,7 +38,7 @@ export const SettingsTab = () => {
             description="Receive notifications about new events."
             control={<Switch id="notifications-switch" />}
           /> */}
-          <InfoRow label="Application Version" value="0.0.1-beta" />
+          <InfoRow label="Application Version" value={CONFIG.APP_VERSION} />
         </div>
       </CardContent>
 
