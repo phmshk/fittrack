@@ -10,6 +10,7 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldLegend,
   FieldSet,
   FieldTitle,
 } from "@/shared/shadcn/components/ui/field";
@@ -68,9 +69,14 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <FieldSet data-invalid={fieldState.invalid}>
-              <FieldLabel>Goals</FieldLabel>
+              <FieldLegend>Goals</FieldLegend>
               <FieldDescription>
                 You can update your goal at any time.
+                <br />
+                <span className="font-bold">
+                  Please notice that selecting any of these will calculate new
+                  nutritional targets and replace your existing ones.
+                </span>
               </FieldDescription>
               <RadioGroup
                 name={field.name}

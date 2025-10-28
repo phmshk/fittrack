@@ -15,7 +15,12 @@ export const profileTabs: Record<string, ProfileTab> = {
     Icon: UserIcon,
     isNavRoute: false,
   },
-  GOALS: { title: "Goals", href: "goals", Icon: Target, isNavRoute: false },
+  GOALS: {
+    title: "Nutritional Goals",
+    href: "goals",
+    Icon: Target,
+    isNavRoute: false,
+  },
   SETTINGS: {
     title: "Settings",
     href: "settings",

@@ -61,7 +61,7 @@ export const WeightChart = (props: WeightChartProps) => {
           <LineChart accessibilityLayer data={chartData} margin={{ right: 20 }}>
             <CartesianGrid />
             <XAxis
-              dataKey={`date-${range}`}
+              dataKey={`date`}
               tickLine={false}
               tickMargin={10}
               axisLine={false}

@@ -8,7 +8,6 @@ import {
 import { toast } from "sonner";
 import type { User } from "../model/types";
 import { useSessionStore } from "../model/useSession";
-import { calculateDailyNeeds } from "../lib/calc";
 import { prepareUpdatePayload } from "../lib/helpers";
 import { useAddWeightLog } from "./weightLogApi";
 

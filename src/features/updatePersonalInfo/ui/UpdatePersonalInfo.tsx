@@ -1,4 +1,8 @@
-import { useGetUserData, useUpdateUserData, type UserInput } from "@/entities/user";
+import {
+  useGetUserData,
+  useUpdateUserData,
+  type UserInput,
+} from "@/entities/user";
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import {
   personalInfoSchema,
@@ -254,7 +258,7 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
           </Button>
           <Button
             type="submit"
-            form="personal-info-form"
+            form={FORM_ID}
             disabled={isUpdatingUserData || !form.formState.isDirty}
           >
             Save

@@ -17,6 +17,7 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldLegend,
   FieldSet,
   FieldTitle,
 } from "@/shared/shadcn/components/ui/field";
@@ -71,9 +72,14 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <FieldSet data-invalid={fieldState.invalid}>
-              <FieldLabel>Activity Level</FieldLabel>
+              <FieldLegend>Activity Levels</FieldLegend>
               <FieldDescription>
                 You can update your activity level at any time.
+                <br />
+                <span className="font-bold">
+                  Please notice that selecting any of these will calculate new
+                  nutritional targets and replace your existing ones.
+                </span>
               </FieldDescription>
               <RadioGroup
                 name={field.name}
