@@ -11,12 +11,14 @@ import {
 } from "@/shared/shadcn/components/ui/dropdown-menu";
 import { EllipsisVertical, Eye, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface FoodOptionsProps {
   foodEntry: FoodLog;
 }
 
 export const FoodOptions = ({ foodEntry }: FoodOptionsProps) => {
+  const { t } = useTranslation("common");
   const [isDetailsOpen, setDetailsOpen] = useState(false);
   const [isEditOpen, setEditOpen] = useState(false);
   const [isDeleteOpen, setDeleteOpen] = useState(false);
@@ -48,20 +50,21 @@ export const FoodOptions = ({ foodEntry }: FoodOptionsProps) => {
             onClick={handleEditClick}
             className="flex cursor-pointer items-center gap-1"
           >
-            <Pencil className="h-4 w-4" /> Edit
+            <Pencil className="h-4 w-4" /> {t("common:actions.edit")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleDetailsClick}
             className="flex cursor-pointer items-center gap-1"
           >
-            <Eye className="h-4 w-4" /> Details
+            <Eye className="h-4 w-4" /> {t("common:actions.details")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleDeleteClick}
             className="flex cursor-pointer items-center gap-1"
           >
-            <Trash2 className="h-4 w-4 text-destructive" /> Delete
+            <Trash2 className="text-destructive h-4 w-4" />{" "}
+            {t("common:actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

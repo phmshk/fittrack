@@ -11,6 +11,7 @@ import {
   AlertDialogTitle,
 } from "@/shared/shadcn/components/ui/alert-dialog";
 import { cn } from "@/shared/shadcn/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface DeleteFoodProps {
   food: FoodLog;
@@ -20,6 +21,7 @@ interface DeleteFoodProps {
 
 export const DeleteFood = (props: DeleteFoodProps) => {
   const { food, isOpen, setIsOpen } = props;
+  const { t } = useTranslation("common");
 
   const { mutate } = useDeleteFoodLog();
 
@@ -32,19 +34,20 @@ export const DeleteFood = (props: DeleteFoodProps) => {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {t("common:deleteFoodModal.title")}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the food
-            entry.
+            {t("common:deleteFoodModal.description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t("common:actions.cancel")}</AlertDialogCancel>
           <AlertDialogAction
             className={cn(buttonVariants({ variant: "destructive" }))}
             onClick={handleDelete}
           >
-            Delete
+            {t("common:actions.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

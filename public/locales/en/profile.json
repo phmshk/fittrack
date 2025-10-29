@@ -1,0 +1,23 @@
+{
+  "title": "Profile",
+  "greeting": "Hello, {{name}}",
+  "description": "You can manage your personal information, goals, and settings here.",
+  "personalInfoTab": "Personal Info",
+  "nutritionalGoalsTab": "Nutritional Goals",
+  "settingsTab": "Settings",
+  "personalInfoTitle": "Your personal information",
+  "personalInfoDescription": "Provide accurate personal details to receive tailored fitness and nutrition recommendations.",
+  "editFieldTitle": "Edit {{fieldName}}",
+  "editFieldDescription": "Click save when you're done.",
+  "goalsTitle": "Your goal",
+  "goalsDescription": "Select your primary fitness goal. This will adjust your calorie and macronutrient recommendations.",
+  "activityLevelTitle": "Your activity level",
+  "activityLevelDescription": "Select your activity level. This will adjust your calorie and macronutrient recommendations.",
+  "nutritionalGoalsTitle": "Nutritional Goals",
+  "nutritionalGoalsDescription": "You can set your daily nutritional targets here if you don't like the suggested ones.",
+  "nutritionalGoalsWarning": "Please notice that changing any of these will override the automatically calculated targets. If you'd like to revert to the suggested targets, you can do so any time by selecting your goal and activity level again.",
+  "calculationMessage": "Calculating your personalized goals...",
+  "recommendationsTitle": "Your Daily Targets",
+  "recommendationsDescription": "Here are our recommendations. You can adjust these if you'd like.",
+  "makeChangesLink": "Want to make changes? Go back"
+}

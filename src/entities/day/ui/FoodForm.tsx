@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/shared/shadcn/components/ui/form";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { formatDateForApi } from "@/shared/lib/utils";
 import { formSchema, type FormOutput } from "../model/zodFoodSchema";
 import { MEALS } from "../model/types";
-import { FORM_INPUT_ITEMS } from "../model/formInputFields";
 import { FormInput, FormSelect } from "@/shared/ui/form";
+import { useTranslation } from "react-i18next";
+import { FieldGroup } from "@/shared/shadcn/components/ui/field";
+import { FORM_INPUT_ITEMS } from "../model/formInputFields";
 
 interface FoodFormProps {
   submitText?: string;
@@ -15,7 +16,8 @@ interface FoodFormProps {
 }
 
 export const FoodForm = (props: FoodFormProps) => {
-  const { submitText = "Save Changes", initialData, onSubmit } = props;
+  const { submitText, initialData, onSubmit } = props;
+  const { t } = useTranslation("common");
   const form = useForm<FormOutput>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,31 +35,42 @@ export const FoodForm = (props: FoodFormProps) => {
     },
   });
 
+  const mealOptions = Object.values(MEALS).map((meal) => ({
+    value: meal,
+    label: t(`common:meals.${meal}`),
+  }));
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="space-y-4"
+      id="add-food-form"
+    >
+      <FieldGroup>
         <FormSelect
           control={form.control}
           name="mealType"
-          label="Meal Type"
-          options={Object.keys(MEALS)}
-          placeholder="Select a meal type"
-          srOnly="Select a meal type"
+          label={t("common:addFoodFormFields.mealType")}
+          options={mealOptions}
+          placeholder={t("common:addFoodFormFields.mealTypePlaceholder")}
+          srOnly={t("common:addFoodFormFields.srMealType")}
         />
         {FORM_INPUT_ITEMS.map((item) => (
           <FormInput
             key={item.name}
             control={form.control}
             name={item.name}
-            label={item.label}
-            placeholder={item.placeholder}
-            srOnly={item.srOnly}
+            label={t(`common:addFoodFormFields.${item.name}`)}
+            placeholder={t(`common:addFoodFormFields.${item.name}Placeholder`)}
+            srOnly={t(
+              `common:addFoodFormFields.sr${item.name.charAt(0).toUpperCase() + item.name.slice(1)}`,
+            )}
           />
         ))}
-        <Button className="ml-auto block w-fit cursor-pointer" type="submit">
-          {submitText}
-        </Button>
-      </form>
-    </Form>
+      </FieldGroup>
+      <Button className="ml-auto block w-fit cursor-pointer" type="submit">
+        {submitText}
+      </Button>
+    </form>
   );
 };

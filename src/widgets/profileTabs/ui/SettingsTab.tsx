@@ -1,3 +1,4 @@
+import { LanguageSwitcher } from "@/features/changeLanguage";
 import { ThemeToggle } from "@/features/changeTheme";
 import { LogoutButton } from "@/features/logout";
 import { useBreakpoint } from "@/shared/lib";
@@ -29,6 +30,12 @@ export const SettingsTab = () => {
             label="Application Theme"
             description="Choose between light, dark, or system default theme."
             control={<ThemeToggle />}
+          />
+          <SettingRow
+            id="language-switcher"
+            label="Language"
+            description="Select your preferred language."
+            control={<LanguageSwitcher />}
           />
 
           {/**To be implemented */}

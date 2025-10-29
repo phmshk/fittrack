@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/shadcn/components/ui/dialog";
+import { useTranslation } from "react-i18next";
 
 interface FoodDetailsProps {
   foodEntry: FoodLog;
@@ -14,6 +15,7 @@ interface FoodDetailsProps {
 }
 export const FoodDetails = (props: FoodDetailsProps) => {
   const { foodEntry, isOpen, setIsOpen } = props;
+  const { t } = useTranslation("common");
   const onChange = () => {
     setIsOpen(!isOpen);
   };
@@ -24,44 +26,60 @@ export const FoodDetails = (props: FoodDetailsProps) => {
         <DialogHeader>
           <DialogTitle>{foodEntry.name}</DialogTitle>
           <DialogDescription className="sr-only">
-            Modal for food details like protein, carbs, fat, calories
+            {t("common:foodDetailsModal.srDescription")}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-2 items-center gap-4">
-            <span className="text-muted-foreground">Calories</span>
+            <span className="text-muted-foreground">
+              {t("common:macronutrients.calories")}
+            </span>
             <span className="text-right font-medium">
-              {foodEntry.calories} kcal
+              {t("common:units.totalCalories", { count: foodEntry.calories })}
             </span>
           </div>
           <div className="grid grid-cols-2 items-center gap-4">
-            <span className="text-muted-foreground">Proteins</span>
+            <span className="text-muted-foreground">
+              {t("common:macronutrients.proteins")}
+            </span>
             <span className="text-right font-medium">
-              {foodEntry.proteins} g
+              {t("common:units.totalGrams", { count: foodEntry.proteins })}
             </span>
           </div>
           <div className="grid grid-cols-2 items-center gap-4">
-            <span className="text-muted-foreground">Fats</span>
-            <span className="text-right font-medium">{foodEntry.fats} g</span>
+            <span className="text-muted-foreground">
+              {t("common:macronutrients.fats")}
+            </span>
+            <span className="text-right font-medium">
+              {t("common:units.totalGrams", { count: foodEntry.fats })}
+            </span>
             {foodEntry.saturatedFats > 0 && (
               <>
-                <span className="ml-4 text-muted-foreground">
-                  Saturated Fats
+                <span className="text-muted-foreground ml-4">
+                  {t("common:macronutrients.saturatedFats")}
                 </span>
                 <span className="text-right font-medium">
-                  {foodEntry.saturatedFats} g
+                  {t("common:units.totalGrams", {
+                    count: foodEntry.saturatedFats,
+                  })}
                 </span>
               </>
             )}
           </div>
           <div className="grid grid-cols-2 items-center gap-4">
-            <span className="text-muted-foreground">Carbs</span>
-            <span className="text-right font-medium">{foodEntry.carbs} g</span>
+            <span className="text-muted-foreground">
+              {t("common:macronutrients.carbs")}
+            </span>
+            <span className="text-right font-medium">
+              {t("common:units.totalGrams", { count: foodEntry.carbs })}
+            </span>
             {foodEntry.sugars > 0 && (
               <>
-                <span className="ml-4 text-muted-foreground">Sugars</span>
+                <span className="text-muted-foreground ml-4">
+                  {t("common:macronutrients.sugars")}
+                </span>
                 <span className="text-right font-medium">
-                  {foodEntry.sugars} g
+                  {t("common:units.totalGrams", { count: foodEntry.sugars })}
                 </span>
               </>
             )}

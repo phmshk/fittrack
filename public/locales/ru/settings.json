@@ -1,0 +1,13 @@
+{
+  "title": "Настройки",
+  "description": "Управляйте вашим аккаунтом и настройками приложения.",
+  "themeLabel": "Тема приложения",
+  "themeDescription": "Выберите светлую, темную или системную тему.",
+  "themeLight": "Светлая",
+  "themeDark": "Темная",
+  "themeSystem": "Системная",
+  "languageLabel": "Язык",
+  "languageDescription": "Выберите предпочитаемый язык.",
+  "versionLabel": "Версия приложения",
+  "logout": "Выйти"
+}

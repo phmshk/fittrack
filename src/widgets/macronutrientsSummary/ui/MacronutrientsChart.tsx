@@ -16,6 +16,7 @@ import {
 import { Progress } from "@/shared/shadcn/components/ui/progress";
 import { useMemo } from "react";
 import { Cell, Label, Pie, PieChart } from "recharts";
+import { useTranslation } from "react-i18next";
 
 const chartConfig = {
   proteins: {
@@ -38,19 +39,23 @@ interface MacronutrientsChartProps {
 
 export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
   const { daySummary } = props;
+  const { t } = useTranslation(["dashboard", "common"]);
 
   const chartData = useMemo(() => {
     return [
       {
-        name: "Proteins",
+        label: "Proteins",
+        name: t("common:macronutrients.proteins"),
         value: daySummary.consumedProteins,
       },
       {
-        name: "Carbs",
+        label: "Carbs",
+        name: t("common:macronutrients.carbs"),
         value: daySummary.consumedCarbs,
       },
       {
-        name: "Fats",
+        label: "Fats",
+        name: t("common:macronutrients.fats"),
         value: daySummary.consumedFats,
       },
     ].filter((item) => item.value > 0);
@@ -62,14 +67,14 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
     return (
       <Card className="h-full border-none">
         <CardHeader>
-          <CardTitle>Macronutrient Distribution</CardTitle>
+          <CardTitle>{t("dashboard:macrosChart.title")}</CardTitle>
           <CardDescription>
-            Distribution of proteins, carbs, and fats for the selected day.
+            {t("dashboard:macrosChart.description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="text-muted-foreground flex h-64 items-center justify-center">
-            <p>No data for this day to display the chart.</p>
+            <p>{t("dashboard:macrosChart.noDataForChart")}</p>
           </div>
         </CardContent>
       </Card>
@@ -79,9 +84,9 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
   return (
     <Card className="h-full justify-around border-none">
       <CardHeader>
-        <CardTitle>Macronutrient Distribution</CardTitle>
+        <CardTitle>{t("dashboard:macrosChart.title")}</CardTitle>
         <CardDescription>
-          Track your daily macronutrients consumption.
+          {t("dashboard:macrosChart.description")}
         </CardDescription>
       </CardHeader>
       <CardContent className="px-6">
@@ -124,22 +129,15 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          kcal
+                          {t("common:units.kcal")}
                         </tspan>
                       </text>
                     );
                   }
                 }}
               />
-              {chartData.map((entry) => (
-                <Cell
-                  key={`cell-${entry.name}`}
-                  fill={
-                    chartConfig[
-                      entry.name.toLowerCase() as keyof typeof chartConfig
-                    ].color
-                  }
-                />
+              {Object.values(chartConfig).map((entry) => (
+                <Cell key={`cell-${entry.label}`} fill={entry.color} />
               ))}
             </Pie>
           </PieChart>
@@ -148,7 +146,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
       <CardFooter className="text-muted-foreground flex flex-row flex-wrap justify-center gap-2 text-sm">
         {chartData.map((entry) => {
           let max;
-          switch (entry.name) {
+          switch (entry.label) {
             case "Proteins":
               max = daySummary.consumedProteins + daySummary.remainingProteins;
               break;
@@ -167,7 +165,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
 
           return (
             <div
-              key={entry.name}
+              key={entry.label}
               className="flex flex-1 flex-col items-center gap-1"
             >
               {entry.name}
@@ -177,14 +175,14 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
                   {
                     "--progress-color":
                       chartConfig[
-                        entry.name.toLowerCase() as keyof typeof chartConfig
+                        entry.label.toLowerCase() as keyof typeof chartConfig
                       ].color,
                   } as React.CSSProperties
                 }
               />
               <span className="text-center font-medium">
-                {progressPercentage.toFixed(0)}% ({entry.value}
-                g)
+                {progressPercentage.toFixed(0)}% (
+                {t("common:units.totalGrams", { count: entry.value })})
               </span>
             </div>
           );

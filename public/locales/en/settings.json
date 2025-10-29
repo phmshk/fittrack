@@ -1,0 +1,13 @@
+{
+  "title": "Settings",
+  "description": "Manage your account and application settings.",
+  "themeLabel": "Application Theme",
+  "themeDescription": "Choose between light, dark, or system default theme.",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeSystem": "System",
+  "languageLabel": "Language",
+  "languageDescription": "Select your preferred language.",
+  "versionLabel": "Application Version",
+  "logout": "Logout"
+}

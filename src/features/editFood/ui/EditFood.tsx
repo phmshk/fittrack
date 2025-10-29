@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogDescription,
 } from "@/shared/shadcn/components/ui/dialog";
+import { useTranslation } from "react-i18next";
 
 interface EditFoodProps {
   food: FoodLog;
@@ -20,6 +21,7 @@ interface EditFoodProps {
 }
 
 export const EditFood = ({ food, isOpen, setIsOpen }: EditFoodProps) => {
+  const { t } = useTranslation("common");
   const { mutate } = useUpdateFoodLog();
 
   const handleFormSubmit = (data: FormOutput) => {
@@ -29,19 +31,17 @@ export const EditFood = ({ food, isOpen, setIsOpen }: EditFoodProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] overflow-y-auto overflow-x-hidden">
         <DialogHeader>
-          <DialogTitle>Edit food Entry</DialogTitle>
+          <DialogTitle>{t("common:editFoodModal.title")}</DialogTitle>
           <DialogDescription className="mb-4">
-            Edit the form below to modify the food item in your meal plan.
-            <span className="sr-only">
-              This will update the food item in your meal plan.
-            </span>
+            {t("common:editFoodModal.description")}
+            <span className="sr-only">{t("common:editFoodModal.SRdescr")}</span>
           </DialogDescription>
           <FoodForm
             onSubmit={handleFormSubmit}
             initialData={foodLogToZodInput(food)}
-            submitText="Save changes"
+            submitText={t("common:editFoodModal.saveButton")}
           />
         </DialogHeader>
       </DialogContent>

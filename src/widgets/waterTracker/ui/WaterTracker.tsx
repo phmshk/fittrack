@@ -10,6 +10,7 @@ import { Spinner } from "@/shared/ui/spinner";
 import { useState } from "react";
 import { WaterWithIcons } from "./WaterWithIcons";
 import { HandleWater } from "@/features/handleWater";
+import { useTranslation } from "react-i18next";
 
 interface WaterTrackerProps {
   date: Date;
@@ -19,6 +20,7 @@ interface WaterTrackerProps {
 const WATER_PORTION_ML = 250;
 
 export const WaterTracker = (props: WaterTrackerProps) => {
+  const { t } = useTranslation(["dashboard", "common"]);
   const { date, targetWaterIntake } = props;
   const { data: waterLog, isLoading } = useGetWaterByDate(date);
 
@@ -41,9 +43,9 @@ export const WaterTracker = (props: WaterTrackerProps) => {
   return (
     <Card className="border-none">
       <CardHeader>
-        <CardTitle>Water Intake</CardTitle>
+        <CardTitle>{t("dashboard:waterTracker.title")}</CardTitle>
         <CardDescription>
-          Stay hydrated to support your health and fitness goals.
+          {t("dashboard:waterTracker.description")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

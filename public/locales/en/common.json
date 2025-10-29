@@ -1,0 +1,112 @@
+{
+  "greeting": "Hello!",
+  "loading": "Loading...",
+  "recommended": "Recommended around",
+  "ofDailyGoal": "of daily goal",
+  "navigation": {
+    "dashboard": "Dashboard",
+    "diary": "Diary",
+    "progress": "Progress",
+    "profile": "Profile"
+  },
+  "actions": {
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "add": "Add",
+    "addFood": "Add Food",
+    "addFromOpenFoodFacts": "Add from Open Food Facts",
+    "next": "Next",
+    "back": "Back",
+    "reset": "Reset",
+    "finish": "Save and Finish",
+    "saving": "Saving...",
+    "details": "Details",
+    "selectDate": "Select Date",
+    "scanBarcode": "Scan Barcode"
+  },
+  "units": {
+    "totalCalories": "{{count}} kcal",
+    "kcal": "kcal",
+    "totalGrams": "{{count}} g",
+    "g": "g",
+    "totalMl": "{{count}} ml",
+    "ml": "ml",
+    "totalKg": "{{count}} kg",
+    "kg": "kg",
+    "totalCm": "{{count}} cm",
+    "cm": "cm",
+    "totalYears": "{{count}} years",
+    "years": "years"
+  },
+  "macronutrients": {
+    "calories": "Calories",
+    "proteins": "Proteins",
+    "carbs": "Carbs",
+    "fats": "Fats",
+    "water": "Water",
+    "saturatedFats": "Saturated Fats",
+    "sugars": "Sugars"
+  },
+  "meals": {
+    "title": "Meals",
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "snacks": "Snacks"
+  },
+  "mealCard": {
+    "noFoodAdded": "No food added yet for {{mealType}}.",
+    "SRdescr": "Meal card for {{mealType}} summarizing all foods eaten for that meal",
+    "img": {
+      "alt": "Image for {{mealType}}"
+    },
+    "showLess": "Show less foods",
+    "showAll": "Show all {{count}} foods",
+    "showAll_one": "Show {{count}} food"
+  },
+  "editFoodModal": {
+    "title": "Edit Food Entry",
+    "description": "Edit the form below to modify the food item in your meal plan.",
+    "saveButton": "Save Changes",
+    "cancelButton": "Cancel",
+    "SRdescr": "This will update the food item in your meal plan."
+  },
+  "addFoodFormFields": {
+    "mealType": "Meal Type",
+    "mealTypePlaceholder": "Select a meal type",
+    "srMealType": "Select a meal type",
+    "name": "Food Name",
+    "namePlaceholder": "e.g., Apple",
+    "srName": "Enter the food name",
+    "calories": "Calories (kcal) in 100g serving",
+    "caloriesPlaceholder": "Mandatory field",
+    "srCalories": "Enter the amount of calories in kcal for a 100 gram serving.",
+    "proteins": "Proteins (g) in 100g serving",
+    "proteinsPlaceholder": "Default is 0g",
+    "srProteins": "Enter the amount of proteins in grams for a 100 gram serving. Default is 0 grams.",
+    "carbs": "Carbs (g) in 100g serving",
+    "carbsPlaceholder": "Default is 0g",
+    "srCarbs": "Enter the amount of carbohydrates in grams for a 100 gram serving. Default is 0 grams.",
+    "fats": "Fats (g) in 100g serving",
+    "fatsPlaceholder": "Default is 0g",
+    "srFats": "Enter the amount of fats in grams for a 100 gram serving. Default is 0 grams.",
+    "sugars": "Sugars (g) in 100g serving",
+    "sugarsPlaceholder": "Default is 0g",
+    "srSugars": "Enter the amount of sugars in grams for a 100 gram serving. Default is 0 grams.",
+    "saturatedFats": "Saturated Fats (g) in 100g serving",
+    "saturatedFatsPlaceholder": "Default is 0g",
+    "srSaturatedFats": "Enter the amount of saturated fats in grams for a 100 gram serving. Default is 0 grams.",
+    "grams": "Grams (g)",
+    "gramsPlaceholder": "Default is 100g",
+    "srGrams": "Enter the amount in grams for this food item. Default is 100 grams."
+  },
+  "foodDetailsModal": {
+    "srDescription": "Modal for food details like protein, carbs, fat, calories etc."
+  },
+  "deleteFoodModal": {
+    "title": "Are you sure?",
+    "description": "This action cannot be undone. This will permanently delete the food entry."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Dashboard",
+  "greeting": "Today, {{date}}",
+  "noFoodLogs": "No food logs available",
+  "caloriesCard": {
+    "caloriesRemaining": "{{count}} kcal remaining",
+    "caloriesOverGoal": "{{count}} kcal over goal",
+    "goal": "Goal",
+    "eaten": "Eaten",
+    "exercise": "Exercise",
+    "caloriesCardSR": "Card showing calories summary. Remaining, eaten, and exercise calories."
+  },
+  "macrosChart": {
+    "title": "Macronutrient Distribution",
+    "description": "Track your daily macronutrients consumption.",
+    "noDataForChart": "No data for this day to display the chart."
+  },
+  "waterTracker": {
+    "title": "Water Tracker",
+    "description": "Stay hydrated to support your health and fitness goals.",
+    "noData": "No water intake data for this day.",
+    "noGoal": "No water intake goal set.",
+    "mlToGo": "{{count}} ml to go",
+    "goalReached": "Goal reached!"
+  }
+}
