@@ -1,0 +1,62 @@
+{
+  "addFood": {
+    "title": "Essen hinzufügen",
+    "backToMeal": "Zurück zur Mahlzeit"
+  },
+  "mealCard": {
+    "noFoodAdded": "Noch kein Essen für {{mealType}} hinzugefügt.",
+    "SRdescr": "Mahlzeiten-Karte für {{mealType}}, die alle gegessenen Lebensmittel zusammenfasst",
+    "img": {
+      "alt": "Bild für {{mealType}}"
+    },
+    "showLess": "Weniger anzeigen",
+    "showAll_one": "{{count}} Lebensmittel anzeigen",
+    "showAll_plural": "Alle {{count}} Lebensmittel anzeigen"
+  },
+  "editFoodModal": {
+    "title": "Eintrag bearbeiten",
+    "description": "Bearbeiten Sie das Formular, um den Eintrag in Ihrem Ernährungsplan zu ändern.",
+    "SRdescr": "Dies aktualisiert den Eintrag in Ihrem Ernährungsplan."
+  },
+  "addFoodFormFields": {
+    "mealType": "Mahlzeit-Typ",
+    "mealTypePlaceholder": "Wählen Sie einen Mahlzeit-Typ",
+    "srMealType": "Wählen Sie einen Mahlzeit-Typ",
+    "name": "Name des Lebensmittels",
+    "namePlaceholder": "z.B. Apfel",
+    "srName": "Namen des Lebensmittels eingeben",
+    "calories": "Kalorien (kcal) pro 100g",
+    "caloriesPlaceholder": "Pflichtfeld",
+    "srCalories": "Geben Sie die Kalorienmenge in kcal pro 100g Portion ein.",
+    "proteins": "Proteine (g) pro 100g",
+    "proteinsPlaceholder": "Standard ist 0g",
+    "srProteins": "Geben Sie die Proteinmenge in Gramm pro 100g Portion ein. Standard ist 0 Gramm.",
+    "carbs": "Kohlenhydrate (g) pro 100g",
+    "carbsPlaceholder": "Standard ist 0g",
+    "srCarbs": "Geben Sie die Kohlenhydratmenge in Gramm pro 100g Portion ein. Standard ist 0 Gramm.",
+    "fats": "Fette (g) pro 100g",
+    "fatsPlaceholder": "Standard ist 0g",
+    "srFats": "Geben Sie die Fettmenge in Gramm pro 100g Portion ein. Standard ist 0 Gramm.",
+    "sugars": "Zucker (g) pro 100g",
+    "sugarsPlaceholder": "Standard ist 0g",
+    "srSugars": "Geben Sie die Zuckermenge in Gramm pro 100g Portion ein. Standard ist 0 Gramm.",
+    "saturatedFats": "Gesättigte Fette (g) pro 100g",
+    "saturatedFatsPlaceholder": "Standard ist 0g",
+    "srSaturatedFats": "Geben Sie die Menge an gesättigten Fetten in Gramm pro 100g Portion ein. Standard ist 0 Gramm.",
+    "grams": "Gramm (g)",
+    "gramsPlaceholder": "Standard ist 100g",
+    "srGrams": "Geben Sie die Menge in Gramm für diesen Eintrag ein. Standard ist 100 Gramm."
+  },
+  "foodDetailsModal": {
+    "srDescription": "Modal für Lebensmitteldetails wie Protein, Kohlenhydrate, Fett, Kalorien usw."
+  },
+  "deleteFoodModal": {
+    "title": "Sind Sie sicher?",
+    "description": "Diese Aktion kann nicht rückgängig gemacht werden. Dies löscht den Eintrag endgültig."
+  },
+  "addFoodForm": {
+    "title": "Essen zum Ernährungsplan hinzufügen",
+    "description": "Füllen Sie das Formular aus, um ein neues Lebensmittel zu Ihrem Ernährungsplan hinzuzufügen.",
+    "srDescription": "Formular, um ein neues Lebensmittel zum Ernährungsplan hinzuzufügen"
+  }
+}

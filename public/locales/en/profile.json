@@ -1,6 +1,8 @@
 {
   "title": "Profile",
   "greeting": "Hello, {{name}}",
+  "myProfile": "My Profile",
+  "logout": "Log Out",
   "description": "You can manage your personal information, goals, and settings here.",
   "personalInfoTab": "Personal Info",
   "nutritionalGoalsTab": "Nutritional Goals",
@@ -19,5 +21,42 @@
   "calculationMessage": "Calculating your personalized goals...",
   "recommendationsTitle": "Your Daily Targets",
   "recommendationsDescription": "Here are our recommendations. You can adjust these if you'd like.",
-  "makeChangesLink": "Want to make changes? Go back"
+  "makeChangesLink": "Want to make changes? Go back",
+  "tabs": {
+    "personal-info": {
+      "title": "Personal Info"
+    },
+    "goals": {
+      "title": "Nutritional Goals",
+      "description": "You can set your daily nutritional targets here if you don't like the suggested ones.",
+      "warning": "Please notice that changing any of these will override the automatically calculated targets. If you'd like to revert to the suggested targets, you can do so any time by selecting your goal and activity level again."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Manage your application settings and preferences.",
+      "logout": "Logout",
+      "items": {
+        "theme": {
+          "title": "Application Theme",
+          "toggleTheme": "Toggle Theme",
+          "description": "Choose between light, dark, or system default theme.",
+          "light": "Light",
+          "dark": "Dark",
+          "system": "System"
+        },
+        "language": {
+          "title": "Language",
+          "changeLanguage": "Change Language",
+          "description": "Select your preferred language."
+        },
+        "version": {
+          "title": "App Version"
+        }
+      }
+    }
+  },
+  "mobileNav": {
+    "openProfile": "Open profile menu",
+    "srNav": "Navigation for mobile devices"
+  }
 }

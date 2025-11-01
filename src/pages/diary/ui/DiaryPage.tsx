@@ -10,8 +10,10 @@ import { useDateStore } from "@/shared/model";
 import { Container } from "@/shared/ui/container";
 import { useGetUserData } from "@/entities/user";
 import { Spinner } from "@/shared/ui/spinner";
+import { useTranslation } from "react-i18next";
 
 export const DiaryPage = () => {
+  const { t } = useTranslation(["diary", "common"]);
   const selectedDate = useDateStore((state) => state.selectedDate);
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
 
@@ -23,25 +25,23 @@ export const DiaryPage = () => {
   const isLoading = isLoadingLogs || isLoadingGoals;
 
   if (isLoading) {
-    return <Spinner text="Loading data..." />;
+    return <Spinner text={t("common:loading")} />;
   }
 
   return (
     <Container>
       <div className="mb-6">
-        <H1>Diary</H1>
-        <p className="text-muted-foreground">
-          Track your nutrition and calories.
-        </p>
+        <H1>{t("diary:title")}</H1>
+        <p className="text-muted-foreground">{t("diary:description")}</p>
       </div>
       <DayNavigator date={selectedDate} onDateChange={setSelectedDate} />
 
-      <H2>Calories</H2>
+      <H2>{t("common:macronutrients:calories")}</H2>
       <ProgressBar
         currentValue={summary.consumedCalories}
         goalValue={userData?.dailyTargets?.targetCalories || 0}
-        label="Calories"
-        units="kcal"
+        label={t("common:macronutrients:calories")}
+        units={t("common:units:kcal")}
       />
 
       {dailyTargets ? (
@@ -51,7 +51,7 @@ export const DiaryPage = () => {
           isLoading={isLoading}
         />
       ) : (
-        <div>No macronutrient summary available</div>
+        <div>{t("diary:noMacroSummary")}</div>
       )}
 
       {foodLogs ? (
@@ -62,7 +62,7 @@ export const DiaryPage = () => {
           variant="full"
         />
       ) : (
-        <div>No food logs available</div>
+        <div>{t("diary:noFoodLogs")}</div>
       )}
     </Container>
   );

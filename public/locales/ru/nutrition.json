@@ -1,0 +1,48 @@
+{
+  "units": {
+    "totalCalories": "{{count}} ккал",
+    "kcal": "ккал",
+    "kcal100g": "ккал/100г",
+    "totalGrams": "{{count}} г",
+    "g": "г",
+    "totalMl": "{{count}} мл",
+    "ml": "мл",
+    "totalKg": "{{count}} кг",
+    "kg": "кг",
+    "totalCm": "{{count}} см",
+    "cm": "см",
+    "totalYears_one": "{{count}} год",
+    "totalYears_few": "{{count}} года",
+    "totalYears_many": "{{count}} лет",
+    "years": "лет"
+  },
+  "macronutrients": {
+    "title": "Макронутриенты",
+    "calories": "Калории",
+    "caloriesWithUnit": "Калории (ккал)",
+    "caloriesPlaceholder": "Ваша дневная норма калорий",
+    "proteins": "Белки",
+    "proteinsWithUnit": "Белки (г)",
+    "proteinsPlaceholder": "Ваша дневная норма белков",
+    "carbs": "Углеводы",
+    "carbsWithUnit": "Углеводы (г)",
+    "carbsPlaceholder": "Ваша дневная норма углеводов",
+    "fats": "Жиры",
+    "fatsWithUnit": "Жиры (г)",
+    "fatsPlaceholder": "Ваша дневная норма жиров",
+    "water": "Вода",
+    "waterWithUnit": "Вода (мл)",
+    "waterPlaceholder": "Ваша дневная норма воды",
+    "saturatedFats": "Насыщенные жиры",
+    "saturatedFatsWithUnit": "Насыщенные жиры (г)",
+    "sugars": "Сахар",
+    "sugarsWithUnit": "Сахар (г)"
+  },
+  "meals": {
+    "title": "Приемы пищи",
+    "breakfast": "Завтрак",
+    "lunch": "Обед",
+    "dinner": "Ужин",
+    "snacks": "Перекусы"
+  }
+}

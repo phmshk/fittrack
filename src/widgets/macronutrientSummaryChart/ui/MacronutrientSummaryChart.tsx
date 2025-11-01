@@ -7,7 +7,7 @@ import {
 } from "@/shared/shadcn/components/ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import type { DailyData } from "../model/types";
-
+import { useTranslation } from "react-i18next";
 
 interface MacronutrientSummaryChartProps {
   chartConfig: ChartConfig;
@@ -19,6 +19,7 @@ export const MacronutrientSummaryChart = (
   props: MacronutrientSummaryChartProps,
 ) => {
   const { chartConfig, chartData, dataKey } = props;
+  const { t } = useTranslation("common");
   const isMobile = useBreakpoint();
   // Dynamically generate ticks for the XAxis to prevent cluttering and ensure the last tick is always visible.
   const xAxisTicks = useCalculateTicksForXAxis(chartData, isMobile);
@@ -37,7 +38,11 @@ export const MacronutrientSummaryChart = (
           fontSize={12}
         />
         <YAxis
-          unit={dataKey === "calories" ? "kcal" : "g"}
+          unit={
+            dataKey === "calories"
+              ? t("common:units.kcal")
+              : t("common:units.g")
+          }
           tickLine={false}
           tickMargin={10}
           axisLine={false}

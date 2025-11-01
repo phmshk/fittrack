@@ -1,0 +1,31 @@
+{
+  "title": "Fortschritt",
+  "description": "Verfolgen und verwalten Sie Ihr Gewicht und Ihre Ernährung im Laufe der Zeit.",
+  "noData": "Keine Daten für den ausgewählten Zeitraum verfügbar.",
+  "rangeTabs": {
+    "7d": "7 Tage",
+    "30d": "30 Tage",
+    "90d": "90 Tage",
+    "180d": "180 Tage",
+    "1y": "1 Jahr",
+    "all": "Gesamt"
+  },
+  "weightHistory": {
+    "title": "Gewichtsverlauf",
+    "description": "Verfolgen Sie Ihre Gewichtsänderungen im Laufe der Zeit."
+  },
+  "weightChart": {
+    "noData": "Fügen Sie mindestens einen Gewichtseintrag hinzu, um ein Diagramm zu sehen."
+  },
+  "progressSummary": {
+    "title": "Fortschrittsübersicht",
+    "averageIntake": "Ihre durchschnittliche Nährstoffaufnahme im ausgewählten Zeitraum.",
+    "averageIntakeDescription": "Diese Übersicht gibt Einblicke in Ihren täglichen Durchschnittsverbrauch von Kalorien, Proteinen, Kohlenhydraten und Fetten, basierend auf den von Ihnen protokollierten Daten.",
+    "weightChange": "Gewichtsänderung",
+    "averageCalories": "Ø Tägliche Kalorien",
+    "averageProteins": "Ø Tägliche Proteine",
+    "averageCarbs": "Ø Tägliche Kohlenhydrate",
+    "averageFats": "Ø Tägliche Fette",
+    "noData": "Keine Ernährungsdaten für eine Zusammenfassung verfügbar."
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "personalInfo": {
+    "title": "Your Personal Information",
+    "description": "Provide accurate personal details to receive tailored fitness and nutrition recommendations.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Enter your name",
+    "genderLabel": "Gender",
+    "genderPlaceholder": "Select your gender",
+    "genderOptions": {
+      "male": "Male",
+      "female": "Female"
+    },
+    "weightLabel": "Weight (kg)",
+    "weightPlaceholder": "Enter your weight in kilograms",
+    "heightLabel": "Height (cm)",
+    "heightPlaceholder": "Enter your height in centimeters",
+    "ageLabel": "Age (years)",
+    "agePlaceholder": "Enter your age in years"
+  },
+  "goal": {
+    "title": "Goals",
+    "yourGoals": "Your Goal",
+    "description": "Select your primary goal. This will adjust your calorie and macronutrient recommendations. You can change this anytime.",
+    "warning": "Please notice that selecting any of these will calculate new nutritional targets and replace your existing ones.",
+    "options": {
+      "lose_weight": "Lose Weight",
+      "maintain_weight": "Maintain Weight",
+      "gain_weight": "Gain Weight"
+    }
+  },
+  "activityLevel": {
+    "title": "Activity Levels",
+    "yourActivityLevel": "Your Activity Level",
+    "description": "Select your activity level. This will adjust your calorie and macronutrient recommendations. You can change this anytime.",
+    "warning": "Please notice that selecting any of these will calculate new nutritional targets and replace your existing ones.",
+    "options": {
+      "sedentary": {
+        "title": "Sedentary",
+        "description": "Little or no exercise, desk job"
+      },
+      "light": {
+        "title": "Lightly Active",
+        "description": "Light exercise/sports 1-3 days/week"
+      },
+      "moderate": {
+        "title": "Moderately Active",
+        "description": "Moderate exercise/sports 3-5 days/week"
+      },
+      "active": {
+        "title": "Very Active",
+        "description": "Hard exercise/sports 6-7 days a week"
+      },
+      "extra_active": {
+        "title": "Extra Active",
+        "description": "Very hard exercise/sports & physical job"
+      }
+    }
+  }
+}

@@ -13,6 +13,7 @@ import type { DaysRange } from "@/widgets/rangeTabs";
 import { type ChartConfig } from "@/shared/shadcn/components/ui/chart";
 import { MacronutrientSummaryChart } from "@/widgets/macronutrientSummaryChart";
 import { H2 } from "@/shared/ui/headings";
+import { useTranslation } from "react-i18next";
 
 const chartConfig = {
   calories: {
@@ -39,29 +40,32 @@ interface ProgressSummaryProps {
 
 export const ProgressSummary = (props: ProgressSummaryProps) => {
   const { range } = props;
+  const { t } = useTranslation(["progress", "common"]);
   const { summary, isLoading } = useProgressSummary(range);
   const summaryCards = [
     {
-      title: "Average Calories",
-      value: `${summary.averageCalories} kcal`,
+      title: t("progress:progressSummary.averageCalories"),
+      value: t("common:units.totalCalories", {
+        count: summary.averageCalories,
+      }),
       icon: <Flame stroke="var(--calories-color)" className="size-6" />,
       dataKey: "calories",
     },
     {
-      title: "Average Proteins",
-      value: `${summary.averageProteins} g`,
+      title: t("progress:progressSummary.averageProteins"),
+      value: t("common:units.totalGrams", { count: summary.averageProteins }),
       icon: <Beef stroke="var(--proteins-color)" className="size-6" />,
       dataKey: "proteins",
     },
     {
-      title: "Average Carbs",
-      value: `${summary.averageCarbs} g`,
+      title: t("progress:progressSummary.averageCarbs"),
+      value: t("common:units.totalGrams", { count: summary.averageCarbs }),
       icon: <Wheat stroke="var(--carbs-color)" className="size-6" />,
       dataKey: "carbs",
     },
     {
-      title: "Average Fats",
-      value: `${summary.averageFats} g`,
+      title: t("progress:progressSummary.averageFats"),
+      value: t("common:units.totalGrams", { count: summary.averageFats }),
       icon: <Zap stroke="var(--fats-color)" className="size-6" />,
       dataKey: "fats",
     },
@@ -71,9 +75,9 @@ export const ProgressSummary = (props: ProgressSummaryProps) => {
     return (
       <Card className="mb-6 border-none">
         <CardHeader>
-          <CardTitle>Your average nutritional intake</CardTitle>
+          <CardTitle>{t("progress:progressSummary.averageIntake")}</CardTitle>
           <CardDescription>
-            Track your intake of calories, proteins, carbs, and fats over time.
+            {t("progress:progressSummary.averageIntakeDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -95,9 +99,9 @@ export const ProgressSummary = (props: ProgressSummaryProps) => {
   return (
     <>
       <div>
-        <H2>Your average nutritional intake</H2>
+        <H2>{t("progress:progressSummary.averageIntake")}</H2>
         <p className="text-muted-foreground">
-          Track your intake of calories, proteins, carbs, and fats over time.
+          {t("progress:progressSummary.averageIntakeDescription")}
         </p>
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -114,15 +118,16 @@ export const ProgressSummary = (props: ProgressSummaryProps) => {
             </CardContent>
             <CardFooter>
               {summary.dailyData.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  No data available for the selected range.
+                <p className="text-muted-foreground text-sm">
+                  {t("progress:progressSummary.noData")}
                 </p>
-              ) : ( 
-              <MacronutrientSummaryChart
-                chartConfig={chartConfig}
-                chartData={summary.dailyData}
-                dataKey={card.dataKey}
-              />)}
+              ) : (
+                <MacronutrientSummaryChart
+                  chartConfig={chartConfig}
+                  chartData={summary.dailyData}
+                  dataKey={card.dataKey}
+                />
+              )}
             </CardFooter>
           </Card>
         ))}

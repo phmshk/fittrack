@@ -34,6 +34,7 @@ import {
   SelectValue,
 } from "@/shared/shadcn/components/ui/select";
 import { Input } from "@/shared/shadcn/components/ui/input";
+import { useTranslation } from "react-i18next";
 
 const FORM_ID = "personal-info-form";
 
@@ -43,6 +44,7 @@ interface UpdatePersonalInfoProps {
 
 export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
   const { isStandalone = true } = props;
+  const { t } = useTranslation(["profile", "common", "forms"]);
   const { data: userData, isLoading: isLoadingUserData } = useGetUserData();
   const { mutate: updateUserData, isPending: isUpdatingUserData } =
     useUpdateUserData();
@@ -120,12 +122,14 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor={`${FORM_ID}-name`}>Name</FieldLabel>
+                <FieldLabel htmlFor={`${FORM_ID}-name`}>
+                  {t("forms:personalInfo.nameLabel")}
+                </FieldLabel>
                 <Input
                   {...field}
                   id={`${FORM_ID}-name`}
                   aria-invalid={fieldState.invalid}
-                  placeholder="Your name"
+                  placeholder={t("forms:personalInfo.namePlaceholder")}
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -141,7 +145,7 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Gender</FieldLabel>
+                <FieldLabel>{t("forms:personalInfo.genderLabel")}</FieldLabel>
                 <Select
                   name={field.name}
                   value={field.value}
@@ -153,14 +157,16 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
                     aria-invalid={fieldState.invalid}
                     className="cursor-pointer"
                   >
-                    <SelectValue placeholder="Select your gender" />
+                    <SelectValue
+                      placeholder={t("forms:personalInfo.genderPlaceholder")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem className="cursor-pointer" value="male">
-                      Male
+                      {t("forms:personalInfo.genderOptions.male")}
                     </SelectItem>
                     <SelectItem className="cursor-pointer" value="female">
-                      Female
+                      {t("forms:personalInfo.genderOptions.female")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -179,12 +185,14 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={`${FORM_ID}-weight`}>Weight (kg)</FieldLabel>
+              <FieldLabel htmlFor={`${FORM_ID}-weight`}>
+                {t("forms:personalInfo.weightLabel")}
+              </FieldLabel>
               <Input
                 {...field}
                 id={`${FORM_ID}-weight`}
                 aria-invalid={fieldState.invalid}
-                placeholder="Your weight"
+                placeholder={t("forms:personalInfo.weightPlaceholder")}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -196,12 +204,14 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={`${FORM_ID}-height`}>Height (cm)</FieldLabel>
+              <FieldLabel htmlFor={`${FORM_ID}-height`}>
+                {t("forms:personalInfo.heightLabel")}
+              </FieldLabel>
               <Input
                 {...field}
                 id={`${FORM_ID}-height`}
                 aria-invalid={fieldState.invalid}
-                placeholder="Your height"
+                placeholder={t("forms:personalInfo.heightPlaceholder")}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -213,12 +223,14 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={`${FORM_ID}-age`}>Age (years)</FieldLabel>
+              <FieldLabel htmlFor={`${FORM_ID}-age`}>
+                {t("forms:personalInfo.ageLabel")}
+              </FieldLabel>
               <Input
                 {...field}
                 id={`${FORM_ID}-age`}
                 aria-invalid={fieldState.invalid}
-                placeholder="Your age"
+                placeholder={t("forms:personalInfo.agePlaceholder")}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -229,7 +241,7 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
   );
 
   if (isLoadingUserData) {
-    return <Spinner text="Loading user data..." />;
+    return <Spinner text={t("common:loading")} />;
   }
 
   if (!isStandalone) {
@@ -239,10 +251,9 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
   return (
     <Card className="h-full w-full border-none">
       <CardHeader>
-        <CardTitle>Your personal information</CardTitle>
+        <CardTitle>{t("forms:personalInfo.title")}</CardTitle>
         <CardDescription>
-          Provide accurate personal details to receive tailored fitness and
-          nutrition recommendations.
+          {t("forms:personalInfo.description")}
         </CardDescription>
       </CardHeader>
       <CardContent>{FormContent}</CardContent>
@@ -254,14 +265,14 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
             onClick={() => form.reset()}
             disabled={isUpdatingUserData || !form.formState.isDirty}
           >
-            Reset
+            {t("common:actions.reset")}
           </Button>
           <Button
             type="submit"
             form={FORM_ID}
             disabled={isUpdatingUserData || !form.formState.isDirty}
           >
-            Save
+            {t("common:actions.save")}
           </Button>
         </Field>
       </CardFooter>

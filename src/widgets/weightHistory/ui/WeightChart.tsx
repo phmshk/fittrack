@@ -11,6 +11,7 @@ import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import { useBreakpoint, useCalculateTicksForXAxis } from "@/shared/lib";
 import { useChartData } from "../model/useChartData";
 import type { DaysRange } from "@/widgets/rangeTabs";
+import { useTranslation } from "react-i18next";
 
 const chartConfig = {
   weight: {
@@ -26,6 +27,7 @@ interface WeightChartProps {
 
 export const WeightChart = (props: WeightChartProps) => {
   const { data, range } = props;
+  const { t } = useTranslation("progress");
   const isMobile = useBreakpoint();
   const chartData = useChartData(data, range);
   const yAxisDomain = useMemo(() => {
@@ -47,7 +49,7 @@ export const WeightChart = (props: WeightChartProps) => {
       <Card className="mb-6 border-none">
         <CardContent>
           <div className="text-muted-foreground flex h-64 items-center justify-center">
-            <p>Add at least one weight entry to see a chart.</p>
+            <p>{t("progress:weightChart.noData")}</p>
           </div>
         </CardContent>
       </Card>

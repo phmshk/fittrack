@@ -1,20 +1,10 @@
 {
   "title": "Дневник",
-  "description": "Отслеживайте ваше питание и калории.",
+  "description": "Отслеживайте свое питание и калории.",
   "today": "Сегодня",
-  "editDay": "Редакт. день",
-  "saveChanges": "Сохранить изм.",
-  "addFoodTitle": "Добавить еду в план",
-  "addFoodDescription": "Заполните форму ниже, чтобы добавить новый продукт в ваш план питания.",
-  "addFoodManualEntry": "Добавить запись",
-  "addFoodScanBarcode": "Сканировать штрих-код",
-  "addFoodFromDatabase": "Добавить из Open Food Facts",
-  "editFoodTitle": "Изменить запись о еде",
-  "editFoodDescription": "Отредактируйте форму ниже, чтобы изменить продукт в вашем плане питания.",
-  "foodDetailsTitle": "Детали продукта",
-  "deleteFoodTitle": "Вы уверены?",
-  "deleteFoodDescription": "Это действие нельзя будет отменить. Запись о еде будет удалена навсегда.",
-  "noFoodAdded": "Еда еще не добавлена для {{mealType}}.",
-  "showAllFoods": "Показать все ({{count}})",
-  "showLessFoods": "Показать меньше"
+  "editDay": {
+    "editDay": "Изменить день"
+  },
+  "noMacroSummary": "Нет сводки по макронутриентам",
+  "noFoodLogs": "Нет записей о еде за этот день."
 }

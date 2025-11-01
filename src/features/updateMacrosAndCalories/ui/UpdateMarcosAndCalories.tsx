@@ -22,10 +22,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useGetUserData, useUpdateUserData } from "@/entities/user";
 import { Spinner } from "@/shared/ui/spinner";
+import { useTranslation } from "react-i18next";
 
 const FORM_ID = "update-macros-and-calories-form";
 
 export const UpdateMarcosAndCalories = () => {
+  const { t } = useTranslation(["profile", "common"]);
   const { data: userData, isLoading: isLoadingUserData } = useGetUserData();
   const { mutate: updateUserData, isPending: isUpdatingUserData } =
     useUpdateUserData();
@@ -55,22 +57,18 @@ export const UpdateMarcosAndCalories = () => {
   };
 
   if (isLoadingUserData) {
-    return <Spinner text="Loading user data..." />;
+    return <Spinner text={t("common:loading")} />;
   }
 
   return (
     <Card className="h-full w-full border-none">
       <CardHeader>
-        <CardTitle>Nutritional Goals</CardTitle>
+        <CardTitle>{t("profile:tabs.nutritionalGoals.title")}</CardTitle>
         <CardDescription>
-          You can set your daily nutritional targets here if you don't like the
-          suggested ones.
+          {t("profile:tabs.nutritionalGoals.description")}
           <br />
           <span className="font-bold">
-            Please notice that changing any of these will override the
-            automatically calculated targets. If you'd like to revert to the
-            suggested targets, you can do so any time by selecting your goal and
-            activity level again.
+            {t("profile:tabs.nutritionalGoals.warning")}
           </span>
         </CardDescription>
       </CardHeader>
@@ -84,13 +82,13 @@ export const UpdateMarcosAndCalories = () => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={`${FORM_ID}-calories`}>
-                    Calories (kcal)
+                    {t("common:macronutrients.caloriesWithUnit")}
                   </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-calories`}
                     aria-invalid={fieldState.invalid}
-                    placeholder="Your daily calories goal"
+                    placeholder={t("common:macronutrients.caloriesPlaceholder")}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -106,13 +104,13 @@ export const UpdateMarcosAndCalories = () => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={`${FORM_ID}-proteins`}>
-                    Proteins (g)
+                    {t("common:macronutrients.proteinsWithUnit")}
                   </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-proteins`}
                     aria-invalid={fieldState.invalid}
-                    placeholder="Your daily proteins goal"
+                    placeholder={t("common:macronutrients.proteinsPlaceholder")}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -126,12 +124,14 @@ export const UpdateMarcosAndCalories = () => {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={`${FORM_ID}-fats`}>Fats (g)</FieldLabel>
+                  <FieldLabel htmlFor={`${FORM_ID}-fats`}>
+                    {t("common:macronutrients.fatsWithUnit")}
+                  </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-fats`}
                     aria-invalid={fieldState.invalid}
-                    placeholder="Your daily fats goal"
+                    placeholder={t("common:macronutrients.fatsPlaceholder")}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -146,13 +146,13 @@ export const UpdateMarcosAndCalories = () => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={`${FORM_ID}-carbohydrates`}>
-                    Carbohydrates (g)
+                    {t("common:macronutrients.carbsWithUnit")}
                   </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-carbohydrates`}
                     aria-invalid={fieldState.invalid}
-                    placeholder="Your daily carbohydrates goal"
+                    placeholder={t("common:macronutrients.carbsPlaceholder")}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -168,13 +168,13 @@ export const UpdateMarcosAndCalories = () => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={`${FORM_ID}-water`}>
-                    Water Intake (ml)
+                    {t("common:macronutrients.waterWithUnit")}
                   </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-water`}
                     aria-invalid={fieldState.invalid}
-                    placeholder="Your daily water intake goal"
+                    placeholder={t("common:macronutrients.waterPlaceholder")}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -193,14 +193,14 @@ export const UpdateMarcosAndCalories = () => {
             onClick={() => form.reset()}
             disabled={isUpdatingUserData || !form.formState.isDirty}
           >
-            Reset
+            {t("common:actions.reset")}
           </Button>
           <Button
             type="submit"
             form={FORM_ID}
             disabled={isUpdatingUserData || !form.formState.isDirty}
           >
-            Save
+            {t("common:actions.save")}
           </Button>
         </Field>
       </CardFooter>

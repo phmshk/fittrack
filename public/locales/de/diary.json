@@ -1,0 +1,10 @@
+{
+  "title": "Tagebuch",
+  "description": "Verfolgen Sie Ihre Ernährung und Kalorien.",
+  "today": "Heute",
+  "editDay": {
+    "editDay": "Tag bearbeiten"
+  },
+  "noMacroSummary": "Keine Makronährstoff-Zusammenfassung verfügbar",
+  "noFoodLogs": "Keine Einträge für diesen Tag vorhanden."
+}

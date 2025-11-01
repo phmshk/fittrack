@@ -5,6 +5,7 @@ import {
   CardContent,
 } from "@/shared/shadcn/components/ui/card";
 import { Beef, Droplet, Flame, Wheat, Zap } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface RecommendationsProps {
   dailyNeeds: CalculationResult;
@@ -13,31 +14,42 @@ interface RecommendationsProps {
 
 export const Recommendations = (props: RecommendationsProps) => {
   const { dailyNeeds, className } = props;
+  const { t } = useTranslation("common");
 
   const resultCards = [
     {
-      title: "Calories",
-      value: `${dailyNeeds.caloriesForGoal} kcal`,
+      title: t("common:macronutrients.calories"),
+      value: t("common:units.totalCalories", {
+        count: Number(dailyNeeds.caloriesForGoal.toFixed(1)),
+      }),
       icon: <Flame stroke="var(--calories-color)" className="size-6" />,
     },
     {
-      title: "Water",
-      value: `${dailyNeeds.waterIntake.totalIntakeLiters.toFixed(1)} L`,
+      title: t("common:macronutrients.water"),
+      value: t("common:units.totalMl", {
+        count: Number(dailyNeeds.waterIntake.totalIntakeMl.toFixed(1)),
+      }),
       icon: <Droplet stroke="var(--water-color)" className="size-6" />,
     },
     {
-      title: "Protein",
-      value: `${dailyNeeds.macronutrients.proteins} g`,
+      title: t("common:macronutrients.proteins"),
+      value: t("common:units.totalGrams", {
+        count: Number(dailyNeeds.macronutrients.proteins.toFixed(1)),
+      }),
       icon: <Beef stroke="var(--proteins-color)" className="size-6" />,
     },
     {
-      title: "Carbs",
-      value: `${dailyNeeds.macronutrients.carbs} g`,
+      title: t("common:macronutrients.carbs"),
+      value: t("common:units.totalGrams", {
+        count: Number(dailyNeeds.macronutrients.carbs.toFixed(1)),
+      }),
       icon: <Wheat stroke="var(--carbs-color)" className="size-6" />,
     },
     {
-      title: "Fats",
-      value: `${dailyNeeds.macronutrients.fats} g`,
+      title: t("common:macronutrients.fats"),
+      value: t("common:units.totalGrams", {
+        count: Number(dailyNeeds.macronutrients.fats.toFixed(1)),
+      }),
       icon: <Zap stroke="var(--fats-color)" className="size-6" />,
     },
   ];

@@ -2,19 +2,9 @@
   "title": "Diary",
   "description": "Track your nutrition and calories.",
   "today": "Today",
-  "editDay": "Edit day",
-  "saveChanges": "Save changes",
-  "addFoodTitle": "Add Food to Meal Plan",
-  "addFoodDescription": "Fill out the form below to add a new food item to your meal plan.",
-  "addFoodManualEntry": "Add Entry",
-  "addFoodScanBarcode": "Scan Barcode",
-  "addFoodFromDatabase": "Add from Open Food Facts",
-  "editFoodTitle": "Edit food Entry",
-  "editFoodDescription": "Edit the form below to modify the food item in your meal plan.",
-  "foodDetailsTitle": "Food Details",
-  "deleteFoodTitle": "Are you sure?",
-  "deleteFoodDescription": "This action cannot be undone. This will permanently delete the food entry.",
-  "noFoodAdded": "No food added yet for {{mealType}}.",
-  "showAllFoods": "Show all ({{count}}) foods",
-  "showLessFoods": "Show less foods"
+  "editDay": {
+    "editDay": "Edit day"
+  },
+  "noMacroSummary": "No macronutrient summary available",
+  "noFoodLogs": "No food logs available for this day."
 }

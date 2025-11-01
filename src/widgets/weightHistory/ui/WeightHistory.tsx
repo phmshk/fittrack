@@ -2,6 +2,7 @@ import type { WeightLog } from "@/entities/user";
 import { WeightChart } from "./WeightChart";
 import type { DaysRange } from "@/widgets/rangeTabs";
 import { H2 } from "@/shared/ui/headings";
+import { useTranslation } from "react-i18next";
 
 interface WeightHistoryProps {
   weightHistory: WeightLog[];
@@ -10,12 +11,13 @@ interface WeightHistoryProps {
 
 export const WeightHistory = (props: WeightHistoryProps) => {
   const { weightHistory, range } = props;
+  const { t } = useTranslation("progress");
   return (
     <>
       <div>
-        <H2>Your Weight Trend</H2>
+        <H2>{t("progress:weightHistory.title")}</H2>
         <p className="text-muted-foreground">
-          Track your weight changes over time.
+          {t("progress:weightHistory.description")}
         </p>
       </div>
 

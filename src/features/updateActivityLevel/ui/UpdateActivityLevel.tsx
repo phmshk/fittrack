@@ -34,6 +34,7 @@ import {
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
 import { Button } from "@/shared/shadcn/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 const FORM_ID = "activity-level-form";
 
@@ -43,6 +44,7 @@ interface UpdateActivityLevelProps {
 
 export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
   const { isStandalone = true } = props;
+  const { t } = useTranslation(["forms", "common"]);
   const { data: userData, isLoading: isLoadingUserData } = useGetUserData();
   const { mutate: updateUserData, isPending: isUpdatingUserData } =
     useUpdateUserData();
@@ -72,15 +74,7 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <FieldSet data-invalid={fieldState.invalid}>
-              <FieldLegend>Activity Levels</FieldLegend>
-              <FieldDescription>
-                You can update your activity level at any time.
-                <br />
-                <span className="font-bold">
-                  Please notice that selecting any of these will calculate new
-                  nutritional targets and replace your existing ones.
-                </span>
-              </FieldDescription>
+              <FieldLegend>{t("forms:activityLevel.title")}</FieldLegend>
               <RadioGroup
                 name={field.name}
                 value={field.value}
@@ -98,8 +92,14 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
                       data-invalid={fieldState.invalid}
                     >
                       <FieldContent>
-                        <FieldTitle>{level.title}</FieldTitle>
-                        <FieldDescription>{level.description}</FieldDescription>
+                        <FieldTitle>
+                          {t(`forms:activityLevel.options.${level.id}.title`)}
+                        </FieldTitle>
+                        <FieldDescription>
+                          {t(
+                            `forms:activityLevel.options.${level.id}.description`,
+                          )}
+                        </FieldDescription>
                       </FieldContent>
                       <RadioGroupItem
                         value={level.id}
@@ -119,7 +119,7 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
   );
 
   if (isLoadingUserData) {
-    return <Spinner text="Loading goals..." />;
+    return <Spinner text={t("common:loading")} />;
   }
 
   if (!isStandalone) {
@@ -129,10 +129,11 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
   return (
     <Card className="h-full w-full border-none">
       <CardHeader>
-        <CardTitle>Your activity level</CardTitle>
+        <CardTitle>{t("forms:activityLevel.yourActivityLevel")}</CardTitle>
         <CardDescription>
-          Select your activity level. This will adjust your calorie and
-          macronutrient recommendations.
+          {t("forms:activityLevel.description")}
+          <br />
+          <span className="font-bold">{t("forms:activityLevel.warning")}</span>
         </CardDescription>
       </CardHeader>
       <CardContent>{FormContent}</CardContent>
@@ -147,7 +148,7 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
               form.getValues("activityLevel") === userData?.activityLevel
             }
           >
-            Reset
+            {t("common:actions.reset")}
           </Button>
           <Button
             type="submit"
@@ -158,7 +159,7 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
               form.getValues("activityLevel") === userData?.activityLevel
             }
           >
-            Save
+            {t("common:actions.save")}
           </Button>
         </Field>
       </CardFooter>

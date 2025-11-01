@@ -1,0 +1,32 @@
+{
+  "greeting": "Hallo!",
+  "loading": "Wird geladen...",
+  "recommended": "Empfohlen ca.",
+  "ofDailyGoal": "des Tagesziels",
+  "actions": {
+    "save": "Speichern",
+    "saveChanges": "Änderungen speichern",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "cancel": "Abbrechen",
+    "add": "Hinzufügen",
+    "addFood": "Essen hinzufügen",
+    "addEntry": "Eintrag hinzufügen",
+    "addFromOpenFoodFacts": "Von Open Food Facts hinzufügen",
+    "next": "Weiter",
+    "back": "Zurück",
+    "reset": "Zurücksetzen",
+    "finish": "Speichern und beenden",
+    "saving": "Wird gespeichert...",
+    "details": "Details",
+    "selectDate": "Datum auswählen",
+    "scanBarcode": "Barcode scannen",
+    "close": "Schließen"
+  },
+  "nav": {
+    "/": "Dashboard",
+    "/diary": "Tagebuch",
+    "/progress": "Fortschritt",
+    "/profile": "Profil"
+  }
+}

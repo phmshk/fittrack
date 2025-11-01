@@ -300,8 +300,12 @@ const meals = {
 
 // --- Data Generation Logic ---
 export const foodLogs: StoredFoodLog[] = [];
-const startDate = new Date("2025-09-01");
-const endDate = new Date("2025-10-31");
+// Generate data for one month
+// Two weeks before and two weeks after current date
+const startDate = new Date();
+startDate.setDate(startDate.getDate() - 14);
+const endDate = new Date();
+endDate.setDate(endDate.getDate() + 14);
 
 const mealCounters = {
   healthyBreakfast: 0,
