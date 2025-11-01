@@ -9,7 +9,7 @@ i18next
   .use(initReactI18next)
   .init({
     debug: true,
-    ns: ["common", "auth", "dashboard", "diary", "profile", "settings"],
+    ns: ["common", "nutrition"],
     nsSeparator: ":",
     defaultNS: "common",
     fallbackNS: "common",

@@ -252,9 +252,7 @@ export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
     <Card className="h-full w-full border-none">
       <CardHeader>
         <CardTitle>{t("forms:personalInfo.title")}</CardTitle>
-        <CardDescription>
-          {t("forms:personalInfo.description")}
-        </CardDescription>
+        <CardDescription>{t("forms:personalInfo.description")}</CardDescription>
       </CardHeader>
       <CardContent>{FormContent}</CardContent>
       <CardFooter>

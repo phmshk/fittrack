@@ -19,7 +19,7 @@ export const MacronutrientSummaryChart = (
   props: MacronutrientSummaryChartProps,
 ) => {
   const { chartConfig, chartData, dataKey } = props;
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("nutrition");
   const isMobile = useBreakpoint();
   // Dynamically generate ticks for the XAxis to prevent cluttering and ensure the last tick is always visible.
   const xAxisTicks = useCalculateTicksForXAxis(chartData, isMobile);
@@ -40,8 +40,8 @@ export const MacronutrientSummaryChart = (
         <YAxis
           unit={
             dataKey === "calories"
-              ? t("common:units.kcal")
-              : t("common:units.g")
+              ? t("nutrition:units.kcal")
+              : t("nutrition:units.g")
           }
           tickLine={false}
           tickMargin={10}

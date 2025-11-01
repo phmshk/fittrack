@@ -17,7 +17,7 @@ interface FoodFormProps {
 
 export const FoodForm = (props: FoodFormProps) => {
   const { submitText, initialData, onSubmit } = props;
-  const { t } = useTranslation("common");
+  const { t } = useTranslation(["nutrition", "food"]);
   const form = useForm<FormOutput>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,7 +37,7 @@ export const FoodForm = (props: FoodFormProps) => {
 
   const mealOptions = Object.values(MEALS).map((meal) => ({
     value: meal,
-    label: t(`common:meals.${meal}`),
+    label: t(`nutrition:meals.${meal}`),
   }));
 
   return (
@@ -50,20 +50,20 @@ export const FoodForm = (props: FoodFormProps) => {
         <FormSelect
           control={form.control}
           name="mealType"
-          label={t("common:addFoodFormFields.mealType")}
+          label={t("food:addFoodFormFields.mealType")}
           options={mealOptions}
-          placeholder={t("common:addFoodFormFields.mealTypePlaceholder")}
-          srOnly={t("common:addFoodFormFields.srMealType")}
+          placeholder={t("food:addFoodFormFields.mealTypePlaceholder")}
+          srOnly={t("food:addFoodFormFields.srMealType")}
         />
         {FORM_INPUT_ITEMS.map((item) => (
           <FormInput
             key={item.name}
             control={form.control}
             name={item.name}
-            label={t(`common:addFoodFormFields.${item.name}`)}
-            placeholder={t(`common:addFoodFormFields.${item.name}Placeholder`)}
+            label={t(`food:addFoodFormFields.${item.name}`)}
+            placeholder={t(`food:addFoodFormFields.${item.name}Placeholder`)}
             srOnly={t(
-              `common:addFoodFormFields.sr${item.name.charAt(0).toUpperCase() + item.name.slice(1)}`,
+              `food:addFoodFormFields.sr${item.name.charAt(0).toUpperCase() + item.name.slice(1)}`,
             )}
           />
         ))}

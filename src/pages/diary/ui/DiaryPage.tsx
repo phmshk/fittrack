@@ -13,7 +13,7 @@ import { Spinner } from "@/shared/ui/spinner";
 import { useTranslation } from "react-i18next";
 
 export const DiaryPage = () => {
-  const { t } = useTranslation(["diary", "common"]);
+  const { t } = useTranslation(["diary", "common", "nutrition"]);
   const selectedDate = useDateStore((state) => state.selectedDate);
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
 
@@ -36,12 +36,12 @@ export const DiaryPage = () => {
       </div>
       <DayNavigator date={selectedDate} onDateChange={setSelectedDate} />
 
-      <H2>{t("common:macronutrients:calories")}</H2>
+      <H2>{t("nutrition:macronutrients:calories")}</H2>
       <ProgressBar
         currentValue={summary.consumedCalories}
         goalValue={userData?.dailyTargets?.targetCalories || 0}
-        label={t("common:macronutrients:calories")}
-        units={t("common:units:kcal")}
+        label={t("nutrition:macronutrients:calories")}
+        units={t("nutrition:units:kcal")}
       />
 
       {dailyTargets ? (

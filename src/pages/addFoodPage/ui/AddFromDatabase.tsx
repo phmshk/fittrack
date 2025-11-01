@@ -5,6 +5,7 @@ import { Container } from "@/shared/ui/container";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { router } from "@/app/main";
+import { useTranslation } from "react-i18next";
 
 const DEBOUNCE_DELAY = 800; // milliseconds
 
@@ -14,6 +15,7 @@ export const AddFromDatabase = () => {
   // Debounce the search input to avoid excessive API calls
   const debouncedSearchQuery = useDebounce(searchQuery, DEBOUNCE_DELAY);
   const isMobile = useBreakpoint();
+  const { t } = useTranslation("food");
 
   return (
     <Container>
@@ -25,7 +27,8 @@ export const AddFromDatabase = () => {
           asChild
         >
           <div>
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to meal
+            <ArrowLeft className="mr-2 h-4 w-4" />{" "}
+            {t("food:addFood.backToMeal")}
           </div>
         </Button>
       )}

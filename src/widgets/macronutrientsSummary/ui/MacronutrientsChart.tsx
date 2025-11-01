@@ -39,23 +39,23 @@ interface MacronutrientsChartProps {
 
 export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
   const { daySummary } = props;
-  const { t } = useTranslation(["dashboard", "common"]);
+  const { t } = useTranslation(["dashboard", "nutrition"]);
 
   const chartData = useMemo(() => {
     return [
       {
         label: "Proteins",
-        name: t("common:macronutrients.proteins"),
+        name: t("nutrition:macronutrients.proteins"),
         value: daySummary.consumedProteins,
       },
       {
         label: "Carbs",
-        name: t("common:macronutrients.carbs"),
+        name: t("nutrition:macronutrients.carbs"),
         value: daySummary.consumedCarbs,
       },
       {
         label: "Fats",
-        name: t("common:macronutrients.fats"),
+        name: t("nutrition:macronutrients.fats"),
         value: daySummary.consumedFats,
       },
     ].filter((item) => item.value > 0);
@@ -129,7 +129,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          {t("common:units.kcal")}
+                          {t("nutrition:units.kcal")}
                         </tspan>
                       </text>
                     );
@@ -182,7 +182,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
               />
               <span className="text-center font-medium">
                 {progressPercentage.toFixed(0)}% (
-                {t("common:units.totalGrams", { count: entry.value })})
+                {t("nutrition:units.totalGrams", { count: entry.value })})
               </span>
             </div>
           );

@@ -1,7 +1,7 @@
 import { type FoodLog, type MealType } from "@/entities/day";
 import { H2 } from "@/shared/ui/headings";
 import { MealCard } from "@/widgets/mealCard";
-import { MEAL_IMAGES, MEAL_TITLES } from "../model/types";
+import { MEAL_IMAGES } from "../model/types";
 import { Spinner } from "@/shared/ui/spinner";
 import { useGetMealsFromLogs } from "../model/useGetMealsFromLogs";
 import { MealCardCollapsed } from "@/widgets/mealCard/ui/MealCardCollapsed";
@@ -17,7 +17,7 @@ interface MealsProps {
 }
 
 export const Meals = (props: MealsProps) => {
-  const { t } = useTranslation(["dashboard", "common"]);
+  const { t } = useTranslation(["nutrition", "common"]);
 
   const { foodLogs, isLoading, date, variant, dailyTargets } = props;
 
@@ -29,7 +29,7 @@ export const Meals = (props: MealsProps) => {
 
   return (
     <div>
-      <H2>{t("common:meals.title")}</H2>
+      <H2>{t("nutrition:meals.title")}</H2>
       <div className="mt-6 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2">
         {variant === "full"
           ? mealsData.map((meal) => (

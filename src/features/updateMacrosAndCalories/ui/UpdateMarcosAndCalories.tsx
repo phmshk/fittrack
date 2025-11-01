@@ -27,7 +27,7 @@ import { useTranslation } from "react-i18next";
 const FORM_ID = "update-macros-and-calories-form";
 
 export const UpdateMarcosAndCalories = () => {
-  const { t } = useTranslation(["profile", "common"]);
+  const { t } = useTranslation(["profile", "common", "nutrition"]);
   const { data: userData, isLoading: isLoadingUserData } = useGetUserData();
   const { mutate: updateUserData, isPending: isUpdatingUserData } =
     useUpdateUserData();
@@ -63,13 +63,11 @@ export const UpdateMarcosAndCalories = () => {
   return (
     <Card className="h-full w-full border-none">
       <CardHeader>
-        <CardTitle>{t("profile:tabs.nutritionalGoals.title")}</CardTitle>
+        <CardTitle>{t("profile:tabs.goals.title")}</CardTitle>
         <CardDescription>
-          {t("profile:tabs.nutritionalGoals.description")}
+          {t("profile:tabs.goals.description")}
           <br />
-          <span className="font-bold">
-            {t("profile:tabs.nutritionalGoals.warning")}
-          </span>
+          <span className="font-bold">{t("profile:tabs.goals.warning")}</span>
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -82,13 +80,15 @@ export const UpdateMarcosAndCalories = () => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={`${FORM_ID}-calories`}>
-                    {t("common:macronutrients.caloriesWithUnit")}
+                    {t("nutrition:macronutrients.caloriesWithUnit")}
                   </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-calories`}
                     aria-invalid={fieldState.invalid}
-                    placeholder={t("common:macronutrients.caloriesPlaceholder")}
+                    placeholder={t(
+                      "nutrition:macronutrients.caloriesPlaceholder",
+                    )}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -104,13 +104,15 @@ export const UpdateMarcosAndCalories = () => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={`${FORM_ID}-proteins`}>
-                    {t("common:macronutrients.proteinsWithUnit")}
+                    {t("nutrition:macronutrients.proteinsWithUnit")}
                   </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-proteins`}
                     aria-invalid={fieldState.invalid}
-                    placeholder={t("common:macronutrients.proteinsPlaceholder")}
+                    placeholder={t(
+                      "nutrition:macronutrients.proteinsPlaceholder",
+                    )}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -125,13 +127,13 @@ export const UpdateMarcosAndCalories = () => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={`${FORM_ID}-fats`}>
-                    {t("common:macronutrients.fatsWithUnit")}
+                    {t("nutrition:macronutrients.fatsWithUnit")}
                   </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-fats`}
                     aria-invalid={fieldState.invalid}
-                    placeholder={t("common:macronutrients.fatsPlaceholder")}
+                    placeholder={t("nutrition:macronutrients.fatsPlaceholder")}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -146,13 +148,13 @@ export const UpdateMarcosAndCalories = () => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={`${FORM_ID}-carbohydrates`}>
-                    {t("common:macronutrients.carbsWithUnit")}
+                    {t("nutrition:macronutrients.carbsWithUnit")}
                   </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-carbohydrates`}
                     aria-invalid={fieldState.invalid}
-                    placeholder={t("common:macronutrients.carbsPlaceholder")}
+                    placeholder={t("nutrition:macronutrients.carbsPlaceholder")}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -168,13 +170,13 @@ export const UpdateMarcosAndCalories = () => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={`${FORM_ID}-water`}>
-                    {t("common:macronutrients.waterWithUnit")}
+                    {t("nutrition:macronutrients.waterWithUnit")}
                   </FieldLabel>
                   <Input
                     {...field}
                     id={`${FORM_ID}-water`}
                     aria-invalid={fieldState.invalid}
-                    placeholder={t("common:macronutrients.waterPlaceholder")}
+                    placeholder={t("nutrition:macronutrients.waterPlaceholder")}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />

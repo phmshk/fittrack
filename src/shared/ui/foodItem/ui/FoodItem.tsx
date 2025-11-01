@@ -9,7 +9,7 @@ interface FoodItemProps {
 }
 
 export const FoodItem = (props: FoodItemProps) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("nutrition");
   const { food, className, actions } = props;
 
   return (
@@ -23,7 +23,7 @@ export const FoodItem = (props: FoodItemProps) => {
         <span className="font-medium">{food.name}</span>
         <div className="mt-1 flex items-center gap-2">
           <span className="text-secondary-foreground text-sm">
-            {t("common:units.totalCalories", { count: food.calories })}
+            {t("nutrition:units.totalCalories", { count: food.calories })}
           </span>
         </div>
       </div>

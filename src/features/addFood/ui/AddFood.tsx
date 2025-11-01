@@ -15,6 +15,7 @@ import {
   type MealType,
 } from "@/entities/day";
 import { formatDateForApi } from "@/shared/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface AddFoodProps {
   triggerButtonProps: React.ComponentProps<typeof Button>;
@@ -26,6 +27,7 @@ interface AddFoodProps {
 export const AddFood = (props: AddFoodProps) => {
   const { triggerButtonProps, mealType, date, initialData } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation(["forms", "food"]);
 
   const { mutate } = useAddFoodLog();
 
@@ -41,11 +43,11 @@ export const AddFood = (props: AddFoodProps) => {
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Add Food to Meal Plan</DialogTitle>
+          <DialogTitle>{t("food:addFoodForm.title")}</DialogTitle>
           <DialogDescription className="mb-4">
-            Fill out the form below to add a new food item to your meal plan.
+            {t("food:addFoodForm.description")}
             <span className="sr-only">
-              This will add the food item to your meal plan.
+              {t("food:addFoodForm.srDescription")}
             </span>
           </DialogDescription>
         </DialogHeader>
@@ -56,7 +58,7 @@ export const AddFood = (props: AddFoodProps) => {
             ...initialData,
           }}
           onSubmit={handleFormSubmit}
-          submitText="Add Entry"
+          submitText={t("common:actions.addEntry")}
         />
       </DialogContent>
     </Dialog>

@@ -15,7 +15,7 @@ interface CaloriesCardProps {
 }
 
 export const CaloriesCard = (props: CaloriesCardProps) => {
-  const { t } = useTranslation(["dashboard", "common"]);
+  const { t } = useTranslation(["dashboard", "common", "nutrition"]);
 
   const { userGoals, summary, exercise = 0 } = props;
 
@@ -44,7 +44,7 @@ export const CaloriesCard = (props: CaloriesCardProps) => {
     <CardContent className="hidden w-full gap-4 md:flex md:flex-row md:items-end md:justify-between">
       <div className="bg-secondary/80 rounded-xl p-6 md:w-auto">
         <CardTitle className="hidden text-2xl font-bold md:block">
-          {t("common:macronutrients.calories")}
+          {t("nutrition:macronutrients.calories")}
         </CardTitle>
         <div className={`font-bold ${isOverGoal ? "text-destructive" : ""}`}>
           {remainingText}

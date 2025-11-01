@@ -21,7 +21,7 @@ interface EditFoodProps {
 }
 
 export const EditFood = ({ food, isOpen, setIsOpen }: EditFoodProps) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation(["food", "common"]);
   const { mutate } = useUpdateFoodLog();
 
   const handleFormSubmit = (data: FormOutput) => {
@@ -33,15 +33,15 @@ export const EditFood = ({ food, isOpen, setIsOpen }: EditFoodProps) => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-h-[90vh] overflow-y-auto overflow-x-hidden">
         <DialogHeader>
-          <DialogTitle>{t("common:editFoodModal.title")}</DialogTitle>
+          <DialogTitle>{t("food:editFoodModal.title")}</DialogTitle>
           <DialogDescription className="mb-4">
-            {t("common:editFoodModal.description")}
-            <span className="sr-only">{t("common:editFoodModal.SRdescr")}</span>
+            {t("food:editFoodModal.description")}
+            <span className="sr-only">{t("food:editFoodModal.SRdescr")}</span>
           </DialogDescription>
           <FoodForm
             onSubmit={handleFormSubmit}
             initialData={foodLogToZodInput(food)}
-            submitText={t("common:editFoodModal.saveButton")}
+            submitText={t("common:actions.saveChanges")}
           />
         </DialogHeader>
       </DialogContent>

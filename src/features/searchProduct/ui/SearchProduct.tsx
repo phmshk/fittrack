@@ -6,6 +6,7 @@ import { Button } from "@/shared/shadcn/components/ui/button";
 import { Input } from "@/shared/shadcn/components/ui/input";
 import { ProductsView } from "@/widgets/productsView";
 import { Frown, ScanBarcode, Search } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const NUMBER_OF_SKELETONS = 5;
 
@@ -18,7 +19,7 @@ interface SearchProductProps {
 
 export const SearchProduct = (props: SearchProductProps) => {
   const { searchQuery, onInputChange, inputValue, isMobile } = props;
-
+  const { t } = useTranslation("searchProduct");
   const { data, error, isLoading } = useGetProductByQuery({
     search_terms: searchQuery,
     page_size: 10,
@@ -37,7 +38,7 @@ export const SearchProduct = (props: SearchProductProps) => {
     if (error) {
       return (
         <div className="text-destructive p-4 text-center">
-          An error occurred
+          {t("searchProduct:error")}
         </div>
       );
     }
@@ -50,7 +51,7 @@ export const SearchProduct = (props: SearchProductProps) => {
       return (
         <div className="p-4 text-center">
           <Frown className="text-foreground mx-auto size-10" />
-          <p>No products matching the search found</p>
+          <p>{t("searchProduct:noResults")}</p>
         </div>
       );
     }
@@ -61,7 +62,7 @@ export const SearchProduct = (props: SearchProductProps) => {
     // Initial state
     return (
       <div className="text-muted-foreground p-4 text-center">
-        Start typing to search for products
+        {t("searchProduct:startTyping")}
       </div>
     );
   };

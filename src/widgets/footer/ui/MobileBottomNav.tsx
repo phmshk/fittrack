@@ -1,14 +1,16 @@
 import { useNavLinks } from "@/shared/lib";
 import { Link, useLocation } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 export const MobileBottomNav = () => {
   const navLinks = useNavLinks();
   const location = useLocation();
+  const { t } = useTranslation("common");
   return (
     <footer className="bg-background sticky bottom-0 z-50 w-full rounded-t-md border-t shadow-sm md:rounded-none">
       <nav className="relative p-2">
         <ul className="flex justify-around">
-          {navLinks.map(({ href, text, Icon }) => {
+          {navLinks.map(({ href, Icon }) => {
             const isActive = location.pathname === href;
             return (
               <li
@@ -22,7 +24,9 @@ export const MobileBottomNav = () => {
                   }`}
                 >
                   <Icon strokeWidth={1.5} />
-                  <span className="mt-1 block text-xs">{text}</span>
+                  <span className="mt-1 block text-xs">
+                    {t(`common:nav.${href}`)}
+                  </span>
                 </Link>
               </li>
             );

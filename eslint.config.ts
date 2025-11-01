@@ -20,6 +20,7 @@ export default defineConfig([
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   // cast to any to satisfy ESLint config type definitions
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   i18next.configs["flat/recommended"] as unknown as any,
   {
     rules: {

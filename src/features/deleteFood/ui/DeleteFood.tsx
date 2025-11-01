@@ -21,7 +21,7 @@ interface DeleteFoodProps {
 
 export const DeleteFood = (props: DeleteFoodProps) => {
   const { food, isOpen, setIsOpen } = props;
-  const { t } = useTranslation("common");
+  const { t } = useTranslation(["common", "food"]);
 
   const { mutate } = useDeleteFoodLog();
 
@@ -34,11 +34,9 @@ export const DeleteFood = (props: DeleteFoodProps) => {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {t("common:deleteFoodModal.title")}
-          </AlertDialogTitle>
+          <AlertDialogTitle>{t("food:deleteFoodModal.title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            {t("common:deleteFoodModal.description")}
+            {t("food:deleteFoodModal.description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -10,8 +10,8 @@ FitTrack is a web application designed to help users track their daily food inta
 - **Macronutrient Monitoring:** Keep track of your protein, carbohydrate, and fat intake against your personal goals.
 - **Comprehensive Food Diary:** View your meal history by day, organized into categories like breakfast, lunch, dinner, and snacks.
 - **Extensive Food Database:** Search for food items to add them to your diary (using a mock API).
-- **Personalized Goals:** (Planned) Set and manage your own goals for weight, daily calorie intake, and macros.
-- **Progress Visualization:** (Planned) Interactive charts and graphs to visualize your progress over time.
+- **Personalized Goals:** Set and manage your own goals for weight, daily calorie intake, and macros.
+- **Progress Visualization:** Interactive charts and graphs to visualize your progress over time.
 - **Responsive Design:** A clean, accessible, and mobile-first user interface.
 
 ## 🛠️ Technology Stack

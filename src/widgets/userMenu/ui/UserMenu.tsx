@@ -15,6 +15,7 @@ import {
 } from "@/shared/shadcn/components/ui/dropdown-menu";
 import { Link } from "@tanstack/react-router";
 import { LogOutIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface UserMenuProps {
   handleClose?: () => void;
@@ -22,7 +23,7 @@ interface UserMenuProps {
 
 export const UserMenu = ({ handleClose }: UserMenuProps) => {
   const user = useCurrentUser();
-
+  const { t } = useTranslation("profile");
   const logout = useLogout();
 
   // Fallback initials if the user name is not available
@@ -65,7 +66,7 @@ export const UserMenu = ({ handleClose }: UserMenuProps) => {
             search={{ tab: "personal-info" }}
             className="cursor-pointer"
           >
-            My Profile
+            {t("profile:myProfile")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -75,7 +76,7 @@ export const UserMenu = ({ handleClose }: UserMenuProps) => {
           onClick={logout}
         >
           <LogOutIcon className="text-destructive h-4 w-4" />
-          Log Out
+          {t("profile:logout")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
