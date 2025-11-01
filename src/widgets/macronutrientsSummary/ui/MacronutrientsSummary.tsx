@@ -14,27 +14,27 @@ interface MacronutrientsSummaryProps {
 
 export const MacronutrientsSummary = (props: MacronutrientsSummaryProps) => {
   const { summary, userGoals, isLoading } = props;
-  const { t } = useTranslation("common");
+  const { t } = useTranslation(["common", "nutrition"]);
 
   const result = useMemo(() => {
     return [
       {
-        name: t("common:macronutrients.proteins"),
+        name: t("nutrition:macronutrients.proteins"),
         current: Number(summary.consumedProteins.toFixed(1)),
         goal: userGoals?.targetProteins || 0,
-        units: t("common:units:g"),
+        units: t("nutrition:units:g"),
       },
       {
-        name: t("common:macronutrients.fats"),
+        name: t("nutrition:macronutrients.fats"),
         current: Number(summary.consumedFats.toFixed(1)),
         goal: userGoals?.targetFats || 0,
-        units: t("common:units:g"),
+        units: t("nutrition:units:g"),
       },
       {
-        name: t("common:macronutrients.carbs"),
+        name: t("nutrition:macronutrients.carbs"),
         current: Number(summary.consumedCarbs.toFixed(1)),
         goal: userGoals?.targetCarbs || 0,
-        units: t("common:units:g"),
+        units: t("nutrition:units:g"),
       },
     ];
   }, [summary, userGoals]);
@@ -45,7 +45,7 @@ export const MacronutrientsSummary = (props: MacronutrientsSummaryProps) => {
 
   return (
     <>
-      <H2>{t("common:macronutrients.title")}</H2>
+      <H2>{t("nutrition:macronutrients.title")}</H2>
       {result.map((nutrient) => (
         <ProgressBar
           key={nutrient.name}

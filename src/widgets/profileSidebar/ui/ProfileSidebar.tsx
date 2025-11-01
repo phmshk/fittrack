@@ -8,7 +8,7 @@ export const ProfileSidebar = () => {
   const { t } = useTranslation("profile");
   return (
     <nav className="flex flex-col gap-2">
-      {Object.values(profileTabs).map(({ href, title, Icon }) => (
+      {Object.values(profileTabs).map(({ href, Icon }) => (
         <Link
           key={href}
           to="/profile"

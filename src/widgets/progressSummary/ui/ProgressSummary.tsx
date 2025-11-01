@@ -40,12 +40,12 @@ interface ProgressSummaryProps {
 
 export const ProgressSummary = (props: ProgressSummaryProps) => {
   const { range } = props;
-  const { t } = useTranslation(["progress", "common"]);
+  const { t } = useTranslation(["progress", "nutrition"]);
   const { summary, isLoading } = useProgressSummary(range);
   const summaryCards = [
     {
       title: t("progress:progressSummary.averageCalories"),
-      value: t("common:units.totalCalories", {
+      value: t("nutrition:units.totalCalories", {
         count: summary.averageCalories,
       }),
       icon: <Flame stroke="var(--calories-color)" className="size-6" />,
@@ -53,19 +53,21 @@ export const ProgressSummary = (props: ProgressSummaryProps) => {
     },
     {
       title: t("progress:progressSummary.averageProteins"),
-      value: t("common:units.totalGrams", { count: summary.averageProteins }),
+      value: t("nutrition:units.totalGrams", {
+        count: summary.averageProteins,
+      }),
       icon: <Beef stroke="var(--proteins-color)" className="size-6" />,
       dataKey: "proteins",
     },
     {
       title: t("progress:progressSummary.averageCarbs"),
-      value: t("common:units.totalGrams", { count: summary.averageCarbs }),
+      value: t("nutrition:units.totalGrams", { count: summary.averageCarbs }),
       icon: <Wheat stroke="var(--carbs-color)" className="size-6" />,
       dataKey: "carbs",
     },
     {
       title: t("progress:progressSummary.averageFats"),
-      value: t("common:units.totalGrams", { count: summary.averageFats }),
+      value: t("nutrition:units.totalGrams", { count: summary.averageFats }),
       icon: <Zap stroke="var(--fats-color)" className="size-6" />,
       dataKey: "fats",
     },

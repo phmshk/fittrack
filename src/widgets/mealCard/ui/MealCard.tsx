@@ -36,7 +36,7 @@ interface MealCardProps {
 const VISIBLE_ITEMS_LIMIT = 3;
 
 export const MealCard = (props: MealCardProps) => {
-  const { t } = useTranslation(["dashboard", "common"]);
+  const { t } = useTranslation(["food", "common", "nutrition"]);
 
   const { mealType, date, foods, totalCalories, imageUrl } = props;
   const isMobile = useBreakpoint();
@@ -57,21 +57,21 @@ export const MealCard = (props: MealCardProps) => {
       <CardHeader className="flex items-center justify-between gap-4 pb-2 pt-4">
         <div>
           <CardTitle className="text-4xl font-bold sm:text-5xl">
-            {t(`common:meals.${mealType}`)}
+            {t(`nutrition:meals.${mealType}`)}
           </CardTitle>
           <CardDescription>
             <span className="text-secondary-foreground sm:text-lg">
-              {`${totalCalories} ${t("common:units.kcal")}`}
+              {`${totalCalories} ${t("nutrition:units.kcal")}`}
             </span>
             <span className="sr-only">
-              {t("common:mealCard.SRdescr", { mealType: mealType })}
+              {t("food:mealCard.SRdescr", { mealType: mealType })}
             </span>
           </CardDescription>
         </div>
 
         <img
           src={imageUrl}
-          alt={t("common:mealCard.img.alt", { mealType: mealType })}
+          alt={t("food:mealCard.img.alt", { mealType: mealType })}
           className="w-1/3 rounded-full object-cover"
         />
       </CardHeader>
@@ -82,7 +82,7 @@ export const MealCard = (props: MealCardProps) => {
               <Utensils className="text-primary/80 size-16" />
             </div>
             <p className="mb-4 text-center text-sm">
-              {t("common:mealCard.noFoodAdded", { mealType: mealType })}
+              {t("food:mealCard.noFoodAdded", { mealType: mealType })}
             </p>
           </div>
         ) : (
@@ -107,7 +107,7 @@ export const MealCard = (props: MealCardProps) => {
               className="text-muted-foreground mt-2 w-full"
               onClick={() => setIsExpanded(false)}
             >
-              {t("common:mealCard.showLess")}
+              {t("food:mealCard.showLess")}
             </Button>
           ) : (
             <Button
@@ -115,7 +115,7 @@ export const MealCard = (props: MealCardProps) => {
               className="text-muted-foreground mt-2 w-full"
               onClick={() => setIsExpanded(true)}
             >
-              {t("common:mealCard.showAll", { count: foods.length })}
+              {t("food:mealCard.showAll", { count: foods.length })}
             </Button>
           ))}
       </CardContent>

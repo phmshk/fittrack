@@ -10,6 +10,7 @@ import { AddFood } from "@/features/addFood";
 import type { FormOutput } from "@/entities/day";
 import { useDateStore } from "@/shared/model";
 import { useSearch } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 interface ProductsViewProps {
   products: Product[];
@@ -19,7 +20,7 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const selectedDate = useDateStore((state) => state.selectedDate);
   const { tab } = useSearch({ from: "/_protectedRoutes/addFood" });
-
+  const { t } = useTranslation(["searchProduct"]);
   // Map product fields to form output structure
   const productToFormOutput = (product: Product): Partial<FormOutput> => ({
     mealType: tab,
@@ -41,7 +42,7 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
   };
 
   if (!products || products.length === 0) {
-    return <p>No products found.</p>;
+    return <p>{t("searchProduct:noProductsFound")}</p>;
   }
 
   return (
@@ -72,7 +73,8 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
               onClick={handleGoBack}
               className="mb-4 md:hidden"
             >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to list
+              <ArrowLeft className="mr-2 h-4 w-4" />{" "}
+              {t("searchProduct:backToList")}
             </Button>
             <ProductCardFull
               product={selectedProduct}
@@ -85,7 +87,7 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
                     className: "flex-grow",
                     children: (
                       <span className="text-primary-foreground flex items-center gap-2">
-                        Add item to diary
+                        {t("searchProduct:addToDiary")}
                       </span>
                     ),
                   }}
@@ -96,7 +98,7 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
         ) : (
           <div className="bg-muted sticky top-20 hidden h-2/3 items-center justify-center rounded-lg border-2 border-dashed md:flex">
             <div className="text-muted-foreground flex h-full items-center justify-center">
-              Select a product to see details
+              <p>{t("searchProduct:selectForDetails")}</p>
             </div>
           </div>
         )}

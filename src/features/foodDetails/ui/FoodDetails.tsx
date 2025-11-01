@@ -15,7 +15,7 @@ interface FoodDetailsProps {
 }
 export const FoodDetails = (props: FoodDetailsProps) => {
   const { foodEntry, isOpen, setIsOpen } = props;
-  const { t } = useTranslation("common");
+  const { t } = useTranslation(["common", "food", "nutrition"]);
   const onChange = () => {
     setIsOpen(!isOpen);
   };
@@ -26,40 +26,42 @@ export const FoodDetails = (props: FoodDetailsProps) => {
         <DialogHeader>
           <DialogTitle>{foodEntry.name}</DialogTitle>
           <DialogDescription className="sr-only">
-            {t("common:foodDetailsModal.srDescription")}
+            {t("food:foodDetailsModal.srDescription")}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-2 items-center gap-4">
             <span className="text-muted-foreground">
-              {t("common:macronutrients.calories")}
+              {t("nutrition:macronutrients.calories")}
             </span>
             <span className="text-right font-medium">
-              {t("common:units.totalCalories", { count: foodEntry.calories })}
+              {t("nutrition:units.totalCalories", {
+                count: foodEntry.calories,
+              })}
             </span>
           </div>
           <div className="grid grid-cols-2 items-center gap-4">
             <span className="text-muted-foreground">
-              {t("common:macronutrients.proteins")}
+              {t("nutrition:macronutrients.proteins")}
             </span>
             <span className="text-right font-medium">
-              {t("common:units.totalGrams", { count: foodEntry.proteins })}
+              {t("nutrition:units.totalGrams", { count: foodEntry.proteins })}
             </span>
           </div>
           <div className="grid grid-cols-2 items-center gap-4">
             <span className="text-muted-foreground">
-              {t("common:macronutrients.fats")}
+              {t("nutrition:macronutrients.fats")}
             </span>
             <span className="text-right font-medium">
-              {t("common:units.totalGrams", { count: foodEntry.fats })}
+              {t("nutrition:units.totalGrams", { count: foodEntry.fats })}
             </span>
             {foodEntry.saturatedFats > 0 && (
               <>
                 <span className="text-muted-foreground ml-4">
-                  {t("common:macronutrients.saturatedFats")}
+                  {t("nutrition:macronutrients.saturatedFats")}
                 </span>
                 <span className="text-right font-medium">
-                  {t("common:units.totalGrams", {
+                  {t("nutrition:units.totalGrams", {
                     count: foodEntry.saturatedFats,
                   })}
                 </span>
@@ -68,18 +70,18 @@ export const FoodDetails = (props: FoodDetailsProps) => {
           </div>
           <div className="grid grid-cols-2 items-center gap-4">
             <span className="text-muted-foreground">
-              {t("common:macronutrients.carbs")}
+              {t("nutrition:macronutrients.carbs")}
             </span>
             <span className="text-right font-medium">
-              {t("common:units.totalGrams", { count: foodEntry.carbs })}
+              {t("nutrition:units.totalGrams", { count: foodEntry.carbs })}
             </span>
             {foodEntry.sugars > 0 && (
               <>
                 <span className="text-muted-foreground ml-4">
-                  {t("common:macronutrients.sugars")}
+                  {t("nutrition:macronutrients.sugars")}
                 </span>
                 <span className="text-right font-medium">
-                  {t("common:units.totalGrams", { count: foodEntry.sugars })}
+                  {t("nutrition:units.totalGrams", { count: foodEntry.sugars })}
                 </span>
               </>
             )}

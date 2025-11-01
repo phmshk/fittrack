@@ -6,6 +6,7 @@ import {
 } from "@/shared/shadcn/components/ui/card";
 import { type Product } from "../model/types";
 import { H3 } from "@/shared/ui/headings";
+import { useTranslation } from "react-i18next";
 interface ProductCardFullProps {
   product: Product;
   additionalClasses?: string;
@@ -18,64 +19,87 @@ export const ProductCardFull = ({
   action,
 }: ProductCardFullProps) => {
   const { product_name, nutriments } = product;
+  const { t } = useTranslation("nutrition");
 
   return (
     <Card
-      className={`max-w-xl hover:cursor-pointer hover:bg-muted ${additionalClasses}`}
+      className={`hover:bg-muted max-w-xl hover:cursor-pointer ${additionalClasses}`}
     >
       <CardHeader className="flex items-center justify-between">
         <img
           src={"https://placehold.co/200x200/e9f1ea/52946b?text=Product"}
-          alt={product_name || "Product Image"}
+          alt={product_name}
           className="h-16 w-16 rounded-lg object-cover sm:h-24 sm:w-24"
         />
         <div>
-          <H3>{product.product_name || "Unknown Product"}</H3>
+          <H3>{product.product_name}</H3>
         </div>
         <div>
           <div>
-            <p className="text-center text-lg font-bold text-foreground">
+            <p className="text-foreground text-center text-lg font-bold">
               {nutriments?.["energy-kcal_100g"] || "N/A"}
             </p>
-            <p className="text-right text-xs text-muted-foreground">kca/100g</p>
+            <p className="text-muted-foreground text-right text-xs">
+              {t("nutrition:units.kcal100g")}
+            </p>
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="my-4 border-t border-muted"></div>
+        <div className="border-muted my-4 border-t"></div>
         <div className="grid gap-x-6 gap-y-3 text-sm">
           <div className="flex items-baseline justify-between">
-            <span className="text-foreground">Proteins</span>
+            <span className="text-foreground">
+              {t("nutrition:macronutrients.proteins")}
+            </span>
             <span className="font-semibold">
-              {nutriments?.proteins_100g?.toFixed(1)} g
+              {t("nutrition:units.totalGrams", {
+                count: Number(nutriments?.proteins_100g?.toFixed(1)),
+              })}
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-foreground">Fats</span>
+            <span className="text-foreground">
+              {t("nutrition:macronutrients.fats")}
+            </span>
             <span className="font-semibold">
-              {nutriments?.fat_100g?.toFixed(1)} g
+              {t("nutrition:units.totalGrams", {
+                count: Number(nutriments?.fat_100g?.toFixed(1)),
+              })}
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-foreground">Saturated Fats</span>
+            <span className="text-foreground">
+              {t("nutrition:macronutrients.saturatedFats")}{" "}
+            </span>
             <span className="font-semibold">
-              {nutriments?.["saturated-fat_100g"]?.toFixed(1)} g
+              {t("nutrition:units.totalGrams", {
+                count: Number(nutriments?.["saturated-fat_100g"]?.toFixed(1)),
+              })}
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-foreground">Carbs</span>
+            <span className="text-foreground">
+              {t("nutrition:macronutrients.carbs")}
+            </span>
             <span className="font-semibold">
-              {nutriments?.carbohydrates_100g?.toFixed(1)} g
+              {t("nutrition:units.totalGrams", {
+                count: Number(nutriments?.carbohydrates_100g?.toFixed(1)),
+              })}
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-foreground">Sugars</span>
+            <span className="text-foreground">
+              {t("nutrition:macronutrients.sugars")}
+            </span>
             <span className="font-semibold">
-              {nutriments?.sugars_100g?.toFixed(1)} g
+              {t("nutrition:units.totalGrams", {
+                count: Number(nutriments?.sugars_100g?.toFixed(1)),
+              })}
             </span>
           </div>
         </div>
-        <div className="my-4 border-t border-muted"></div>
+        <div className="border-muted my-4 border-t"></div>
       </CardContent>
       <CardFooter>{action}</CardFooter>
     </Card>

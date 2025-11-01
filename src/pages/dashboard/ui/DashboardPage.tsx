@@ -55,7 +55,7 @@ export const DashboardPage = () => {
             <Card className="border-none">
               <CardContent className="flex h-48 items-center justify-center">
                 <span className="text-muted-foreground">
-                  {t("dashboard:noWaterGoal")}
+                  {t("dashboard:waterTracker.noGoal")}
                 </span>
               </CardContent>
             </Card>

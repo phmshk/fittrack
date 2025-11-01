@@ -20,7 +20,7 @@ interface WaterTrackerProps {
 const WATER_PORTION_ML = 250;
 
 export const WaterTracker = (props: WaterTrackerProps) => {
-  const { t } = useTranslation(["dashboard", "common"]);
+  const { t } = useTranslation("dashboard");
   const { date, targetWaterIntake } = props;
   const { data: waterLog, isLoading } = useGetWaterByDate(date);
 

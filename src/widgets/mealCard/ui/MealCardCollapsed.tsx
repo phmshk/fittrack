@@ -32,25 +32,25 @@ const MEAL_CALORIE_PERCENTAGE: Record<MealType, number> = {
 export const MealCardCollapsed = (props: MealCardCollapsedProps) => {
   const { mealType, foods, totalCalories, imageUrl, dailyTargets, date } =
     props;
-  const { t } = useTranslation(["dashboard", "common"]);
+  const { t } = useTranslation(["common", "nutrition", "food"]);
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
   const calorieEstimate = dailyTargets?.targetCalories
     ? Math.round(
         dailyTargets?.targetCalories *
           MEAL_CALORIE_PERCENTAGE[mealType.toLowerCase() as MealType],
-      ) + t("common:units.kcal")
+      ) + t("nutrition:units.kcal")
     : ` (${MEAL_CALORIE_PERCENTAGE[mealType.toLowerCase() as MealType] * 100}% ${t("common:ofDailyGoal")})`;
 
   return (
     <Card className="w-full max-w-xl flex-row items-center gap-2 border-none px-4">
       <img
         src={imageUrl}
-        alt={t("common:mealCard.img.alt", { mealType })}
+        alt={t("food:mealCard.img.alt", { mealType })}
         className="w-1/4 rounded-full object-cover"
       />
       <div className="flex w-full flex-col">
         <CardHeader>
-          <CardTitle>{t(`common:meals.${mealType}`)}</CardTitle>
+          <CardTitle>{t(`nutrition:meals.${mealType}`)}</CardTitle>
         </CardHeader>
         <CardContent className="text-muted-foreground text-sm">
           {foods.length > 0
@@ -63,7 +63,7 @@ export const MealCardCollapsed = (props: MealCardCollapsedProps) => {
             <div className="border-muted m-4 border-t-2" />
 
             <CardFooter className="text-muted-foreground flex items-center justify-center text-sm">
-              {t("common:units.totalCalories", { count: totalCalories })}
+              {t("nutrition:units.totalCalories", { count: totalCalories })}
             </CardFooter>
           </div>
         )}

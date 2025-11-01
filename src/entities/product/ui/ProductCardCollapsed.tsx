@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/shared/shadcn/components/ui/card";
 import type { Product } from "../model/types";
 import { H3 } from "@/shared/ui/headings";
+import { useTranslation } from "react-i18next";
 
 interface ProductCardCollapsedProps {
   product: Product;
@@ -12,6 +13,7 @@ export const ProductCardCollapsed = ({
   additionalClasses,
 }: ProductCardCollapsedProps) => {
   const { product_name, nutriments } = product;
+  const { t } = useTranslation("nutrition");
 
   return (
     <Card
@@ -25,9 +27,7 @@ export const ProductCardCollapsed = ({
             className="h-16 w-16 rounded-lg object-cover sm:h-24 sm:w-24"
           />
           <div className="min-w-0">
-            <H3 additionalClasses="line-clamp-2">
-              {product.product_name || "Unknown Product"}
-            </H3>
+            <H3 additionalClasses="line-clamp-2">{product.product_name}</H3>
           </div>
         </div>
         <div>
@@ -36,7 +36,7 @@ export const ProductCardCollapsed = ({
               {nutriments?.["energy-kcal_100g"] || "N/A"}
             </p>
             <p className="text-muted-foreground text-right text-xs">
-              kcal/100g
+              {t("nutrition:units.kcal100g")}
             </p>
           </div>
         </div>

@@ -12,10 +12,12 @@ import { Menu } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useProfileNavLinks } from "../model/useProfileNavLinks";
+import { useTranslation } from "react-i18next";
 
 export const MobileProfileNavigation = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const profileLinks = useProfileNavLinks();
+  const { t } = useTranslation("profile");
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -23,22 +25,24 @@ export const MobileProfileNavigation = () => {
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon">
           <Menu />
-          <span className="sr-only">Open profile menu</span>
+          <span className="sr-only">{t("profile:mobileNav.openProfile")}</span>
         </Button>
       </SheetTrigger>
 
       {/* Mobile navigation content */}
       <SheetContent side="right">
         <SheetHeader>
-          <SheetTitle className="text-lg font-bold">Profile</SheetTitle>
+          <SheetTitle className="text-lg font-bold">
+            {t("profile:title")}
+          </SheetTitle>
           <SheetDescription className="sr-only">
-            Navigation for mobile devices.
+            {t("profile:mobileNav.srNav")}
           </SheetDescription>
         </SheetHeader>
 
         {/* Mobile navigation items */}
         <ul aria-label="Mobile navigation" className="flex flex-col space-y-4">
-          {profileLinks.map(({ href, text, Icon, isActive }) => (
+          {profileLinks.map(({ href, Icon, isActive }) => (
             <li key={href}>
               <SheetClose asChild>
                 <Link
@@ -52,7 +56,9 @@ export const MobileProfileNavigation = () => {
                   }`}
                 >
                   <Icon />
-                  <span className="ml-2">{text}</span>
+                  <span className="ml-2">
+                    {t(`profile:tabs.${href}.title`)}
+                  </span>
                 </Link>
               </SheetClose>
             </li>
