@@ -6,6 +6,7 @@ import { Spinner } from "@/shared/ui/spinner";
 import { useGetMealsFromLogs } from "../model/useGetMealsFromLogs";
 import { MealCardCollapsed } from "@/widgets/mealCard/ui/MealCardCollapsed";
 import type { DailyTargets } from "@/entities/user";
+import { useTranslation } from "react-i18next";
 
 interface MealsProps {
   foodLogs: FoodLog[];
@@ -16,24 +17,26 @@ interface MealsProps {
 }
 
 export const Meals = (props: MealsProps) => {
+  const { t } = useTranslation(["dashboard", "common"]);
+
   const { foodLogs, isLoading, date, variant, dailyTargets } = props;
 
   const mealsData = useGetMealsFromLogs(foodLogs);
 
   if (isLoading) {
-    return <Spinner text="Loading..." className="h-64" />;
+    return <Spinner text={t("common:loading")} className="h-64" />;
   }
 
   return (
     <div>
-      <H2>Meals</H2>
+      <H2>{t("common:meals.title")}</H2>
       <div className="mt-6 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2">
         {variant === "full"
           ? mealsData.map((meal) => (
               <MealCard
                 date={date}
                 key={meal.mealType}
-                mealType={MEAL_TITLES[meal.mealType]}
+                mealType={meal.mealType}
                 foods={meal.foods}
                 totalCalories={meal.totalCalories}
                 imageUrl={MEAL_IMAGES[meal.mealType.toLowerCase() as MealType]}
@@ -42,7 +45,7 @@ export const Meals = (props: MealsProps) => {
           : mealsData.map((meal) => (
               <MealCardCollapsed
                 key={meal.mealType}
-                mealType={MEAL_TITLES[meal.mealType]}
+                mealType={meal.mealType}
                 foods={meal.foods}
                 totalCalories={meal.totalCalories}
                 imageUrl={MEAL_IMAGES[meal.mealType.toLowerCase() as MealType]}

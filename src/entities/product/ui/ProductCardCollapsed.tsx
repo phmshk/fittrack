@@ -15,13 +15,13 @@ export const ProductCardCollapsed = ({
 
   return (
     <Card
-      className={`max-w-xl hover:cursor-pointer hover:bg-muted ${additionalClasses}`}
+      className={`hover:bg-muted max-w-xl hover:cursor-pointer ${additionalClasses}`}
     >
       <CardContent className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <img
             src={"https://placehold.co/200x200/e9f1ea/52946b?text=Product"}
-            alt={product_name || "Product Image"}
+            alt={product_name}
             className="h-16 w-16 rounded-lg object-cover sm:h-24 sm:w-24"
           />
           <div className="min-w-0">
@@ -32,10 +32,12 @@ export const ProductCardCollapsed = ({
         </div>
         <div>
           <div>
-            <p className="text-center text-lg font-bold text-foreground">
+            <p className="text-foreground text-center text-lg font-bold">
               {nutriments?.["energy-kcal_100g"] || "N/A"}
             </p>
-            <p className="text-right text-xs text-muted-foreground">kca/100g</p>
+            <p className="text-muted-foreground text-right text-xs">
+              kcal/100g
+            </p>
           </div>
         </div>
       </CardContent>

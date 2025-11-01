@@ -23,6 +23,7 @@ import { Link } from "@tanstack/react-router";
 import { useDateStore } from "@/shared/model";
 import { useDayEditStore } from "@/features/editDay";
 import { useBreakpoint } from "@/shared/lib";
+import { useTranslation } from "react-i18next";
 
 interface MealCardProps {
   mealType: string;
@@ -35,6 +36,8 @@ interface MealCardProps {
 const VISIBLE_ITEMS_LIMIT = 3;
 
 export const MealCard = (props: MealCardProps) => {
+  const { t } = useTranslation(["dashboard", "common"]);
+
   const { mealType, date, foods, totalCalories, imageUrl } = props;
   const isMobile = useBreakpoint();
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
@@ -54,21 +57,21 @@ export const MealCard = (props: MealCardProps) => {
       <CardHeader className="flex items-center justify-between gap-4 pb-2 pt-4">
         <div>
           <CardTitle className="text-4xl font-bold sm:text-5xl">
-            {mealType}
+            {t(`common:meals.${mealType}`)}
           </CardTitle>
           <CardDescription>
             <span className="text-secondary-foreground sm:text-lg">
-              {totalCalories} kcal
+              {`${totalCalories} ${t("common:units.kcal")}`}
             </span>
             <span className="sr-only">
-              Meal card for {mealType} summarizing all foods eaten for that meal
+              {t("common:mealCard.SRdescr", { mealType: mealType })}
             </span>
           </CardDescription>
         </div>
 
         <img
           src={imageUrl}
-          alt={`${mealType} illustration`}
+          alt={t("common:mealCard.img.alt", { mealType: mealType })}
           className="w-1/3 rounded-full object-cover"
         />
       </CardHeader>
@@ -79,7 +82,7 @@ export const MealCard = (props: MealCardProps) => {
               <Utensils className="text-primary/80 size-16" />
             </div>
             <p className="mb-4 text-center text-sm">
-              No food added yet for {mealType}.
+              {t("common:mealCard.noFoodAdded", { mealType: mealType })}
             </p>
           </div>
         ) : (
@@ -104,7 +107,7 @@ export const MealCard = (props: MealCardProps) => {
               className="text-muted-foreground mt-2 w-full"
               onClick={() => setIsExpanded(false)}
             >
-              Show less foods
+              {t("common:mealCard.showLess")}
             </Button>
           ) : (
             <Button
@@ -112,7 +115,7 @@ export const MealCard = (props: MealCardProps) => {
               className="text-muted-foreground mt-2 w-full"
               onClick={() => setIsExpanded(true)}
             >
-              Show all ({foods.length}) foods
+              {t("common:mealCard.showAll", { count: foods.length })}
             </Button>
           ))}
       </CardContent>
@@ -129,7 +132,7 @@ export const MealCard = (props: MealCardProps) => {
               children: (
                 <span className="text-primary-foreground flex items-center gap-2">
                   <PlusCircleIcon className="size-4" />
-                  Add Food
+                  {t("common:actions.addFood")}
                 </span>
               ),
             }}
@@ -141,11 +144,13 @@ export const MealCard = (props: MealCardProps) => {
                 <TooltipTrigger asChild>
                   <Button variant="outline" size="icon">
                     <ScanBarcode className="size-5" />
-                    <span className="sr-only">Scan Barcode</span>
+                    <span className="sr-only">
+                      {t("common:actions.scanBarcode")}
+                    </span>
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Scan Barcode</p>
+                  <p>{t("common:actions.scanBarcode")}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -166,7 +171,7 @@ export const MealCard = (props: MealCardProps) => {
             state={{ from: "allowedToAddFood" }}
           >
             <Database className="mr-2 size-4" />
-            Add from Open Food Facts
+            {t("common:actions.addFromOpenFoodFacts")}
           </Link>
         </Button>
       </CardFooter>

@@ -7,6 +7,7 @@ import {
 import { Calendar } from "@/shared/shadcn/components/ui/calendar";
 import { useState } from "react";
 import { Button } from "@/shared/shadcn/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface CalendarPopoverProps {
   date: Date;
@@ -16,6 +17,7 @@ interface CalendarPopoverProps {
 
 export const CalendarPopover = (props: CalendarPopoverProps) => {
   const { date, onDateChange, additionalClasses } = props;
+  const { t } = useTranslation("common");
   const [isCalendarOpen, setCalendarOpen] = useState(false);
 
   const handleDateSelect = (selectedDate: Date) => {
@@ -28,7 +30,9 @@ export const CalendarPopover = (props: CalendarPopoverProps) => {
         <PopoverTrigger asChild>
           <Button variant="outline">
             <CalendarIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Select Date</span>
+            <span className="hidden sm:inline">
+              {t("common:actions.selectDate")}
+            </span>
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">

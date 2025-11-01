@@ -1,0 +1,32 @@
+{
+  "greeting": "Hello!",
+  "loading": "Loading...",
+  "recommended": "Recommended around",
+  "ofDailyGoal": "of daily goal",
+  "actions": {
+    "save": "Save",
+    "saveChanges": "Save changes",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "add": "Add",
+    "addFood": "Add Food",
+    "addEntry": "Add Entry",
+    "addFromOpenFoodFacts": "Add from Open Food Facts",
+    "next": "Next",
+    "back": "Back",
+    "reset": "Reset",
+    "finish": "Save and Finish",
+    "saving": "Saving...",
+    "details": "Details",
+    "selectDate": "Select Date",
+    "scanBarcode": "Scan Barcode",
+    "close": "Close"
+  },
+  "nav": {
+    "/": "Dashboard",
+    "/diary": "Diary",
+    "/progress": "Progress",
+    "/profile": "Profile"
+  }
+}

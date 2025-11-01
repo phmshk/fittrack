@@ -5,10 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { RegisterCredentials } from "../model/types";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { FormInput } from "@/shared/ui/form";
-import { Form } from "@/shared/shadcn/components/ui/form";
+import { useTranslation } from "react-i18next";
 
 export const RegisterForm = () => {
   const registerMutation = useRegister();
+  const { t } = useTranslation("auth");
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(formSchema),
@@ -25,46 +26,48 @@ export const RegisterForm = () => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormInput
-          name="name"
-          placeholder="John Doe"
-          control={form.control}
-          label="Name"
-          srOnly={"Name input"}
-        />
-        <FormInput
-          name="email"
-          placeholder="name@example.com"
-          control={form.control}
-          label="Email"
-          type="email"
-          srOnly={"Email input"}
-        />
-        {registerMutation.error && (
-          <p className="text-destructive text-sm">
-            {registerMutation.error.message}
-          </p>
-        )}
-        <FormInput
-          name="password"
-          placeholder="********"
-          control={form.control}
-          label="Password"
-          type="password"
-          srOnly={"Password input"}
-        />
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={registerMutation.isPending}
-        >
-          {registerMutation.isPending
-            ? "Creating account..."
-            : "Create Account"}
-        </Button>
-      </form>
-    </Form>
+    <form
+      id="register-form"
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="space-y-4"
+    >
+      <FormInput
+        name="name"
+        placeholder={t("auth:namePlaceholder")}
+        control={form.control}
+        label={t("auth:nameLabel")}
+        srOnly={t("auth:nameSrOnly")}
+      />
+      <FormInput
+        name="email"
+        placeholder="name@example.com"
+        control={form.control}
+        label={t("auth:emailLabel")}
+        type="email"
+        srOnly={t("auth:emailSrOnly")}
+      />
+      {registerMutation.error && (
+        <p className="text-destructive text-sm">
+          {registerMutation.error.message}
+        </p>
+      )}
+      <FormInput
+        name="password"
+        placeholder="********"
+        control={form.control}
+        label={t("auth:passwordLabel")}
+        type="password"
+        srOnly={t("auth:passwordSrOnly")}
+      />
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={registerMutation.isPending}
+      >
+        {registerMutation.isPending
+          ? t("auth:pendingRegister")
+          : t("auth:registerButton")}
+      </Button>
+    </form>
   );
 };

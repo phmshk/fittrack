@@ -1,23 +1,22 @@
 import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from "@/shared/shadcn/components/ui/form";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/shared/shadcn/components/ui/select";
-import type { FieldValues } from "react-hook-form";
+import { Controller, type FieldValues } from "react-hook-form";
 import type { BaseFormProps } from "../types/formTypes";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/shared/shadcn/components/ui/field";
 
 interface FormSelectProps<T extends FieldValues> extends BaseFormProps<T> {
-  options: string[];
+  options: Array<{ value: string; label: string }>;
 }
 
 export const FormSelect = <T extends FieldValues>(
@@ -26,33 +25,41 @@ export const FormSelect = <T extends FieldValues>(
   const { control, options, name, label, placeholder, srOnly } = props;
 
   return (
-    <FormField
+    <Controller
       control={control}
       name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <FormControl>
-              <SelectTrigger className="cursor-pointer">
-                <SelectValue placeholder={placeholder} />
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent>
+      render={({ field, fieldState }) => (
+        <Field data-invalid={fieldState.invalid}>
+          <FieldContent>
+            <FieldLabel htmlFor={`select-${name}`}>{label}</FieldLabel>
+            <FieldDescription className="sr-only">{srOnly}</FieldDescription>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </FieldContent>
+          <Select
+            onValueChange={field.onChange}
+            defaultValue={field.value}
+            name={field.name}
+          >
+            <SelectTrigger
+              className="w-max cursor-pointer"
+              aria-invalid={fieldState.invalid}
+              id={`select-${name}`}
+            >
+              <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+            <SelectContent position="item-aligned">
               {options.map((option) => (
                 <SelectItem
-                  key={option}
-                  value={option.toLowerCase()}
+                  key={option.value}
+                  value={option.value}
                   className="cursor-pointer"
                 >
-                  {option}
+                  {option.label}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          <FormDescription className="sr-only">{srOnly}</FormDescription>
-          <FormMessage />
-        </FormItem>
+        </Field>
       )}
     />
   );

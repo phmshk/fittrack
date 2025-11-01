@@ -27,6 +27,7 @@ import {
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
 import { Button } from "@/shared/shadcn/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 const FORM_ID = "goals-form";
 
@@ -36,6 +37,7 @@ interface UpdateUserGoalProps {
 
 export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
   const { isStandalone = true } = props;
+  const { t } = useTranslation(["profile", "common", "forms"]);
   const { data: userData, isLoading: isLoadingUserData } = useGetUserData();
   const { mutate: updateUserData, isPending: isUpdatingUserData } =
     useUpdateUserData();
@@ -69,15 +71,7 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
           control={form.control}
           render={({ field, fieldState }) => (
             <FieldSet data-invalid={fieldState.invalid}>
-              <FieldLegend>Goals</FieldLegend>
-              <FieldDescription>
-                You can update your goal at any time.
-                <br />
-                <span className="font-bold">
-                  Please notice that selecting any of these will calculate new
-                  nutritional targets and replace your existing ones.
-                </span>
-              </FieldDescription>
+              <FieldLegend>{t("forms:goal.title")}</FieldLegend>
               <RadioGroup
                 name={field.name}
                 value={field.value}
@@ -95,7 +89,9 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
                       data-invalid={fieldState.invalid}
                     >
                       <FieldContent>
-                        <FieldTitle>{goal.title}</FieldTitle>
+                        <FieldTitle>
+                          {t(`forms:goal.options.${goal.id}`)}
+                        </FieldTitle>
                       </FieldContent>
                       <RadioGroupItem
                         value={goal.id}
@@ -115,7 +111,7 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
   );
 
   if (isLoadingUserData) {
-    return <Spinner text="Loading goals..." />;
+    return <Spinner text={t("common:loading")} />;
   }
 
   if (!isStandalone) {
@@ -125,10 +121,11 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
   return (
     <Card className="h-full w-full justify-between border-none">
       <CardHeader>
-        <CardTitle>Your goal</CardTitle>
+        <CardTitle>{t("forms:goal.yourGoals")}</CardTitle>
         <CardDescription>
-          Select your primary fitness goal. This will adjust your calorie and
-          macronutrient recommendations.
+          {t("forms:goal.description")}
+          <br />
+          <span className="font-bold">{t("forms:goal.warning")}</span>
         </CardDescription>
       </CardHeader>
       <CardContent>{FormContent}</CardContent>
@@ -142,7 +139,7 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
               isUpdatingUserData || form.getValues("goal") === userData?.goal
             }
           >
-            Reset
+            {t("common:actions.reset")}
           </Button>
           <Button
             type="submit"
@@ -153,7 +150,7 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
               form.getValues("goal") === userData?.goal
             }
           >
-            Save
+            {t("common:actions.save")}
           </Button>
         </Field>
       </CardFooter>

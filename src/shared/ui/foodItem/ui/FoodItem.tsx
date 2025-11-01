@@ -1,5 +1,6 @@
 import type { FoodLog } from "@/entities/day";
 import { cn } from "@/shared/shadcn/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface FoodItemProps {
   food: FoodLog;
@@ -8,6 +9,7 @@ interface FoodItemProps {
 }
 
 export const FoodItem = (props: FoodItemProps) => {
+  const { t } = useTranslation("common");
   const { food, className, actions } = props;
 
   return (
@@ -20,8 +22,8 @@ export const FoodItem = (props: FoodItemProps) => {
       <div className="flex flex-col">
         <span className="font-medium">{food.name}</span>
         <div className="mt-1 flex items-center gap-2">
-          <span className="text-sm text-secondary-foreground">
-            {food.calories} kcal
+          <span className="text-secondary-foreground text-sm">
+            {t("common:units.totalCalories", { count: food.calories })}
           </span>
         </div>
       </div>

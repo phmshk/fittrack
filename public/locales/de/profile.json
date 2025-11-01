@@ -1,0 +1,62 @@
+{
+  "title": "Profil",
+  "greeting": "Hallo, {{name}}",
+  "myProfile": "Mein Profil",
+  "logout": "Abmelden",
+  "description": "Hier können Sie Ihre persönlichen Daten, Ziele und Einstellungen verwalten.",
+  "personalInfoTab": "Persönliche Daten",
+  "nutritionalGoalsTab": "Ernährungsziele",
+  "settingsTab": "Einstellungen",
+  "personalInfoTitle": "Ihre persönlichen Daten",
+  "personalInfoDescription": "Geben Sie genaue persönliche Daten an, um maßgeschneiderte Fitness- und Ernährungsempfehlungen zu erhalten.",
+  "editFieldTitle": "{{fieldName}} bearbeiten",
+  "editFieldDescription": "Klicken Sie auf 'Speichern', wenn Sie fertig sind.",
+  "goalsTitle": "Ihr Ziel",
+  "goalsDescription": "Wählen Sie Ihr Haupt-Fitnessziel. Dies passt Ihre Kalorien- und Makronährstoffempfehlungen an.",
+  "activityLevelTitle": "Ihr Aktivitätslevel",
+  "activityLevelDescription": "Wählen Sie Ihr Aktivitätslevel. Dies passt Ihre Kalorien- und Makronährstoffempfehlungen an.",
+  "nutritionalGoalsTitle": "Ernährungsziele",
+  "nutritionalGoalsDescription": "Sie können hier Ihre täglichen Ernährungsziele festlegen, wenn Ihnen die vorgeschlagenen nicht zusagen.",
+  "nutritionalGoalsWarning": "Bitte beachten Sie, dass eine Änderung dieser Werte die automatisch berechneten Ziele überschreibt. Wenn Sie zu den vorgeschlagenen Zielen zurückkehren möchten, können Sie dies jederzeit tun, indem Sie Ihr Ziel und Ihr Aktivitätslevel erneut auswählen.",
+  "calculationMessage": "Ihre persönlichen Ziele werden berechnet...",
+  "recommendationsTitle": "Ihre täglichen Ziele",
+  "recommendationsDescription": "Hier sind unsere Empfehlungen. Sie können diese anpassen, wenn Sie möchten.",
+  "makeChangesLink": "Möchten Sie Änderungen vornehmen? Gehen Sie zurück",
+  "tabs": {
+    "personal-info": {
+      "title": "Persönliche Daten"
+    },
+    "goals": {
+      "title": "Ernährungsziele",
+      "description": "Sie können hier Ihre täglichen Ernährungsziele festlegen, wenn Ihnen die vorgeschlagenen nicht zusagen.",
+      "warning": "Bitte beachten Sie, dass eine Änderung dieser Werte die automatisch berechneten Ziele überschreibt. Wenn Sie zu den vorgeschlagenen Zielen zurückkehren möchten, können Sie dies jederzeit tun, indem Sie Ihr Ziel und Ihr Aktivitätslevel erneut auswählen."
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "description": "Verwalten Sie Ihre Anwendungseinstellungen und Präferenzen.",
+      "logout": "Abmelden",
+      "items": {
+        "theme": {
+          "title": "App-Design",
+          "toggleTheme": "Design wechseln",
+          "description": "Wählen Sie zwischen hellem, dunklem oder Systemstandard-Design.",
+          "light": "Hell",
+          "dark": "Dunkel",
+          "system": "System"
+        },
+        "language": {
+          "title": "Sprache",
+          "changeLanguage": "Sprache ändern",
+          "description": "Wählen Sie Ihre bevorzugte Sprache."
+        },
+        "version": {
+          "title": "App-Version"
+        }
+      }
+    }
+  },
+  "mobileNav": {
+    "openProfile": "Profilmenü öffnen",
+    "srNav": "Navigation für Mobilgeräte"
+  }
+}

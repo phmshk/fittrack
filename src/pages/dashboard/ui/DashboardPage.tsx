@@ -10,9 +10,11 @@ import { WaterTracker } from "@/widgets/waterTracker";
 import { Spinner } from "@/shared/ui/spinner";
 import { Card, CardContent } from "@/shared/shadcn/components/ui/card";
 import { Meals } from "@/widgets/meals";
+import { useTranslation } from "react-i18next";
 
 export const DashboardPage = () => {
   const today = useDateStore((state) => state.today);
+  const { t, i18n } = useTranslation(["dashboard", "common"]);
 
   const { data: foodLogs, isLoading: isLoadingLogs } = useGetFoodsByDate(today);
   const { data: userData, isLoading: isLoadingGoals } = useGetUserData();
@@ -23,21 +25,21 @@ export const DashboardPage = () => {
   if (isLoading) {
     return (
       <Container>
-        <Spinner text="Loading user data..." />
+        <Spinner text={t("common:loading")} />
       </Container>
     );
   }
 
+  const locale = i18n.language || "en-US";
+  const formattedDate = today.toLocaleString(locale, {
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <Container>
       {/* Page heading. Date display */}
-      <H1>
-        Today,{" "}
-        {today.toLocaleString("en-US", {
-          month: "long",
-          day: "numeric",
-        })}
-      </H1>
+      <H1>{t("dashboard:greeting", { date: formattedDate })}</H1>
       {/* Water and Macronutrients intake summary */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:grid-rows-2">
         <div className="col-span-1 md:col-span-2 md:row-span-2">
@@ -53,7 +55,7 @@ export const DashboardPage = () => {
             <Card className="border-none">
               <CardContent className="flex h-48 items-center justify-center">
                 <span className="text-muted-foreground">
-                  No water intake goal set
+                  {t("dashboard:noWaterGoal")}
                 </span>
               </CardContent>
             </Card>
@@ -70,7 +72,7 @@ export const DashboardPage = () => {
           dailyTargets={userData?.dailyTargets}
         />
       ) : (
-        <div>No food logs available</div>
+        <div>{t("dashboard:noFoodLogs")}</div>
       )}
     </Container>
   );

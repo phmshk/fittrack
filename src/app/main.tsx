@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles/index.css";
 import { routeTree } from "@/routeTree.gen";
@@ -7,7 +7,8 @@ import { QueryProvider } from "./providers/queryProvider";
 import { App } from "./App";
 import type { NavTab } from "@/shared/model";
 import { ThemeEffect } from "@/entities/theme";
-
+import { Spinner } from "@/shared/ui/spinner";
+import "@/shared/config/i18n/i18nConfiguration";
 // Create a new router instance
 export const router = createRouter({
   routeTree,
@@ -70,8 +71,14 @@ if (!rootElement.innerHTML) {
     root.render(
       <StrictMode>
         <QueryProvider>
-          <App />
-          <ThemeEffect />
+          <Suspense
+            fallback={
+              <Spinner text="Loading..." className="h-screen w-screen" />
+            }
+          >
+            <App />
+            <ThemeEffect />
+          </Suspense>
         </QueryProvider>
       </StrictMode>,
     );

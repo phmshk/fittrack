@@ -1,4 +1,5 @@
 import { Apple, Dumbbell, GlassWater, Grape, Salad, Wheat } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const CalculationAnimation = () => {
   const icons = [
@@ -10,6 +11,8 @@ export const CalculationAnimation = () => {
     { Icon: Dumbbell, color: "text-black-500", key: 6 },
   ];
 
+  const { t } = useTranslation("profileSetup");
+
   return (
     <div className="flex h-64 flex-col items-center justify-center space-y-8">
       <div className="calculation-container-fade">
@@ -17,9 +20,7 @@ export const CalculationAnimation = () => {
           <Icon key={key} className={`icon icon-${key} ${color} size-7`} />
         ))}
       </div>
-      <p className="text-muted-foreground">
-        Calculating your personalized goals...
-      </p>
+      <p className="text-muted-foreground">{t("profileSetup:calculating")}</p>
     </div>
   );
 };

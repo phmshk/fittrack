@@ -4,6 +4,7 @@ import { H2 } from "@/shared/ui/headings";
 import { ProgressBar } from "@/shared/ui/progressBar";
 import { Spinner } from "@/shared/ui/spinner";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 interface MacronutrientsSummaryProps {
   summary: DaySummary;
@@ -13,37 +14,38 @@ interface MacronutrientsSummaryProps {
 
 export const MacronutrientsSummary = (props: MacronutrientsSummaryProps) => {
   const { summary, userGoals, isLoading } = props;
+  const { t } = useTranslation("common");
 
   const result = useMemo(() => {
     return [
       {
-        name: "Proteins",
+        name: t("common:macronutrients.proteins"),
         current: Number(summary.consumedProteins.toFixed(1)),
         goal: userGoals?.targetProteins || 0,
-        units: "g",
+        units: t("common:units:g"),
       },
       {
-        name: "Fats",
+        name: t("common:macronutrients.fats"),
         current: Number(summary.consumedFats.toFixed(1)),
         goal: userGoals?.targetFats || 0,
-        units: "g",
+        units: t("common:units:g"),
       },
       {
-        name: "Carbs",
+        name: t("common:macronutrients.carbs"),
         current: Number(summary.consumedCarbs.toFixed(1)),
         goal: userGoals?.targetCarbs || 0,
-        units: "g",
+        units: t("common:units:g"),
       },
     ];
   }, [summary, userGoals]);
 
   if (isLoading) {
-    return <Spinner text="Loading..." className="h-64" />;
+    return <Spinner text={t("common:loading")} className="h-64" />;
   }
 
   return (
     <>
-      <H2>Macronutrients</H2>
+      <H2>{t("common:macronutrients.title")}</H2>
       {result.map((nutrient) => (
         <ProgressBar
           key={nutrient.name}

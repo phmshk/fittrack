@@ -1,10 +1,11 @@
 import { profileTabs } from "@/entities/profile";
 import { cn } from "@/shared/shadcn/lib/utils";
 import { Link, useSearch } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 export const ProfileSidebar = () => {
   const { tab } = useSearch({ from: "/_protectedRoutes/profile/" });
-
+  const { t } = useTranslation("profile");
   return (
     <nav className="flex flex-col gap-2">
       {Object.values(profileTabs).map(({ href, title, Icon }) => (
@@ -21,7 +22,7 @@ export const ProfileSidebar = () => {
           )}
         >
           <Icon className="h-4 w-4" />
-          {title}
+          {t(`profile:tabs.${href}.title`)}
         </Link>
       ))}
     </nav>

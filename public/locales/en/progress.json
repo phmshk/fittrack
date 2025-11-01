@@ -1,0 +1,31 @@
+{
+  "title": "Progress",
+  "description": "Track and manage your weight and nutrition over time.",
+  "noData": "No data available for the selected range.",
+  "rangeTabs": {
+    "7d": "7 Days",
+    "30d": "30 Days",
+    "90d": "90 Days",
+    "180d": "180 Days",
+    "1y": "1 Year",
+    "all": "All Time"
+  },
+  "weightHistory": {
+    "title": "Weight History",
+    "description": "Track your weight changes over time."
+  },
+  "weightChart": {
+    "noData": "Add at least one weight entry to see a chart."
+  },
+  "progressSummary": {
+    "title": "Progress Summary",
+    "averageIntake": "Your average nutritional intake over the selected period.",
+    "averageIntakeDescription": "This summary provides insights into your daily average consumption of calories, proteins, carbs, and fats based on the data you've logged.",
+    "weightChange": "Weight Change",
+    "averageCalories": "Average Daily Calories",
+    "averageProteins": "Average Daily Proteins",
+    "averageCarbs": "Average Daily Carbs",
+    "averageFats": "Average Daily Fats",
+    "noData": "No nutritional data available to summarize."
+  }
+}

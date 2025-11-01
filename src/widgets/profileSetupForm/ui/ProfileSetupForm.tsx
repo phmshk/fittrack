@@ -18,6 +18,7 @@ import { UpdateUserGoal } from "@/features/updateUserGoal";
 import { CalculationAnimation } from "@/shared/ui/calcAnimation";
 import { Recommendations } from "@/shared/ui/recommendations";
 import { Button } from "@/shared/shadcn/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 const TOTAL_STEPS = 4;
 
@@ -29,6 +30,8 @@ export const ProfileSetupForm = () => {
   const [isCalculating, setIsCalculating] = useState(false);
   const [calculatedNeeds, setCalculatedNeeds] =
     useState<CalculationResult | null>(null);
+
+  const { t } = useTranslation(["profileSetup", "common"]);
 
   const form = useForm<UserProfileFormValuesInput>({
     resolver: zodResolver(formSchema),
@@ -124,16 +127,17 @@ export const ProfileSetupForm = () => {
           {currentStep === 4 && (
             <div className="animate-in fade-in-20 space-y-6">
               <div className="text-center">
-                <h2 className="text-2xl font-bold">Your Daily Targets</h2>
+                <h2 className="text-2xl font-bold">
+                  {t("profileSetup:dailyTargets")}
+                </h2>
                 <p className="text-muted-foreground">
-                  Here are our recommendations. You can adjust these if you'd
-                  like.
+                  {t("profileSetup:recommendations")}
                 </p>
               </div>
               <Recommendations dailyNeeds={calculatedNeeds!} />
               <div className="text-center">
                 <Button variant="link" onClick={() => setCurrentStep(1)}>
-                  Want to make changes? Go back
+                  {t("profileSetup:wantToAdjust")}
                 </Button>
               </div>
             </div>
@@ -145,13 +149,13 @@ export const ProfileSetupForm = () => {
         <div className="flex justify-between pt-4">
           {currentStep > 1 && (
             <Button type="button" variant="outline" onClick={prevStep}>
-              Back
+              {t("common:actions.back")}
             </Button>
           )}
           <div className="flex-grow"></div>
           {currentStep < TOTAL_STEPS && (
             <Button type="button" onClick={nextStep}>
-              Next
+              {t("common:actions.next")}
             </Button>
           )}
           {currentStep === TOTAL_STEPS && (
@@ -160,7 +164,9 @@ export const ProfileSetupForm = () => {
               disabled={isUpdatingUserData}
               onClick={form.handleSubmit(onSubmit)}
             >
-              {isUpdatingUserData ? "Saving..." : "Save and Finish"}
+              {isUpdatingUserData
+                ? t("common:actions.saving")
+                : t("common:actions.finish")}
             </Button>
           )}
         </div>

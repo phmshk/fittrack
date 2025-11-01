@@ -11,6 +11,7 @@ import {
 } from "@/shared/shadcn/components/ui/card";
 import { Link } from "@tanstack/react-router";
 import { PlusIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface MealCardCollapsedProps {
   mealType: string;
@@ -31,29 +32,30 @@ const MEAL_CALORIE_PERCENTAGE: Record<MealType, number> = {
 export const MealCardCollapsed = (props: MealCardCollapsedProps) => {
   const { mealType, foods, totalCalories, imageUrl, dailyTargets, date } =
     props;
+  const { t } = useTranslation(["dashboard", "common"]);
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
   const calorieEstimate = dailyTargets?.targetCalories
     ? Math.round(
         dailyTargets?.targetCalories *
           MEAL_CALORIE_PERCENTAGE[mealType.toLowerCase() as MealType],
-      ) + "kcal"
-    : ` (${MEAL_CALORIE_PERCENTAGE[mealType.toLowerCase() as MealType] * 100}% of daily goal)`;
+      ) + t("common:units.kcal")
+    : ` (${MEAL_CALORIE_PERCENTAGE[mealType.toLowerCase() as MealType] * 100}% ${t("common:ofDailyGoal")})`;
 
   return (
     <Card className="w-full max-w-xl flex-row items-center gap-2 border-none px-4">
       <img
         src={imageUrl}
-        alt={`${mealType} illustration`}
+        alt={t("common:mealCard.img.alt", { mealType })}
         className="w-1/4 rounded-full object-cover"
       />
       <div className="flex w-full flex-col">
         <CardHeader>
-          <CardTitle>{mealType}</CardTitle>
+          <CardTitle>{t(`common:meals.${mealType}`)}</CardTitle>
         </CardHeader>
         <CardContent className="text-muted-foreground text-sm">
           {foods.length > 0
             ? foods.map((food) => food.name).join(", ")
-            : "Recommended around " + calorieEstimate}
+            : t("common:recommended") + " " + calorieEstimate}
         </CardContent>
         {/* Separator */}
         {totalCalories > 0 && (
@@ -61,7 +63,7 @@ export const MealCardCollapsed = (props: MealCardCollapsedProps) => {
             <div className="border-muted m-4 border-t-2" />
 
             <CardFooter className="text-muted-foreground flex items-center justify-center text-sm">
-              {totalCalories} kcal
+              {t("common:units.totalCalories", { count: totalCalories })}
             </CardFooter>
           </div>
         )}

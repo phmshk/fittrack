@@ -3,6 +3,7 @@ import { Minus, Plus } from "lucide-react";
 import { formatDateForApi } from "@/shared/lib/utils";
 import type { WaterLog } from "@/entities/water";
 import { Button } from "@/shared/shadcn/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface HandleWaterProps {
   waterLog: WaterLog | null | undefined;
@@ -13,6 +14,8 @@ interface HandleWaterProps {
 }
 
 export const HandleWater = (props: HandleWaterProps) => {
+  const { t } = useTranslation(["dashboard", "common"]);
+
   const { waterLog, date, waterPortion, target, onClick } = props;
   const addMutation = useAddWaterLog();
   const updateMutation = useUpdateWaterLog();
@@ -60,11 +63,11 @@ export const HandleWater = (props: HandleWaterProps) => {
         <Plus className="h-4 w-4" />
       </Button>
       <span className="text-muted-foreground text-sm">
-        {currentAmount < target ? (
-          <>{target - currentAmount} ml to go</>
-        ) : (
-          "Goal reached!"
-        )}
+        {currentAmount < target
+          ? t("dashboard:waterTracker.mlToGo", {
+              count: target - currentAmount,
+            })
+          : t("dashboard:waterTracker.goalReached")}
       </span>
     </div>
   );

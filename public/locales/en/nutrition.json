@@ -1,0 +1,46 @@
+{
+  "units": {
+    "totalCalories": "{{count}} kcal",
+    "kcal": "kcal",
+    "kcal100g": "kcal/100g",
+    "totalGrams": "{{count}} g",
+    "g": "g",
+    "totalMl": "{{count}} ml",
+    "ml": "ml",
+    "totalKg": "{{count}} kg",
+    "kg": "kg",
+    "totalCm": "{{count}} cm",
+    "cm": "cm",
+    "totalYears": "{{count}} years",
+    "years": "years"
+  },
+  "macronutrients": {
+    "title": "Macronutrients",
+    "calories": "Calories",
+    "caloriesWithUnit": "Calories (kcal)",
+    "caloriesPlaceholder": "Your daily calorie goal",
+    "proteins": "Proteins",
+    "proteinsWithUnit": "Proteins (g)",
+    "proteinsPlaceholder": "Your daily protein goal",
+    "carbs": "Carbs",
+    "carbsWithUnit": "Carbs (g)",
+    "carbsPlaceholder": "Your daily carbohydrate goal",
+    "fats": "Fats",
+    "fatsWithUnit": "Fats (g)",
+    "fatsPlaceholder": "Your daily fat goal",
+    "water": "Water",
+    "waterWithUnit": "Water (ml)",
+    "waterPlaceholder": "Your daily water intake goal",
+    "saturatedFats": "Saturated Fats",
+    "saturatedFatsWithUnit": "Saturated Fats (g)",
+    "sugars": "Sugars",
+    "sugarsWithUnit": "Sugars (g)"
+  },
+  "meals": {
+    "title": "Meals",
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "snacks": "Snacks"
+  }
+}

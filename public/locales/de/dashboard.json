@@ -1,0 +1,26 @@
+{
+  "title": "Dashboard",
+  "greeting": "Heute, {{date}}",
+  "noFoodLogs": "Keine Einträge vorhanden",
+  "caloriesCard": {
+    "caloriesRemaining": "Noch {{count}} kcal",
+    "caloriesOverGoal": "{{count}} kcal über dem Ziel",
+    "goal": "Ziel",
+    "eaten": "Gegessen",
+    "exercise": "Training",
+    "caloriesCardSR": "Karte mit Kalorienübersicht. Verbleibende, gegessene und durch Training verbrauchte Kalorien."
+  },
+  "macrosChart": {
+    "title": "Makronährstoffverteilung",
+    "description": "Verfolgen Sie Ihren täglichen Makronährstoffverbrauch.",
+    "noDataForChart": "Keine Daten für diesen Tag vorhanden, um das Diagramm anzuzeigen."
+  },
+  "waterTracker": {
+    "title": "Wasser-Tracker",
+    "description": "Trinken Sie ausreichend, um Ihre Gesundheits- und Fitnessziele zu unterstützen.",
+    "noData": "Keine Daten zur Wasseraufnahme für diesen Tag.",
+    "noGoal": "Kein Ziel für die Wasseraufnahme festgelegt.",
+    "mlToGo": "Noch {{count}} ml",
+    "goalReached": "Ziel erreicht!"
+  }
+}

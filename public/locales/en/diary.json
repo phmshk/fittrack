@@ -1,0 +1,10 @@
+{
+  "title": "Diary",
+  "description": "Track your nutrition and calories.",
+  "today": "Today",
+  "editDay": {
+    "editDay": "Edit day"
+  },
+  "noMacroSummary": "No macronutrient summary available",
+  "noFoodLogs": "No food logs available for this day."
+}

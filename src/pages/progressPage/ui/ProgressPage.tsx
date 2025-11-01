@@ -6,8 +6,10 @@ import { ProgressSummary } from "@/widgets/progressSummary";
 import { RangeTabs, type DaysRange } from "@/widgets/rangeTabs";
 import { WeightHistory } from "@/widgets/weightHistory";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const ProgressPage = () => {
+  const { t } = useTranslation(["progress", "common"]);
   const { data: user, isLoading: isLoadingUser } = useGetUserData();
   const weightHistory = user?.weightHistory || [];
   const [range, setRange] = useState<DaysRange>("30d");
@@ -17,7 +19,7 @@ export const ProgressPage = () => {
   if (isLoading || !user) {
     return (
       <Container className="items-center justify-center">
-        <Spinner text="Loading your progress..." />
+        <Spinner text={t("common:loading")} />
       </Container>
     );
   }
@@ -25,10 +27,8 @@ export const ProgressPage = () => {
   return (
     <Container>
       <div className="mb-6">
-        <H1>Progress</H1>
-        <p className="text-muted-foreground">
-          Track and manage your weight and nutrition over time.
-        </p>
+        <H1>{t("progress:title")}</H1>
+        <p className="text-muted-foreground">{t("progress:description")}</p>
       </div>
       <RangeTabs value={range} setRange={setRange} />
       <WeightHistory weightHistory={weightHistory} range={range} />

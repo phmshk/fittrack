@@ -1,0 +1,47 @@
+{
+  "units": {
+    "totalCalories": "{{count}} kcal",
+    "kcal": "kcal",
+    "kcal100g": "kcal/100g",
+    "totalGrams": "{{count}} g",
+    "g": "g",
+    "totalMl": "{{count}} ml",
+    "ml": "ml",
+    "totalKg": "{{count}} kg",
+    "kg": "kg",
+    "totalCm": "{{count}} cm",
+    "cm": "cm",
+    "totalYears_one": "{{count}} Jahr",
+    "totalYears_plural": "{{count}} Jahre",
+    "years": "Jahre"
+  },
+  "macronutrients": {
+    "title": "Makronährstoffe",
+    "calories": "Kalorien",
+    "caloriesWithUnit": "Kalorien (kcal)",
+    "caloriesPlaceholder": "Ihr tägliches Kalorienziel",
+    "proteins": "Proteine",
+    "proteinsWithUnit": "Proteine (g)",
+    "proteinsPlaceholder": "Ihr tägliches Proteinziel",
+    "carbs": "Kohlenhydrate",
+    "carbsWithUnit": "Kohlenhydrate (g)",
+    "carbsPlaceholder": "Ihr tägliches Kohlenhydratziel",
+    "fats": "Fette",
+    "fatsWithUnit": "Fette (g)",
+    "fatsPlaceholder": "Ihr tägliches Fettziel",
+    "water": "Wasser",
+    "waterWithUnit": "Wasser (ml)",
+    "waterPlaceholder": "Ihr tägliches Wasserziel",
+    "saturatedFats": "Gesättigte Fette",
+    "saturatedFatsWithUnit": "Gesättigte Fette (g)",
+    "sugars": "Zucker",
+    "sugarsWithUnit": "Zucker (g)"
+  },
+  "meals": {
+    "title": "Mahlzeiten",
+    "breakfast": "Frühstück",
+    "lunch": "Mittagessen",
+    "dinner": "Abendessen",
+    "snacks": "Snacks"
+  }
+}

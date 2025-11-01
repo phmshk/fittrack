@@ -1,0 +1,59 @@
+{
+  "personalInfo": {
+    "title": "Ihre persönlichen Daten",
+    "description": "Geben Sie genaue persönliche Daten an, um maßgeschneiderte Fitness- und Ernährungsempfehlungen zu erhalten.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Geben Sie Ihren Namen ein",
+    "genderLabel": "Geschlecht",
+    "genderPlaceholder": "Wählen Sie Ihr Geschlecht",
+    "genderOptions": {
+      "male": "Männlich",
+      "female": "Weiblich"
+    },
+    "weightLabel": "Gewicht (kg)",
+    "weightPlaceholder": "Geben Sie Ihr Gewicht in Kilogramm ein",
+    "heightLabel": "Größe (cm)",
+    "heightPlaceholder": "Geben Sie Ihre Größe in Zentimetern ein",
+    "ageLabel": "Alter (Jahre)",
+    "agePlaceholder": "Geben Sie Ihr Alter in Jahren ein"
+  },
+  "goal": {
+    "title": "Ziele",
+    "yourGoals": "Ihr Ziel",
+    "description": "Wählen Sie Ihr Hauptziel. Dies passt Ihre Kalorien- und Makronährstoffempfehlungen an. Sie können dies jederzeit ändern.",
+    "warning": "Bitte beachten Sie, dass die Auswahl einer dieser Optionen neue Ernährungsziele berechnet und Ihre bestehenden ersetzt.",
+    "options": {
+      "lose_weight": "Gewicht verlieren",
+      "maintain_weight": "Gewicht halten",
+      "gain_weight": "Gewicht zunehmen"
+    }
+  },
+  "activityLevel": {
+    "title": "Aktivitätslevel",
+    "yourActivityLevel": "Ihr Aktivitätslevel",
+    "description": "Wählen Sie Ihr Aktivitätslevel. Dies passt Ihre Kalorien- und Makronährstoffempfehlungen an. Sie können dies jederzeit ändern.",
+    "warning": "Bitte beachten Sie, dass die Auswahl einer dieser Optionen neue Ernährungsziele berechnet und Ihre bestehenden ersetzt.",
+    "options": {
+      "sedentary": {
+        "title": "Sitzend",
+        "description": "Wenig oder keine Bewegung, Schreibtischjob"
+      },
+      "light": {
+        "title": "Leicht aktiv",
+        "description": "Leichtes Training/Sport 1-3 Tage/Woche"
+      },
+      "moderate": {
+        "title": "Mäßig aktiv",
+        "description": "Mäßiges Training/Sport 3-5 Tage/Woche"
+      },
+      "active": {
+        "title": "Sehr aktiv",
+        "description": "Schweres Training/Sport 6-7 Tage/Woche"
+      },
+      "extra_active": {
+        "title": "Extrem aktiv",
+        "description": "Sehr schweres Training/Sport & körperliche Arbeit"
+      }
+    }
+  }
+}

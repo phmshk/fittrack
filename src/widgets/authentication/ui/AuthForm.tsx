@@ -14,32 +14,32 @@ import {
   TabsTrigger,
 } from "@/shared/shadcn/components/ui/tabs";
 import { Link, useSearch } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 export const AuthForm = () => {
   const { tab } = useSearch({ from: "/auth" });
   const currentTab = tab ?? "login";
+  const { t } = useTranslation("auth");
 
   return (
     <Tabs value={currentTab} className="w-full max-w-md">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="login" asChild>
           <Link to="/auth" search={{ tab: "login" }}>
-            Login
+            {t("auth:login")}
           </Link>
         </TabsTrigger>
         <TabsTrigger value="register" asChild>
           <Link to="/auth" search={{ tab: "register" }}>
-            Register
+            {t("auth:register")}
           </Link>
         </TabsTrigger>
       </TabsList>
       <TabsContent value="login">
         <Card>
           <CardHeader>
-            <CardTitle>Sign In</CardTitle>
-            <CardDescription>
-              Enter your credentials to access your account.
-            </CardDescription>
+            <CardTitle>{t("auth:signIn")}</CardTitle>
+            <CardDescription>{t("auth:signInDescription")}</CardDescription>
           </CardHeader>
           <CardContent>
             <LoginForm />
@@ -49,10 +49,8 @@ export const AuthForm = () => {
       <TabsContent value="register">
         <Card>
           <CardHeader>
-            <CardTitle>Sign Up</CardTitle>
-            <CardDescription>
-              Create a new account to get started.
-            </CardDescription>
+            <CardTitle>{t("auth:signUp")}</CardTitle>
+            <CardDescription>{t("auth:signUpDescription")}</CardDescription>
           </CardHeader>
           <CardContent>
             <RegisterForm />
