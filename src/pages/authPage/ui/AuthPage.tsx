@@ -1,5 +1,5 @@
 import { AuthForm } from "@/widgets/authentication";
-import auth_image from "@/shared/assets/img/auth_img.png";
+import auth_image from "@/shared/assets/img/auth_img.webp";
 import { Container } from "@/shared/ui/container/ui/Container";
 import { useTranslation } from "react-i18next";
 const AUTH_IMAGE_URL = auth_image;
