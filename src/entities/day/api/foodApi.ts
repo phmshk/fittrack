@@ -166,7 +166,7 @@ export const useUpdateFoodLog = () => {
 
     onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
-        queryKey: [onMutateResult?.queryKey],
+        queryKey: onMutateResult?.queryKey,
       }),
   });
 };
@@ -205,7 +205,7 @@ export const useDeleteFoodLog = () => {
     onSuccess: () => toast.success(t("common:notifications.deletionSuccess")),
     onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
-        queryKey: [onMutateResult?.queryKey],
+        queryKey: onMutateResult?.queryKey,
       }),
   });
 };

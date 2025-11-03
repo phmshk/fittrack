@@ -121,7 +121,7 @@ export const useUpdateUserData = () => {
     },
     onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
-        queryKey: [onMutateResult?.queryKey],
+        queryKey: onMutateResult?.queryKey,
       }),
   });
 };

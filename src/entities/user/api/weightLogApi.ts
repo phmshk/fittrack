@@ -54,7 +54,7 @@ export const useAddWeightLog = () => {
     },
     onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
-        queryKey: [onMutateResult?.queryKey],
+        queryKey: onMutateResult?.queryKey,
       }),
   });
 };
@@ -102,7 +102,7 @@ export const useUpdateWeightLog = () => {
     },
     onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
-        queryKey: [onMutateResult?.queryKey],
+        queryKey: onMutateResult?.queryKey,
       }),
   });
 };
@@ -149,7 +149,7 @@ export const useDeleteWeightLog = () => {
     },
     onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
-        queryKey: [onMutateResult?.queryKey],
+        queryKey: onMutateResult?.queryKey,
       }),
   });
 };
