@@ -3,6 +3,7 @@ import { formatDateForApi } from "@/shared/lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { WaterLog, WaterLogInput } from "../model/types";
 import { toast } from "sonner";
+import { t } from "i18next";
 
 const waterKeys = {
   all: ["water-logs"] as const,
@@ -49,8 +50,8 @@ export const useAddWaterLog = () => {
       queryClient.setQueryData<WaterLog | null>(queryKey, optimisticLog);
       return { previousLog, queryKey };
     },
-    onError: (err, newLog, onMutateResult) => {
-      toast.error("Failed to add water log. Please try again.");
+    onError: (_err, _newLog, onMutateResult) => {
+      toast.error(t("common:notifications.errorAddingWaterLog"));
       queryClient.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLog,
@@ -60,7 +61,7 @@ export const useAddWaterLog = () => {
       queryClient.setQueryData(waterKeys.list(data.date), data);
     },
 
-    onSettled: (data, error, variables, onMutateResult) => {
+    onSettled: (_data, _error, _variables, onMutateResult) => {
       queryClient.invalidateQueries({ queryKey: onMutateResult?.queryKey });
     },
   });
@@ -97,8 +98,8 @@ export const useUpdateWaterLog = () => {
       return { previousLog, queryKey };
     },
 
-    onError: (err, updates, onMutateResult) => {
-      toast.error("Failed to update water log. Please try again.");
+    onError: (_err, _updates, onMutateResult) => {
+      toast.error(t("common:notifications.errorUpdatingWaterLog"));
       queryClient.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLog,
@@ -108,7 +109,7 @@ export const useUpdateWaterLog = () => {
       queryClient.setQueryData(waterKeys.list(data.date), data);
     },
 
-    onSettled: (data, error, variables, onMutateResult) => {
+    onSettled: (_data, _error, _variables, onMutateResult) => {
       queryClient.invalidateQueries({ queryKey: onMutateResult?.queryKey });
     },
   });

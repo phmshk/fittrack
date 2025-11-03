@@ -41,7 +41,7 @@ export const AddFood = (props: AddFoodProps) => {
       <DialogTrigger asChild>
         <Button className="w-fit" {...triggerButtonProps} />
       </DialogTrigger>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] overflow-y-auto overflow-x-hidden">
         <DialogHeader>
           <DialogTitle>{t("food:addFoodForm.title")}</DialogTitle>
           <DialogDescription className="mb-4">

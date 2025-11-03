@@ -55,5 +55,18 @@
         "description": "Very hard exercise/sports & physical job"
       }
     }
+  },
+  "errors": {
+    "invalidEmail": "Invalid email address.",
+    "nameMin": "Minimum 2 characters required for name.",
+    "passwordMin": "Password must be at least 8 characters.",
+    "activityLevelRequired": "Activity level is required for correct calculation.",
+    "genericRequired": "This field is required.",
+    "genericMandatory": "This field is mandatory.",
+    "genericNotEmpty": "This field can not be empty.",
+    "positiveNumber": "Must be a positive number.",
+    "positiveNumberWithName": "{{fieldName}} must be a positive number.",
+    "selectMeal": "Please select a meal type.",
+    "selectGoal": "Please select a goal."
   }
 }

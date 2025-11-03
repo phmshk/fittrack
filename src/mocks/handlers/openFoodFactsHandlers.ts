@@ -21,8 +21,6 @@ export const openFoodFactsHandlers = [
         count: filteredProducts?.length || 0,
         products: filteredProducts,
       };
-      //simulate network delay
-      await new Promise((res) => setTimeout(res, 1000));
 
       return HttpResponse.json(response);
     },

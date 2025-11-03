@@ -10,12 +10,8 @@ import type { User } from "../model/types";
 import { useSessionStore } from "../model/useSession";
 import { prepareUpdatePayload } from "../lib/helpers";
 import { useAddWeightLog } from "./weightLogApi";
-
-// --- Keys for user data ---
-export const userKeys = {
-  all: ["user"] as const,
-  details: () => [...userKeys.all, "details"] as const,
-};
+import { userKeys } from "./userKeys";
+import { t } from "i18next";
 
 const fetchUserData = async (): Promise<User> => {
   const { data, error } = await apiClient.GET("/user");
@@ -113,17 +109,17 @@ export const useUpdateUserData = () => {
 
       return { previousData, queryKey };
     },
-    onError: (err, newData, onMutateResult) => {
-      toast.error("Error updating user data");
+    onError: (_err, _newData, onMutateResult) => {
+      toast.error(t("common:notifications.updateUserDataError"));
       queryClient.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousData,
       );
     },
     onSuccess: () => {
-      toast.success("User data updated successfully!");
+      toast.success(t("common:notifications.updateUserDataSuccess"));
     },
-    onSettled: (newLog, error, variables, onMutateResult) =>
+    onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
         queryKey: [onMutateResult?.queryKey],
       }),

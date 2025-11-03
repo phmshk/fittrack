@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { User, WeightLog, WeightLogInput } from "../model/types";
 import { apiClient } from "@/shared/api/apiClient";
-import { userKeys } from "./userApi";
 import { toast } from "sonner";
+import { userKeys } from "./userKeys";
+import { t } from "i18next";
 
 export const useAddWeightLog = () => {
   const queryClient = useQueryClient();
@@ -42,8 +43,8 @@ export const useAddWeightLog = () => {
 
       return { previousData, queryKey };
     },
-    onError: (err, newLog, onMutateResult) => {
-      toast.error("Error adding weight log");
+    onError: (_err, _newLog, onMutateResult) => {
+      toast.error(t("common:notifications.addWeightError"));
       if (onMutateResult?.previousData) {
         queryClient.setQueryData(
           [onMutateResult?.queryKey],
@@ -51,7 +52,7 @@ export const useAddWeightLog = () => {
         );
       }
     },
-    onSettled: (newLog, error, variables, onMutateResult) =>
+    onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
         queryKey: [onMutateResult?.queryKey],
       }),
@@ -87,8 +88,8 @@ export const useUpdateWeightLog = () => {
       }
       return { previousData, queryKey };
     },
-    onError: (err, newData, onMutateResult) => {
-      toast.error("Error updating user data");
+    onError: (_err, _newData, onMutateResult) => {
+      toast.error(t("common:notifications.updateUserDataError"));
       if (onMutateResult?.previousData) {
         queryClient.setQueryData(
           [onMutateResult?.queryKey],
@@ -97,9 +98,9 @@ export const useUpdateWeightLog = () => {
       }
     },
     onSuccess: () => {
-      toast.success("User data updated successfully!");
+      toast.success(t("common:notifications.updateUserDataSuccess"));
     },
-    onSettled: (newLog, error, variables, onMutateResult) =>
+    onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
         queryKey: [onMutateResult?.queryKey],
       }),
@@ -134,8 +135,8 @@ export const useDeleteWeightLog = () => {
       }
       return { previousData, queryKey };
     },
-    onError: (err, variables, onMutateResult) => {
-      toast.error("Error deleting weight log");
+    onError: (_err, _variables, onMutateResult) => {
+      toast.error(t("common:notifications.deleteWeightError"));
       if (onMutateResult?.previousData) {
         queryClient.setQueryData(
           [onMutateResult?.queryKey],
@@ -144,9 +145,9 @@ export const useDeleteWeightLog = () => {
       }
     },
     onSuccess: () => {
-      toast.success("Successfully deleted weight entry");
+      toast.success(t("common:notifications.deletionSuccess"));
     },
-    onSettled: (newLog, error, variables, onMutateResult) =>
+    onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
         queryKey: [onMutateResult?.queryKey],
       }),

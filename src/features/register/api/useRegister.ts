@@ -3,6 +3,7 @@ import { apiClient } from "@/shared/api/apiClient";
 import type { ApiComponents } from "@/shared/api/schema";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { t } from "i18next";
 import { toast } from "sonner";
 
 type RegisterRequest = ApiComponents["schemas"]["RegisterRequest"];
@@ -26,11 +27,11 @@ export const useRegister = () => {
     },
     onSuccess: (data) => {
       setSession(data);
-      toast.success("Account created successfully!");
+      toast.success(t("common:notifications.registrationSuccess"));
       navigate({ to: "/setup", replace: true });
     },
     onError: (error: ApiError) => {
-      toast.error(error.message || "Registration failed. Please try again.");
+      toast.error(error.message || t("common:notifications.registrationError"));
     },
   });
 };

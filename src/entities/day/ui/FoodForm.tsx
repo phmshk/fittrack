@@ -18,6 +18,7 @@ interface FoodFormProps {
 export const FoodForm = (props: FoodFormProps) => {
   const { submitText, initialData, onSubmit } = props;
   const { t } = useTranslation(["nutrition", "food"]);
+
   const form = useForm<FormOutput>({
     resolver: zodResolver(formSchema),
     defaultValues: {
