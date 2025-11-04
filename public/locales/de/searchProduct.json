@@ -5,5 +5,6 @@
   "startTyping": "Beginnen Sie zu tippen, um nach Produkten zu suchen...",
   "backToList": "Zurück zur Produktliste",
   "addToDiary": "Produkt zum Tagebuch hinzufügen",
-  "selectForDetails": "Wählen Sie ein Produkt für Details aus"
+  "selectForDetails": "Wählen Sie ein Produkt für Details aus",
+  "placeholder": "Produkte nach Name suchen"
 }
