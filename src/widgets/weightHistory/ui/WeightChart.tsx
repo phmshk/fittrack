@@ -7,11 +7,11 @@ import {
   type ChartConfig,
 } from "@/shared/shadcn/components/ui/chart";
 import { useMemo } from "react";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import { useBreakpoint, useCalculateTicksForXAxis } from "@/shared/lib";
 import { useChartData } from "../model/useChartData";
 import type { DaysRange } from "@/widgets/rangeTabs";
 import { useTranslation } from "react-i18next";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 const chartConfig = {
   weight: {

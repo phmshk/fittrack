@@ -62,7 +62,7 @@ export const CaloriesCard = (props: CaloriesCardProps) => {
   return (
     <>
       {/* Calories Summary Card */}
-      <Card className="h-48 w-full justify-end gap-0 border-none bg-[url('@/shared/assets/img/card-background.png')] bg-cover bg-center p-0 md:h-56 md:py-6 lg:h-64">
+      <Card className="h-48 w-full justify-end gap-0 border-none bg-[url('@/shared/assets/img/card-background.webp')] bg-cover bg-center p-0 md:h-56 md:py-6 lg:h-64">
         <CardDescription className="sr-only">
           {t("dashboard:caloriesCard.caloriesCardSR")}
         </CardDescription>

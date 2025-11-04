@@ -1,4 +1,4 @@
-import { z } from "zod";
+import * as z from "zod";
 import { MEALS } from "./types";
 import { t } from "i18next";
 

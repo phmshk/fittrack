@@ -1,4 +1,4 @@
-import { z } from "zod";
+import * as z from "zod";
 import { t } from "i18next";
 export const profileSchema = z.object({
   name: z.string().min(2, { message: t("forms:errors.nameMin") }),

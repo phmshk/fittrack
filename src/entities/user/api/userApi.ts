@@ -9,9 +9,9 @@ import { toast } from "sonner";
 import type { User } from "../model/types";
 import { useSessionStore } from "../model/useSession";
 import { prepareUpdatePayload } from "../lib/helpers";
-import { useAddWeightLog } from "./weightLogApi";
-import { userKeys } from "./userKeys";
+import { useAddWeightLog } from "../../weight/api/weightLogApi";
 import { t } from "i18next";
+import { userKeys } from "./userKeys";
 
 const fetchUserData = async (): Promise<User> => {
   const { data, error } = await apiClient.GET("/user");

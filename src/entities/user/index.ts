@@ -3,11 +3,7 @@ export {
   useUpdateUserData,
   userQueryOptions,
 } from "./api/userApi";
-export {
-  useAddWeightLog,
-  useUpdateWeightLog,
-  useDeleteWeightLog,
-} from "./api/weightLogApi";
+
 export {
   useSessionStore,
   useCurrentUser,

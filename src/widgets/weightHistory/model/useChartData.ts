@@ -1,7 +1,8 @@
 import type { WeightLog } from "@/entities/user";
 import { formatDateForApi } from "@/shared/lib/utils";
 import type { DaysRange } from "@/widgets/rangeTabs";
-import { startOfWeek, subDays } from "date-fns";
+import { subDays } from "date-fns/subDays";
+import { startOfWeek } from "date-fns/startOfWeek";
 import { useMemo } from "react";
 
 /**

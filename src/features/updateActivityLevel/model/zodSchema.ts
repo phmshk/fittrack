@@ -1,5 +1,5 @@
 import { ACTIVITY_LEVELS_IDS } from "@/entities/user";
-import z from "zod";
+import * as z from "zod";
 import { t } from "i18next";
 
 export const activityFormSchema = z.object({

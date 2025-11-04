@@ -1,9 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { User, WeightLog, WeightLogInput } from "../model/types";
 import { apiClient } from "@/shared/api/apiClient";
 import { toast } from "sonner";
-import { userKeys } from "./userKeys";
 import { t } from "i18next";
+import type {
+  User,
+  WeightLog,
+  WeightLogInput,
+} from "@/entities/user/model/types";
+import { userKeys } from "@/entities/user/api/userKeys";
 
 export const useAddWeightLog = () => {
   const queryClient = useQueryClient();

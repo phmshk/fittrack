@@ -1,6 +1,6 @@
 import createClient from "openapi-fetch";
 import type { ApiPaths } from "./schema";
-import { useSessionStore } from "@/entities/user";
+import { useSessionStore } from "@/entities/user/model/useSession";
 
 let refreshTokenPromise: Promise<string> | null = null;
 

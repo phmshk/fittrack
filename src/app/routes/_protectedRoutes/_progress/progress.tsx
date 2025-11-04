@@ -1,9 +1,7 @@
-import { ProgressPage } from "@/pages/progressPage";
 import { createFileRoute } from "@tanstack/react-router";
 import { ChartColumnIncreasing } from "lucide-react";
 
-export const Route = createFileRoute("/_protectedRoutes/progress")({
-  component: ProgressPage,
+export const Route = createFileRoute("/_protectedRoutes/_progress/progress")({
   staticData: {
     title: "Progress",
     showHeader: true,

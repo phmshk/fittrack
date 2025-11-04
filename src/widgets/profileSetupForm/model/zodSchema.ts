@@ -1,5 +1,5 @@
 import { ACTIVITY_LEVELS_IDS, GOALS_IDS, type Gender } from "@/entities/user";
-import z from "zod";
+import * as z from "zod";
 import { t } from "i18next";
 
 const numericString = (errorMessage: string) =>

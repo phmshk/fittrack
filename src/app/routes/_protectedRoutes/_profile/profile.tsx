@@ -1,10 +1,8 @@
 import { profileSchema, profileTabs } from "@/entities/profile";
-import { ProfilePage } from "@/pages/profilePage";
 import { createFileRoute } from "@tanstack/react-router";
 import { User2Icon } from "lucide-react";
 
-export const Route = createFileRoute("/_protectedRoutes/profile/")({
-  component: ProfilePage,
+export const Route = createFileRoute("/_protectedRoutes/_profile/profile")({
   validateSearch: profileSchema,
 
   staticData: {

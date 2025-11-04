@@ -4,7 +4,7 @@ import { Link, useSearch } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 export const ProfileSidebar = () => {
-  const { tab } = useSearch({ from: "/_protectedRoutes/profile/" });
+  const { tab } = useSearch({ from: "/_protectedRoutes/_profile/profile" });
   const { t } = useTranslation("profile");
   return (
     <nav className="flex flex-col gap-2">

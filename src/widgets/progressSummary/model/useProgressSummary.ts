@@ -1,6 +1,6 @@
 import { useGetFoodsByDateRange } from "@/entities/day";
 import type { DaysRange } from "@/widgets/rangeTabs";
-import { subDays } from "date-fns";
+import { subDays } from "date-fns/subDays";
 import { useMemo } from "react";
 
 export const useProgressSummary = (rangeInDays: DaysRange) => {
