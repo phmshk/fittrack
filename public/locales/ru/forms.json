@@ -15,7 +15,7 @@
     "heightLabel": "Рост (см)",
     "heightPlaceholder": "Введите ваш рост в сантиметрах",
     "ageLabel": "Возраст (лет)",
-    "agePlaceholder": "Введите ваш возраст (в годах)"
+    "agePlaceholder": "Введите ваш возраст"
   },
   "goal": {
     "title": "Цели",
@@ -26,7 +26,8 @@
       "lose_weight": "Сбросить вес",
       "maintain_weight": "Поддерживать вес",
       "gain_weight": "Набрать вес"
-    }
+    },
+    "chooseGoal": "Выберите вашу цель:"
   },
   "activityLevel": {
     "title": "Уровни активности",
@@ -54,7 +55,8 @@
         "title": "Очень высокая активность",
         "description": "Очень тяжелые упражнения/спорт и физическая работа"
       }
-    }
+    },
+    "chooseActivityLevel": "Выберите ваш уровень активности:"
   },
   "errors": {
     "invalidEmail": "Неверный адрес email.",

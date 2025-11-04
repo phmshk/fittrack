@@ -35,6 +35,7 @@ import {
 } from "@/shared/shadcn/components/ui/card";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { H2 } from "@/shared/ui/headings";
 
 const FORM_ID = "activity-level-form";
 
@@ -123,7 +124,12 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
   }
 
   if (!isStandalone) {
-    return <>{FormContent}</>;
+    return (
+      <div className="space-y-4">
+        <H2>{t("forms:activityLevel.chooseActivityLevel")}</H2>
+        {FormContent}
+      </div>
+    );
   }
 
   return (

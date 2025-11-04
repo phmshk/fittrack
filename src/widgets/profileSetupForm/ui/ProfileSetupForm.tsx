@@ -138,6 +138,8 @@ export const ProfileSetupForm = () => {
               <div className="text-center">
                 <Button variant="link" onClick={() => setCurrentStep(1)}>
                   {t("profileSetup:wantToAdjust")}
+                  <br />
+                  {t("common:actions.goBack")}
                 </Button>
               </div>
             </div>

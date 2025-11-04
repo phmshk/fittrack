@@ -21,7 +21,8 @@
     "details": "Details",
     "selectDate": "Datum auswählen",
     "scanBarcode": "Barcode scannen",
-    "close": "Schließen"
+    "close": "Schließen",
+    "goBack": "Zurückgehen"
   },
   "nav": {
     "/": "Dashboard",

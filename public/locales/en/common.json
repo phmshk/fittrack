@@ -21,7 +21,8 @@
     "details": "Details",
     "selectDate": "Select Date",
     "scanBarcode": "Scan Barcode",
-    "close": "Close"
+    "close": "Close",
+    "goBack": "Go Back"
   },
   "nav": {
     "/": "Dashboard",

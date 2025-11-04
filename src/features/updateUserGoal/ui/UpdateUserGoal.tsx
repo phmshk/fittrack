@@ -27,6 +27,7 @@ import {
 } from "@/shared/shadcn/components/ui/card";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { H2 } from "@/shared/ui/headings";
 
 const FORM_ID = "goals-form";
 
@@ -114,7 +115,12 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
   }
 
   if (!isStandalone) {
-    return <>{FormContent}</>;
+    return (
+      <div className="space-y-4">
+        <H2>{t("forms:goal.chooseGoal")}</H2>
+        {FormContent}
+      </div>
+    );
   }
 
   return (
