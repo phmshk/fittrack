@@ -1,11 +1,12 @@
 import { GOALS_IDS } from "@/entities/user";
+import type { TFunction } from "i18next";
 import * as z from "zod";
-import { t } from "i18next";
 
-export const goalFormSchema = z.object({
-  goal: z.enum(GOALS_IDS, {
-    error: t("forms:errors.selectGoal"),
-  }),
-});
+export const getGoalFormSchema = (t: TFunction) =>
+  z.object({
+    goal: z.enum(GOALS_IDS, {
+      error: t("forms:errors.selectGoal"),
+    }),
+  });
 
-export type GoalFormValues = z.infer<typeof goalFormSchema>;
+export type GoalFormValues = z.infer<ReturnType<typeof getGoalFormSchema>>;

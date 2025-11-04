@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { formatDateForApi } from "@/shared/lib/utils";
-import { formSchema, type FormOutput } from "../model/zodFoodSchema";
+import { getFormSchema, type FormOutput } from "../model/zodFoodSchema";
 import { MEALS } from "../model/types";
 import { FormInput, FormSelect } from "@/shared/ui/form";
 import { useTranslation } from "react-i18next";
 import { FieldGroup } from "@/shared/shadcn/components/ui/field";
 import { FORM_INPUT_ITEMS } from "../model/formInputFields";
+import { useMemo } from "react";
 
 interface FoodFormProps {
   submitText?: string;
@@ -17,8 +18,8 @@ interface FoodFormProps {
 
 export const FoodForm = (props: FoodFormProps) => {
   const { submitText, initialData, onSubmit } = props;
-  const { t } = useTranslation(["nutrition", "food"]);
-
+  const { t } = useTranslation(["nutrition", "food", "forms"]);
+  const formSchema = useMemo(() => getFormSchema(t), [t]);
   const form = useForm<FormOutput>({
     resolver: zodResolver(formSchema),
     defaultValues: {
