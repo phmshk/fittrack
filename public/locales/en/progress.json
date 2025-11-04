@@ -15,7 +15,8 @@
     "description": "Track your weight changes over time."
   },
   "weightChart": {
-    "noData": "Add at least one weight entry to see a chart."
+    "noData": "Add at least one weight entry to see a chart.",
+    "insufficientData": "No data points available to render the weight chart for this period."
   },
   "progressSummary": {
     "title": "Progress Summary",

@@ -15,7 +15,6 @@ interface MobileHeaderProps {
 
 export const MobileHeader = (props: MobileHeaderProps) => {
   const { showBackButton, title, showMobileHeaderNav, emptyHeader } = props;
-  console.log(emptyHeader);
   return (
     <div className="flex items-center justify-between gap-2">
       <div>

@@ -56,6 +56,18 @@ export const WeightChart = (props: WeightChartProps) => {
     );
   }
 
+  if (chartData.length < 1) {
+    return (
+      <Card className="mb-6 border-none">
+        <CardContent>
+          <div className="text-muted-foreground flex h-64 items-center justify-center">
+            <p>{t("progress:weightChart.insufficientData")}</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="mb-6 border-none">
       <CardContent className="px-6">

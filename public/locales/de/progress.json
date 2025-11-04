@@ -15,7 +15,8 @@
     "description": "Verfolgen Sie Ihre Gewichtsänderungen im Laufe der Zeit."
   },
   "weightChart": {
-    "noData": "Fügen Sie mindestens einen Gewichtseintrag hinzu, um ein Diagramm zu sehen."
+    "noData": "Fügen Sie mindestens einen Gewichtseintrag hinzu, um ein Diagramm zu sehen.",
+    "insufficientData": "Keine Datenpunkte verfügbar, um das Gewichtsdiagramm für diesen Zeitraum darzustellen."
   },
   "progressSummary": {
     "title": "Fortschrittsübersicht",
