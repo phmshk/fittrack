@@ -4,6 +4,7 @@ import { formatDateForApi } from "@/shared/lib/utils";
 import type { WaterLog } from "@/entities/water";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { WATER_PORTION_ML } from "@/widgets/waterTracker/ui/WaterTracker";
 
 interface HandleWaterProps {
   waterLog: WaterLog | null | undefined;
@@ -51,6 +52,10 @@ export const HandleWater = (props: HandleWaterProps) => {
       >
         <Minus className="h-4 w-4" />
       </Button>
+      <span className="text-muted-foreground text-sm">
+        {currentAmount < target &&
+          WATER_PORTION_ML + "" + t("nutrition:units.ml")}
+      </span>
       <Button
         variant="outline"
         size="icon"

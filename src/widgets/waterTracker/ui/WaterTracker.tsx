@@ -17,7 +17,7 @@ interface WaterTrackerProps {
   targetWaterIntake: number;
 }
 
-const WATER_PORTION_ML = 250;
+export const WATER_PORTION_ML = 250;
 
 export const WaterTracker = (props: WaterTrackerProps) => {
   const { t } = useTranslation("dashboard");
