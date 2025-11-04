@@ -1,6 +1,7 @@
 import { Container } from "@/shared/ui/container";
 import { MobileHeader } from "./MobileHeader";
 import { DesktopHeader } from "./DesktopHeader";
+import { useTranslation } from "react-i18next";
 
 interface HeaderProps {
   title?: string;
@@ -16,6 +17,7 @@ export const Header = (props: HeaderProps) => {
     isMobile,
     showMobileHeaderNav,
   } = props;
+  const { t } = useTranslation("common");
 
   return (
     <header className="bg-background sticky top-0 z-50 w-full rounded-b-md border-b shadow-sm md:rounded-none">
@@ -23,7 +25,7 @@ export const Header = (props: HeaderProps) => {
         {isMobile ? (
           <MobileHeader
             showBackButton={showBackButton}
-            title={title}
+            title={title && t(`common:mobileHeaderTitles.${title}`)}
             showMobileHeaderNav={showMobileHeaderNav}
           />
         ) : (

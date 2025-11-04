@@ -4,7 +4,7 @@ import { LayoutDashboard } from "lucide-react";
 export const Route = createFileRoute("/_protectedRoutes/_index/")({
   staticData: {
     showHeader: true,
-    title: "Dashboard",
+    key: "dashboard",
     showBackButton: false,
     isNavRoute: true,
     icon: LayoutDashboard,

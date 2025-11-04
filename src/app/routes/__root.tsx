@@ -26,7 +26,7 @@ const RootComponent = () => {
   const showFooter = currentPage?.staticData.showFooter;
   const showBackButton = currentPage?.staticData.showBackButton;
   const showMobileHeaderNav = currentPage?.staticData.showMobileHeaderNav;
-  const title = showBackButton ? currentPage?.staticData.title : "";
+  const title = showBackButton ? currentPage?.staticData.key : "";
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -73,7 +73,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   },
   staticData: {
     showHeader: false,
-    title: "",
+    key: "",
     showBackButton: false,
     isNavRoute: false,
     showFooter: false,

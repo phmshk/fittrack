@@ -3,6 +3,7 @@
   "loading": "Загрузка...",
   "recommended": "Рекомендуется около",
   "ofDailyGoal": "от дневной нормы",
+  "today": "Сегодня",
   "actions": {
     "save": "Сохранить",
     "saveChanges": "Сохранить изменения",
@@ -29,6 +30,13 @@
     "/diary": "Дневник",
     "/progress": "Прогресс",
     "/profile": "Профиль"
+  },
+  "mobileHeaderTitles": {
+    "dashboard": "Главная",
+    "diary": "Дневник",
+    "progress": "Прогресс",
+    "profile": "Профиль",
+    "addFood": "Добавить еду"
   },
   "notifications": {
     "loginError": "Неверный email или пароль. Попробуйте снова.",

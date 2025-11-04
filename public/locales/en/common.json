@@ -3,6 +3,7 @@
   "loading": "Loading...",
   "recommended": "Recommended around",
   "ofDailyGoal": "of daily goal",
+  "today": "Today",
   "actions": {
     "save": "Save",
     "saveChanges": "Save changes",
@@ -29,6 +30,13 @@
     "/diary": "Diary",
     "/progress": "Progress",
     "/profile": "Profile"
+  },
+  "mobileHeaderTitles": {
+    "dashboard": "Dashboard",
+    "diary": "Diary",
+    "progress": "Progress",
+    "profile": "Profile",
+    "addFood": "Add Food"
   },
   "notifications": {
     "loginError": "Invalid email or password. Please try again.",

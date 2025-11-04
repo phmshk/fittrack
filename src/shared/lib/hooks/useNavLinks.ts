@@ -29,7 +29,7 @@ export const useNavLinks = (): Array<NavLink> => {
       if (staticData.isNavRoute) {
         allNavLinks.push({
           href: route.fullPath,
-          text: staticData.title,
+          text: staticData.key,
           Icon: staticData.icon,
         });
       }

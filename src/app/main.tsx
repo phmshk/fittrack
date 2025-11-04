@@ -40,8 +40,8 @@ declare module "@tanstack/react-router" {
     showMobileHeaderNav?: boolean;
     // Whether to show the footer for this route for mobile devices
     showFooter: boolean;
-    // Title to display in the header for this route on mobile devices. Empty string to show app logo.
-    title: string;
+    // Key for this route to be shown on mobile devices. Empty string to show app logo.
+    key: string;
     // Whether to show a back button in the header for this route on mobile devices
     showBackButton: boolean;
     // Whether this route is part of the main navigation (e.g., Dashboard, Diary)

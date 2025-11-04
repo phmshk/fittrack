@@ -2,6 +2,7 @@ import { Button } from "@/shared/shadcn/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { formatDate } from "../model/helpers/helpers";
 import { H2 } from "@/shared/ui/headings";
+import { useTranslation } from "react-i18next";
 
 interface DaySelectProps {
   date: Date;
@@ -12,6 +13,7 @@ interface DaySelectProps {
 
 export const DaySelect = (props: DaySelectProps) => {
   const { date, onDateChange, locale, additionalClasses } = props;
+  const { t } = useTranslation("common");
 
   const handlePreviousDay = () => {
     const newDate = new Date(date);
@@ -32,7 +34,7 @@ export const DaySelect = (props: DaySelectProps) => {
       <Button variant="outline" size="icon" onClick={handlePreviousDay}>
         <ChevronLeft className="h-4 w-4" />
       </Button>
-      <H2>{formatDate(date, locale)}</H2>
+      <H2>{formatDate(date, locale, t)}</H2>
       <Button variant="outline" size="icon" onClick={handleNextDay}>
         <ChevronRight className="h-4 w-4" />
       </Button>

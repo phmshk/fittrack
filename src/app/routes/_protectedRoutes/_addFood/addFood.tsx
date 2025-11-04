@@ -9,7 +9,7 @@ const schema = z.object({
 export const Route = createFileRoute("/_protectedRoutes/_addFood/addFood")({
   validateSearch: schema,
   staticData: {
-    title: "Add Food",
+    key: "addFood",
     showHeader: true,
     showBackButton: true,
     isNavRoute: false,
