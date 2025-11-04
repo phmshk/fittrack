@@ -2,7 +2,7 @@ import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import i18next from "eslint-plugin-i18next";
 
 export default defineConfig([
@@ -17,6 +17,7 @@ export default defineConfig([
       react: { version: "detect" },
     },
   },
+  globalIgnores(["dist/", "node_modules/"]),
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   // cast to any to satisfy ESLint config type definitions

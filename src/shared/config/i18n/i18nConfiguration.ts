@@ -8,7 +8,9 @@ i18next
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    debug: true,
+    debug: process.env.NODE_ENV === "development",
+    fallbackLng: "en",
+    supportedLngs: ["en", "de", "ru"],
     ns: ["common", "nutrition"],
     nsSeparator: ":",
     defaultNS: "common",
@@ -20,4 +22,5 @@ i18next
       loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
   });
+
 export default i18next;

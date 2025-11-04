@@ -19,7 +19,7 @@ interface ProductsViewProps {
 export const ProductsView = ({ products }: ProductsViewProps) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const selectedDate = useDateStore((state) => state.selectedDate);
-  const { tab } = useSearch({ from: "/_protectedRoutes/addFood" });
+  const { tab } = useSearch({ from: "/_protectedRoutes/_addFood/addFood" });
   const { t } = useTranslation(["searchProduct"]);
   // Map product fields to form output structure
   const productToFormOutput = (product: Product): Partial<FormOutput> => ({

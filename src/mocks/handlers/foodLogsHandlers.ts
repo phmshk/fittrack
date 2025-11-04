@@ -26,8 +26,6 @@ export const foodLogsHandlers = [
     }
 
     const logs = db.getFoodLogsByDateRange(userId, from, to);
-    // simulate network delay
-    await new Promise((res) => setTimeout(res, 1000));
     console.log(
       `[MSW] GET /api/food-logs?from=${from}&to=${to}: found ${logs.length} logs`,
     );
@@ -44,8 +42,6 @@ export const foodLogsHandlers = [
 
     const { date } = params as { date: string };
     const logs = db.getFoodLogsByDate(userId, date);
-    // simulate network delay
-    await new Promise((res) => setTimeout(res, 1000));
     console.log(`[MSW] GET /api/food-logs/${date}: found ${logs.length} logs`);
     return HttpResponse.json(logs);
   }),

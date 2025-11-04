@@ -7,7 +7,6 @@ import {
   isRedirect,
   useMatches,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
 import { userQueryOptions } from "@/entities/user";
 import { queryClient } from "../providers/queryClient";

@@ -28,5 +28,25 @@
     "/diary": "Дневник",
     "/progress": "Прогресс",
     "/profile": "Профиль"
+  },
+  "notifications": {
+    "loginError": "Неверный email или пароль. Попробуйте снова.",
+    "registrationSuccess": "Аккаунт успешно создан!",
+    "deletionSuccess": "Успешно удалено",
+    "loginSuccess": "С возвращением!",
+    "registrationError": "Ошибка регистрации. Попробуйте снова.",
+    "updateUserDataSuccess": "Данные пользователя успешно обновлены!",
+    "updateUserDataError": "Ошибка обновления данных пользователя",
+    "addFoodSuccess": "{{name}} успешно добавлено в {{mealType}}",
+    "addFoodError": "Ошибка добавления записи о еде",
+    "updateFoodSuccess": "{{name}} в {{mealType}} успешно обновлено",
+    "updateFoodError": "Ошибка обновления записи о еде",
+    "deleteFoodError": "Ошибка удаления записи о еде",
+    "errorAddingWaterLog": "Не удалось добавить запись о воде. Попробуйте снова.",
+    "errorUpdatingWaterLog": "Не удалось обновить запись о воде. Попробуйте снова.",
+    "addWeightError": "Ошибка добавления записи о весе",
+    "updateWeightError": "Ошибка обновления записи о весе",
+    "deleteWeightSuccess": "Запись о весе успешно удалена",
+    "deleteWeightError": "Ошибка удаления записи о весе"
   }
 }

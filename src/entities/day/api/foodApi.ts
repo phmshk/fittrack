@@ -5,6 +5,7 @@ import type { FoodLog } from "../model/types";
 import { toast } from "sonner";
 import { calculateFinalNutrientsValues } from "../lib/helpers";
 import type { FormOutput } from "../model/zodFoodSchema";
+import { t } from "i18next";
 
 // --- Keys for food logs ---
 export const foodKeys = {
@@ -90,17 +91,22 @@ export const useAddFoodLog = () => {
       return { previousLogs, queryKey };
     },
 
-    onError: (err, newLog, onMutateResult) => {
-      toast.error("Error adding food log");
+    onError: (_err, _newLog, onMutateResult) => {
+      toast.error(t("common:notifications.addFoodError"));
       queryClient.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLogs,
       );
     },
     onSuccess: (data) =>
-      toast.success(`Successfully added ${data?.name} to ${data?.mealType}`),
+      toast.success(
+        t("common:notifications.addFoodSuccess", {
+          name: data?.name,
+          mealType: t(`nutrition:meals.${data?.mealType}`),
+        }),
+      ),
 
-    onSettled: (data, error, variables, onMutateResult) => {
+    onSettled: (_data, _error, _variables, onMutateResult) => {
       queryClient.invalidateQueries({ queryKey: onMutateResult?.queryKey });
     },
   });
@@ -142,8 +148,8 @@ export const useUpdateFoodLog = () => {
       return { previousLogs, newLog, queryKey };
     },
 
-    onError: (err, newLog, onMutateResult) => {
-      toast.error("Error updating food log");
+    onError: (_err, _newLog, onMutateResult) => {
+      toast.error(t("common:notifications.updateFoodError"));
       queryClient.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLogs,
@@ -151,11 +157,16 @@ export const useUpdateFoodLog = () => {
     },
 
     onSuccess: (data) =>
-      toast.success(`Successfully updated ${data?.name} in ${data?.mealType}`),
+      toast.success(
+        t("common:notifications.updateFoodSuccess", {
+          name: data?.name,
+          mealType: t(`nutrition:meals.${data?.mealType}`),
+        }),
+      ),
 
-    onSettled: (newLog, error, variables, onMutateResult) =>
+    onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
-        queryKey: [onMutateResult?.queryKey],
+        queryKey: onMutateResult?.queryKey,
       }),
   });
 };
@@ -184,17 +195,17 @@ export const useDeleteFoodLog = () => {
       return { previousLogs, queryKey };
     },
 
-    onError: (err, newLog, onMutateResult) => {
-      toast.error("Error deleting food log");
+    onError: (_err, _newLog, onMutateResult) => {
+      toast.error(t("common:notifications.deleteFoodError"));
       queryClient.setQueryData(
         [onMutateResult?.queryKey],
         onMutateResult?.previousLogs,
       );
     },
-    onSuccess: () => toast.success("Deletion successful"),
-    onSettled: (newLog, error, variables, onMutateResult) =>
+    onSuccess: () => toast.success(t("common:notifications.deletionSuccess")),
+    onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
-        queryKey: [onMutateResult?.queryKey],
+        queryKey: onMutateResult?.queryKey,
       }),
   });
 };

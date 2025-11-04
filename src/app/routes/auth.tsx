@@ -1,6 +1,6 @@
 import { AuthPage } from "@/pages/authPage";
 import { createFileRoute } from "@tanstack/react-router";
-import z from "zod";
+import * as z from "zod";
 
 const authSearchSchema = z.object({
   tab: z.enum(["login", "register"]).catch("login"),

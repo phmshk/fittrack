@@ -9,7 +9,7 @@ interface TabProps {
 
 export const ActiveTabComponent = (props: TabProps) => {
   const { userData } = props;
-  const { tab } = useSearch({ from: "/_protectedRoutes/profile/" });
+  const { tab } = useSearch({ from: "/_protectedRoutes/_profile/profile" });
 
   const tabComponents: Record<
     ProfileSearchSchema["tab"],

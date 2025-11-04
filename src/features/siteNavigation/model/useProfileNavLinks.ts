@@ -15,7 +15,9 @@ type ProfileNavLink = {
  * @returns An array of navigation links for the profile page.
  */
 export const useProfileNavLinks = (): Array<ProfileNavLink> => {
-  const { tab: activeTab } = useSearch({ from: "/_protectedRoutes/profile/" });
+  const { tab: activeTab } = useSearch({
+    from: "/_protectedRoutes/_profile/profile",
+  });
 
   const navLinks = useMemo(() => {
     return Object.values(profileTabs).map(({ href, title, Icon }) => ({

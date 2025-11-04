@@ -43,6 +43,7 @@ export const FormInput = <T extends FieldValues>(props: FormInputProps<T>) => {
             id={`input-${name}`}
             aria-invalid={fieldState.invalid}
             placeholder={placeholder}
+            type={type}
           />
           <FieldDescription className="sr-only">{srOnly}</FieldDescription>
           {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
