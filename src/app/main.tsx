@@ -38,6 +38,8 @@ declare module "@tanstack/react-router" {
     showHeader: boolean;
     // Whether to show the mobile header navigation (hamburger menu) for this route
     showMobileHeaderNav?: boolean;
+    // Whether to show the profile link in the header for this route (mobile only)
+    emptyHeader?: boolean;
     // Whether to show the footer for this route for mobile devices
     showFooter: boolean;
     // Key for this route to be shown on mobile devices. Empty string to show app logo.

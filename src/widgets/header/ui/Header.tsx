@@ -8,6 +8,7 @@ interface HeaderProps {
   showBackButton?: boolean;
   showMobileHeaderNav?: boolean;
   isMobile: boolean;
+  emptyHeader?: boolean;
 }
 
 export const Header = (props: HeaderProps) => {
@@ -16,6 +17,7 @@ export const Header = (props: HeaderProps) => {
     title,
     isMobile,
     showMobileHeaderNav,
+    emptyHeader,
   } = props;
   const { t } = useTranslation("common");
 
@@ -27,6 +29,7 @@ export const Header = (props: HeaderProps) => {
             showBackButton={showBackButton}
             title={title && t(`common:mobileHeaderTitles.${title}`)}
             showMobileHeaderNav={showMobileHeaderNav}
+            emptyHeader={emptyHeader}
           />
         ) : (
           <DesktopHeader />

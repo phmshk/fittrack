@@ -14,6 +14,7 @@ export const Route = createFileRoute("/_protectedRoutes/_addFood/addFood")({
     showBackButton: true,
     isNavRoute: false,
     showFooter: false,
+    emptyHeader: true,
   },
   // Ensure this route can only be accessed when navigated from a link which sets state { from: "allowedToAddFood" }
   beforeLoad: ({ location }) => {
