@@ -6,7 +6,7 @@ import {
 import { Spinner } from "@/shared/ui/spinner";
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import {
-  activityFormSchema,
+  getActivityFormSchema,
   type ActivityFormValues,
 } from "../model/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,6 +35,8 @@ import {
 } from "@/shared/shadcn/components/ui/card";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { H2 } from "@/shared/ui/headings";
+import { useMemo } from "react";
 
 const FORM_ID = "activity-level-form";
 
@@ -45,6 +47,8 @@ interface UpdateActivityLevelProps {
 export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
   const { isStandalone = true } = props;
   const { t } = useTranslation(["forms", "common"]);
+
+  const activityFormSchema = useMemo(() => getActivityFormSchema(t), [t]);
   const { data: userData, isLoading: isLoadingUserData } = useGetUserData();
   const { mutate: updateUserData, isPending: isUpdatingUserData } =
     useUpdateUserData();
@@ -123,7 +127,12 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
   }
 
   if (!isStandalone) {
-    return <>{FormContent}</>;
+    return (
+      <div className="space-y-4">
+        <H2>{t("forms:activityLevel.chooseActivityLevel")}</H2>
+        {FormContent}
+      </div>
+    );
   }
 
   return (

@@ -27,8 +27,14 @@ export {
   type ActivityLevels,
   type GoalOptions,
 } from "./model/types";
-export { type WeightLogFormValues, formSchema } from "./model/zodWeightSchema";
-export { profileSchema, type ProfileFormData } from "./model/zodAccountSchemas";
+export {
+  type WeightLogFormValues,
+  getFormSchema,
+} from "./model/zodWeightSchema";
+export {
+  getProfileSchema,
+  type ProfileFormData,
+} from "./model/zodAccountSchemas";
 export {
   type CalculationResult,
   calculateDailyNeeds,

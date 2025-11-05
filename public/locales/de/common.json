@@ -3,6 +3,7 @@
   "loading": "Wird geladen...",
   "recommended": "Empfohlen ca.",
   "ofDailyGoal": "des Tagesziels",
+  "today": "Heute",
   "actions": {
     "save": "Speichern",
     "saveChanges": "Änderungen speichern",
@@ -21,13 +22,21 @@
     "details": "Details",
     "selectDate": "Datum auswählen",
     "scanBarcode": "Barcode scannen",
-    "close": "Schließen"
+    "close": "Schließen",
+    "goBack": "Zurückgehen"
   },
   "nav": {
     "/": "Dashboard",
     "/diary": "Tagebuch",
     "/progress": "Fortschritt",
     "/profile": "Profil"
+  },
+  "mobileHeaderTitles": {
+    "dashboard": "Dashboard",
+    "diary": "Tagebuch",
+    "progress": "Fortschritt",
+    "profile": "Profil",
+    "addFood": "Essen hinzufügen"
   },
   "notifications": {
     "loginError": "Ungültige E-Mail oder Passwort. Bitte versuchen Sie es erneut.",

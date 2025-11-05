@@ -15,7 +15,7 @@
     "heightLabel": "Height (cm)",
     "heightPlaceholder": "Enter your height in centimeters",
     "ageLabel": "Age (years)",
-    "agePlaceholder": "Enter your age in years"
+    "agePlaceholder": "Enter your age"
   },
   "goal": {
     "title": "Goals",
@@ -26,7 +26,8 @@
       "lose_weight": "Lose Weight",
       "maintain_weight": "Maintain Weight",
       "gain_weight": "Gain Weight"
-    }
+    },
+    "chooseGoal": "Choose your goal:"
   },
   "activityLevel": {
     "title": "Activity Levels",
@@ -54,7 +55,8 @@
         "title": "Extra Active",
         "description": "Very hard exercise/sports & physical job"
       }
-    }
+    },
+    "chooseActivityLevel": "Choose your activity level:"
   },
   "errors": {
     "invalidEmail": "Invalid email address.",

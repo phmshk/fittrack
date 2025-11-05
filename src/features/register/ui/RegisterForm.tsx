@@ -1,16 +1,17 @@
 import { useForm } from "react-hook-form";
 import { useRegister } from "../api/useRegister";
-import { formSchema, type RegisterFormValues } from "../model/zodSchema";
+import { getFormSchema, type RegisterFormValues } from "../model/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { RegisterCredentials } from "../model/types";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { FormInput } from "@/shared/ui/form";
 import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
 
 export const RegisterForm = () => {
   const registerMutation = useRegister();
-  const { t } = useTranslation("auth");
-
+  const { t } = useTranslation(["auth", "forms"]);
+  const formSchema = useMemo(() => getFormSchema(t), [t]);
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {

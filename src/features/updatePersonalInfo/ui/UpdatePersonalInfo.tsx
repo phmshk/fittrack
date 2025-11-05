@@ -5,7 +5,7 @@ import {
 } from "@/entities/user";
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import {
-  personalInfoSchema,
+  getPersonalInfoSchema,
   type PersonalInfoFormValues,
 } from "../model/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,6 +35,7 @@ import {
 } from "@/shared/shadcn/components/ui/select";
 import { Input } from "@/shared/shadcn/components/ui/input";
 import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
 
 const FORM_ID = "personal-info-form";
 
@@ -45,6 +46,9 @@ interface UpdatePersonalInfoProps {
 export const UpdatePersonalInfo = (props: UpdatePersonalInfoProps) => {
   const { isStandalone = true } = props;
   const { t } = useTranslation(["profile", "common", "forms"]);
+
+  const personalInfoSchema = useMemo(() => getPersonalInfoSchema(t), [t]);
+
   const { data: userData, isLoading: isLoadingUserData } = useGetUserData();
   const { mutate: updateUserData, isPending: isUpdatingUserData } =
     useUpdateUserData();

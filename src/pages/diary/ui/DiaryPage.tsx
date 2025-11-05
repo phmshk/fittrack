@@ -13,7 +13,7 @@ import { Spinner } from "@/shared/ui/spinner";
 import { useTranslation } from "react-i18next";
 
 export const DiaryPage = () => {
-  const { t } = useTranslation(["diary", "common", "nutrition"]);
+  const { t, i18n } = useTranslation(["diary", "common", "nutrition"]);
   const selectedDate = useDateStore((state) => state.selectedDate);
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
 
@@ -34,7 +34,11 @@ export const DiaryPage = () => {
         <H1>{t("diary:title")}</H1>
         <p className="text-muted-foreground">{t("diary:description")}</p>
       </div>
-      <DayNavigator date={selectedDate} onDateChange={setSelectedDate} />
+      <DayNavigator
+        date={selectedDate}
+        onDateChange={setSelectedDate}
+        locale={i18n.language}
+      />
 
       <H2>{t("nutrition:macronutrients:calories")}</H2>
       <ProgressBar

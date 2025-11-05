@@ -15,7 +15,7 @@
     "heightLabel": "Größe (cm)",
     "heightPlaceholder": "Geben Sie Ihre Größe in Zentimetern ein",
     "ageLabel": "Alter (Jahre)",
-    "agePlaceholder": "Geben Sie Ihr Alter in Jahren ein"
+    "agePlaceholder": "Geben Sie Ihr Alter ein"
   },
   "goal": {
     "title": "Ziele",
@@ -26,7 +26,8 @@
       "lose_weight": "Gewicht verlieren",
       "maintain_weight": "Gewicht halten",
       "gain_weight": "Gewicht zunehmen"
-    }
+    },
+    "chooseGoal": "Wählen Sie Ihr Ziel:"
   },
   "activityLevel": {
     "title": "Aktivitätslevel",
@@ -54,7 +55,8 @@
         "title": "Extrem aktiv",
         "description": "Sehr schweres Training/Sport & körperliche Arbeit"
       }
-    }
+    },
+    "chooseActivityLevel": "Wählen Sie Ihr Aktivitätslevel:"
   },
   "errors": {
     "invalidEmail": "Ungültige E-Mail-Adresse.",

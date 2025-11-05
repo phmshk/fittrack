@@ -26,7 +26,8 @@ const RootComponent = () => {
   const showFooter = currentPage?.staticData.showFooter;
   const showBackButton = currentPage?.staticData.showBackButton;
   const showMobileHeaderNav = currentPage?.staticData.showMobileHeaderNav;
-  const title = showBackButton ? currentPage?.staticData.title : "";
+  const title = showBackButton ? currentPage?.staticData.key : "";
+  const emptyHeader = currentPage?.staticData.emptyHeader;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -36,6 +37,7 @@ const RootComponent = () => {
           showBackButton={showBackButton}
           isMobile={isMobile}
           showMobileHeaderNav={showMobileHeaderNav}
+          emptyHeader={emptyHeader}
         />
       )}
       <main className="flex-grow">
@@ -73,7 +75,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   },
   staticData: {
     showHeader: false,
-    title: "",
+    key: "",
     showBackButton: false,
     isNavRoute: false,
     showFooter: false,

@@ -6,29 +6,32 @@ import path from "path";
 import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [
-    tanstackRouter({
-      target: "react",
-      autoCodeSplitting: true,
-      routesDirectory: "./src/app/routes",
-      generatedRouteTree: "./src/routeTree.gen.ts",
-    }),
-    react(),
-    tailwindcss(),
-    visualizer({
-      open: true,
-      filename: "dist/stats.html",
-      gzipSize: true,
-      brotliSize: true,
-    }),
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+export default defineConfig(({ mode }) => {
+  const isProduction = mode === "production";
+  return {
+    plugins: [
+      tanstackRouter({
+        target: "react",
+        autoCodeSplitting: true,
+        routesDirectory: "./src/app/routes",
+        generatedRouteTree: "./src/routeTree.gen.ts",
+      }),
+      react(),
+      tailwindcss(),
+      visualizer({
+        open: true,
+        filename: "dist/stats.html",
+        gzipSize: true,
+        brotliSize: true,
+      }),
+    ],
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
     },
-  },
-  esbuild: {
-    drop: ["console", "debugger"],
-  },
+    esbuild: {
+      drop: isProduction ? ["console", "debugger"] : [],
+    },
+  };
 });

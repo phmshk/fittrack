@@ -4,9 +4,9 @@ import {
   type CalculationResult,
 } from "@/entities/user";
 import { useNavigate } from "@tanstack/react-router";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
-  formSchema,
+  getPersonalInfoSchema,
   type UserProfileFormValuesInput,
   type UserProfileFormValuesOutput,
 } from "../model/zodSchema";
@@ -32,6 +32,8 @@ export const ProfileSetupForm = () => {
     useState<CalculationResult | null>(null);
 
   const { t } = useTranslation(["profileSetup", "common"]);
+
+  const formSchema = useMemo(() => getPersonalInfoSchema(t), [t]);
 
   const form = useForm<UserProfileFormValuesInput>({
     resolver: zodResolver(formSchema),
@@ -138,6 +140,8 @@ export const ProfileSetupForm = () => {
               <div className="text-center">
                 <Button variant="link" onClick={() => setCurrentStep(1)}>
                   {t("profileSetup:wantToAdjust")}
+                  <br />
+                  {t("common:actions.goBack")}
                 </Button>
               </div>
             </div>

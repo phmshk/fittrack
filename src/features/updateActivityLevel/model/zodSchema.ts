@@ -1,11 +1,14 @@
 import { ACTIVITY_LEVELS_IDS } from "@/entities/user";
+import type { TFunction } from "i18next";
 import * as z from "zod";
-import { t } from "i18next";
 
-export const activityFormSchema = z.object({
-  activityLevel: z.enum(ACTIVITY_LEVELS_IDS, {
-    error: t("forms:errors.activityLevelRequired"),
-  }),
-});
+export const getActivityFormSchema = (t: TFunction) =>
+  z.object({
+    activityLevel: z.enum(ACTIVITY_LEVELS_IDS, {
+      error: t("forms:errors.activityLevelRequired"),
+    }),
+  });
 
-export type ActivityFormValues = z.infer<typeof activityFormSchema>;
+export type ActivityFormValues = z.infer<
+  ReturnType<typeof getActivityFormSchema>
+>;

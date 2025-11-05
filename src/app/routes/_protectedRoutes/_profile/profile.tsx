@@ -6,7 +6,7 @@ export const Route = createFileRoute("/_protectedRoutes/_profile/profile")({
   validateSearch: profileSchema,
 
   staticData: {
-    title: "Profile",
+    key: "profile",
     showHeader: true,
     showMobileHeaderNav: true,
     showFooter: false,

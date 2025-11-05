@@ -15,7 +15,7 @@ export const Route = createFileRoute("/_protectedRoutes")({
   },
   staticData: {
     showHeader: false,
-    title: "",
+    key: "",
     showBackButton: false,
     isNavRoute: false,
     showFooter: false,
