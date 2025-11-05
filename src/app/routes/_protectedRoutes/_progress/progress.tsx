@@ -3,7 +3,7 @@ import { ChartColumnIncreasing } from "lucide-react";
 
 export const Route = createFileRoute("/_protectedRoutes/_progress/progress")({
   staticData: {
-    title: "Progress",
+    key: "progress",
     showHeader: true,
     showFooter: true,
     showBackButton: false,

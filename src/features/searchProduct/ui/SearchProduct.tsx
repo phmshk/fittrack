@@ -74,7 +74,7 @@ export const SearchProduct = (props: SearchProductProps) => {
           <Search className="text-muted-foreground absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2" />
           <Input
             type="text"
-            placeholder="Search products by name"
+            placeholder={t("searchProduct:placeholder")}
             className="text-foreground h-12 pl-10"
             value={inputValue}
             onChange={(e) => onInputChange(e.target.value)}

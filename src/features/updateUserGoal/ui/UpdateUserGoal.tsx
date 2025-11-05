@@ -1,5 +1,5 @@
 import { Controller, useForm, useFormContext } from "react-hook-form";
-import { goalFormSchema, type GoalFormValues } from "../model/zodSchema";
+import { getGoalFormSchema, type GoalFormValues } from "../model/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { goals, useGetUserData, useUpdateUserData } from "@/entities/user";
 import { Spinner } from "@/shared/ui/spinner";
@@ -27,6 +27,8 @@ import {
 } from "@/shared/shadcn/components/ui/card";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { H2 } from "@/shared/ui/headings";
+import { useMemo } from "react";
 
 const FORM_ID = "goals-form";
 
@@ -41,6 +43,7 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
   const { mutate: updateUserData, isPending: isUpdatingUserData } =
     useUpdateUserData();
 
+  const goalFormSchema = useMemo(() => getGoalFormSchema(t), [t]);
   const contextForm = useFormContext<GoalFormValues>();
 
   const standaloneForm = useForm<GoalFormValues>({
@@ -114,7 +117,12 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
   }
 
   if (!isStandalone) {
-    return <>{FormContent}</>;
+    return (
+      <div className="space-y-4">
+        <H2>{t("forms:goal.chooseGoal")}</H2>
+        {FormContent}
+      </div>
+    );
   }
 
   return (

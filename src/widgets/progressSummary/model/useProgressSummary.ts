@@ -8,7 +8,6 @@ export const useProgressSummary = (rangeInDays: DaysRange) => {
     "7d": 7,
     "30d": 30,
     "90d": 90,
-    "1y": 365,
     all: 365, // For simplicity, treat 'all' as 1 year
   } as const;
   const to = new Date();

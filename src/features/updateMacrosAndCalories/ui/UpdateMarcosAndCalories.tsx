@@ -16,21 +16,24 @@ import {
 import { Input } from "@/shared/shadcn/components/ui/input";
 import { Controller, useForm } from "react-hook-form";
 import {
-  nutriGoalsSchema,
+  getNutriGoalsSchema,
   type NutriGoalsFormValues,
 } from "../model/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useGetUserData, useUpdateUserData } from "@/entities/user";
 import { Spinner } from "@/shared/ui/spinner";
 import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
 
 const FORM_ID = "update-macros-and-calories-form";
 
 export const UpdateMarcosAndCalories = () => {
-  const { t } = useTranslation(["profile", "common", "nutrition"]);
+  const { t } = useTranslation(["profile", "common", "nutrition", "forms"]);
   const { data: userData, isLoading: isLoadingUserData } = useGetUserData();
   const { mutate: updateUserData, isPending: isUpdatingUserData } =
     useUpdateUserData();
+
+  const nutriGoalsSchema = useMemo(() => getNutriGoalsSchema(t), [t]);
 
   const form = useForm<NutriGoalsFormValues>({
     resolver: zodResolver(nutriGoalsSchema),

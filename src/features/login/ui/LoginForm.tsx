@@ -1,16 +1,18 @@
 import { useLogin } from "../api/useLogin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/shared/shadcn/components/ui/button";
-import { formSchema, type LoginFormValues } from "../model/zodSchema";
+import { getFormSchema, type LoginFormValues } from "../model/zodSchema";
 import type { LoginCredentials } from "../model/types";
 import { FormInput } from "@/shared/ui/form";
 import { useTranslation } from "react-i18next";
 import { FieldGroup } from "@/shared/shadcn/components/ui/field";
 import { useForm } from "react-hook-form";
+import { useMemo } from "react";
 
 export const LoginForm = () => {
   const loginMutation = useLogin();
-  const { t } = useTranslation("auth");
+  const { t } = useTranslation(["auth", "forms"]);
+  const formSchema = useMemo(() => getFormSchema(t), [t]);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchema),

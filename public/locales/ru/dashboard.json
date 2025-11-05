@@ -4,7 +4,7 @@
   "noFoodLogs": "Нет записей о еде",
   "caloriesCard": {
     "caloriesRemaining": "Осталось {{count}} ккал",
-    "caloriesOverGoal": "На {{count}} ккал сверх нормы",
+    "caloriesOverGoal": "{{count}} ккал сверх нормы",
     "goal": "Цель",
     "eaten": "Съедено",
     "exercise": "Упражнения",

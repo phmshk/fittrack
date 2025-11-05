@@ -10,10 +10,11 @@ interface MobileHeaderProps {
   showBackButton?: boolean;
   title?: string;
   showMobileHeaderNav?: boolean;
+  emptyHeader?: boolean;
 }
 
 export const MobileHeader = (props: MobileHeaderProps) => {
-  const { showBackButton, title, showMobileHeaderNav } = props;
+  const { showBackButton, title, showMobileHeaderNav, emptyHeader } = props;
   return (
     <div className="flex items-center justify-between gap-2">
       <div>
@@ -28,7 +29,10 @@ export const MobileHeader = (props: MobileHeaderProps) => {
         )}
       </div>
       {title ? <H2>{title}</H2> : <Logo />}
-      {showMobileHeaderNav ? (
+      {/* Profile navigation or empty space based on emptyHeader prop */}
+      {emptyHeader ? (
+        <div></div>
+      ) : showMobileHeaderNav ? (
         <MobileProfileNavigation />
       ) : (
         <div>

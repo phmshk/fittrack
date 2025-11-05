@@ -11,7 +11,7 @@ export const Route = createFileRoute("/auth")({
   validateSearch: authSearchSchema,
   staticData: {
     showHeader: false,
-    title: "",
+    key: "",
     showBackButton: false,
     isNavRoute: false,
     showFooter: false,

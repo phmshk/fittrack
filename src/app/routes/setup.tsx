@@ -28,7 +28,7 @@ export const Route = createFileRoute("/setup")({
   },
   staticData: {
     showHeader: false,
-    title: "",
+    key: "",
     showBackButton: false,
     isNavRoute: false,
     showFooter: false,
