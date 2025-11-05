@@ -181,8 +181,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
                 }
               />
               <span className="text-center font-medium">
-                {progressPercentage.toFixed(0)}% (
-                {t("nutrition:units.totalGrams", { count: entry.value })})
+                {`${progressPercentage.toFixed(0)}% (${t("nutrition:units.totalGrams", { count: entry.value })})`}
               </span>
             </div>
           );

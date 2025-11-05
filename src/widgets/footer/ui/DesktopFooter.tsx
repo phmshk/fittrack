@@ -1,3 +1,6 @@
+//Disable eslint for this file as it is not used in app
+/* eslint-disable */
+
 import { Container } from "@/shared/ui/container";
 
 export const DesktopFooter = () => {

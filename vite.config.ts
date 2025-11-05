@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
       react(),
       tailwindcss(),
       visualizer({
-        open: true,
+        open: false,
         filename: "dist/stats.html",
         gzipSize: true,
         brotliSize: true,

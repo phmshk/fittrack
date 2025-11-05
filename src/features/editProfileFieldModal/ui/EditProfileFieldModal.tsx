@@ -1,3 +1,6 @@
+//Disable eslint for this file as it is not used in app
+/* eslint-disable */
+
 import type { ProfileFormData } from "@/entities/user";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import {
