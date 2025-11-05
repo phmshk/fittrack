@@ -20,13 +20,13 @@
   },
   "progressSummary": {
     "title": "Progress Summary",
-    "averageIntake": "Your average nutritional intake over the selected period.",
+    "averageIntake": "Average nutritional intake.",
     "averageIntakeDescription": "This summary provides insights into your daily average consumption of calories, proteins, carbs, and fats based on the data you've logged.",
     "weightChange": "Weight Change",
-    "averageCalories": "Average Daily Calories",
-    "averageProteins": "Average Daily Proteins",
-    "averageCarbs": "Average Daily Carbs",
-    "averageFats": "Average Daily Fats",
+    "averageCalories": "Ø Daily Calories",
+    "averageProteins": "Ø Daily Proteins",
+    "averageCarbs": "Ø Daily Carbs",
+    "averageFats": "Ø Daily Fats",
     "noData": "No nutritional data available to summarize."
   }
 }
