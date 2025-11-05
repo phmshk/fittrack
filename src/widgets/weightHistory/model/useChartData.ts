@@ -60,13 +60,6 @@ export const useChartData = (data: WeightLog[], range: DaysRange) => {
         );
         break;
       }
-      case "1y": {
-        const oneYearAgo = subDays(now, 365);
-        filteredData = data.filter(
-          (entry) => new Date(entry.date) >= oneYearAgo,
-        );
-        break;
-      }
       case "all":
         filteredData = data;
         break;
