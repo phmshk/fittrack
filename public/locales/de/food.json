@@ -1,4 +1,8 @@
 {
+  "unknownFood": {
+    "name": "Unbekanntes Lebensmittel",
+    "description": "Keine Details für dieses Lebensmittel verfügbar."
+  },
   "addFood": {
     "title": "Essen hinzufügen",
     "backToMeal": "Zurück zur Mahlzeit"
@@ -58,5 +62,14 @@
     "title": "Essen zum Ernährungsplan hinzufügen",
     "description": "Füllen Sie das Formular aus, um ein neues Lebensmittel zu Ihrem Ernährungsplan hinzuzufügen.",
     "srDescription": "Formular, um ein neues Lebensmittel zum Ernährungsplan hinzuzufügen"
+  },
+  "scanner": {
+    "title": "Barcode scannen",
+    "srScanBarcode": "Öffnen Sie den Barcode-Scanner, um den Barcode eines Lebensmittels zu scannen",
+    "permissionDenied": "Zugriff auf die Kamera verweigert. Bitte erlauben Sie den Zugriff auf die Kamera, um Barcodes zu scannen.",
+    "noCamera": "Keine Kamera auf diesem Gerät gefunden.",
+    "scanning": "Scannen...",
+    "placeBarcode": "Bitte platzieren Sie den Barcode im Rahmen.",
+    "unknownError": "Ein unbekannter Fehler ist beim Zugriff auf die Kamera aufgetreten."
   }
 }
