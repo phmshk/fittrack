@@ -12,7 +12,7 @@ export const ProductCardCollapsed = ({
   product,
   additionalClasses,
 }: ProductCardCollapsedProps) => {
-  const { product_name, nutriments } = product;
+  const { product_name, nutriments, image_url } = product;
   const { t } = useTranslation("nutrition");
 
   return (
@@ -22,7 +22,10 @@ export const ProductCardCollapsed = ({
       <CardContent className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <img
-            src={"https://placehold.co/200x200/e9f1ea/52946b?text=Product"}
+            src={
+              image_url ||
+              "https://placehold.co/200x200/e9f1ea/52946b?text=Product"
+            }
             alt={product_name}
             className="h-16 w-16 rounded-lg object-cover sm:h-24 sm:w-24"
           />

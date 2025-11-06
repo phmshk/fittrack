@@ -38,16 +38,16 @@ components:
       type: object
       description: "Represents a food product from Open Food Facts."
       properties:
-        code:
+        image_url:
           type: string
-          description: "The barcode of the product."
-          example: "3017620422003"
+          description: "URL of the product image."
+        nutriments:
+          $ref: "#/components/schemas/Nutriments"
         product_name:
           type: string
           description: "The name of the product."
           example: "Coca-Cola"
-        nutriments:
-          $ref: "#/components/schemas/Nutriments"
+      additionalProperties: true
 
     # --- API Response for Product Search ---
     SearchResponse:
@@ -68,15 +68,21 @@ components:
     ProductResponse:
       type: object
       properties:
+        code:
+          type: string
+          description: "The barcode of the product."
+          example: "3017620422003"
+        product:
+          $ref: "#/components/schemas/Product"
         status:
           type: integer
           description: "Status of the request (1 for success)."
           example: 1
-        code:
+        status_verbose:
           type: string
-          description: "The requested barcode."
-        product:
-          $ref: "#/components/schemas/Product"
+          description: "Verbose status message."
+          example: "product found"
+        additionalProperties: true
 
   # --- Endpoint Definitions ---
   searchProducts:

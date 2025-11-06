@@ -7,6 +7,7 @@ import {
 import { type Product } from "../model/types";
 import { H3 } from "@/shared/ui/headings";
 import { useTranslation } from "react-i18next";
+
 interface ProductCardFullProps {
   product: Product;
   additionalClasses?: string;
@@ -18,7 +19,7 @@ export const ProductCardFull = ({
   additionalClasses,
   action,
 }: ProductCardFullProps) => {
-  const { product_name, nutriments } = product;
+  const { product_name, nutriments, image_url } = product;
   const { t } = useTranslation("nutrition");
 
   return (
@@ -27,7 +28,10 @@ export const ProductCardFull = ({
     >
       <CardHeader className="flex items-center justify-between">
         <img
-          src={"https://placehold.co/200x200/e9f1ea/52946b?text=Product"}
+          src={
+            image_url ||
+            "https://placehold.co/200x200/e9f1ea/52946b?text=Product"
+          }
           alt={product_name}
           className="h-16 w-16 rounded-lg object-cover sm:h-24 sm:w-24"
         />

@@ -27,7 +27,7 @@ export const openFoodFactsHandlers = [
   ),
 
   http.get(
-    "https://world.openfoodfacts.org/api/v2/product/:barcode",
+    "https://world.openfoodfacts.org/api/v2/product/:barcode?*",
     ({ params }) => {
       console.log(
         `[MSW] Intercepted Open Food Facts fetch for barcode: ${params.barcode}`,
