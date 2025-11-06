@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Frown } from "lucide-react";
 import {
   ProductCardCollapsed,
   ProductCardFull,
@@ -22,6 +22,7 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
   const { tab } = useSearch({ from: "/_protectedRoutes/_addFood/addFood" });
   const { t } = useTranslation(["searchProduct"]);
   // Map product fields to form output structure
+
   const productToFormOutput = (product: Product): Partial<FormOutput> => ({
     mealType: tab,
     name: product.product_name || "",
@@ -33,6 +34,13 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
     saturatedFats: product.nutriments?.["saturated-fat_100g"]?.toString() || "",
   });
 
+  // Automatically select the product if there's only one in the list
+  useEffect(() => {
+    if (products.length === 1) {
+      setSelectedProduct(products[0]);
+    }
+  }, [products]);
+
   const handleSelectProduct = (product: Product) => {
     setSelectedProduct(product);
   };
@@ -42,7 +50,12 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
   };
 
   if (!products || products.length === 0) {
-    return <p>{t("searchProduct:noProductsFound")}</p>;
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <Frown className="size-8" />
+        <p>{t("searchProduct:noProductsFound")}</p>
+      </div>
+    );
   }
 
   return (
@@ -54,7 +67,10 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
         }`}
       >
         {products.map((product) => (
-          <div key={product.code} onClick={() => handleSelectProduct(product)}>
+          <div
+            key={product.product_name}
+            onClick={() => handleSelectProduct(product)}
+          >
             <ProductCardCollapsed
               product={product}
               additionalClasses="mx-auto"

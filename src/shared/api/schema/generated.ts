@@ -1143,17 +1143,16 @@ export interface components {
         };
         /** @description Represents a food product from Open Food Facts. */
         Product: {
-            /**
-             * @description The barcode of the product.
-             * @example 3017620422003
-             */
-            code?: string;
+            /** @description URL of the product image. */
+            image_url?: string;
+            nutriments?: components["schemas"]["Nutriments"];
             /**
              * @description The name of the product.
              * @example Coca-Cola
              */
             product_name?: string;
-            nutriments?: components["schemas"]["Nutriments"];
+        } & {
+            [key: string]: unknown;
         };
         SearchResponse: {
             /** @description Total number of products found. */
@@ -1164,13 +1163,22 @@ export interface components {
         };
         ProductResponse: {
             /**
+             * @description The barcode of the product.
+             * @example 3017620422003
+             */
+            code?: string;
+            product?: components["schemas"]["Product"];
+            /**
              * @description Status of the request (1 for success).
              * @example 1
              */
             status?: number;
-            /** @description The requested barcode. */
-            code?: string;
-            product?: components["schemas"]["Product"];
+            /**
+             * @description Verbose status message.
+             * @example product found
+             */
+            status_verbose?: string;
+            additionalProperties?: unknown;
         };
     };
     responses: {

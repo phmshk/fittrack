@@ -1,4 +1,8 @@
 {
+  "unknownFood": {
+    "name": "Unknown Food",
+    "description": "No details available for this food item."
+  },
   "addFood": {
     "title": "Add Food",
     "backToMeal": "Back to meal"
@@ -58,5 +62,14 @@
     "title": "Add Food to Meal Plan",
     "description": "Fill out the form below to add a new food item to your meal plan.",
     "srDescription": "Form to add a new food item to your meal plan"
+  },
+  "scanner": {
+    "title": "Scan Barcode",
+    "srScanBarcode": "Open the barcode scanner to scan a food product's barcode",
+    "permissionDenied": "Camera permission denied. Please allow camera access to scan barcodes.",
+    "noCamera": "No camera found on this device.",
+    "scanning": "Scanning...",
+    "placeBarcode": "Please place the barcode within the frame.",
+    "unknownError": "An unknown error occurred while accessing the camera."
   }
 }
