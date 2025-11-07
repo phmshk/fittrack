@@ -1,3 +1,4 @@
+import { RealisticBarcodeIcon } from "@/shared/assets/icons/BarcodeIcon";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import {
   Dialog,
@@ -74,8 +75,7 @@ export const ScanBarcodeButton = (props: ScanBarcodeButtonProps) => {
     if (open) {
       setScannerError(null);
       setIsModalOpen(true);
-    }
-    if (!open) {
+    } else {
       dismissScanner();
     }
   };
@@ -92,7 +92,7 @@ export const ScanBarcodeButton = (props: ScanBarcodeButtonProps) => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-sm">
         <DialogHeader>
           <DialogTitle>{t("food:scanner.title", "Scan Barcode")}</DialogTitle>
           <DialogDescription>
@@ -110,6 +110,10 @@ export const ScanBarcodeButton = (props: ScanBarcodeButtonProps) => {
               onError={onScannerError}
               stopStream={stopStream}
             />
+            {/* Barcode overlay */}
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              <RealisticBarcodeIcon className="w-100 h-20 text-white/50" />
+            </div>
             <Button
               variant="ghost"
               size="icon"

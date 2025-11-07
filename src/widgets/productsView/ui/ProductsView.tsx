@@ -51,7 +51,7 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
 
   if (!products || products.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex w-full flex-col items-center justify-center text-center">
         <Frown className="size-8" />
         <p>{t("searchProduct:noProductsFound")}</p>
       </div>
