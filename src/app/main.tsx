@@ -9,6 +9,12 @@ import type { NavTab } from "@/shared/model";
 import { ThemeEffect } from "@/entities/theme";
 import { Spinner } from "@/shared/ui/spinner";
 import "@/shared/config/i18n/i18nConfiguration";
+
+// Firebase initialization
+import { auth } from "@/app/firebase/firebase.setup";
+import { onAuthStateChanged } from "firebase/auth";
+import { useSessionStore, type UserSession } from "@/entities/user";
+
 // Create a new router instance
 export const router = createRouter({
   routeTree,
@@ -55,24 +61,44 @@ declare module "@tanstack/react-router" {
   }
 }
 
-async function enableMocking() {
-  if (
-    process.env.NODE_ENV === "production" &&
-    import.meta.env.VITE_ENABLE_MOCKS !== "true"
-  ) {
-    return;
+// App initialization either enable mocking or start the with firebase
+async function startApp() {
+  if (import.meta.env.VITE_USE_MOCKS === "true") {
+    const { worker } = await import("@/mocks/worker");
+
+    return worker.start();
+  } else {
+    onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          const token = await firebaseUser.getIdToken();
+          const session: UserSession = {
+            accessToken: token,
+            refreshToken: firebaseUser.refreshToken,
+            user: {
+              id: firebaseUser.uid,
+              email: firebaseUser.email || "",
+              name: firebaseUser.displayName || "User",
+            },
+          };
+          useSessionStore.getState().setSession(session);
+        } catch (error) {
+          console.error("Error getting firebase token", error);
+          useSessionStore.getState().clearSession();
+        }
+      } else {
+        useSessionStore.getState().clearSession();
+      }
+    });
   }
-
-  const { worker } = await import("@/mocks/worker");
-
-  return worker.start();
+  return Promise.resolve();
 }
 
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
   const root = createRoot(rootElement);
 
-  enableMocking().then(() => {
+  startApp().then(() => {
     root.render(
       <StrictMode>
         <QueryProvider>

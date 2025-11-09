@@ -70,6 +70,9 @@
     "noCamera": "Keine Kamera auf diesem Gerät gefunden.",
     "scanning": "Scannen...",
     "placeBarcode": "Bitte platzieren Sie den Barcode im Rahmen.",
-    "unknownError": "Ein unbekannter Fehler ist beim Zugriff auf die Kamera aufgetreten."
+    "unknownError": "Ein unbekannter Fehler ist beim Zugriff auf die Kamera aufgetreten.",
+    "errorStarting": "Fehler beim Starten des Scanners. Bitte versuchen Sie es erneut.",
+    "startScan": "Scan starten",
+    "stopScan": "Scan stoppen"
   }
 }

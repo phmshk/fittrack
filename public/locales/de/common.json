@@ -41,6 +41,8 @@
   "notifications": {
     "loginError": "Ungültige E-Mail oder Passwort. Bitte versuchen Sie es erneut.",
     "registrationSuccess": "Konto erfolgreich erstellt!",
+    "emailAlreadyInUse": "Die E-Mail-Adresse wird bereits von einem anderen Konto verwendet.",
+    "errorSigningOut": "Fehler beim Abmelden. Bitte versuchen Sie es erneut.",
     "deletionSuccess": "Löschen erfolgreich",
     "loginSuccess": "Willkommen zurück!",
     "registrationError": "Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.",
