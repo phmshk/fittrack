@@ -2,7 +2,7 @@ import { useBreakpoint, useDebounce } from "@/shared/lib";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { Container } from "@/shared/ui/container";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { router } from "@/app/main";
 import { useTranslation } from "react-i18next";
 import { ProductsView } from "@/widgets/productsView";
@@ -29,6 +29,7 @@ export const AddFromDatabase = () => {
   const { t } = useTranslation("food");
   const { data: barcodeProductData, isLoading: isBarcodeLoading } =
     useGetProductByBarcode(scannedBarcode, BARCODE_PRODUCT_PARAMS);
+  const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
   const isTextSearchLoading = false; // Placeholder for text search loading state
 
@@ -36,15 +37,11 @@ export const AddFromDatabase = () => {
   const isPending =
     isBarcodeLoading ||
     isTextSearchLoading ||
-    (searchQuery !== debouncedSearchQuery && !!searchQuery);
+    searchQuery !== debouncedSearchQuery;
 
-  const displayedProducts: Product[] = [];
-
-  if (scannedBarcode && barcodeProductData) {
-    displayedProducts.push(barcodeProductData);
-  } else if (!scannedBarcode) {
-    // Placeholder for text search results
-  }
+  const handleScannedBarcode = (barcode: string | null) => {
+    setScannedBarcode(barcode);
+  };
 
   const handleSearchQuery = (query: string) => {
     setSearchQuery(query);
@@ -52,6 +49,19 @@ export const AddFromDatabase = () => {
       setScannedBarcode(null);
     }
   };
+
+  useEffect(() => {
+    if (barcodeProductData) {
+      setDisplayedProducts((prev) => {
+        // Avoid duplicates
+        const exists = prev.some(
+          (product) => product.code === barcodeProductData.code,
+        );
+        if (exists) return prev;
+        return [barcodeProductData, ...prev];
+      });
+    }
+  }, [barcodeProductData]);
 
   return (
     <Container>
@@ -72,7 +82,7 @@ export const AddFromDatabase = () => {
       <AddFoodSearchField
         searchQuery={searchQuery}
         setSearchQuery={handleSearchQuery}
-        setScannedBarcode={setScannedBarcode}
+        setScannedBarcode={handleScannedBarcode}
       />
       {isPending ? (
         <div className="mt-4 space-y-2">
