@@ -20,7 +20,7 @@ To explore the app, you can use the test account:
 - **Daily Calorie Tracking:** Easily log meals and see a real-time summary of your daily consumption.
 - **Macronutrient Monitoring:** Keep track of your protein, carbohydrate, and fat intake against your personal goals.
 - **Comprehensive Food Diary:** View your meal history by day, organized into categories like breakfast, lunch, dinner, and snacks.
-- **Full Backend Simulation:** Uses **Mock Service Worker (MSW)** to intercept all API calls. This provides a complete, interactive demo (login, registration, adding/editing data) without requiring a live database.
+- **Backend Simulation:** Uses **Mock Service Worker (MSW)** to intercept all API calls. This provides a complete, interactive demo (login, registration, adding/editing data) without requiring a live database.
 - **Extensive Food Database:** Search for food items to add them to your diary (using a mock API).
 - **Personalized Goals:** Set and manage your own goals for weight, daily calorie intake, and macros.
 - **Progress Visualization:** Interactive charts and graphs to visualize your progress over time.

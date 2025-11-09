@@ -47,6 +47,10 @@ components:
           type: string
           description: "The name of the product."
           example: "Coca-Cola"
+        code:
+          type: string
+          description: "The barcode of the product."
+          example: "3017620422003"
       additionalProperties: true
 
     # --- API Response for Product Search ---

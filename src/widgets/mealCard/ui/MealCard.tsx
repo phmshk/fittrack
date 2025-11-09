@@ -9,20 +9,13 @@ import {
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
 import { FoodItem } from "@/shared/ui/foodItem";
-import { Database, PlusCircleIcon, ScanBarcode, Utensils } from "lucide-react";
+import { Database, PlusCircleIcon, Utensils } from "lucide-react";
 import { FoodOptions } from "./FoodOptions";
 import { useMemo, useState } from "react";
 import { Button } from "@/shared/shadcn/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/shared/shadcn/components/ui/tooltip";
 import { Link } from "@tanstack/react-router";
 import { useDateStore } from "@/shared/model";
 import { useDayEditStore } from "@/features/editDay";
-import { useBreakpoint } from "@/shared/lib";
 import { useTranslation } from "react-i18next";
 
 interface MealCardProps {
@@ -39,7 +32,6 @@ export const MealCard = (props: MealCardProps) => {
   const { t } = useTranslation(["food", "common", "nutrition"]);
 
   const { mealType, date, foods, totalCalories, imageUrl } = props;
-  const isMobile = useBreakpoint();
   const setSelectedDate = useDateStore((state) => state.setSelectedDate);
   const today = useDateStore((state) => state.today);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -137,24 +129,6 @@ export const MealCard = (props: MealCardProps) => {
               ),
             }}
           />
-
-          {isMobile && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="outline" size="icon">
-                    <ScanBarcode className="size-5" />
-                    <span className="sr-only">
-                      {t("common:actions.scanBarcode")}
-                    </span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t("common:actions.scanBarcode")}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
         </div>
 
         <Button

@@ -25,6 +25,11 @@ export default defineConfig(({ mode }) => {
         brotliSize: true,
       }),
     ],
+    server: {
+      host: true,
+      allowedHosts: ["aria-unbookish-supportingly.ngrok-free.dev"],
+    },
+
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),

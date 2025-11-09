@@ -1151,6 +1151,11 @@ export interface components {
              * @example Coca-Cola
              */
             product_name?: string;
+            /**
+             * @description The barcode of the product.
+             * @example 3017620422003
+             */
+            code?: string;
         } & {
             [key: string]: unknown;
         };
