@@ -1,4 +1,4 @@
-import { useSessionStore } from "@/entities/user";
+import { useSessionStore, type UserSession } from "@/entities/user";
 import { apiClient } from "@/shared/api/apiClient";
 import type { ApiComponents } from "@/shared/api/schema";
 import { useMutation } from "@tanstack/react-query";
@@ -7,9 +7,8 @@ import { t } from "i18next";
 import { toast } from "sonner";
 
 // Firebase
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/app/firebase/firebase.setup";
 import { getFirebaseAuthErrorMessage } from "./firebaseErrors";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 type LoginRequest = ApiComponents["schemas"]["LoginRequest"];
 
@@ -29,20 +28,33 @@ export const useLogin = () => {
         return data;
       } else {
         //FIREBASE LOGIN
-        await signInWithEmailAndPassword(
+        const auth = getAuth();
+        const userCredential = await signInWithEmailAndPassword(
           auth,
           credentials.email,
           credentials.password,
         );
-        return null;
+        const user = userCredential.user;
+        const token = await user.getIdToken();
+        const session: UserSession = {
+          accessToken: token,
+          refreshToken: user.refreshToken,
+          user: {
+            id: user.uid,
+            email: user.email || "",
+            name: user.displayName || "",
+          },
+        };
+        return session;
       }
     },
     onSuccess: (data) => {
-      if (import.meta.env.VITE_USE_MOCKS === "true" && data) {
+      if (data) {
+        console.log("Login successful, setting session");
         setSession(data);
+        toast.success(t("common:notifications.loginSuccess"));
+        navigate({ to: "/", replace: true });
       }
-      toast.success(t("common:notifications.loginSuccess"));
-      navigate({ to: "/", replace: true });
     },
     onError: (error) => {
       if (import.meta.env.VITE_USE_MOCKS === "true") {

@@ -9,10 +9,8 @@ import type { NavTab } from "@/shared/model";
 import { ThemeEffect } from "@/entities/theme";
 import { Spinner } from "@/shared/ui/spinner";
 import "@/shared/config/i18n/i18nConfiguration";
-
-// Firebase initialization
-import { auth } from "@/app/firebase/firebase.setup";
 import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase/firebase.setup";
 import { useSessionStore, type UserSession } from "@/entities/user";
 
 // Create a new router instance
@@ -64,26 +62,27 @@ declare module "@tanstack/react-router" {
 // App initialization either enable mocking or start the with firebase
 async function startApp() {
   if (import.meta.env.VITE_USE_MOCKS === "true") {
+    console.log("Starting app with mocks");
     const { worker } = await import("@/mocks/worker");
 
     return worker.start();
   } else {
-    onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
         try {
-          const token = await firebaseUser.getIdToken();
+          const token = await user.getIdToken();
           const session: UserSession = {
             accessToken: token,
-            refreshToken: firebaseUser.refreshToken,
+            refreshToken: user.refreshToken,
             user: {
-              id: firebaseUser.uid,
-              email: firebaseUser.email || "",
-              name: firebaseUser.displayName || "User",
+              id: user.uid,
+              email: user.email!,
+              name: user.displayName || "",
             },
           };
           useSessionStore.getState().setSession(session);
         } catch (error) {
-          console.error("Error getting firebase token", error);
+          console.error("Error fetching user token:", error);
           useSessionStore.getState().clearSession();
         }
       } else {

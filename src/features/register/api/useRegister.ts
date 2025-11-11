@@ -1,4 +1,4 @@
-import { useSessionStore } from "@/entities/user";
+import { useSessionStore, type UserSession } from "@/entities/user";
 import { apiClient } from "@/shared/api/apiClient";
 import type { ApiComponents } from "@/shared/api/schema";
 import { useMutation } from "@tanstack/react-query";
@@ -8,8 +8,9 @@ import { toast } from "sonner";
 
 //Firebase
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "@/app/firebase/firebase.setup";
+import { auth, db } from "@/app/firebase/firebase.setup";
 import { getFirebaseAuthErrorMessage } from "@/features/login";
+import { doc, setDoc } from "firebase/firestore";
 
 type RegisterRequest = ApiComponents["schemas"]["RegisterRequest"];
 
@@ -38,18 +39,43 @@ export const useRegister = () => {
           credentials.email,
           credentials.password,
         );
-        await updateProfile(userCredential.user, {
+        const user = userCredential.user;
+        await updateProfile(user, {
           displayName: credentials.name,
         });
-        return null;
+
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, {
+          id: user.uid,
+          name: credentials.name,
+          email: credentials.email,
+          hasCompletedSetup: false,
+          personalData: {},
+          dailyTargets: {},
+          weightHistory: [],
+          activityLevel: "sedentary",
+          goal: "maintain_weight",
+        });
+
+        const token = await user.getIdToken();
+        const session: UserSession = {
+          accessToken: token,
+          refreshToken: user.refreshToken,
+          user: {
+            id: user.uid,
+            email: user.email || "",
+            name: user.displayName || "",
+          },
+        };
+        return session;
       }
     },
     onSuccess: (data) => {
-      if (import.meta.env.VITE_USE_MOCKS === "true" && data) {
+      if (data) {
         setSession(data);
+        toast.success(t("common:notifications.registrationSuccess"));
+        navigate({ to: "/setup", replace: true });
       }
-      toast.success(t("common:notifications.registrationSuccess"));
-      navigate({ to: "/setup", replace: true });
     },
     onError: (error: ApiError) => {
       if (import.meta.env.VITE_USE_MOCKS === "true") {
