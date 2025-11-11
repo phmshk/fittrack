@@ -13,7 +13,7 @@ import { useAddWeightLog } from "../../weight/api/weightLogApi";
 import { t } from "i18next";
 import { userKeys } from "./userKeys";
 import { auth, db } from "@/app/firebase/firebase.setup";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 const fetchUserData = async (): Promise<User> => {
   if (import.meta.env.VITE_USE_MOCKS === "true") {
@@ -56,25 +56,24 @@ export const useUpdateUserData = () => {
 
   return useMutation({
     mutationFn: async (updatedData: Partial<User>) => {
-      if (import.meta.env.VITE_USE_MOCKS !== "true") {
-        //Fetch current user data to merge with updates
-        const currentUserData = queryClient.getQueryData<User>(
-          userKeys.details(),
-        );
+      //Fetch current user data to merge with updates
+      const currentUserData = queryClient.getQueryData<User>(
+        userKeys.details(),
+      );
 
-        if (!currentUserData) {
-          throw new Error("No user data available to update");
-        }
+      if (!currentUserData) {
+        throw new Error("No user data available to update");
+      }
 
-        const { payload, newWeightLog } = prepareUpdatePayload({
-          currentUserData,
-          updatedData,
-        });
+      const { payload, newWeightLog } = prepareUpdatePayload({
+        currentUserData,
+        updatedData,
+      });
 
-        if (newWeightLog) {
-          addWeightLog(newWeightLog);
-        }
-
+      if (newWeightLog) {
+        addWeightLog(newWeightLog);
+      }
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         if (Object.keys(payload).length === 0) {
           console.log(
             "[MSW] PUT /api/user: No changes detected, skipping update",
@@ -92,6 +91,17 @@ export const useUpdateUserData = () => {
         );
         if (error) throw error;
         return data;
+      } else {
+        //FIREBASE UPDATE
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const userDocRef = doc(db, "users", user.uid);
+        if (Object.keys(payload).length > 0) {
+          await updateDoc(userDocRef, payload);
+        }
+        const updatedDoc = await getDoc(userDocRef);
+        return updatedDoc.data() as User;
       }
     },
     onMutate: async (newData) => {

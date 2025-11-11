@@ -1,4 +1,5 @@
 export {
+  useGetWeightLogs,
   useAddWeightLog,
   useUpdateWeightLog,
   useDeleteWeightLog,

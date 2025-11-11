@@ -1,4 +1,5 @@
 import { useGetUserData } from "@/entities/user";
+import { useGetWeightLogs } from "@/entities/weight";
 import { Container } from "@/shared/ui/container";
 import { H1 } from "@/shared/ui/headings";
 import { Spinner } from "@/shared/ui/spinner";
@@ -11,7 +12,10 @@ import { useTranslation } from "react-i18next";
 export const ProgressPage = () => {
   const { t } = useTranslation(["progress", "common"]);
   const { data: user, isLoading: isLoadingUser } = useGetUserData();
-  const weightHistory = user?.weightHistory || [];
+  const { data: weightLogs } = useGetWeightLogs();
+  const weightHistory = import.meta.env.VITE_USE_MOCKS
+    ? user?.weightHistory || []
+    : weightLogs || [];
   const [range, setRange] = useState<DaysRange>("30d");
 
   const isLoading = isLoadingUser;
