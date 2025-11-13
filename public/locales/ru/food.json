@@ -8,7 +8,7 @@
     "backToMeal": "Назад к приему пищи"
   },
   "mealCard": {
-    "noFoodAdded": "Для {{mealType}} еще не добавлено еды.",
+    "noFoodAdded": "Еда ещё не добавлена.",
     "SRdescr": "Карточка приема пищи {{mealType}} со сводкой по всей съеденной еде",
     "img": {
       "alt": "Изображение для {{mealType}}"

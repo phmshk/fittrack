@@ -8,7 +8,7 @@
     "backToMeal": "Zurück zur Mahlzeit"
   },
   "mealCard": {
-    "noFoodAdded": "Noch kein Essen für {{mealType}} hinzugefügt.",
+    "noFoodAdded": "Noch kein Essen hinzugefügt.",
     "SRdescr": "Mahlzeiten-Karte für {{mealType}}, die alle gegessenen Lebensmittel zusammenfasst",
     "img": {
       "alt": "Bild für {{mealType}}"

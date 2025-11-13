@@ -8,7 +8,7 @@
     "backToMeal": "Back to meal"
   },
   "mealCard": {
-    "noFoodAdded": "No food added yet for {{mealType}}.",
+    "noFoodAdded": "No food added yet.",
     "SRdescr": "Meal card for {{mealType}} summarizing all foods eaten for that meal",
     "img": {
       "alt": "Image for {{mealType}}"

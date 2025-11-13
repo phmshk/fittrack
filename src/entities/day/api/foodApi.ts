@@ -15,6 +15,7 @@ import {
   getDocs,
   query,
   setDoc,
+  Timestamp,
   where,
 } from "firebase/firestore";
 
@@ -29,6 +30,7 @@ export const foodKeys = {
 // --- Hooks for food logs ---
 export const useGetFoodsByDate = (date: Date) => {
   const dateString = formatDateForApi(date);
+  console.log("Fetching food logs for date:", dateString); // Debug log
 
   return useQuery({
     queryKey: foodKeys.list(dateString),
@@ -60,6 +62,10 @@ export const useGetFoodsByDate = (date: Date) => {
 
         return snapshot.docs.map((doc) => ({
           id: doc.id,
+          date:
+            doc.data().date instanceof Timestamp
+              ? formatDateForApi(doc.data().date.toDate())
+              : doc.data().date,
           ...doc.data(),
         })) as FoodLog[];
       }
@@ -87,10 +93,11 @@ export const useGetFoodsByDateRange = (params: { from: Date; to: Date }) => {
         });
 
         if (error) throw error;
-        return data;
+        return data || [];
       } else {
         // FIREBASE VERSION
         const user = auth.currentUser;
+
         if (!user) throw new Error("User not authenticated");
 
         const foodLogsCollection = collection(
@@ -109,6 +116,10 @@ export const useGetFoodsByDateRange = (params: { from: Date; to: Date }) => {
 
         return snapshot.docs.map((doc) => ({
           id: doc.id,
+          date:
+            doc.data().date instanceof Timestamp
+              ? formatDateForApi(doc.data().date.toDate())
+              : doc.data().date,
           ...doc.data(),
         })) as FoodLog[];
       }
@@ -141,6 +152,7 @@ export const useAddFoodLog = () => {
           user.uid,
           "foodLogs",
         );
+
         const docRef = await addDoc(foodLogsCollection, finalLog);
         return {
           id: docRef.id,
@@ -154,11 +166,11 @@ export const useAddFoodLog = () => {
 
       await queryClient.cancelQueries({ queryKey });
 
-      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey);
+      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey) || [];
 
       const optimisticLog: FoodLog = {
-        id: crypto.randomUUID(),
         ...finalLog,
+        id: crypto.randomUUID(),
       };
 
       queryClient.setQueryData<FoodLog[]>(queryKey, (old) => [
@@ -166,27 +178,30 @@ export const useAddFoodLog = () => {
         optimisticLog,
       ]);
 
-      return { previousLogs, queryKey };
+      return { previousLogs, queryKey, optimisticLog };
     },
 
     onError: (_err, _newLog, onMutateResult) => {
       toast.error(t("common:notifications.addFoodError"));
-      queryClient.setQueryData(
-        [onMutateResult?.queryKey],
-        onMutateResult?.previousLogs,
-      );
+      if (onMutateResult?.queryKey) {
+        queryClient.setQueryData(
+          onMutateResult?.queryKey,
+          onMutateResult?.previousLogs,
+        );
+      }
     },
     onSuccess: (data) =>
       toast.success(
-        t("common:notifications.addFoodSuccess", {
+        t("common:notifications.updateFoodSuccess", {
           name: data?.name,
           mealType: t(`nutrition:meals.${data?.mealType}`),
         }),
       ),
 
-    onSettled: (_data, _error, _variables, onMutateResult) => {
-      queryClient.invalidateQueries({ queryKey: onMutateResult?.queryKey });
-    },
+    onSettled: (_newLog, _error, _variables, onMutateResult) =>
+      queryClient.invalidateQueries({
+        queryKey: onMutateResult?.queryKey,
+      }),
   });
 };
 
@@ -227,7 +242,7 @@ export const useUpdateFoodLog = () => {
 
       await queryClient.cancelQueries({ queryKey });
 
-      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey);
+      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey) || [];
 
       queryClient.setQueryData<FoodLog[]>(queryKey, (old) =>
         old
@@ -242,10 +257,12 @@ export const useUpdateFoodLog = () => {
 
     onError: (_err, _newLog, onMutateResult) => {
       toast.error(t("common:notifications.updateFoodError"));
-      queryClient.setQueryData(
-        [onMutateResult?.queryKey],
-        onMutateResult?.previousLogs,
-      );
+      if (onMutateResult?.queryKey) {
+        queryClient.setQueryData(
+          onMutateResult?.queryKey,
+          onMutateResult?.previousLogs,
+        );
+      }
     },
 
     onSuccess: (data) =>
@@ -288,7 +305,7 @@ export const useDeleteFoodLog = () => {
 
       await queryClient.cancelQueries({ queryKey });
 
-      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey);
+      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey) || [];
 
       queryClient.setQueryData<FoodLog[]>(queryKey, (old) =>
         old ? old.filter((log) => log.id !== newLog.id) : [],
@@ -296,13 +313,14 @@ export const useDeleteFoodLog = () => {
 
       return { previousLogs, queryKey };
     },
-
     onError: (_err, _newLog, onMutateResult) => {
       toast.error(t("common:notifications.deleteFoodError"));
-      queryClient.setQueryData(
-        [onMutateResult?.queryKey],
-        onMutateResult?.previousLogs,
-      );
+      if (onMutateResult?.queryKey) {
+        queryClient.setQueryData(
+          onMutateResult?.queryKey,
+          onMutateResult?.previousLogs,
+        );
+      }
     },
     onSuccess: () => toast.success(t("common:notifications.deletionSuccess")),
     onSettled: (_newLog, _error, _variables, onMutateResult) =>
