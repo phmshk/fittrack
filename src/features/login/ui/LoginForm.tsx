@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { FieldGroup } from "@/shared/shadcn/components/ui/field";
 import { useForm } from "react-hook-form";
 import { useMemo } from "react";
+import { getFirebaseAuthErrorMessage } from "@/entities/user";
 
 export const LoginForm = () => {
   const loginMutation = useLogin();
@@ -51,7 +52,7 @@ export const LoginForm = () => {
         />
         {loginMutation.isError && (
           <p className="text-destructive text-sm">
-            {loginMutation.error?.message || "An error occurred during login."}
+            {getFirebaseAuthErrorMessage(loginMutation.error)}
           </p>
         )}
       </FieldGroup>

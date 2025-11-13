@@ -40,7 +40,9 @@
   },
   "notifications": {
     "loginError": "Invalid email or password. Please try again.",
+    "emailAlreadyInUse": "The email address is already in use by another account.",
     "registrationSuccess": "Account created successfully!",
+    "errorSigningOut": "Error signing out. Please try again.",
     "deletionSuccess": "Deletion successful",
     "loginSuccess": "Welcome back!",
     "registrationError": "Registration failed. Please try again.",

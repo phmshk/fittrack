@@ -1,7 +1,6 @@
-import { useAddWaterLog, useUpdateWaterLog } from "@/entities/water";
 import { Minus, Plus } from "lucide-react";
 import { formatDateForApi } from "@/shared/lib/utils";
-import type { WaterLog } from "@/entities/water";
+import { useSetWaterLog, type WaterLog } from "@/entities/water";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { WATER_PORTION_ML } from "@/widgets/waterTracker/ui/WaterTracker";
@@ -11,30 +10,20 @@ interface HandleWaterProps {
   date: Date;
   waterPortion: number;
   target: number;
-  onClick: (value: React.SetStateAction<number>) => void;
 }
 
 export const HandleWater = (props: HandleWaterProps) => {
   const { t } = useTranslation(["dashboard", "common"]);
 
-  const { waterLog, date, waterPortion, target, onClick } = props;
-  const addMutation = useAddWaterLog();
-  const updateMutation = useUpdateWaterLog();
-  const isPending = addMutation.isPending || updateMutation.isPending;
+  const { waterLog, date, waterPortion, target } = props;
+  const { mutate, isPending } = useSetWaterLog();
 
   const handleUpdate = (newAmount: number) => {
-    if (waterLog) {
-      updateMutation.mutate({
-        id: waterLog.id,
-        amount: newAmount,
-        date: formatDateForApi(date),
-      });
-    } else {
-      addMutation.mutate({
-        date: formatDateForApi(date),
-        amount: newAmount,
-      });
-    }
+    const finalAmount = Math.max(0, newAmount);
+    mutate({
+      date: formatDateForApi(date),
+      amount: finalAmount,
+    });
   };
 
   const currentAmount = waterLog?.amount || 0;
@@ -46,7 +35,6 @@ export const HandleWater = (props: HandleWaterProps) => {
         size="icon"
         onClick={() => {
           handleUpdate(currentAmount - waterPortion);
-          onClick((prev) => prev - 1);
         }}
         disabled={isPending || currentAmount <= 0}
       >
@@ -61,7 +49,6 @@ export const HandleWater = (props: HandleWaterProps) => {
         size="icon"
         onClick={() => {
           handleUpdate(currentAmount + waterPortion);
-          onClick((prev) => prev + 1);
         }}
         disabled={isPending || currentAmount >= target}
       >

@@ -74,7 +74,7 @@ export const MealCard = (props: MealCardProps) => {
               <Utensils className="text-primary/80 size-16" />
             </div>
             <p className="mb-4 text-center text-sm">
-              {t("food:mealCard.noFoodAdded", { mealType: mealType })}
+              {t("food:mealCard.noFoodAdded")}
             </p>
           </div>
         ) : (

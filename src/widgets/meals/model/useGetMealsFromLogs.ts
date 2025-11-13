@@ -2,7 +2,7 @@ import type { FoodLog } from "@/entities/day";
 import { useMemo } from "react";
 import { MEAL_ORDER } from "./types";
 
-export const useGetMealsFromLogs = (foodLogs: FoodLog[]) => {
+export const useGetMealsFromLogs = (foodLogs: FoodLog[] | undefined) => {
   return useMemo(() => {
     if (!foodLogs || foodLogs.length === 0) {
       return MEAL_ORDER.map((mealType) => ({

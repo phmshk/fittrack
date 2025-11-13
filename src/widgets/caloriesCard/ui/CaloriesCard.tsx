@@ -17,7 +17,7 @@ interface CaloriesCardProps {
 export const CaloriesCard = (props: CaloriesCardProps) => {
   const { t } = useTranslation(["dashboard", "common", "nutrition"]);
 
-  const { userGoals, summary, exercise = 0 } = props;
+  const { userGoals, summary } = props;
 
   const isOverGoal =
     summary.remainingCalories < 0 && userGoals?.targetCalories !== undefined;
@@ -52,9 +52,9 @@ export const CaloriesCard = (props: CaloriesCardProps) => {
       </div>
       <div className="md:bg-secondary/80 hidden md:block md:rounded-xl md:px-3 md:py-2 md:font-bold">
         {t("dashboard:caloriesCard.goal")}: {userGoals?.targetCalories} |{" "}
-        {t("dashboard:caloriesCard.eaten")}: {summary.consumedCalories} |{" "}
-        {t("dashboard:caloriesCard.exercise")}:{" "}
-        {exercise > 0 ? `-${exercise}` : 0}
+        {t("dashboard:caloriesCard.eaten")}: {summary.consumedCalories}
+        {/* {t("dashboard:caloriesCard.exercise")}:{" "}
+        {exercise > 0 ? `-${exercise}` : 0} */}
       </div>
     </CardContent>
   );

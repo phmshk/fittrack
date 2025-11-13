@@ -6,6 +6,18 @@ import { toast } from "sonner";
 import { calculateFinalNutrientsValues } from "../lib/helpers";
 import type { FormOutput } from "../model/zodFoodSchema";
 import { t } from "i18next";
+import { auth, db } from "@/app/firebase/firebase.setup";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  Timestamp,
+  where,
+} from "firebase/firestore";
 
 // --- Keys for food logs ---
 export const foodKeys = {
@@ -18,19 +30,47 @@ export const foodKeys = {
 // --- Hooks for food logs ---
 export const useGetFoodsByDate = (date: Date) => {
   const dateString = formatDateForApi(date);
+  const isDateToday = date.toDateString() === new Date().toDateString();
 
   return useQuery({
     queryKey: foodKeys.list(dateString),
     queryFn: async () => {
-      const { data, error } = await apiClient.GET("/food-logs/{date}", {
-        params: {
-          path: { date: dateString },
-        },
-      });
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
+        // MOCKED VERSION
+        const { data, error } = await apiClient.GET("/food-logs/{date}", {
+          params: {
+            path: { date: dateString },
+          },
+        });
 
-      if (error) throw error;
-      return data;
+        if (error) throw error;
+        return data;
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const foodLogsCollection = collection(
+          db,
+          "users",
+          user.uid,
+          "foodLogs",
+        );
+
+        const q = query(foodLogsCollection, where("date", "==", dateString));
+        const snapshot = await getDocs(q);
+
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          date:
+            doc.data().date instanceof Timestamp
+              ? formatDateForApi(doc.data().date.toDate())
+              : doc.data().date,
+          ...doc.data(),
+        })) as FoodLog[];
+      }
     },
+    staleTime: isDateToday ? 0 : Infinity,
   });
 };
 
@@ -42,17 +82,48 @@ export const useGetFoodsByDateRange = (params: { from: Date; to: Date }) => {
   return useQuery({
     queryKey: foodKeys.list({ from: fromString, to: toString }),
     queryFn: async () => {
-      const { data, error } = await apiClient.GET("/food-logs", {
-        params: {
-          query: {
-            from: fromString,
-            to: toString,
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
+        // MOCKED VERSION
+        const { data, error } = await apiClient.GET("/food-logs", {
+          params: {
+            query: {
+              from: fromString,
+              to: toString,
+            },
           },
-        },
-      });
+        });
 
-      if (error) throw error;
-      return data;
+        if (error) throw error;
+        return data || [];
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+
+        if (!user) throw new Error("User not authenticated");
+
+        const foodLogsCollection = collection(
+          db,
+          "users",
+          user.uid,
+          "foodLogs",
+        );
+
+        const q = query(
+          foodLogsCollection,
+          where("date", ">=", fromString),
+          where("date", "<=", toString),
+        );
+        const snapshot = await getDocs(q);
+
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          date:
+            doc.data().date instanceof Timestamp
+              ? formatDateForApi(doc.data().date.toDate())
+              : doc.data().date,
+          ...doc.data(),
+        })) as FoodLog[];
+      }
     },
     enabled: !!(from && to),
   });
@@ -64,11 +135,31 @@ export const useAddFoodLog = () => {
   return useMutation({
     mutationFn: async (newLog: FormOutput) => {
       const finalLog = calculateFinalNutrientsValues(newLog);
-      const { data, error } = await apiClient.POST("/food-logs", {
-        body: finalLog,
-      });
-      if (error) throw error;
-      return data;
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
+        // MOCKED VERSION
+        const { data, error } = await apiClient.POST("/food-logs", {
+          body: finalLog,
+        });
+        if (error) throw error;
+        return data;
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const foodLogsCollection = collection(
+          db,
+          "users",
+          user.uid,
+          "foodLogs",
+        );
+
+        const docRef = await addDoc(foodLogsCollection, finalLog);
+        return {
+          id: docRef.id,
+          ...finalLog,
+        } as FoodLog;
+      }
     },
     onMutate: async (newLog) => {
       const finalLog = calculateFinalNutrientsValues(newLog);
@@ -76,11 +167,11 @@ export const useAddFoodLog = () => {
 
       await queryClient.cancelQueries({ queryKey });
 
-      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey);
+      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey) || [];
 
       const optimisticLog: FoodLog = {
-        id: crypto.randomUUID(),
         ...finalLog,
+        id: crypto.randomUUID(),
       };
 
       queryClient.setQueryData<FoodLog[]>(queryKey, (old) => [
@@ -88,27 +179,30 @@ export const useAddFoodLog = () => {
         optimisticLog,
       ]);
 
-      return { previousLogs, queryKey };
+      return { previousLogs, queryKey, optimisticLog };
     },
 
     onError: (_err, _newLog, onMutateResult) => {
       toast.error(t("common:notifications.addFoodError"));
-      queryClient.setQueryData(
-        [onMutateResult?.queryKey],
-        onMutateResult?.previousLogs,
-      );
+      if (onMutateResult?.queryKey) {
+        queryClient.setQueryData(
+          onMutateResult?.queryKey,
+          onMutateResult?.previousLogs,
+        );
+      }
     },
     onSuccess: (data) =>
       toast.success(
-        t("common:notifications.addFoodSuccess", {
+        t("common:notifications.updateFoodSuccess", {
           name: data?.name,
           mealType: t(`nutrition:meals.${data?.mealType}`),
         }),
       ),
 
-    onSettled: (_data, _error, _variables, onMutateResult) => {
-      queryClient.invalidateQueries({ queryKey: onMutateResult?.queryKey });
-    },
+    onSettled: (_newLog, _error, _variables, onMutateResult) =>
+      queryClient.invalidateQueries({
+        queryKey: onMutateResult?.queryKey,
+      }),
   });
 };
 
@@ -118,12 +212,26 @@ export const useUpdateFoodLog = () => {
     mutationFn: async (params: { id: string; updatedLog: FormOutput }) => {
       const finalLog = calculateFinalNutrientsValues(params.updatedLog);
       const { id } = params;
-      const { data, error } = await apiClient.PUT("/food-logs/{id}", {
-        params: { path: { id } },
-        body: finalLog,
-      });
-      if (error) throw error;
-      return data;
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
+        // MOCKED VERSION
+        const { data, error } = await apiClient.PUT("/food-logs/{id}", {
+          params: { path: { id } },
+          body: finalLog,
+        });
+        if (error) throw error;
+        return data;
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const logDocRef = doc(db, "users", user.uid, "foodLogs", id);
+        await setDoc(logDocRef, finalLog, { merge: true });
+        return {
+          id,
+          ...finalLog,
+        } as FoodLog;
+      }
     },
 
     onMutate: async (newLog) => {
@@ -135,7 +243,7 @@ export const useUpdateFoodLog = () => {
 
       await queryClient.cancelQueries({ queryKey });
 
-      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey);
+      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey) || [];
 
       queryClient.setQueryData<FoodLog[]>(queryKey, (old) =>
         old
@@ -150,10 +258,12 @@ export const useUpdateFoodLog = () => {
 
     onError: (_err, _newLog, onMutateResult) => {
       toast.error(t("common:notifications.updateFoodError"));
-      queryClient.setQueryData(
-        [onMutateResult?.queryKey],
-        onMutateResult?.previousLogs,
-      );
+      if (onMutateResult?.queryKey) {
+        queryClient.setQueryData(
+          onMutateResult?.queryKey,
+          onMutateResult?.previousLogs,
+        );
+      }
     },
 
     onSuccess: (data) =>
@@ -176,17 +286,27 @@ export const useDeleteFoodLog = () => {
   return useMutation({
     mutationFn: async (params: { id: string; date: string }) => {
       const { id } = params;
-      const { error } = await apiClient.DELETE("/food-logs/{id}", {
-        params: { path: { id } },
-      });
-      if (error) throw error;
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
+        // MOCKED VERSION
+        const { error } = await apiClient.DELETE("/food-logs/{id}", {
+          params: { path: { id } },
+        });
+        if (error) throw error;
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const logDocRef = doc(db, "users", user.uid, "foodLogs", id);
+        await deleteDoc(logDocRef);
+      }
     },
     onMutate: async (newLog) => {
       const queryKey = foodKeys.list(newLog.date);
 
       await queryClient.cancelQueries({ queryKey });
 
-      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey);
+      const previousLogs = queryClient.getQueryData<FoodLog[]>(queryKey) || [];
 
       queryClient.setQueryData<FoodLog[]>(queryKey, (old) =>
         old ? old.filter((log) => log.id !== newLog.id) : [],
@@ -194,13 +314,14 @@ export const useDeleteFoodLog = () => {
 
       return { previousLogs, queryKey };
     },
-
     onError: (_err, _newLog, onMutateResult) => {
       toast.error(t("common:notifications.deleteFoodError"));
-      queryClient.setQueryData(
-        [onMutateResult?.queryKey],
-        onMutateResult?.previousLogs,
-      );
+      if (onMutateResult?.queryKey) {
+        queryClient.setQueryData(
+          onMutateResult?.queryKey,
+          onMutateResult?.previousLogs,
+        );
+      }
     },
     onSuccess: () => toast.success(t("common:notifications.deletionSuccess")),
     onSettled: (_newLog, _error, _variables, onMutateResult) =>

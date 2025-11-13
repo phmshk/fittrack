@@ -7,7 +7,6 @@ import {
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
 import { Spinner } from "@/shared/ui/spinner";
-import { useState } from "react";
 import { WaterWithIcons } from "./WaterWithIcons";
 import { HandleWater } from "@/features/handleWater";
 import { useTranslation } from "react-i18next";
@@ -26,9 +25,7 @@ export const WaterTracker = (props: WaterTrackerProps) => {
 
   const targetWater = targetWaterIntake;
   const currentWater = waterLog?.amount || 0;
-  const [currentAmount, setCurrentAmount] = useState(
-    currentWater / WATER_PORTION_ML,
-  );
+  const currentAmountForIcons = currentWater / WATER_PORTION_ML;
 
   if (isLoading) {
     return (
@@ -50,7 +47,10 @@ export const WaterTracker = (props: WaterTrackerProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-col justify-center gap-2 pt-2">
-          <WaterWithIcons target={targetWater} numberOfItems={currentAmount} />
+          <WaterWithIcons
+            target={targetWater}
+            numberOfItems={currentAmountForIcons}
+          />
 
           <div className="mt-4 flex items-center justify-center gap-4">
             <HandleWater
@@ -58,7 +58,6 @@ export const WaterTracker = (props: WaterTrackerProps) => {
               date={date}
               waterPortion={WATER_PORTION_ML}
               target={targetWater}
-              onClick={setCurrentAmount}
             />
           </div>
         </div>

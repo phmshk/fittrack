@@ -58,16 +58,12 @@ export const DiaryPage = () => {
         <div>{t("diary:noMacroSummary")}</div>
       )}
 
-      {foodLogs ? (
-        <Meals
-          foodLogs={foodLogs}
-          isLoading={isLoading}
-          date={selectedDate}
-          variant="full"
-        />
-      ) : (
-        <div>{t("diary:noFoodLogs")}</div>
-      )}
+      <Meals
+        foodLogs={foodLogs}
+        isLoading={isLoading}
+        date={selectedDate}
+        variant="full"
+      />
     </Container>
   );
 };

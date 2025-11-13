@@ -41,6 +41,8 @@
   "notifications": {
     "loginError": "Неверный email или пароль. Попробуйте снова.",
     "registrationSuccess": "Аккаунт успешно создан!",
+    "emailAlreadyInUse": "Электронная почта уже используется другой учетной записью.",
+    "errorSigningOut": "Ошибка при выходе. Пожалуйста, попробуйте еще раз.",
     "deletionSuccess": "Успешно удалено",
     "loginSuccess": "С возвращением!",
     "registrationError": "Ошибка регистрации. Попробуйте снова.",
