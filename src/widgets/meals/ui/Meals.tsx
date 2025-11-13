@@ -9,7 +9,7 @@ import type { DailyTargets } from "@/entities/user";
 import { useTranslation } from "react-i18next";
 
 interface MealsProps {
-  foodLogs: FoodLog[];
+  foodLogs: FoodLog[] | undefined;
   isLoading: boolean;
   date: Date;
   variant: "full" | "collapsed";
