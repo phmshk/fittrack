@@ -33,7 +33,7 @@ export const useGetFoodsByDate = (date: Date) => {
   return useQuery({
     queryKey: foodKeys.list(dateString),
     queryFn: async () => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED VERSION
         const { data, error } = await apiClient.GET("/food-logs/{date}", {
           params: {
@@ -75,7 +75,7 @@ export const useGetFoodsByDateRange = (params: { from: Date; to: Date }) => {
   return useQuery({
     queryKey: foodKeys.list({ from: fromString, to: toString }),
     queryFn: async () => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED VERSION
         const { data, error } = await apiClient.GET("/food-logs", {
           params: {
@@ -123,7 +123,7 @@ export const useAddFoodLog = () => {
   return useMutation({
     mutationFn: async (newLog: FormOutput) => {
       const finalLog = calculateFinalNutrientsValues(newLog);
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED VERSION
         const { data, error } = await apiClient.POST("/food-logs", {
           body: finalLog,
@@ -196,7 +196,7 @@ export const useUpdateFoodLog = () => {
     mutationFn: async (params: { id: string; updatedLog: FormOutput }) => {
       const finalLog = calculateFinalNutrientsValues(params.updatedLog);
       const { id } = params;
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED VERSION
         const { data, error } = await apiClient.PUT("/food-logs/{id}", {
           params: { path: { id } },
@@ -268,7 +268,7 @@ export const useDeleteFoodLog = () => {
   return useMutation({
     mutationFn: async (params: { id: string; date: string }) => {
       const { id } = params;
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED VERSION
         const { error } = await apiClient.DELETE("/food-logs/{id}", {
           params: { path: { id } },

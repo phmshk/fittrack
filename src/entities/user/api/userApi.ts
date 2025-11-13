@@ -16,7 +16,7 @@ import { auth, db } from "@/app/firebase/firebase.setup";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 const fetchUserData = async (): Promise<User> => {
-  if (import.meta.env.VITE_USE_MOCKS) {
+  if (import.meta.env.VITE_USE_MOCKS === "true") {
     const { data, error } = await apiClient.GET("/user");
     if (error) throw error;
     return data;
@@ -73,7 +73,7 @@ export const useUpdateUserData = () => {
       if (newWeightLog) {
         addWeightLog(newWeightLog);
       }
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         if (Object.keys(payload).length === 0) {
           console.log(
             "[MSW] PUT /api/user: No changes detected, skipping update",

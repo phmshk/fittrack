@@ -27,7 +27,7 @@ export const useGetWeightLogs = () => {
   return useQuery({
     queryKey: weightLogKeys.all(),
     queryFn: async (): Promise<WeightLog[]> => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED RESPONSE
         const { data, error } = await apiClient.GET("/user");
         console.log("[MSW] GET /api/user/weight: Fetched weight logs", data);
@@ -61,7 +61,7 @@ export const useAddWeightLog = () => {
 
   return useMutation({
     mutationFn: async (newLog: WeightLogInput) => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED ADD LOG
         const { data, error } = await apiClient.POST("/user/weight", {
           body: newLog,
@@ -89,7 +89,7 @@ export const useAddWeightLog = () => {
       }
     },
     onMutate: async (newLog) => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         const queryKey = userKeys.details();
         await queryClient.cancelQueries({ queryKey });
 
@@ -152,7 +152,7 @@ export const useUpdateWeightLog = () => {
   return useMutation({
     mutationFn: async (params: { id: string; updatedLog: WeightLogInput }) => {
       // MOCKED UPDATE LOG
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         const { data, error } = await apiClient.PUT("/user/weight/{id}", {
           params: { path: { id: params.id } },
           body: params.updatedLog,
@@ -169,7 +169,7 @@ export const useUpdateWeightLog = () => {
       }
     },
     onMutate: async (variables) => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED OPTIMISTIC UPDATE
         const queryKey = userKeys.details();
         await queryClient.cancelQueries({ queryKey });
@@ -222,7 +222,7 @@ export const useDeleteWeightLog = () => {
 
   return useMutation({
     mutationFn: async (params: { id: string }) => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED DELETE LOG
         const { data, error } = await apiClient.DELETE("/user/weight/{id}", {
           params: { path: { id: params.id } },
@@ -239,7 +239,7 @@ export const useDeleteWeightLog = () => {
       }
     },
     onMutate: async (variables) => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // MOCKED OPTIMISTIC UPDATE
         const queryKey = userKeys.details();
 

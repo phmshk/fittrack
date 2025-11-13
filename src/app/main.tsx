@@ -67,30 +67,37 @@ async function startApp() {
 
     return worker.start();
   } else {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          const token = await user.getIdToken();
-          const session: UserSession = {
-            accessToken: token,
-            refreshToken: user.refreshToken,
-            user: {
-              id: user.uid,
-              email: user.email!,
-              name: user.displayName || "",
-            },
-          };
-          useSessionStore.getState().setSession(session);
-        } catch (error) {
-          console.error("Error fetching user token:", error);
+    return new Promise<void>((resolve) => {
+      let resolved = false;
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          try {
+            const token = await user.getIdToken();
+            const session: UserSession = {
+              accessToken: token,
+              refreshToken: user.refreshToken,
+              user: {
+                id: user.uid,
+                email: user.email!,
+                name: user.displayName || "",
+              },
+            };
+            useSessionStore.getState().setSession(session);
+          } catch (error) {
+            console.error("Error fetching user token:", error);
+            useSessionStore.getState().clearSession();
+          }
+        } else {
           useSessionStore.getState().clearSession();
         }
-      } else {
-        useSessionStore.getState().clearSession();
-      }
+
+        if (!resolved) {
+          resolved = true;
+          resolve();
+        }
+      });
     });
   }
-  return Promise.resolve();
 }
 
 const rootElement = document.getElementById("root")!;

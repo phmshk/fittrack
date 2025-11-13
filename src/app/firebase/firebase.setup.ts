@@ -19,14 +19,18 @@ let analytics: Analytics;
 let db: Firestore;
 
 // Initialize Firebase only if not using mocks and config is present
-if (!import.meta.env.VITE_USE_MOCKS && firebaseConfig.apiKey) {
+if (import.meta.env.VITE_USE_MOCKS !== "true" && firebaseConfig.apiKey) {
+  console.log("Initializing Firebase ");
   app = initializeApp(firebaseConfig);
   auth = getAuth(app);
   db = getFirestore(app);
   analytics = getAnalytics(app);
 } else {
+  console.log(
+    "Firebase initialization skipped. Using mocks or missing config.",
+  );
   // Log a warning if Firebase is not initialized due to missing config
-  if (!import.meta.env.VITE_USE_MOCKS && !firebaseConfig.apiKey) {
+  if (import.meta.env.VITE_USE_MOCKS !== "true" && !firebaseConfig.apiKey) {
     console.error(
       "Firebase config is missing or incomplete. Please check your .env files. App will run in mock mode if VITE_USE_MOCKS is not set.",
     );

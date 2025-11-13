@@ -25,7 +25,7 @@ export const useRegister = () => {
 
   return useMutation({
     mutationFn: async (credentials: RegisterRequest) => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         //MOCK REGISTER
         const { data, error } = await apiClient.POST("/auth/register", {
           body: credentials,
@@ -78,7 +78,7 @@ export const useRegister = () => {
       }
     },
     onError: (error: ApiError) => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         toast.error(
           error.message || t("common:notifications.registrationError"),
         );

@@ -18,7 +18,7 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: async (credentials: LoginRequest) => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         //MOCK LOGIN
         const { data, error } = await apiClient.POST("/auth/login", {
           body: credentials,
@@ -57,7 +57,7 @@ export const useLogin = () => {
       }
     },
     onError: (error) => {
-      if (import.meta.env.VITE_USE_MOCKS) {
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
         // Clear any existing session on login error in mock mode
         toast.error(t("common:notifications.loginError"));
       } else {

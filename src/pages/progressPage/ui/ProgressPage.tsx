@@ -13,9 +13,10 @@ export const ProgressPage = () => {
   const { t } = useTranslation(["progress", "common"]);
   const { data: user, isLoading: isLoadingUser } = useGetUserData();
   const { data: weightLogs } = useGetWeightLogs();
-  const weightHistory = import.meta.env.VITE_USE_MOCKS
-    ? user?.weightHistory || []
-    : weightLogs || [];
+  const weightHistory =
+    import.meta.env.VITE_USE_MOCKS === "true"
+      ? user?.weightHistory || []
+      : weightLogs || [];
   const [range, setRange] = useState<DaysRange>("30d");
 
   const isLoading = isLoadingUser;
