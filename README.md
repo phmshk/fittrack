@@ -2,18 +2,36 @@
 
 FitTrack is a web application designed to help users track their daily food intake, monitor calories and macronutrients, and achieve their fitness goals. This project is inspired by popular apps like Lifesum and MyFitnessPal and is built as a portfolio piece to showcase modern frontend development practices.
 
-**[\[ ➡️ Live Demo \]](https://fittrack-app-rt2cp.ondigitalocean.app/)**
+## 🚀 Live Demo
+
+You can try the live application here: **[\[ ➡️ Live Demo \]](https://fittrack-app-rt2cp.ondigitalocean.app/)**
+
+Please note: This deployed version is connected to a live Firebase backend. To explore the app, you must register a new account.
+
+(The demo credentials listed below are for local mock development only and will not work on the live version.)
 
 ---
 
-### 🔑 Demo Credentials
+## 🔧 Running Locally
 
-To explore the app, you can use the test account:
+This project can be run in two modes, controlled by an environment variable:
 
-- **Email:** `test@example.com`
-- **Password:** `password123`
+**Mock Mode**: Runs completely offline without a backend. All data is simulated.
 
----
+**Firebase Mode**: Connects to a live Firebase project.
+
+To run in Mock Mode:
+
+Create a .env file in the project root.
+
+Add the following line:
+
+VITE_USE_MOCKS=true
+Run the app. You can now use the built-in demo credentials:
+
+Email: test@example.com
+
+Password: password123
 
 ## ✨ Key Features
 
