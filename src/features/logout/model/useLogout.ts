@@ -11,7 +11,7 @@ export const useLogout = () => {
   const { t } = useTranslation("common");
 
   const handleLogout = async () => {
-    if (import.meta.env.VITE_USE_MOCKS === "true") {
+    if (import.meta.env.VITE_USE_MOCKS) {
       // MOCK LOGOUT
       clearSession();
       navigate({ to: "/auth", search: { tab: "login" }, replace: true });

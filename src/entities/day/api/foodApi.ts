@@ -6,6 +6,17 @@ import { toast } from "sonner";
 import { calculateFinalNutrientsValues } from "../lib/helpers";
 import type { FormOutput } from "../model/zodFoodSchema";
 import { t } from "i18next";
+import { auth, db } from "@/app/firebase/firebase.setup";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 // --- Keys for food logs ---
 export const foodKeys = {
@@ -22,14 +33,36 @@ export const useGetFoodsByDate = (date: Date) => {
   return useQuery({
     queryKey: foodKeys.list(dateString),
     queryFn: async () => {
-      const { data, error } = await apiClient.GET("/food-logs/{date}", {
-        params: {
-          path: { date: dateString },
-        },
-      });
+      if (import.meta.env.VITE_USE_MOCKS) {
+        // MOCKED VERSION
+        const { data, error } = await apiClient.GET("/food-logs/{date}", {
+          params: {
+            path: { date: dateString },
+          },
+        });
 
-      if (error) throw error;
-      return data;
+        if (error) throw error;
+        return data;
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const foodLogsCollection = collection(
+          db,
+          "users",
+          user.uid,
+          "foodLogs",
+        );
+
+        const q = query(foodLogsCollection, where("date", "==", dateString));
+        const snapshot = await getDocs(q);
+
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as FoodLog[];
+      }
     },
   });
 };
@@ -42,17 +75,43 @@ export const useGetFoodsByDateRange = (params: { from: Date; to: Date }) => {
   return useQuery({
     queryKey: foodKeys.list({ from: fromString, to: toString }),
     queryFn: async () => {
-      const { data, error } = await apiClient.GET("/food-logs", {
-        params: {
-          query: {
-            from: fromString,
-            to: toString,
+      if (import.meta.env.VITE_USE_MOCKS) {
+        // MOCKED VERSION
+        const { data, error } = await apiClient.GET("/food-logs", {
+          params: {
+            query: {
+              from: fromString,
+              to: toString,
+            },
           },
-        },
-      });
+        });
 
-      if (error) throw error;
-      return data;
+        if (error) throw error;
+        return data;
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const foodLogsCollection = collection(
+          db,
+          "users",
+          user.uid,
+          "foodLogs",
+        );
+
+        const q = query(
+          foodLogsCollection,
+          where("date", ">=", fromString),
+          where("date", "<=", toString),
+        );
+        const snapshot = await getDocs(q);
+
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as FoodLog[];
+      }
     },
     enabled: !!(from && to),
   });
@@ -64,11 +123,30 @@ export const useAddFoodLog = () => {
   return useMutation({
     mutationFn: async (newLog: FormOutput) => {
       const finalLog = calculateFinalNutrientsValues(newLog);
-      const { data, error } = await apiClient.POST("/food-logs", {
-        body: finalLog,
-      });
-      if (error) throw error;
-      return data;
+      if (import.meta.env.VITE_USE_MOCKS) {
+        // MOCKED VERSION
+        const { data, error } = await apiClient.POST("/food-logs", {
+          body: finalLog,
+        });
+        if (error) throw error;
+        return data;
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const foodLogsCollection = collection(
+          db,
+          "users",
+          user.uid,
+          "foodLogs",
+        );
+        const docRef = await addDoc(foodLogsCollection, finalLog);
+        return {
+          id: docRef.id,
+          ...finalLog,
+        } as FoodLog;
+      }
     },
     onMutate: async (newLog) => {
       const finalLog = calculateFinalNutrientsValues(newLog);
@@ -118,12 +196,26 @@ export const useUpdateFoodLog = () => {
     mutationFn: async (params: { id: string; updatedLog: FormOutput }) => {
       const finalLog = calculateFinalNutrientsValues(params.updatedLog);
       const { id } = params;
-      const { data, error } = await apiClient.PUT("/food-logs/{id}", {
-        params: { path: { id } },
-        body: finalLog,
-      });
-      if (error) throw error;
-      return data;
+      if (import.meta.env.VITE_USE_MOCKS) {
+        // MOCKED VERSION
+        const { data, error } = await apiClient.PUT("/food-logs/{id}", {
+          params: { path: { id } },
+          body: finalLog,
+        });
+        if (error) throw error;
+        return data;
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const logDocRef = doc(db, "users", user.uid, "foodLogs", id);
+        await setDoc(logDocRef, finalLog, { merge: true });
+        return {
+          id,
+          ...finalLog,
+        } as FoodLog;
+      }
     },
 
     onMutate: async (newLog) => {
@@ -176,10 +268,20 @@ export const useDeleteFoodLog = () => {
   return useMutation({
     mutationFn: async (params: { id: string; date: string }) => {
       const { id } = params;
-      const { error } = await apiClient.DELETE("/food-logs/{id}", {
-        params: { path: { id } },
-      });
-      if (error) throw error;
+      if (import.meta.env.VITE_USE_MOCKS) {
+        // MOCKED VERSION
+        const { error } = await apiClient.DELETE("/food-logs/{id}", {
+          params: { path: { id } },
+        });
+        if (error) throw error;
+      } else {
+        // FIREBASE VERSION
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const logDocRef = doc(db, "users", user.uid, "foodLogs", id);
+        await deleteDoc(logDocRef);
+      }
     },
     onMutate: async (newLog) => {
       const queryKey = foodKeys.list(newLog.date);
