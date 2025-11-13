@@ -30,7 +30,7 @@ export const foodKeys = {
 // --- Hooks for food logs ---
 export const useGetFoodsByDate = (date: Date) => {
   const dateString = formatDateForApi(date);
-  console.log("Fetching food logs for date:", dateString); // Debug log
+  const isDateToday = date.toDateString() === new Date().toDateString();
 
   return useQuery({
     queryKey: foodKeys.list(dateString),
@@ -70,6 +70,7 @@ export const useGetFoodsByDate = (date: Date) => {
         })) as FoodLog[];
       }
     },
+    staleTime: isDateToday ? 0 : Infinity,
   });
 };
 

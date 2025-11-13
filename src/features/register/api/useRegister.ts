@@ -7,9 +7,9 @@ import { t } from "i18next";
 import { toast } from "sonner";
 
 //Firebase
+import { getFirebaseAuthErrorMessage } from "@/entities/user";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "@/app/firebase/firebase.setup";
-import { getFirebaseAuthErrorMessage } from "@/features/login";
 import { doc, setDoc } from "firebase/firestore";
 
 type RegisterRequest = ApiComponents["schemas"]["RegisterRequest"];

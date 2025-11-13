@@ -16,6 +16,8 @@ export const getFirebaseAuthErrorMessage = (error: any): string => {
       return t("forms:errors.invalidEmail");
     case "auth/email-already-in-use":
       return t("common:notifications.emailAlreadyInUse");
+    case "auth/password-does-not-meet-requirements":
+      return t("forms:errors.passwordRequirements");
     case "auth/weak-password":
       return t("forms:errors.passwordMin");
     case "auth/invalid-credential":

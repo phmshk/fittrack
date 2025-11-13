@@ -69,6 +69,16 @@
     "positiveNumber": "Must be a positive number.",
     "positiveNumberWithName": "{{fieldName}} must be a positive number.",
     "selectMeal": "Please select a meal type.",
-    "selectGoal": "Please select a goal."
+    "selectGoal": "Please select a goal.",
+    "passwordRequirements": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+  },
+  "password": {
+    "criteria": {
+      "length": "At least 8 characters",
+      "digit": "At least one digit (0-9)",
+      "uppercase": "At least one uppercase letter (A-Z)",
+      "lowercase": "At least one lowercase letter (a-z)",
+      "special": "At least one special character (!@#$%^&*)"
+    }
   }
 }

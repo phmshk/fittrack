@@ -7,7 +7,7 @@ import { t } from "i18next";
 import { toast } from "sonner";
 
 // Firebase
-import { getFirebaseAuthErrorMessage } from "./firebaseErrors";
+import { getFirebaseAuthErrorMessage } from "@/entities/user";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 type LoginRequest = ApiComponents["schemas"]["LoginRequest"];

@@ -40,3 +40,5 @@ export {
   calculateDailyNeeds,
   type Gender,
 } from "./lib/calc";
+
+export { getFirebaseAuthErrorMessage } from "./lib/firebaseErrors";

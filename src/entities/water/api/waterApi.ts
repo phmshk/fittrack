@@ -15,6 +15,7 @@ const waterKeys = {
 
 export const useGetWaterByDate = (date: Date) => {
   const dateString = formatDateForApi(date);
+  const isDateToday = date.toDateString() === new Date().toDateString();
   return useQuery({
     queryKey: waterKeys.list(dateString),
     queryFn: async () => {
@@ -44,6 +45,7 @@ export const useGetWaterByDate = (date: Date) => {
         return null;
       }
     },
+    staleTime: isDateToday ? 0 : Infinity,
   });
 };
 
