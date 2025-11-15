@@ -8,7 +8,7 @@ i18next
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    debug: process.env.NODE_ENV === "development",
+    debug: false, //process.env.NODE_ENV === "development",
     fallbackLng: "en",
     supportedLngs: ["en", "de", "ru"],
     ns: ["common", "nutrition"],

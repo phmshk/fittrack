@@ -22,12 +22,18 @@ This project can be run in two modes, controlled by an environment variable:
 
 To run in Mock Mode:
 
-Create a .env file in the project root.
+1. **Create a .env file in the project root.**
 
-Add the following line:
+2. **Add the following line:**
 
+```bash
 VITE_USE_MOCKS=true
-Run the app. You can now use the built-in demo credentials:
+```
+
+3. **Run the app.**
+   You can now use the built-in demo credentials:
+
+4. **Important:** The mock functionality is limited and is no longer being developed since the project fully transitioned to Firebase.
 
 Email: test@example.com
 
