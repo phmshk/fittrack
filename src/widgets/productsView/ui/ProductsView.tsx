@@ -14,14 +14,17 @@ import { useTranslation } from "react-i18next";
 
 interface ProductsViewProps {
   products: Product[];
+  isError: Error | null;
 }
 
 export const ProductsView = (props: ProductsViewProps) => {
-  const { products } = props;
+  const { products, isError } = props;
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const selectedDate = useDateStore((state) => state.selectedDate);
   const { tab } = useSearch({ from: "/_protectedRoutes/_addFood/addFood" });
   const { t } = useTranslation(["searchProduct"]);
+
+  console.log("ProductsView products:", products);
 
   const productToFormOutput = (product: Product): Partial<FormOutput> => ({
     mealType: tab,
@@ -49,12 +52,30 @@ export const ProductsView = (props: ProductsViewProps) => {
     setSelectedProduct(null);
   };
 
-  if (!products || products.length === 0) {
+  // API error or no products found
+  if (isError) {
+    if (isError.message === "Product not found") {
+      return (
+        <div className="flex w-full flex-col items-center justify-center text-center">
+          <Frown className="size-8" />
+          <p>{t("searchProduct:noResults")}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex w-full flex-col items-center justify-center text-center">
+          <Frown className="size-8" />
+          <p>{t("searchProduct:error")}</p>
+        </div>
+      );
+    }
+  }
+
+  // No products found yet, prompt user to start searching
+  if (products.length === 0) {
     return (
       <div className="flex w-full flex-col items-center justify-center text-center">
-        <p>{products[0]?.product_name}</p>
-        <Frown className="size-8" />
-        <p>{t("searchProduct:noProductsFound")}</p>
+        <p>{t("searchProduct:startSearch")}</p>
       </div>
     );
   }
@@ -85,14 +106,16 @@ export const ProductsView = (props: ProductsViewProps) => {
       >
         {selectedProduct ? (
           <div className="sticky top-20">
-            <Button
-              variant="ghost"
-              onClick={handleGoBack}
-              className="mb-4 md:hidden"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />{" "}
-              {t("searchProduct:backToList")}
-            </Button>
+            {products.length > 1 && (
+              <Button
+                variant="ghost"
+                onClick={handleGoBack}
+                className="mb-4 md:hidden"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />{" "}
+                {t("searchProduct:backToList")}
+              </Button>
+            )}
             <ProductCardFull
               product={selectedProduct}
               additionalClasses="mx-auto"

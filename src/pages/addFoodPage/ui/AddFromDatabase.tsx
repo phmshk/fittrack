@@ -27,9 +27,22 @@ export const AddFromDatabase = () => {
   const debouncedSearchQuery = useDebounce(searchQuery, DEBOUNCE_DELAY);
   const isMobile = useBreakpoint();
   const { t } = useTranslation("food");
-  const { data: barcodeProductData, isLoading: isBarcodeLoading } =
-    useGetProductByBarcode(scannedBarcode, BARCODE_PRODUCT_PARAMS);
+  const {
+    data: barcodeProductData,
+    isLoading: isBarcodeLoading,
+    error: barcodeError,
+  } = useGetProductByBarcode(scannedBarcode, BARCODE_PRODUCT_PARAMS);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
+
+  // console.log("API ERROR:", barcodeError);
+
+  // useEffect(() => {
+  //   if (debouncedSearchQuery === "qwerty") {
+  //     setScannedBarcode("737628064502");
+  //   } else if (debouncedSearchQuery === "banana") {
+  //     setScannedBarcode("0qwe");
+  //   }
+  // }, [debouncedSearchQuery]);
 
   const isTextSearchLoading = false; // Placeholder for text search loading state
 
@@ -47,6 +60,7 @@ export const AddFromDatabase = () => {
     setSearchQuery(query);
     if (scannedBarcode) {
       setScannedBarcode(null);
+      setDisplayedProducts([]);
     }
   };
 
@@ -92,7 +106,7 @@ export const AddFromDatabase = () => {
           ))}
         </div>
       ) : (
-        <ProductsView products={displayedProducts} />
+        <ProductsView products={displayedProducts} isError={barcodeError} />
       )}
     </Container>
   );

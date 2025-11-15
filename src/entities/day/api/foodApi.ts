@@ -191,13 +191,6 @@ export const useAddFoodLog = () => {
         );
       }
     },
-    onSuccess: (data) =>
-      toast.success(
-        t("common:notifications.updateFoodSuccess", {
-          name: data?.name,
-          mealType: t(`nutrition:meals.${data?.mealType}`),
-        }),
-      ),
 
     onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({
@@ -265,14 +258,6 @@ export const useUpdateFoodLog = () => {
         );
       }
     },
-
-    onSuccess: (data) =>
-      toast.success(
-        t("common:notifications.updateFoodSuccess", {
-          name: data?.name,
-          mealType: t(`nutrition:meals.${data?.mealType}`),
-        }),
-      ),
 
     onSettled: (_newLog, _error, _variables, onMutateResult) =>
       queryClient.invalidateQueries({

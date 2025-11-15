@@ -1,4 +1,5 @@
 import { auth } from "@/app/firebase/firebase.setup";
+import { queryClient } from "@/app/providers/queryClient";
 import { useSessionStore } from "@/entities/user";
 import { useNavigate } from "@tanstack/react-router";
 import { signOut } from "firebase/auth";
@@ -14,6 +15,7 @@ export const useLogout = () => {
     if (import.meta.env.VITE_USE_MOCKS === "true") {
       // MOCK LOGOUT
       clearSession();
+      queryClient.clear();
       navigate({ to: "/auth", search: { tab: "login" }, replace: true });
     } else {
       // FIREBASE LOGOUT

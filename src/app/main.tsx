@@ -12,6 +12,7 @@ import "@/shared/config/i18n/i18nConfiguration";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase.setup";
 import { useSessionStore, type UserSession } from "@/entities/user";
+import { queryClient } from "./providers/queryClient";
 
 // Create a new router instance
 export const router = createRouter({
@@ -86,9 +87,11 @@ async function startApp() {
           } catch (error) {
             console.error("Error fetching user token:", error);
             useSessionStore.getState().clearSession();
+            queryClient.clear();
           }
         } else {
           useSessionStore.getState().clearSession();
+          queryClient.clear();
         }
 
         if (!resolved) {

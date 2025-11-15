@@ -14,32 +14,47 @@ export const getFormSchema = (t: TFunction) => {
       },
     );
 
-  return z
-    .object({
-      mealType: z.enum(Object.values(MEALS), {
-        error: t("forms:errors.selectMeal"),
-      }),
-      name: z.string().min(1, {
-        message: t("forms:errors.genericNotEmpty"),
-      }),
-      calories: z
-        .string()
-        .min(1, {
-          message: t("forms:errors.genericMandatory"),
-        })
-        .pipe(positiveNumberCheck()),
-      proteins: z.string().pipe(positiveNumberCheck()),
-      carbs: z.string().pipe(positiveNumberCheck()),
-      sugars: z.string().pipe(positiveNumberCheck()),
-      fats: z.string().pipe(positiveNumberCheck()),
-      saturatedFats: z.string().pipe(positiveNumberCheck()),
-      grams: z.string().pipe(positiveNumberCheck()),
-      date: z.string(),
-    })
-    .refine((data) => !!data.mealType, {
-      message: t("forms:errors.selectMeal"),
-      path: ["mealType"],
-    });
+  return z.object({
+    mealType: z.enum(Object.values(MEALS), {
+      error: t("forms:errors.selectMeal"),
+    }),
+    name: z.string().min(1, {
+      message: t("forms:errors.genericNotEmpty"),
+    }),
+    calories: z
+      .string()
+      .min(1, {
+        message: t("forms:errors.genericMandatory"),
+      })
+
+      .pipe(positiveNumberCheck()),
+    proteins: z
+      .string()
+      .min(1, {
+        message: t("forms:errors.genericMandatory"),
+      })
+      .pipe(positiveNumberCheck()),
+    carbs: z
+      .string()
+      .min(1, {
+        message: t("forms:errors.genericMandatory"),
+      })
+      .pipe(positiveNumberCheck()),
+    sugars: z.string().pipe(positiveNumberCheck()),
+    fats: z
+      .string()
+      .min(1, {
+        message: t("forms:errors.genericMandatory"),
+      })
+      .pipe(positiveNumberCheck()),
+    saturatedFats: z.string().pipe(positiveNumberCheck()),
+    grams: z.string().pipe(positiveNumberCheck()),
+    date: z.string(),
+  });
+  // .refine((data) => !!data.mealType, {
+  //     message: t("forms:errors.selectMeal"),
+  //     path: ["mealType"],
+  //   });
 };
 
 export type FormOutput = z.infer<ReturnType<typeof getFormSchema>>;

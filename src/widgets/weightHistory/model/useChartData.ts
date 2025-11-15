@@ -4,13 +4,14 @@ import type { DaysRange } from "@/widgets/rangeTabs";
 import { subDays } from "date-fns/subDays";
 import { startOfWeek } from "date-fns/startOfWeek";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * Aggregate weight log data by week.
  * @param data Array of WeightLog entries
  * @returns Array of aggregated weight data by week
  */
-const aggregateDataByWeek = (data: WeightLog[]) => {
+const aggregateDataByWeek = (data: WeightLog[], locale: string) => {
   const weeklyData: { [key: string]: { sum: number; count: number } } = {};
 
   data.forEach((entry) => {
@@ -25,7 +26,7 @@ const aggregateDataByWeek = (data: WeightLog[]) => {
   });
 
   return Object.keys(weeklyData).map((weekStart) => ({
-    date: new Date(weekStart).toLocaleDateString("en-US", {
+    date: new Date(weekStart).toLocaleDateString(locale, {
       month: "short",
       day: "numeric",
     }),
@@ -34,6 +35,7 @@ const aggregateDataByWeek = (data: WeightLog[]) => {
 };
 
 export const useChartData = (data: WeightLog[], range: DaysRange) => {
+  const { i18n } = useTranslation();
   return useMemo(() => {
     const now = new Date();
     let filteredData = data;
@@ -60,7 +62,7 @@ export const useChartData = (data: WeightLog[], range: DaysRange) => {
         );
         break;
       }
-      case "all":
+      case "1y":
         filteredData = data;
         break;
     }
@@ -69,12 +71,12 @@ export const useChartData = (data: WeightLog[], range: DaysRange) => {
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
 
-    if (range === "all" && sortedData.length > 20) {
-      return aggregateDataByWeek(sortedData);
+    if (range === "1y" && sortedData.length > 20) {
+      return aggregateDataByWeek(sortedData, i18n.language);
     }
 
     return sortedData.map((entry) => ({
-      date: new Date(entry.date).toLocaleDateString("en-US", {
+      date: new Date(entry.date).toLocaleDateString(i18n.language, {
         month: "short",
         day: "numeric",
       }),
