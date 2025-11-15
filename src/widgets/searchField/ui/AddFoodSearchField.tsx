@@ -1,4 +1,5 @@
 import { ScanBarcodeButton } from "@/features/scanBarcode";
+import { useBreakpoint } from "@/shared/lib";
 import { Input } from "@/shared/shadcn/components/ui/input";
 import { Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -12,6 +13,8 @@ interface AddFoodSearchFieldProps {
 export const AddFoodSearchField = (props: AddFoodSearchFieldProps) => {
   const { searchQuery, setSearchQuery, setScannedBarcode } = props;
   const { t } = useTranslation("searchProduct");
+  const isMobile = useBreakpoint();
+
   return (
     <div className="bg-background sticky top-0 z-10 p-4">
       <div className="relative">
@@ -23,9 +26,11 @@ export const AddFoodSearchField = (props: AddFoodSearchFieldProps) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <div className="absolute right-2 top-1/2 -translate-y-1/2">
-          <ScanBarcodeButton onScanSuccess={setScannedBarcode} />
-        </div>
+        {isMobile && (
+          <div className="absolute right-2 top-1/2 -translate-y-1/2">
+            <ScanBarcodeButton onScanSuccess={setScannedBarcode} />
+          </div>
+        )}
       </div>
     </div>
   );
