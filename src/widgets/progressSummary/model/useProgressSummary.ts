@@ -2,18 +2,20 @@ import { useGetFoodsByDateRange } from "@/entities/day";
 import type { DaysRange } from "@/widgets/rangeTabs";
 import { subDays } from "date-fns/subDays";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useProgressSummary = (rangeInDays: DaysRange) => {
   const rangeAsNumber = {
     "7d": 7,
     "30d": 30,
     "90d": 90,
-    all: 365, // For simplicity, treat 'all' as 1 year
+    "1y": 365,
   } as const;
   const to = new Date();
   const from = subDays(to, rangeAsNumber[rangeInDays]);
 
   const { data: foodLogs, isLoading } = useGetFoodsByDateRange({ from, to });
+  const { i18n } = useTranslation();
 
   const summary = useMemo(() => {
     const defaultSummary = {
@@ -56,13 +58,17 @@ export const useProgressSummary = (rangeInDays: DaysRange) => {
 
     const dailyData = Object.entries(dailyTotals)
       .map(([date, totals]) => ({
-        date: new Date(date).toLocaleDateString("en-US", {
+        date: new Date(date),
+        ...totals,
+      }))
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .map((entry) => ({
+        ...entry,
+        date: entry.date.toLocaleDateString(i18n.language, {
           month: "short",
           day: "numeric",
         }),
-        ...totals,
-      }))
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      }));
 
     const totalDays = Object.keys(dailyTotals).length;
     const totalCalories = Object.values(dailyTotals).reduce(
@@ -91,6 +97,8 @@ export const useProgressSummary = (rangeInDays: DaysRange) => {
       dailyData,
     };
   }, [foodLogs]);
+
+  console.log("useProgressSummary summary:", summary);
 
   return { summary, isLoading };
 };

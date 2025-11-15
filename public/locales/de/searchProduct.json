@@ -1,10 +1,11 @@
 {
   "error": "Bei der Suche nach Produkten ist ein Fehler aufgetreten.",
-  "noResults": "Keine Produkte gefunden, die Ihrer Suche entsprechen.",
+  "noResults": "Produkt nicht gefunden.",
   "noProductsFound": "Keine Produkte gefunden. Bitte versuchen Sie einen anderen Suchbegriff.",
   "startTyping": "Beginnen Sie zu tippen, um nach Produkten zu suchen...",
   "backToList": "Zurück zur Produktliste",
   "addToDiary": "Produkt zum Tagebuch hinzufügen",
   "selectForDetails": "Wählen Sie ein Produkt für Details aus",
-  "placeholder": "Produkte suchen"
+  "searchPlaceholder": "Produktsuche starten...",
+  "startSearch": "Beginnen Sie entweder mit der Eingabe, um nach Produkten zu suchen, oder scannen Sie einen Barcode."
 }

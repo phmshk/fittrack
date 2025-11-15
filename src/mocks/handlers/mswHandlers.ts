@@ -11,7 +11,7 @@ export const handlers = [
   http.get("https://placehold.co/*", () => {
     return passthrough();
   }),
-  http.get(`${CONFIG.FOOD_API_BASE_URL}/api/v2/product/*`, () => {
+  http.get(`${CONFIG.FOOD_API_BASE_URL}/api*`, () => {
     console.log("PASSTHROUGH FOOD API CALL");
     return passthrough();
   }),

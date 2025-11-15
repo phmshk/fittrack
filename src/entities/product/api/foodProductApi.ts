@@ -49,6 +49,8 @@ export const useGetProductByBarcode = (
   return useQuery({
     queryKey: ["product", barcode, params],
     queryFn: async (): Promise<Product> => {
+      console.log("api call");
+
       const response = await apiClient<ProductResponse>(
         `${CONFIG.FOOD_API_BASE_URL}/api/v2/product/${barcode}${params ? `?${params}` : ""}`,
       );

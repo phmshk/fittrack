@@ -21,7 +21,7 @@ export const AddFoodSearchField = (props: AddFoodSearchFieldProps) => {
         <Search className="text-muted-foreground absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2" />
         <Input
           type="text"
-          placeholder={t("searchProduct:placeholder")}
+          placeholder={t("searchProduct:searchPlaceholder")}
           className="text-foreground h-12 pl-10"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}

@@ -73,7 +73,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="text-muted-foreground flex h-64 items-center justify-center">
+          <div className="text-muted-foreground flex h-64 items-center justify-center text-center">
             <p>{t("dashboard:macrosChart.noDataForChart")}</p>
           </div>
         </CardContent>

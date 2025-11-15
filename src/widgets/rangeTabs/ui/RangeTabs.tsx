@@ -32,7 +32,7 @@ export const RangeTabs = (props: RangeTabsProps) => {
           <TabsTrigger className="text-md cursor-pointer" value="90d">
             {t("progress:rangeTabs.90d")}
           </TabsTrigger>
-          <TabsTrigger className="text-md cursor-pointer" value="all">
+          <TabsTrigger className="text-md cursor-pointer" value="1y">
             {t("progress:rangeTabs.all")}
           </TabsTrigger>
         </TabsList>
