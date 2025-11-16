@@ -7,5 +7,8 @@
   "addToDiary": "Produkt zum Tagebuch hinzufügen",
   "selectForDetails": "Wählen Sie ein Produkt für Details aus",
   "searchPlaceholder": "Produktsuche starten...",
-  "startSearch": "Beginnen Sie entweder mit der Eingabe, um nach Produkten zu suchen, oder scannen Sie einen Barcode."
+  "startSearch": "Beginnen Sie entweder mit der Eingabe, um nach Produkten zu suchen, oder scannen Sie einen Barcode.",
+  "addManually": "Produkt manuell hinzufügen",
+  "searchResults": "Suchergebnisse",
+  "recentlyAdded": "Kürzlich hinzugefügte Produkte"
 }

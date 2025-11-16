@@ -3,11 +3,21 @@ import { MEALS } from "./types";
 import type { TFunction } from "i18next";
 
 export const getFormSchema = (t: TFunction) => {
-  const positiveNumberCheck = () =>
+  const atLeastZeroCheck = () =>
     z.string().refine(
       (val) => {
         const parsed = Number(val);
         return !isNaN(parsed) && parsed >= 0;
+      },
+      {
+        message: t("forms:errors.positiveNumber"),
+      },
+    );
+  const greaterThanZeroCheck = () =>
+    z.string().refine(
+      (val) => {
+        const parsed = Number(val);
+        return !isNaN(parsed) && parsed > 0;
       },
       {
         message: t("forms:errors.positiveNumber"),
@@ -27,29 +37,31 @@ export const getFormSchema = (t: TFunction) => {
         message: t("forms:errors.genericMandatory"),
       })
 
-      .pipe(positiveNumberCheck()),
+      .pipe(greaterThanZeroCheck()),
     proteins: z
       .string()
       .min(1, {
         message: t("forms:errors.genericMandatory"),
       })
-      .pipe(positiveNumberCheck()),
+      .pipe(greaterThanZeroCheck()),
     carbs: z
       .string()
       .min(1, {
         message: t("forms:errors.genericMandatory"),
       })
-      .pipe(positiveNumberCheck()),
-    sugars: z.string().pipe(positiveNumberCheck()),
+      .pipe(greaterThanZeroCheck()),
+    sugars: z.string().pipe(atLeastZeroCheck()),
     fats: z
       .string()
       .min(1, {
         message: t("forms:errors.genericMandatory"),
       })
-      .pipe(positiveNumberCheck()),
-    saturatedFats: z.string().pipe(positiveNumberCheck()),
-    grams: z.string().pipe(positiveNumberCheck()),
+      .pipe(greaterThanZeroCheck()),
+    saturatedFats: z.string().pipe(atLeastZeroCheck()),
+    grams: z.string().pipe(atLeastZeroCheck()),
     date: z.string(),
+    code: z.string().optional(),
+    image_url: z.string().optional(),
   });
   // .refine((data) => !!data.mealType, {
   //     message: t("forms:errors.selectMeal"),

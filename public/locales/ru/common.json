@@ -11,7 +11,7 @@
     "delete": "Удалить",
     "cancel": "Отмена",
     "add": "Добавить",
-    "addFood": "Добавить еду",
+    "addFood": "Добавить продукт",
     "addEntry": "Добавить запись",
     "addFromOpenFoodFacts": "Добавить из Open Food Facts",
     "next": "Далее",
@@ -36,7 +36,7 @@
     "diary": "Дневник",
     "progress": "Прогресс",
     "profile": "Профиль",
-    "addFood": "Добавить еду"
+    "addFood": "Добавить продукт"
   },
   "notifications": {
     "loginError": "Неверный email или пароль. Попробуйте снова.",

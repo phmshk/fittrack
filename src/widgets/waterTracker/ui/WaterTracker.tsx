@@ -1,4 +1,4 @@
-import { useGetWaterByDate } from "@/entities/water";
+import { useGetWaterByDate, useSetWaterLog } from "@/entities/water";
 import {
   Card,
   CardContent,
@@ -10,6 +10,9 @@ import { Spinner } from "@/shared/ui/spinner";
 import { WaterWithIcons } from "./WaterWithIcons";
 import { HandleWater } from "@/features/handleWater";
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from "react";
+import { useDebounce } from "@/shared/lib";
+import { formatDateForApi } from "@/shared/lib/utils";
 
 interface WaterTrackerProps {
   date: Date;
@@ -21,13 +24,50 @@ export const WATER_PORTION_ML = 250;
 export const WaterTracker = (props: WaterTrackerProps) => {
   const { t } = useTranslation("dashboard");
   const { date, targetWaterIntake } = props;
-  const { data: waterLog, isLoading } = useGetWaterByDate(date);
+
+  const { data: waterLog, isLoading: isLoadingWaterLog } =
+    useGetWaterByDate(date);
+
+  const { mutate, isPending } = useSetWaterLog();
+
+  const [localAmount, setLocalAmount] = useState<number>(0);
+  const debouncedAmount = useDebounce(localAmount, 5000);
+  const isInitialLoad = useRef(true);
+
+  // Sync local amount with fetched data
+  useEffect(() => {
+    if (waterLog) {
+      setLocalAmount(waterLog.amount || 0);
+    } else {
+      setLocalAmount(0);
+    }
+  }, [waterLog]);
+
+  // Update water log when debounced amount changes
+  useEffect(() => {
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
+
+    if (isLoadingWaterLog) return;
+
+    const serverAmount = waterLog?.amount || 0;
+    if (debouncedAmount === serverAmount) {
+      return;
+    }
+    mutate({ date: formatDateForApi(date), amount: debouncedAmount });
+  }, [debouncedAmount, date, mutate, waterLog, isLoadingWaterLog]);
 
   const targetWater = targetWaterIntake;
-  const currentWater = waterLog?.amount || 0;
-  const currentAmountForIcons = currentWater / WATER_PORTION_ML;
+  const currentAmountForIcons = localAmount / WATER_PORTION_ML;
 
-  if (isLoading) {
+  const handleUpdate = (newAmount: number) => {
+    const finalAmount = Math.max(0, newAmount);
+    setLocalAmount(finalAmount);
+  };
+
+  if (isLoadingWaterLog) {
     return (
       <Card className="border-none">
         <CardContent className="flex h-48 items-center justify-center">
@@ -54,8 +94,9 @@ export const WaterTracker = (props: WaterTrackerProps) => {
 
           <div className="mt-4 flex items-center justify-center gap-4">
             <HandleWater
-              waterLog={waterLog}
-              date={date}
+              currentAmount={localAmount}
+              onUpdate={handleUpdate}
+              isPending={isPending}
               waterPortion={WATER_PORTION_ML}
               target={targetWater}
             />

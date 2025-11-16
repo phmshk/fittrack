@@ -5,12 +5,12 @@ import {
   ProductCardFull,
   type Product,
 } from "@/entities/product";
-import { Button } from "@/shared/shadcn/components/ui/button";
 import { AddFood } from "@/features/addFood";
 import type { FormOutput } from "@/entities/day";
 import { useDateStore } from "@/shared/model";
 import { useSearch } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import { Button } from "@/shared/shadcn/components/ui/button";
 
 interface ProductsViewProps {
   products: Product[];
@@ -24,8 +24,6 @@ export const ProductsView = (props: ProductsViewProps) => {
   const { tab } = useSearch({ from: "/_protectedRoutes/_addFood/addFood" });
   const { t } = useTranslation(["searchProduct"]);
 
-  console.log("ProductsView products:", products);
-
   const productToFormOutput = (product: Product): Partial<FormOutput> => ({
     mealType: tab,
     name: product.product_name || "",
@@ -35,12 +33,16 @@ export const ProductsView = (props: ProductsViewProps) => {
     sugars: product.nutriments?.sugars_100g?.toString() || "",
     fats: product.nutriments?.fat_100g?.toString() || "",
     saturatedFats: product.nutriments?.["saturated-fat_100g"]?.toString() || "",
+    image_url: product.image_url,
+    code: product.code,
   });
 
   // Automatically select the product if there's only one in the list
   useEffect(() => {
     if (products.length === 1) {
       setSelectedProduct(products[0]);
+    } else {
+      setSelectedProduct(null);
     }
   }, [products]);
 
@@ -52,30 +54,21 @@ export const ProductsView = (props: ProductsViewProps) => {
     setSelectedProduct(null);
   };
 
-  // API error or no products found
+  // API error
   if (isError) {
-    if (isError.message === "Product not found") {
-      return (
-        <div className="flex w-full flex-col items-center justify-center text-center">
-          <Frown className="size-8" />
-          <p>{t("searchProduct:noResults")}</p>
-        </div>
-      );
-    } else {
-      return (
-        <div className="flex w-full flex-col items-center justify-center text-center">
-          <Frown className="size-8" />
-          <p>{t("searchProduct:error")}</p>
-        </div>
-      );
-    }
-  }
-
-  // No products found yet, prompt user to start searching
-  if (products.length === 0) {
     return (
       <div className="flex w-full flex-col items-center justify-center text-center">
-        <p>{t("searchProduct:startSearch")}</p>
+        <Frown className="size-8" />
+        <p>{t("searchProduct:error")}</p>
+      </div>
+    );
+  }
+
+  if (!products || products.length === 0) {
+    return (
+      <div className="flex w-full flex-col items-center justify-center text-center">
+        <Frown className="size-8" />
+        <p>{t("searchProduct:noResults")}</p>
       </div>
     );
   }
