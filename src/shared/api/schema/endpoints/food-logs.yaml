@@ -61,6 +61,14 @@ components:
           type: number
           description: Number of grams (in grams).
           example: 100
+        code:
+          type: string
+          description: "Optional: The barcode of the product."
+          example: "737628064502"
+        image_url:
+          type: string
+          description: "Optional: The image URL of the product."
+          example: "https://.../image.jpg"
     FoodLogInput:
       type: object
       required:
@@ -97,6 +105,10 @@ components:
           $ref: "#/components/schemas/FoodLog/properties/sugars"
         grams:
           $ref: "#/components/schemas/FoodLog/properties/grams"
+        code:
+          $ref: "#/components/schemas/FoodLog/properties/code"
+        image_url:
+          $ref: "#/components/schemas/FoodLog/properties/image_url"
 
   getFoodLogs:
     summary: Get food log entries for a date range

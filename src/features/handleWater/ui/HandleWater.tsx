@@ -1,13 +1,12 @@
 import { Minus, Plus } from "lucide-react";
-import { formatDateForApi } from "@/shared/lib/utils";
-import { useSetWaterLog, type WaterLog } from "@/entities/water";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { WATER_PORTION_ML } from "@/widgets/waterTracker/ui/WaterTracker";
 
 interface HandleWaterProps {
-  waterLog: WaterLog | null | undefined;
-  date: Date;
+  currentAmount: number;
+  onUpdate: (newAmount: number) => void;
+  isPending: boolean;
   waterPortion: number;
   target: number;
 }
@@ -15,18 +14,12 @@ interface HandleWaterProps {
 export const HandleWater = (props: HandleWaterProps) => {
   const { t } = useTranslation(["dashboard", "common"]);
 
-  const { waterLog, date, waterPortion, target } = props;
-  const { mutate, isPending } = useSetWaterLog();
+  const { currentAmount, onUpdate, isPending, waterPortion, target } = props;
 
   const handleUpdate = (newAmount: number) => {
     const finalAmount = Math.max(0, newAmount);
-    mutate({
-      date: formatDateForApi(date),
-      amount: finalAmount,
-    });
+    onUpdate(finalAmount);
   };
-
-  const currentAmount = waterLog?.amount || 0;
 
   return (
     <div className="flex items-center justify-center gap-2">

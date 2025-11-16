@@ -90,6 +90,7 @@ export const useSetWaterLog = () => {
         const dataToSave = { amount: logInput.amount };
 
         await setDoc(logDocRef, dataToSave, { merge: true });
+        console.log("Water log saved to Firebase:", dataToSave);
         return {
           id: logInput.date,
           date: logInput.date,

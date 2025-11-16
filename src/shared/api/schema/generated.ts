@@ -984,6 +984,16 @@ export interface components {
              * @example 100
              */
             grams: number;
+            /**
+             * @description Optional: The barcode of the product.
+             * @example 737628064502
+             */
+            code?: string;
+            /**
+             * @description Optional: The image URL of the product.
+             * @example https://.../image.jpg
+             */
+            image_url?: string;
         };
         /**
          * Format: date
@@ -1036,6 +1046,16 @@ export interface components {
          * @example 100
          */
         grams: number;
+        /**
+         * @description Optional: The barcode of the product.
+         * @example 737628064502
+         */
+        code: string;
+        /**
+         * @description Optional: The image URL of the product.
+         * @example https://.../image.jpg
+         */
+        image_url: string;
         FoodLogInput: {
             date: components["schemas"]["date"];
             mealType: components["schemas"]["mealType"];
@@ -1047,6 +1067,8 @@ export interface components {
             carbs: components["schemas"]["carbs"];
             sugars: components["schemas"]["sugars"];
             grams: components["schemas"]["grams"];
+            code?: components["schemas"]["code"];
+            image_url?: components["schemas"]["image_url"];
         };
         /** @description Authentication error. The user does not have permission to access this resource. */
         UnauthorizedError: unknown;
