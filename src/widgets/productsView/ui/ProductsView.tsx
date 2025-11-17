@@ -56,21 +56,22 @@ export const ProductsView = (props: ProductsViewProps) => {
 
   // API error
   if (isError) {
-    return (
-      <div className="flex w-full flex-col items-center justify-center text-center">
-        <Frown className="size-8" />
-        <p>{t("searchProduct:error")}</p>
-      </div>
-    );
-  }
-
-  if (!products || products.length === 0) {
-    return (
-      <div className="flex w-full flex-col items-center justify-center text-center">
-        <Frown className="size-8" />
-        <p>{t("searchProduct:noResults")}</p>
-      </div>
-    );
+    console.error("ProductsView error:", isError.message);
+    if (isError instanceof Error && isError.message === "Product not found") {
+      return (
+        <div className="flex w-full flex-col items-center justify-center text-center">
+          <Frown className="size-8" />
+          <p>{t("searchProduct:noResults")}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex w-full flex-col items-center justify-center text-center">
+          <Frown className="size-8" />
+          <p>{t("searchProduct:error")}</p>
+        </div>
+      );
+    }
   }
 
   return (

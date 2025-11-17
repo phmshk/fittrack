@@ -1,5 +1,5 @@
 {
-  "error": "An error occurred while searching for products.",
+  "error": "An error occurred while searching for products. Please add the product manually.",
   "noResults": "Product not found.",
   "noProductsFound": "No products found. Please try a different search term.",
   "startTyping": "Start typing to search for products...",
@@ -10,5 +10,6 @@
   "startSearch": "Either start typing to search for products or scan a barcode.",
   "addManually": "Add product manually",
   "searchResults": "Search Results",
-  "recentlyAdded": "Recently Added Products"
+  "recentlyAdded": "Recently Added Products",
+  "resetSearch": "Reset Search"
 }

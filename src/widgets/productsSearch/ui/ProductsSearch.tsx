@@ -1,4 +1,4 @@
-import { PlusCircleIcon } from "lucide-react";
+import { Frown, PlusCircleIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { ProductsView } from "@/widgets/productsView";
 import { ProductCardCollapsedSkeleton } from "@/entities/product";
@@ -6,6 +6,7 @@ import { AddFoodSearchField } from "@/widgets/searchField";
 import { AddFood } from "@/features/addFood";
 import { useDateStore } from "@/shared/model";
 import { useProductSearch } from "../model/useProductSearch";
+import { Button } from "@/shared/shadcn/components/ui/button";
 
 const NUMBER_OF_SKELETONS = 5;
 
@@ -32,6 +33,17 @@ export const ProductSearch = () => {
       />
 
       <div className="flex items-center justify-center gap-4">
+        {(listToDisplay === null || listToDisplay.length > 0) && (
+          <Button
+            variant="outline"
+            className="text-muted-foreground"
+            onClick={() => {
+              handleSearchQuery("");
+            }}
+          >
+            {t("searchProduct:resetSearch")}
+          </Button>
+        )}
         <AddFood
           date={selectedDate}
           mealType={tab}
@@ -56,12 +68,19 @@ export const ProductSearch = () => {
         </div>
       ) : (
         <>
-          {listToDisplay.length > 0 && (
+          {listToDisplay && listToDisplay.length > 0 && (
             <h3 className="text-muted-foreground mt-4 px-4 text-sm font-semibold uppercase tracking-wide">
               {t(titleKey)}
             </h3>
           )}
-          <ProductsView products={listToDisplay} isError={barcodeError} />
+          {listToDisplay === null ? (
+            <div className="flex w-full flex-col items-center justify-center text-center">
+              <Frown className="size-8" />
+              <p>{t("searchProduct:noResults")}</p>
+            </div>
+          ) : (
+            <ProductsView products={listToDisplay} isError={barcodeError} />
+          )}
         </>
       )}
     </>

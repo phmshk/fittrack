@@ -1,5 +1,5 @@
 {
-  "error": "Bei der Suche nach Produkten ist ein Fehler aufgetreten.",
+  "error": "Bei der Suche nach Produkten ist ein Fehler aufgetreten. Bitte fügen Sie das Produkt manuell hinzu.",
   "noResults": "Produkt nicht gefunden.",
   "noProductsFound": "Keine Produkte gefunden. Bitte versuchen Sie einen anderen Suchbegriff.",
   "startTyping": "Beginnen Sie zu tippen, um nach Produkten zu suchen...",
@@ -10,5 +10,6 @@
   "startSearch": "Beginnen Sie entweder mit der Eingabe, um nach Produkten zu suchen, oder scannen Sie einen Barcode.",
   "addManually": "Produkt manuell hinzufügen",
   "searchResults": "Suchergebnisse",
-  "recentlyAdded": "Kürzlich hinzugefügte Produkte"
+  "recentlyAdded": "Kürzlich hinzugefügte Produkte",
+  "resetSearch": "Suche zurücksetzen"
 }

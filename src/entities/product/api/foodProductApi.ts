@@ -109,8 +109,8 @@ export const useGetProductByBarcode = (
         throw error;
       }
 
-      // Save the fetched product to Firestore cache
-      if (productFromOFF && productFromOFF.code) {
+      // Save the fetched product to Firestore cache only if it has valid data
+      if (productFromOFF && productFromOFF.code && productFromOFF.nutriments) {
         const cacheRef = doc(db, "products", productFromOFF.code);
         try {
           await setDoc(cacheRef, productFromOFF);

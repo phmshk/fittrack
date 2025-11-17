@@ -20,7 +20,7 @@ export const useProductSearch = () => {
   const debouncedSearchQuery = useDebounce(searchQuery, DEBOUNCE_DELAY);
 
   const [recentProducts, setRecentProducts] = useState<Product[]>([]);
-  const [productsToShow, setProductsToShow] = useState<Product[]>([]);
+  const [productsToShow, setProductsToShow] = useState<Product[] | null>([]);
 
   const searchHistoryRange = {
     from: subDays(new Date(), HISTORY_DAYS_RANGE),
@@ -65,13 +65,19 @@ export const useProductSearch = () => {
           });
         }
       });
+      console.log("Unique Products from Search:", uniqueProducts);
+      const uniqueProductsArray = Array.from(uniqueProducts.values());
 
-      setProductsToShow(Array.from(uniqueProducts.values()));
+      setProductsToShow(
+        uniqueProductsArray.length > 0 ? uniqueProductsArray : null,
+      );
       setScannedBarcode(null);
     } else {
-      setProductsToShow([]);
+      if (scannedBarcode === null) {
+        setProductsToShow([]);
+      }
     }
-  }, [debouncedSearchQuery, foodLogHistory]);
+  }, [debouncedSearchQuery, foodLogHistory, scannedBarcode]);
 
   //useEffect for "Recently Added"
   useEffect(() => {
@@ -116,7 +122,6 @@ export const useProductSearch = () => {
   const handleScannedBarcode = (barcode: string | null) => {
     setScannedBarcode(barcode);
     setSearchQuery("");
-    setProductsToShow([]);
   };
 
   const handleSearchQuery = (query: string) => {
@@ -134,11 +139,15 @@ export const useProductSearch = () => {
   const isPending =
     isBarcodeLoading || isLoadingSearch || isLoadingRecents || isDebouncing;
 
-  const isSearching = debouncedSearchQuery.length > 0;
-  const listToDisplay = isSearching ? productsToShow : recentProducts;
-  const titleKey = isSearching
+  const isSearchingOrScanned =
+    debouncedSearchQuery.length > 0 || scannedBarcode !== null;
+  const listToDisplay = isSearchingOrScanned ? productsToShow : recentProducts;
+
+  const titleKey = isSearchingOrScanned
     ? "searchProduct:searchResults"
     : "searchProduct:recentlyAdded";
+
+  console.log("List to Display:", listToDisplay);
 
   return {
     isPending,

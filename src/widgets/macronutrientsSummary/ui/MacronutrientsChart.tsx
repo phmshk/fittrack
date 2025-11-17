@@ -46,17 +46,17 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
       {
         label: "Proteins",
         name: t("nutrition:macronutrients.proteins"),
-        value: daySummary.consumedProteins,
+        value: Number(daySummary.consumedProteins.toFixed(1)),
       },
       {
         label: "Carbs",
         name: t("nutrition:macronutrients.carbs"),
-        value: daySummary.consumedCarbs,
+        value: Number(daySummary.consumedCarbs.toFixed(1)),
       },
       {
         label: "Fats",
         name: t("nutrition:macronutrients.fats"),
-        value: daySummary.consumedFats,
+        value: Number(daySummary.consumedFats.toFixed(1)),
       },
     ].filter((item) => item.value > 0);
   }, [daySummary]);

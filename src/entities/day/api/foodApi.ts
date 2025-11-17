@@ -115,6 +115,13 @@ export const useGetFoodsByDateRange = (params: { from: Date; to: Date }) => {
         );
         const snapshot = await getDocs(q);
 
+        console.log(
+          "Fetched food logs for date range:",
+          fromString,
+          "to",
+          toString,
+        ); // Debug log
+
         return snapshot.docs.map((doc) => ({
           id: doc.id,
           date:
@@ -153,6 +160,7 @@ export const useAddFoodLog = () => {
           user.uid,
           "foodLogs",
         );
+        console.log("Added food log", finalLog); // Debug log
 
         const docRef = await addDoc(foodLogsCollection, finalLog);
         return {
@@ -182,8 +190,9 @@ export const useAddFoodLog = () => {
       return { previousLogs, queryKey, optimisticLog };
     },
 
-    onError: (_err, _newLog, onMutateResult) => {
+    onError: (err, _newLog, onMutateResult) => {
       toast.error(t("common:notifications.addFoodError"));
+      console.error("Add food log error:", err);
       if (onMutateResult?.queryKey) {
         queryClient.setQueryData(
           onMutateResult?.queryKey,
