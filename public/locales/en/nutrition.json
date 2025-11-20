@@ -42,5 +42,9 @@
     "lunch": "Lunch",
     "dinner": "Dinner",
     "snacks": "Snacks"
+  },
+  "water": {
+    "increaseAmount": "Increase water amount",
+    "decreaseAmount": "Decrease water amount"
   }
 }

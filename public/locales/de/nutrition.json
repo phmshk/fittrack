@@ -43,5 +43,9 @@
     "lunch": "Mittagessen",
     "dinner": "Abendessen",
     "snacks": "Snacks"
+  },
+  "water": {
+    "increaseAmount": "Wassermenge erhöhen",
+    "decreaseAmount": "Wassermenge verringern"
   }
 }

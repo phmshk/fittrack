@@ -12,7 +12,7 @@ interface HandleWaterProps {
 }
 
 export const HandleWater = (props: HandleWaterProps) => {
-  const { t } = useTranslation(["dashboard", "common"]);
+  const { t } = useTranslation(["dashboard", "common", "nutrition"]);
 
   const { currentAmount, onUpdate, isPending, waterPortion, target } = props;
 
@@ -30,6 +30,7 @@ export const HandleWater = (props: HandleWaterProps) => {
           handleUpdate(currentAmount - waterPortion);
         }}
         disabled={isPending || currentAmount <= 0}
+        aria-label={t("nutrition:water.decreaseAmount")}
       >
         <Minus className="h-4 w-4" />
       </Button>
@@ -44,6 +45,7 @@ export const HandleWater = (props: HandleWaterProps) => {
           handleUpdate(currentAmount + waterPortion);
         }}
         disabled={isPending || currentAmount >= target}
+        aria-label={t("nutrition:water.increaseAmount")}
       >
         <Plus className="h-4 w-4" />
       </Button>
