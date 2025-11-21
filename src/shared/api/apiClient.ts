@@ -100,11 +100,18 @@ const customFetch: typeof fetch = async (input, init) => {
   return response;
 };
 
+const getBaseUrl = () => {
+  if (import.meta.env.MODE === "test") {
+    return "http://localhost:3000/api";
+  }
+  return "/api";
+};
+
 export const apiClient = createClient<ApiPaths>({
-  baseUrl: "/api",
+  baseUrl: getBaseUrl(),
   fetch: customFetch,
 });
 
 export const publicApiClient = createClient<ApiPaths>({
-  baseUrl: "/api",
+  baseUrl: getBaseUrl(),
 });

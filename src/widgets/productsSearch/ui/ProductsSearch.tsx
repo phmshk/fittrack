@@ -32,7 +32,7 @@ export const ProductSearch = () => {
         setScannedBarcode={handleScannedBarcode}
       />
 
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex flex-col items-center justify-center gap-4">
         {(listToDisplay === null || listToDisplay.length > 0) && (
           <Button
             variant="outline"
