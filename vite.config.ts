@@ -40,7 +40,7 @@ export default defineConfig(({ mode }) => {
     },
     test: {
       globals: true,
-      environment: "jsdom",
+      environment: "happy-dom",
       setupFiles: "./src/tests/setupTests.ts",
       css: true,
     },

@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { CaloriesCard } from "./CaloriesCard";
 import "@testing-library/jest-dom";
+
 const MockTargets: DailyTargets = {
   targetCalories: 2000,
   targetProteins: 150,
@@ -33,12 +34,8 @@ describe("CaloriesCard", () => {
 
     render(<CaloriesCard userGoals={MockTargets} summary={underGoalSummary} />);
 
-    const remainingText = screen.getAllByText(
-      "dashboard:caloriesCard.caloriesRemaining",
-    );
-    const detailsText = screen.getByText(
-      "dashboard:caloriesCard.goal: 2000 | dashboard:caloriesCard.eaten: 1500",
-    );
+    const remainingText = screen.getAllByText("caloriesRemaining");
+    const detailsText = screen.getByText("goal: 2000 | eaten: 1500");
     expect(remainingText[0]).toBeInTheDocument();
     expect(remainingText[0]).not.toHaveClass("text-destructive");
     expect(detailsText).toBeInTheDocument();
@@ -63,9 +60,7 @@ describe("CaloriesCard", () => {
     };
 
     render(<CaloriesCard userGoals={MockTargets} summary={overGoalSummary} />);
-    const overText = screen.getAllByText(
-      "dashboard:caloriesCard.caloriesOverGoal",
-    );
+    const overText = screen.getAllByText("caloriesOverGoal");
     expect(overText[0]).toBeInTheDocument();
     expect(overText[0]).toHaveClass("text-destructive");
   });
