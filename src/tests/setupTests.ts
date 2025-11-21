@@ -5,8 +5,6 @@ import { handlers } from "@/mocks/handlers/mswHandlers";
 export const server = setupServer(...handlers);
 
 beforeAll(() => {
-  vi.stubEnv("VITE_USE_MOCKS", "true");
-
   server.listen({ onUnhandledRequest: "error" });
 });
 
