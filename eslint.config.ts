@@ -12,7 +12,7 @@ export default defineConfig([
     plugins: { js },
     extends: ["js/recommended"],
     languageOptions: { globals: globals.browser },
-    ignores: ["build/", "dist/", "node_modules/"],
+    ignores: ["build/", "dist/", "node_modules", ".tanstack/", "dev-dist/"],
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
@@ -23,6 +23,8 @@ export default defineConfig([
     "dist/",
     "build/",
     "node_modules/",
+    "dev-dist/",
+    ".tanstack/",
   ]),
   {
     settings: {
