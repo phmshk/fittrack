@@ -3,13 +3,11 @@ import type { TFunction } from "i18next";
 import * as z from "zod";
 
 export const getPersonalInfoSchema = (t: TFunction) => {
-  const numericString = (errorMessage: string) =>
-    z
-      .string()
-      .min(1, { message: errorMessage })
-      .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-        message: t("forms:errors.positiveNumber"),
-      });
+  const coercedIntInRange = (min: number, max: number, errorMessage: string) =>
+    z.coerce
+      .number({ message: t("forms:errors.positiveNumber") })
+      .min(min, { message: errorMessage })
+      .max(max, { message: errorMessage });
 
   return z.object({
     // Step 1
@@ -17,9 +15,9 @@ export const getPersonalInfoSchema = (t: TFunction) => {
       .union([z.enum(["male", "female"]), z.literal("")])
       .refine((val) => val !== "", { error: t("forms:errors.genericRequired") })
       .transform((val) => val as Gender),
-    age: numericString(t("forms:errors.genericRequired")),
-    height: numericString(t("forms:errors.genericRequired")),
-    weight: numericString(t("forms:errors.genericRequired")),
+    age: coercedIntInRange(14, 120, t("forms:errors.ageRange")),
+    height: coercedIntInRange(100, 250, t("forms:errors.heightRange")),
+    weight: coercedIntInRange(30, 300, t("forms:errors.weightRange")),
 
     // Step 2
     activityLevel: z
