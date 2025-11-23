@@ -96,7 +96,23 @@ components:
           type: array
           items:
             $ref: "./weight-logs.yaml#/components/schemas/WeightLog"
-
+        dailyStats:
+          type: array
+          additionalProperties:
+            $ref: "#/components/schemas/DailyStats"
+    DailyStats:
+      type: object
+      properties:
+        calories:
+          type: number
+        protein:
+          type: number
+        fats:
+          type: number
+        carbohydrates:
+          type: number
+        water:
+          type: number
   getUser:
     summary: Get current user data
     description: Retrieves all profile and goal data for the currently authenticated user.

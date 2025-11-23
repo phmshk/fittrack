@@ -109,6 +109,39 @@ components:
           $ref: "#/components/schemas/FoodLog/properties/code"
         image_url:
           $ref: "#/components/schemas/FoodLog/properties/image_url"
+    DayLog:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+          description: Date of the log in YYYY-MM-DD format.
+          example: "2025-09-16"
+        water:
+          type: number
+          description: Total water intake in milliliters on that day.
+          example: 1500
+        foodEntries:
+          type: array
+          description: List of food log entries for that day.
+          items:
+            $ref: "#/components/schemas/FoodLog"
+        totalCalories:
+          type: number
+          description: Total calories consumed on that day.
+          example: 2000
+        totalProteins:
+          type: number
+          description: Total proteins consumed (in grams) on that day.
+          example: 150
+        totalFats:
+          type: number
+          description: Total fats consumed (in grams) on that day.
+          example: 70
+        totalCarbs:
+          type: number
+          description: Total carbs consumed (in grams) on that day.
+          example: 250
 
   getFoodLogs:
     summary: Get food log entries for a date range

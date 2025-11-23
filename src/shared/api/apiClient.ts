@@ -1,12 +1,21 @@
 import createClient from "openapi-fetch";
 import type { ApiPaths } from "./schema";
 import { useSessionStore } from "@/entities/user/model/useSession";
+import { auth } from "@/app/firebase/firebase.setup";
 
 let refreshTokenPromise: Promise<string> | null = null;
 
 const customFetch: typeof fetch = async (input, init) => {
-  const { token } = useSessionStore.getState();
+  let token = useSessionStore.getState().token;
   const headers = new Headers(init?.headers);
+
+  if (import.meta.env.VITE_USE_MOCKS !== "true" && auth.currentUser) {
+    try {
+      token = await auth.currentUser.getIdToken();
+    } catch (error) {
+      console.error("[API Client] Error fetching Firebase token:", error);
+    }
+  }
 
   if (token) {
     headers.set("Authorization", `Bearer ${token}`);
@@ -33,7 +42,11 @@ const customFetch: typeof fetch = async (input, init) => {
   });
 
   // Handle 401 Unauthorized responses
-  if (response.status === 401 && !requestUrl.includes("/auth")) {
+  if (
+    import.meta.env.VITE_USE_MOCKS === "true" &&
+    response.status === 401 &&
+    !requestUrl.includes("/auth")
+  ) {
     // If no refresh token promise is active, start the token refresh process
     if (!refreshTokenPromise) {
       // Start the token refresh process
