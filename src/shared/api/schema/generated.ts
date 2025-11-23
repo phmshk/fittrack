@@ -856,6 +856,13 @@ export interface components {
              */
             weight: number;
         };
+        DailyStats: {
+            calories?: number;
+            protein?: number;
+            fats?: number;
+            carbohydrates?: number;
+            water?: number;
+        };
         User: {
             /**
              * Format: uuid
@@ -885,6 +892,7 @@ export interface components {
             goal?: "lose_weight" | "maintain_weight" | "gain_weight";
             dailyTargets?: components["schemas"]["DailyTargets"];
             weightHistory?: components["schemas"]["WeightLog"][];
+            dailyStats?: unknown[];
         };
         AuthResponse: {
             /** @description JWT access token for authentication. */
