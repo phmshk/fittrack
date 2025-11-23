@@ -7,6 +7,8 @@ import { Button } from "@/shared/shadcn/components/ui/button";
 import { FormInput } from "@/shared/ui/form";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
+import { getFirebaseAuthErrorMessage } from "@/entities/user";
+import { PasswordCriteria } from "@/shared/ui/passwordCriteria/ui/PasswordCriteria";
 
 export const RegisterForm = () => {
   const registerMutation = useRegister();
@@ -47,11 +49,6 @@ export const RegisterForm = () => {
         type="email"
         srOnly={t("auth:emailSrOnly")}
       />
-      {registerMutation.error && (
-        <p className="text-destructive text-sm">
-          {registerMutation.error.message}
-        </p>
-      )}
       <FormInput
         name="password"
         placeholder="********"
@@ -60,6 +57,12 @@ export const RegisterForm = () => {
         type="password"
         srOnly={t("auth:passwordSrOnly")}
       />
+      <PasswordCriteria password={form.watch("password")} />
+      {registerMutation.error && (
+        <p className="text-destructive text-sm">
+          {getFirebaseAuthErrorMessage(registerMutation.error)}
+        </p>
+      )}
       <Button
         type="submit"
         className="w-full"

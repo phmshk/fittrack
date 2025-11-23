@@ -46,17 +46,17 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
       {
         label: "Proteins",
         name: t("nutrition:macronutrients.proteins"),
-        value: daySummary.consumedProteins,
+        value: Number(daySummary.consumedProteins.toFixed(1)),
       },
       {
         label: "Carbs",
         name: t("nutrition:macronutrients.carbs"),
-        value: daySummary.consumedCarbs,
+        value: Number(daySummary.consumedCarbs.toFixed(1)),
       },
       {
         label: "Fats",
         name: t("nutrition:macronutrients.fats"),
-        value: daySummary.consumedFats,
+        value: Number(daySummary.consumedFats.toFixed(1)),
       },
     ].filter((item) => item.value > 0);
   }, [daySummary]);
@@ -73,7 +73,7 @@ export const MacronutrientsChart = (props: MacronutrientsChartProps) => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="text-muted-foreground flex h-64 items-center justify-center">
+          <div className="text-muted-foreground flex h-64 items-center justify-center text-center">
             <p>{t("dashboard:macrosChart.noDataForChart")}</p>
           </div>
         </CardContent>

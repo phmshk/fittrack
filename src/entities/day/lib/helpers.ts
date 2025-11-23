@@ -12,6 +12,8 @@ export const zodInputToFoodLogInput = (data: FormOutput): FoodLogInput => ({
   fats: Number(data.fats) || 0,
   saturatedFats: Number(data.saturatedFats) || 0,
   grams: Number(data.grams) || 100,
+  code: data.code,
+  image_url: data.image_url,
 });
 
 export const foodLogToZodInput = (data: FoodLog): FormOutput => ({
@@ -25,6 +27,8 @@ export const foodLogToZodInput = (data: FoodLog): FormOutput => ({
   fats: data.fats.toString(),
   saturatedFats: data.saturatedFats.toString(),
   grams: data.grams.toString(),
+  code: data.code || "",
+  image_url: data.image_url || "",
 });
 
 export const calculateFinalNutrientsValues = (
@@ -42,5 +46,7 @@ export const calculateFinalNutrientsValues = (
     fats: Number((convertedData.fats * factor).toFixed(1)),
     saturatedFats: Number((convertedData.saturatedFats * factor).toFixed(1)),
     sugars: Number((convertedData.sugars * factor).toFixed(1)),
+    image_url: convertedData.image_url,
+    code: convertedData.code,
   };
 };

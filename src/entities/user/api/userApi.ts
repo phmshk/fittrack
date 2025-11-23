@@ -12,11 +12,27 @@ import { prepareUpdatePayload } from "../lib/helpers";
 import { useAddWeightLog } from "../../weight/api/weightLogApi";
 import { t } from "i18next";
 import { userKeys } from "./userKeys";
+import { auth, db } from "@/app/firebase/firebase.setup";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 const fetchUserData = async (): Promise<User> => {
-  const { data, error } = await apiClient.GET("/user");
-  if (error) throw error;
-  return data;
+  if (import.meta.env.VITE_USE_MOCKS === "true") {
+    const { data, error } = await apiClient.GET("/user");
+    if (error) throw error;
+    return data;
+  } else {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error("No authenticated user found");
+    }
+
+    const userDocRef = doc(db, "users", user.uid);
+    const userDoc = await getDoc(userDocRef);
+    if (!userDoc.exists()) {
+      throw new Error("User document not found");
+    }
+    return userDoc.data() as User;
+  }
 };
 
 export const userQueryOptions: UndefinedInitialDataOptions<User> = {
@@ -57,21 +73,36 @@ export const useUpdateUserData = () => {
       if (newWeightLog) {
         addWeightLog(newWeightLog);
       }
+      if (import.meta.env.VITE_USE_MOCKS === "true") {
+        if (Object.keys(payload).length === 0) {
+          console.log(
+            "[MSW] PUT /api/user: No changes detected, skipping update",
+          );
+          return currentUserData;
+        }
 
-      if (Object.keys(payload).length === 0) {
+        const { data, error } = await apiClient.PUT("/user", {
+          body: payload,
+        });
+
         console.log(
-          "[MSW] PUT /api/user: No changes detected, skipping update",
+          "[MSW] PUT /api/user: Received update request",
+          updatedData,
         );
-        return currentUserData;
+        if (error) throw error;
+        return data;
+      } else {
+        //FIREBASE UPDATE
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+
+        const userDocRef = doc(db, "users", user.uid);
+        if (Object.keys(payload).length > 0) {
+          await updateDoc(userDocRef, payload);
+        }
+        const updatedDoc = await getDoc(userDocRef);
+        return updatedDoc.data() as User;
       }
-
-      const { data, error } = await apiClient.PUT("/user", {
-        body: payload,
-      });
-
-      console.log("[MSW] PUT /api/user: Received update request", updatedData);
-      if (error) throw error;
-      return data;
     },
     onMutate: async (newData) => {
       const queryKey = userKeys.details();

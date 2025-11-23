@@ -135,7 +135,7 @@ export const waterMultiplierPerKg: Record<
  * @param data - User data object (weight, height, age, gender).
  * @returns - BMR value in kcal.
  */
-function calculateBMR(
+export function calculateBMR(
   data: Pick<UserData, "weight" | "height" | "age" | "gender">,
 ): number {
   const { weight, height, age, gender } = data;
@@ -161,7 +161,10 @@ function calculateBMR(
  * @param activityLevel - The user's physical activity level.
  * @returns - TDEE value in kcal.
  */
-function calculateTDEE(bmr: number, activityLevel: ActivityLevels): number {
+export function calculateTDEE(
+  bmr: number,
+  activityLevel: ActivityLevels,
+): number {
   const coefficient = activityCoefficients[activityLevel!];
   return bmr * coefficient;
 }
@@ -174,7 +177,7 @@ function calculateTDEE(bmr: number, activityLevel: ActivityLevels): number {
  * @param goal - The user's goal.
  * @returns - Recommended number of calories to achieve the goal.
  */
-function adjustCaloriesForGoal(tdee: number, goal: GoalOptions): number {
+export function adjustCaloriesForGoal(tdee: number, goal: GoalOptions): number {
   switch (goal) {
     case "lose_weight":
       // Create a 15% deficit for safe weight loss
@@ -196,7 +199,7 @@ function adjustCaloriesForGoal(tdee: number, goal: GoalOptions): number {
  * @param goal - The user's goal (to select the macro percentage ratio).
  * @returns - An object with the amount of protein, fat, and carbs in grams.
  */
-function calculateMacronutrients(
+export function calculateMacronutrients(
   caloriesForGoal: number,
   goal: GoalOptions,
 ): Macronutrients {

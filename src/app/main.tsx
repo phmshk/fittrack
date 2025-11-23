@@ -9,6 +9,11 @@ import type { NavTab } from "@/shared/model";
 import { ThemeEffect } from "@/entities/theme";
 import { Spinner } from "@/shared/ui/spinner";
 import "@/shared/config/i18n/i18nConfiguration";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase/firebase.setup";
+import { useSessionStore, type UserSession } from "@/entities/user";
+import { queryClient } from "./providers/queryClient";
+
 // Create a new router instance
 export const router = createRouter({
   routeTree,
@@ -55,24 +60,54 @@ declare module "@tanstack/react-router" {
   }
 }
 
-async function enableMocking() {
-  if (
-    process.env.NODE_ENV === "production" &&
-    import.meta.env.VITE_ENABLE_MOCKS !== "true"
-  ) {
-    return;
+// App initialization either enable mocking or start the with firebase
+async function startApp() {
+  if (import.meta.env.VITE_USE_MOCKS === "true") {
+    console.log("Starting app with mocks");
+    const { worker } = await import("@/mocks/worker");
+
+    return worker.start();
+  } else {
+    return new Promise<void>((resolve) => {
+      let resolved = false;
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          try {
+            const token = await user.getIdToken();
+            const session: UserSession = {
+              accessToken: token,
+              refreshToken: user.refreshToken,
+              user: {
+                id: user.uid,
+                email: user.email!,
+                name: user.displayName || "",
+              },
+            };
+            useSessionStore.getState().setSession(session);
+          } catch (error) {
+            console.error("Error fetching user token:", error);
+            useSessionStore.getState().clearSession();
+            queryClient.clear();
+          }
+        } else {
+          useSessionStore.getState().clearSession();
+          queryClient.clear();
+        }
+
+        if (!resolved) {
+          resolved = true;
+          resolve();
+        }
+      });
+    });
   }
-
-  const { worker } = await import("@/mocks/worker");
-
-  return worker.start();
 }
 
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
   const root = createRoot(rootElement);
 
-  enableMocking().then(() => {
+  startApp().then(() => {
     root.render(
       <StrictMode>
         <QueryProvider>

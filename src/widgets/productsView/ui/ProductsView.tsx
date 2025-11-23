@@ -5,23 +5,24 @@ import {
   ProductCardFull,
   type Product,
 } from "@/entities/product";
-import { Button } from "@/shared/shadcn/components/ui/button";
 import { AddFood } from "@/features/addFood";
 import type { FormOutput } from "@/entities/day";
 import { useDateStore } from "@/shared/model";
 import { useSearch } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import { Button } from "@/shared/shadcn/components/ui/button";
 
 interface ProductsViewProps {
   products: Product[];
+  isError: Error | null;
 }
 
-export const ProductsView = ({ products }: ProductsViewProps) => {
+export const ProductsView = (props: ProductsViewProps) => {
+  const { products, isError } = props;
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const selectedDate = useDateStore((state) => state.selectedDate);
   const { tab } = useSearch({ from: "/_protectedRoutes/_addFood/addFood" });
   const { t } = useTranslation(["searchProduct"]);
-  // Map product fields to form output structure
 
   const productToFormOutput = (product: Product): Partial<FormOutput> => ({
     mealType: tab,
@@ -32,12 +33,16 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
     sugars: product.nutriments?.sugars_100g?.toString() || "",
     fats: product.nutriments?.fat_100g?.toString() || "",
     saturatedFats: product.nutriments?.["saturated-fat_100g"]?.toString() || "",
+    image_url: product.image_url,
+    code: product.code,
   });
 
   // Automatically select the product if there's only one in the list
   useEffect(() => {
     if (products.length === 1) {
       setSelectedProduct(products[0]);
+    } else {
+      setSelectedProduct(null);
     }
   }, [products]);
 
@@ -49,13 +54,24 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
     setSelectedProduct(null);
   };
 
-  if (!products || products.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center">
-        <Frown className="size-8" />
-        <p>{t("searchProduct:noProductsFound")}</p>
-      </div>
-    );
+  // API error
+  if (isError) {
+    console.error("ProductsView error:", isError.message);
+    if (isError instanceof Error && isError.message === "Product not found") {
+      return (
+        <div className="flex w-full flex-col items-center justify-center text-center">
+          <Frown className="size-8" />
+          <p>{t("searchProduct:noResults")}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex w-full flex-col items-center justify-center text-center">
+          <Frown className="size-8" />
+          <p>{t("searchProduct:error")}</p>
+        </div>
+      );
+    }
   }
 
   return (
@@ -84,14 +100,16 @@ export const ProductsView = ({ products }: ProductsViewProps) => {
       >
         {selectedProduct ? (
           <div className="sticky top-20">
-            <Button
-              variant="ghost"
-              onClick={handleGoBack}
-              className="mb-4 md:hidden"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />{" "}
-              {t("searchProduct:backToList")}
-            </Button>
+            {products.length > 1 && (
+              <Button
+                variant="ghost"
+                onClick={handleGoBack}
+                className="mb-4 md:hidden"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />{" "}
+                {t("searchProduct:backToList")}
+              </Button>
+            )}
             <ProductCardFull
               product={selectedProduct}
               additionalClasses="mx-auto"

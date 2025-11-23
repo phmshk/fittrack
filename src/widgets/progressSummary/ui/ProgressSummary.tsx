@@ -42,6 +42,7 @@ export const ProgressSummary = (props: ProgressSummaryProps) => {
   const { range } = props;
   const { t } = useTranslation(["progress", "nutrition"]);
   const { summary, isLoading } = useProgressSummary(range);
+  console.log("ProgressSummary summary:", summary);
   const summaryCards = [
     {
       title: t("progress:progressSummary.averageCalories"),
@@ -119,7 +120,7 @@ export const ProgressSummary = (props: ProgressSummaryProps) => {
               <div className="text-2xl font-bold">{card.value}</div>
             </CardContent>
             <CardFooter>
-              {summary.dailyData.length === 0 ? (
+              {summary.dailyData.length < 2 ? (
                 <p className="text-muted-foreground text-sm">
                   {t("progress:progressSummary.noData")}
                 </p>

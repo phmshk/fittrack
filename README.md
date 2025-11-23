@@ -2,25 +2,53 @@
 
 FitTrack is a web application designed to help users track their daily food intake, monitor calories and macronutrients, and achieve their fitness goals. This project is inspired by popular apps like Lifesum and MyFitnessPal and is built as a portfolio piece to showcase modern frontend development practices.
 
-**[\[ ➡️ Live Demo \]](https://fittrack-app-rt2cp.ondigitalocean.app/)**
+## 🚀 Live Demo
+
+You can try the live application here: **[\[ ➡️ Live Demo \]](https://fittrack-app-rt2cp.ondigitalocean.app/)**
+
+Please note: This deployed version is connected to a live Firebase backend. To explore the app, you can register a new account or use testing one.
+
+Email: fittrack@test.account
+
+Password: Password123!
+
+(The demo credentials listed below are for local mock development only and will not work on the live version.)
 
 ---
 
-### 🔑 Demo Credentials
+## 🔧 Running Locally
 
-To explore the app, you can use the test account:
+This project can be run in two modes, controlled by an environment variable:
 
-- **Email:** `test@example.com`
-- **Password:** `password123`
+**Mock Mode**: Runs completely offline without a backend. All data is simulated.
 
----
+**Firebase Mode**: Connects to a live Firebase project.
+
+To run in Mock Mode:
+
+1. **Create a .env file in the project root.**
+
+2. **Add the following line:**
+
+```bash
+VITE_USE_MOCKS=true
+```
+
+3. **Run the app.**
+   You can now use the built-in demo credentials:
+
+4. **Important:** The mock functionality is limited and is no longer being developed since the project fully transitioned to Firebase.
+
+Email: test@example.com
+
+Password: password123
 
 ## ✨ Key Features
 
 - **Daily Calorie Tracking:** Easily log meals and see a real-time summary of your daily consumption.
 - **Macronutrient Monitoring:** Keep track of your protein, carbohydrate, and fat intake against your personal goals.
 - **Comprehensive Food Diary:** View your meal history by day, organized into categories like breakfast, lunch, dinner, and snacks.
-- **Full Backend Simulation:** Uses **Mock Service Worker (MSW)** to intercept all API calls. This provides a complete, interactive demo (login, registration, adding/editing data) without requiring a live database.
+- **Backend Simulation:** Uses **Mock Service Worker (MSW)** to intercept all API calls. This provides a complete, interactive demo (login, registration, adding/editing data) without requiring a live database.
 - **Extensive Food Database:** Search for food items to add them to your diary (using a mock API).
 - **Personalized Goals:** Set and manage your own goals for weight, daily calorie intake, and macros.
 - **Progress Visualization:** Interactive charts and graphs to visualize your progress over time.

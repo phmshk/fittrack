@@ -1,61 +1,17 @@
-import { useBreakpoint, useDebounce } from "@/shared/lib";
+import { useBreakpoint } from "@/shared/lib";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import { Container } from "@/shared/ui/container";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
 import { router } from "@/app/main";
 import { useTranslation } from "react-i18next";
-import { ProductsView } from "@/widgets/productsView";
-import {
-  ProductCardCollapsedSkeleton,
-  useGetProductByBarcode,
-  type Product,
-} from "@/entities/product";
-import { AddFoodSearchField } from "@/widgets/searchField";
-
-const DEBOUNCE_DELAY = 800; // milliseconds
-const NUMBER_OF_SKELETONS = 5;
-// Parameters to fetch specific fields for barcode lookup to optimize data usage
-// Product name, nutriments (calories, proteins, carbs, sugars, fats, saturated_fats), and image URL
-const BARCODE_PRODUCT_PARAMS = "fields=product_name,nutriments,image_url";
+import { ProductSearch } from "@/widgets/productsSearch";
 
 export const AddFromDatabase = () => {
-  //State for the search query and debounced search query
-  const [searchQuery, setSearchQuery] = useState("");
-  const [scannedBarcode, setScannedBarcode] = useState<string | null>(null);
-  // Debounce the search input to avoid excessive API calls
-  const debouncedSearchQuery = useDebounce(searchQuery, DEBOUNCE_DELAY);
   const isMobile = useBreakpoint();
   const { t } = useTranslation("food");
-  const { data: barcodeProductData, isLoading: isBarcodeLoading } =
-    useGetProductByBarcode(scannedBarcode, BARCODE_PRODUCT_PARAMS);
-
-  const isTextSearchLoading = false; // Placeholder for text search loading state
-
-  // Determine if any loading is in progress
-  const isPending =
-    isBarcodeLoading ||
-    isTextSearchLoading ||
-    (searchQuery !== debouncedSearchQuery && !!searchQuery);
-
-  const displayedProducts: Product[] = [];
-
-  if (scannedBarcode && barcodeProductData) {
-    displayedProducts.push(barcodeProductData);
-  } else if (!scannedBarcode) {
-    // Placeholder for text search results
-  }
-
-  const handleSearchQuery = (query: string) => {
-    setSearchQuery(query);
-    if (scannedBarcode) {
-      setScannedBarcode(null);
-    }
-  };
 
   return (
     <Container>
-      {/* Button for desktop to go back to previous page */}
       {!isMobile && (
         <Button
           variant="ghost"
@@ -64,26 +20,13 @@ export const AddFromDatabase = () => {
           asChild
         >
           <div>
-            <ArrowLeft className="mr-2 h-4 w-4" />{" "}
+            <ArrowLeft className="mr-2 h-4 w-4" />
             {t("food:addFood.backToMeal")}
           </div>
         </Button>
       )}
-      <AddFoodSearchField
-        searchQuery={searchQuery}
-        setSearchQuery={handleSearchQuery}
-        setScannedBarcode={setScannedBarcode}
-      />
-      {isPending ? (
-        <div className="mt-4 space-y-2">
-          {/* Show loading skeletons while waiting for debounce */}
-          {Array.from({ length: NUMBER_OF_SKELETONS }).map((_, index) => (
-            <ProductCardCollapsedSkeleton key={index} />
-          ))}
-        </div>
-      ) : (
-        <ProductsView products={displayedProducts} />
-      )}
+
+      <ProductSearch />
     </Container>
   );
 };

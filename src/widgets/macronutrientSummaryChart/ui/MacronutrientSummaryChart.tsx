@@ -34,7 +34,6 @@ export const MacronutrientSummaryChart = (
           axisLine={false}
           tickMargin={8}
           ticks={xAxisTicks}
-          tickFormatter={(value) => value.slice(0, 6)}
           fontSize={12}
         />
         <YAxis

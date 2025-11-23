@@ -84,7 +84,7 @@ export const WeightChart = (props: WeightChartProps) => {
               ticks={xAxisTicks}
             />
             <YAxis
-              unit="kg"
+              unit={t("nutrition:units.kg")}
               tickLine={false}
               tickMargin={10}
               axisLine={false}

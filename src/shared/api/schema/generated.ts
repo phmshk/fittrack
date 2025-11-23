@@ -856,6 +856,13 @@ export interface components {
              */
             weight: number;
         };
+        DailyStats: {
+            calories?: number;
+            protein?: number;
+            fats?: number;
+            carbohydrates?: number;
+            water?: number;
+        };
         User: {
             /**
              * Format: uuid
@@ -885,6 +892,7 @@ export interface components {
             goal?: "lose_weight" | "maintain_weight" | "gain_weight";
             dailyTargets?: components["schemas"]["DailyTargets"];
             weightHistory?: components["schemas"]["WeightLog"][];
+            dailyStats?: unknown[];
         };
         AuthResponse: {
             /** @description JWT access token for authentication. */
@@ -984,6 +992,16 @@ export interface components {
              * @example 100
              */
             grams: number;
+            /**
+             * @description Optional: The barcode of the product.
+             * @example 737628064502
+             */
+            code?: string;
+            /**
+             * @description Optional: The image URL of the product.
+             * @example https://.../image.jpg
+             */
+            image_url?: string;
         };
         /**
          * Format: date
@@ -1036,6 +1054,16 @@ export interface components {
          * @example 100
          */
         grams: number;
+        /**
+         * @description Optional: The barcode of the product.
+         * @example 737628064502
+         */
+        code: string;
+        /**
+         * @description Optional: The image URL of the product.
+         * @example https://.../image.jpg
+         */
+        image_url: string;
         FoodLogInput: {
             date: components["schemas"]["date"];
             mealType: components["schemas"]["mealType"];
@@ -1047,6 +1075,8 @@ export interface components {
             carbs: components["schemas"]["carbs"];
             sugars: components["schemas"]["sugars"];
             grams: components["schemas"]["grams"];
+            code?: components["schemas"]["code"];
+            image_url?: components["schemas"]["image_url"];
         };
         /** @description Authentication error. The user does not have permission to access this resource. */
         UnauthorizedError: unknown;
@@ -1151,6 +1181,11 @@ export interface components {
              * @example Coca-Cola
              */
             product_name?: string;
+            /**
+             * @description The barcode of the product.
+             * @example 3017620422003
+             */
+            code?: string;
         } & {
             [key: string]: unknown;
         };

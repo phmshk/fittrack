@@ -8,7 +8,7 @@
     "backToMeal": "Back to meal"
   },
   "mealCard": {
-    "noFoodAdded": "No food added yet for {{mealType}}.",
+    "noFoodAdded": "No food added yet.",
     "SRdescr": "Meal card for {{mealType}} summarizing all foods eaten for that meal",
     "img": {
       "alt": "Image for {{mealType}}"
@@ -33,13 +33,13 @@
     "caloriesPlaceholder": "Mandatory field",
     "srCalories": "Enter the amount of calories in kcal for a 100 gram serving.",
     "proteins": "Proteins (g) in 100g serving",
-    "proteinsPlaceholder": "Default is 0g",
+    "proteinsPlaceholder": "Mandatory field",
     "srProteins": "Enter the amount of proteins in grams for a 100 gram serving. Default is 0 grams.",
     "carbs": "Carbs (g) in 100g serving",
-    "carbsPlaceholder": "Default is 0g",
+    "carbsPlaceholder": "Mandatory field",
     "srCarbs": "Enter the amount of carbohydrates in grams for a 100 gram serving. Default is 0 grams.",
     "fats": "Fats (g) in 100g serving",
-    "fatsPlaceholder": "Default is 0g",
+    "fatsPlaceholder": "Mandatory field",
     "srFats": "Enter the amount of fats in grams for a 100 gram serving. Default is 0 grams.",
     "sugars": "Sugars (g) in 100g serving",
     "sugarsPlaceholder": "Default is 0g",
@@ -70,6 +70,9 @@
     "noCamera": "No camera found on this device.",
     "scanning": "Scanning...",
     "placeBarcode": "Please place the barcode within the frame.",
-    "unknownError": "An unknown error occurred while accessing the camera."
+    "unknownError": "An unknown error occurred while accessing the camera.",
+    "errorStarting": "Error starting the scanner. Please try again.",
+    "startScan": "Start Scan",
+    "stopScan": "Stop Scan"
   }
 }

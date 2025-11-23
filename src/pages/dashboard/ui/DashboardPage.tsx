@@ -63,17 +63,13 @@ export const DashboardPage = () => {
         </div>
       </div>
       {/* Meals summary */}
-      {foodLogs ? (
-        <Meals
-          foodLogs={foodLogs}
-          isLoading={isLoading}
-          date={today}
-          variant="collapsed"
-          dailyTargets={userData?.dailyTargets}
-        />
-      ) : (
-        <div>{t("dashboard:noFoodLogs")}</div>
-      )}
+      <Meals
+        foodLogs={foodLogs}
+        isLoading={isLoading}
+        date={today}
+        variant="collapsed"
+        dailyTargets={userData?.dailyTargets}
+      />
     </Container>
   );
 };

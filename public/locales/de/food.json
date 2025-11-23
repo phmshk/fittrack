@@ -8,7 +8,7 @@
     "backToMeal": "Zurück zur Mahlzeit"
   },
   "mealCard": {
-    "noFoodAdded": "Noch kein Essen für {{mealType}} hinzugefügt.",
+    "noFoodAdded": "Noch kein Essen hinzugefügt.",
     "SRdescr": "Mahlzeiten-Karte für {{mealType}}, die alle gegessenen Lebensmittel zusammenfasst",
     "img": {
       "alt": "Bild für {{mealType}}"
@@ -33,13 +33,13 @@
     "caloriesPlaceholder": "Pflichtfeld",
     "srCalories": "Geben Sie die Kalorienmenge in kcal pro 100g Portion ein.",
     "proteins": "Proteine (g) pro 100g",
-    "proteinsPlaceholder": "Standard ist 0g",
+    "proteinsPlaceholder": "Pflichtfeld",
     "srProteins": "Geben Sie die Proteinmenge in Gramm pro 100g Portion ein. Standard ist 0 Gramm.",
     "carbs": "Kohlenhydrate (g) pro 100g",
-    "carbsPlaceholder": "Standard ist 0g",
+    "carbsPlaceholder": "Pflichtfeld",
     "srCarbs": "Geben Sie die Kohlenhydratmenge in Gramm pro 100g Portion ein. Standard ist 0 Gramm.",
     "fats": "Fette (g) pro 100g",
-    "fatsPlaceholder": "Standard ist 0g",
+    "fatsPlaceholder": "Pflichtfeld",
     "srFats": "Geben Sie die Fettmenge in Gramm pro 100g Portion ein. Standard ist 0 Gramm.",
     "sugars": "Zucker (g) pro 100g",
     "sugarsPlaceholder": "Standard ist 0g",
@@ -70,6 +70,9 @@
     "noCamera": "Keine Kamera auf diesem Gerät gefunden.",
     "scanning": "Scannen...",
     "placeBarcode": "Bitte platzieren Sie den Barcode im Rahmen.",
-    "unknownError": "Ein unbekannter Fehler ist beim Zugriff auf die Kamera aufgetreten."
+    "unknownError": "Ein unbekannter Fehler ist beim Zugriff auf die Kamera aufgetreten.",
+    "errorStarting": "Fehler beim Starten des Scanners. Bitte versuchen Sie es erneut.",
+    "startScan": "Scan starten",
+    "stopScan": "Scan stoppen"
   }
 }
