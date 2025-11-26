@@ -61,13 +61,13 @@ describe("User Calculations (Unit)", () => {
     const mockTdee = 2500;
 
     it("subtracts calories for weight loss", () => {
-      const result = adjustCaloriesForGoal(mockTdee, "lose_weight", "male");
+      const result = adjustCaloriesForGoal(mockTdee, "lose_weight");
       expect(result).toBeLessThan(mockTdee);
       expect(result).toBeCloseTo(mockTdee * 0.85, -1);
     });
 
     it("adds calories for weight gain", () => {
-      const result = adjustCaloriesForGoal(mockTdee, "gain_weight", "male");
+      const result = adjustCaloriesForGoal(mockTdee, "gain_weight");
       expect(result).toBeGreaterThan(mockTdee * 1.15 - 1);
     });
   });
