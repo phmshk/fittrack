@@ -9,3 +9,37 @@ export const formatDateForApi = (date: Date) => {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+
+/**
+ * Formates an object into a flattened object with dot notation keys for Firebase updates.
+ * @param obj The object to flatten.
+ * @param result The resulting flattened object.
+ * @returns A flattened object with dot notation keys.
+ */
+
+export const formatObjectForFirebase = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  obj: Record<string, any>,
+  oldKey?: string,
+) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const flattened: Record<string, any> = {};
+
+  Object.keys(obj).forEach((key) => {
+    const value = obj[key];
+    const newKey = oldKey ? `${oldKey}.${key}` : key;
+
+    if (
+      typeof value === "object" &&
+      value !== null &&
+      !Array.isArray(value) &&
+      !(value instanceof Date)
+    ) {
+      Object.assign(flattened, formatObjectForFirebase(value, newKey));
+    } else {
+      flattened[newKey] = value;
+    }
+  });
+
+  return flattened;
+};
