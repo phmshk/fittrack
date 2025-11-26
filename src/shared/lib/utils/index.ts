@@ -1,2 +1,2 @@
 export { memoize } from "./memo/memo";
-export { formatDateForApi } from "./helpers/helpers";
+export { formatDateForApi, formatObjectForFirebase } from "./helpers/helpers";
