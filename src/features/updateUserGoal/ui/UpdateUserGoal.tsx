@@ -6,6 +6,7 @@ import { Spinner } from "@/shared/ui/spinner";
 import {
   Field,
   FieldContent,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -74,6 +75,7 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
           render={({ field, fieldState }) => (
             <FieldSet data-invalid={fieldState.invalid}>
               <FieldLegend>{t("forms:goal.title")}</FieldLegend>
+              <FieldDescription>{t("forms:goal.goalAdvice")}</FieldDescription>
               <RadioGroup
                 name={field.name}
                 value={field.value}
@@ -92,8 +94,11 @@ export const UpdateUserGoal = (props: UpdateUserGoalProps) => {
                     >
                       <FieldContent>
                         <FieldTitle>
-                          {t(`forms:goal.options.${goal.id}`)}
+                          {t(`forms:goal.options.${goal.id}.title`)}
                         </FieldTitle>
+                        <FieldDescription>
+                          {t(`forms:goal.options.${goal.id}.description`)}
+                        </FieldDescription>
                       </FieldContent>
                       <RadioGroupItem
                         value={goal.id}

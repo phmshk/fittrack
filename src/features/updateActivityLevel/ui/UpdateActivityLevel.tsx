@@ -79,6 +79,9 @@ export const UpdateActivityLevel = (props: UpdateActivityLevelProps) => {
           render={({ field, fieldState }) => (
             <FieldSet data-invalid={fieldState.invalid}>
               <FieldLegend>{t("forms:activityLevel.title")}</FieldLegend>
+              <FieldDescription>
+                {t("forms:activityLevel.levelAdvice")}
+              </FieldDescription>
               <RadioGroup
                 name={field.name}
                 value={field.value}
