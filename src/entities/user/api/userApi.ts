@@ -14,6 +14,7 @@ import { t } from "i18next";
 import { userKeys } from "./userKeys";
 import { auth, db } from "@/app/firebase/firebase.setup";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { formatObjectForFirebase } from "@/shared/lib/utils";
 
 const fetchUserData = async (): Promise<User> => {
   if (import.meta.env.VITE_USE_MOCKS === "true") {
@@ -70,6 +71,12 @@ export const useUpdateUserData = () => {
         updatedData,
       });
 
+      const formattedData = formatObjectForFirebase(payload);
+      console.log("Prepared update payload and new weight log: (userApi)", {
+        payload,
+        newWeightLog,
+      });
+
       if (newWeightLog) {
         addWeightLog(newWeightLog);
       }
@@ -98,9 +105,10 @@ export const useUpdateUserData = () => {
 
         const userDocRef = doc(db, "users", user.uid);
         if (Object.keys(payload).length > 0) {
-          await updateDoc(userDocRef, payload);
+          await updateDoc(userDocRef, formattedData);
         }
         const updatedDoc = await getDoc(userDocRef);
+        console.log("Updated user document: ()", updatedDoc.data());
         return updatedDoc.data() as User;
       }
     },

@@ -57,7 +57,7 @@ export const ProductsView = (props: ProductsViewProps) => {
   // API error
   if (isError) {
     console.error("ProductsView error:", isError.message);
-    if (isError instanceof Error && isError.message === "Product not found") {
+    if (isError.message === "Product not found") {
       return (
         <div className="flex w-full flex-col items-center justify-center text-center">
           <Frown className="size-8" />

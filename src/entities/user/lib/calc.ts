@@ -177,19 +177,36 @@ export function calculateTDEE(
  * @param goal - The user's goal.
  * @returns - Recommended number of calories to achieve the goal.
  */
-export function adjustCaloriesForGoal(tdee: number, goal: GoalOptions): number {
+export function adjustCaloriesForGoal(
+  tdee: number,
+  goal: GoalOptions,
+  gender: "male" | "female",
+): number {
+  let targetCalories = tdee;
+  const MIN_CALORIES_MALE = 1500;
+  const MIN_CALORIES_FEMALE = 1200;
+
   switch (goal) {
     case "lose_weight":
       // Create a 15% deficit for safe weight loss
-      return tdee * 0.85;
+      targetCalories = tdee * 0.85;
+      break;
     case "gain_weight":
       // Create a 15% surplus for muscle gain
-      return tdee * 1.15;
-    case "maintain_weight":
-    default:
-      // For weight maintenance, the calorie count remains unchanged
-      return tdee;
+      targetCalories = tdee * 1.15;
+      break;
   }
+
+  if (goal === "lose_weight") {
+    // Ensure minimum calorie intake for health
+    const minCalories =
+      gender === "male" ? MIN_CALORIES_MALE : MIN_CALORIES_FEMALE;
+    if (targetCalories < minCalories) {
+      targetCalories = minCalories;
+    }
+  }
+
+  return targetCalories;
 }
 
 /**
@@ -205,14 +222,35 @@ export function calculateMacronutrients(
 ): Macronutrients {
   const distribution = macroDistribution[goal!];
 
-  const proteinCalories = caloriesForGoal * distribution.proteins;
-  const fatsCalories = caloriesForGoal * distribution.fats;
-  const carbsCalories = caloriesForGoal * distribution.carbs;
+  const MAX_PROTEIN_GRAMS = 220;
+
+  let proteinGrams = Math.round(
+    (caloriesForGoal * distribution.proteins) / caloriesPerGram.proteins,
+  );
+  if (proteinGrams > MAX_PROTEIN_GRAMS) {
+    proteinGrams = MAX_PROTEIN_GRAMS;
+  }
+
+  const proteinCalories = proteinGrams * caloriesPerGram.proteins;
+  const remainingCalories = caloriesForGoal - proteinCalories;
+
+  // Calculate fats and carbs based on the remaining calories
+  const totalNonProteinRatio = distribution.fats + distribution.carbs;
+
+  const fatShare = distribution.fats / totalNonProteinRatio;
+  const carbShare = distribution.carbs / totalNonProteinRatio;
+
+  const fatsGrams = Math.round(
+    (remainingCalories * fatShare) / caloriesPerGram.fats,
+  );
+  const carbsGrams = Math.round(
+    (remainingCalories * carbShare) / caloriesPerGram.carbs,
+  );
 
   return {
-    proteins: Math.round(proteinCalories / caloriesPerGram.proteins),
-    fats: Math.round(fatsCalories / caloriesPerGram.fats),
-    carbs: Math.round(carbsCalories / caloriesPerGram.carbs),
+    proteins: proteinGrams,
+    fats: fatsGrams,
+    carbs: carbsGrams,
   };
 }
 
@@ -220,11 +258,15 @@ export function calculateWaterIntake(
   params: WaterIntakeParams,
 ): WaterIntakeResult {
   const { weight, activityLevel } = params;
+  const MAX_WATER_INTAKE_ML = 5000; // Maximum recommended water intake in ml
 
   // Step 1: Calculate the base water intake based on weight and activity level.
   const multiplier = waterMultiplierPerKg[activityLevel!];
-  const baseIntakeMl = weight * multiplier;
-
+  let baseIntakeMl = weight * multiplier;
+  // Ensure the water intake does not exceed the maximum recommended limit.
+  if (baseIntakeMl > MAX_WATER_INTAKE_ML) {
+    baseIntakeMl = MAX_WATER_INTAKE_ML;
+  }
   const totalIntakeMl = baseIntakeMl;
   const recommendations: string[] = [
     `For your weight and activity level, a base intake of ${Math.round(baseIntakeMl / 100) * 100} ml is a good starting point.`,
@@ -260,7 +302,11 @@ export function calculateDailyNeeds(userData: UserData): CalculationResult {
   const tdee = calculateTDEE(bmr, userData.activityLevel);
 
   // Step 3: Adjust calories for the goal
-  const caloriesForGoal = adjustCaloriesForGoal(tdee, userData.goal);
+  const caloriesForGoal = adjustCaloriesForGoal(
+    tdee,
+    userData.goal,
+    userData.gender,
+  );
 
   // Step 4: Calculate macronutrients
   const macronutrients = calculateMacronutrients(

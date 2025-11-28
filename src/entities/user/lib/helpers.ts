@@ -18,6 +18,11 @@ export const prepareUpdatePayload = ({
     return { payload: updatedData };
   }
 
+  console.log("Preparing update payload with data:", {
+    currentUserData,
+    updatedData,
+  });
+
   // Merge current user data with updates
   const mergedData = {
     ...currentUserData,
@@ -31,6 +36,8 @@ export const prepareUpdatePayload = ({
       : currentUserData.dailyTargets,
   };
 
+  console.log("Merged user data:", mergedData);
+
   let recalculatedTargets = mergedData.dailyTargets;
 
   //Check if any relevant for calculation fields have changed
@@ -40,8 +47,6 @@ export const prepareUpdatePayload = ({
     updatedData.personalData?.height ||
     updatedData.activityLevel ||
     updatedData.goal;
-
-  console.log("Relevant fields changed:", relevantFieldsHaveChanged);
 
   if (relevantFieldsHaveChanged) {
     const updatedNeeds = calculateDailyNeeds({
@@ -68,18 +73,13 @@ export const prepareUpdatePayload = ({
     dailyTargets: recalculatedTargets,
   };
 
+  console.log("Final payload prepared:", payload);
+
   // If weight has changed, prepare a new weight log entry
   let newWeightLog: WeightLogInput | undefined = undefined;
   const newWeight = updatedData.personalData?.weight;
   const mostRecentWeightLog =
     currentUserData.weightHistory?.[currentUserData.weightHistory.length - 1];
-
-  console.log(
-    "Preparing weight log. New weight:",
-    newWeight,
-    "Most recent log:",
-    mostRecentWeightLog,
-  );
 
   if (newWeight !== undefined) {
     const today = formatDateForApi(new Date());

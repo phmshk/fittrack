@@ -20,40 +20,51 @@
   "goal": {
     "title": "Ziele",
     "yourGoals": "Ihr Ziel",
+    "goalAdvice": "Unsicher, wo du anfangen sollst? Wir empfehlen, die ersten 2–4 Wochen 'Gewicht halten' zu wählen. So kannst du dich an das Tracken gewöhnen und deine Basis finden, ohne den Stress einer strengen Diät. Später kannst du jederzeit zum Fettabbau oder Muskelaufbau wechseln.",
     "description": "Wählen Sie Ihr Hauptziel. Dies passt Ihre Kalorien- und Makronährstoffempfehlungen an. Sie können dies jederzeit ändern.",
     "warning": "Bitte beachten Sie, dass die Auswahl einer dieser Optionen neue Ernährungsziele berechnet und Ihre bestehenden ersetzt.",
     "options": {
-      "lose_weight": "Gewicht verlieren",
-      "maintain_weight": "Gewicht halten",
-      "gain_weight": "Gewicht zunehmen"
+      "lose_weight": {
+        "title": "Fettabbau",
+        "description": "Moderates Kaloriendefizit (-15%). Ziel: Körperfett reduzieren und Muskelmasse erhalten."
+      },
+      "maintain_weight": {
+        "title": "Gewicht halten",
+        "description": "Ausgeglichene Energiebilanz. Ideal für Erhaltungsphasen, Leistungssteigerung oder Rekomposition."
+      },
+      "gain_weight": {
+        "title": "Muskelaufbau",
+        "description": "Kalorienüberschuss (+15%). Wichtig: Erfordert Krafttraining, um Muskeln statt Fett aufzubauen."
+      }
     },
     "chooseGoal": "Wählen Sie Ihr Ziel:"
   },
   "activityLevel": {
     "title": "Aktivitätslevel",
+    "levelAdvice": "Wenn Sie sich zwischen zwei Stufen unsicher sind, wählen Sie die niedrigere. Die meisten Menschen überschätzen ihren Energieverbrauch. Es ist besser, mit einer niedrigeren Zahl zu beginnen und diese zu erhöhen, wenn Sie starken Hunger verspüren oder Ihr Gewicht zu schnell sinkt.",
     "yourActivityLevel": "Ihr Aktivitätslevel",
     "description": "Wählen Sie Ihr Aktivitätslevel. Dies passt Ihre Kalorien- und Makronährstoffempfehlungen an. Sie können dies jederzeit ändern.",
     "warning": "Bitte beachten Sie, dass die Auswahl einer dieser Optionen neue Ernährungsziele berechnet und Ihre bestehenden ersetzt.",
     "options": {
       "sedentary": {
         "title": "Sitzend",
-        "description": "Wenig oder keine Bewegung, Schreibtischjob"
+        "description": "Sitzende Tätigkeit (Büro, Homeoffice, Fahren). Kein Sport. Weniger als 5.000 Schritte pro Tag."
       },
       "light": {
         "title": "Leicht aktiv",
-        "description": "Leichtes Training/Sport 1-3 Tage/Woche"
+        "description": "Sitzende Tätigkeit + leichter Sport 1–3 Mal/Woche oder viel Gehen. 5.000 – 10.000 Schritte pro Tag."
       },
       "moderate": {
         "title": "Mäßig aktiv",
-        "description": "Mäßiges Training/Sport 3-5 Tage/Woche"
+        "description": "Arbeit im Stehen/Gehen oder intensiver Sport 3–5 Mal/Woche. 10.000 – 15.000 Schritte pro Tag."
       },
       "active": {
         "title": "Sehr aktiv",
-        "description": "Schweres Training/Sport 6-7 Tage/Woche"
+        "description": "Schwere körperliche Arbeit oder täglicher intensiver Sport. 15.000 – 20.000 Schritte pro Tag."
       },
       "extra_active": {
         "title": "Extrem aktiv",
-        "description": "Sehr schweres Training/Sport & körperliche Arbeit"
+        "description": "Professioneller Sportler (zwei Trainingseinheiten pro Tag) oder sehr schwere körperliche Arbeit. Mehr als 20.000 Schritte pro Tag."
       }
     },
     "chooseActivityLevel": "Wählen Sie Ihr Aktivitätslevel:"
@@ -67,6 +78,9 @@
     "genericMandatory": "Dieses Feld ist obligatorisch.",
     "genericNotEmpty": "Dieses Feld darf nicht leer sein.",
     "positiveNumber": "Muss eine positive Zahl sein.",
+    "ageRange": "Das Alter muss zwischen 14 und 120 Jahren liegen.",
+    "heightRange": "Die Größe muss zwischen 100 cm und 250 cm liegen.",
+    "weightRange": "Das Gewicht muss zwischen 30 kg und 300 kg liegen.",
     "selectMeal": "Bitte wählen Sie eine Mahlzeit aus.",
     "selectGoal": "Bitte wählen Sie ein Ziel aus.",
     "passwordRequirements": "Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten."
