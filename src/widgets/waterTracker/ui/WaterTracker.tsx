@@ -10,7 +10,7 @@ import { Spinner } from "@/shared/ui/spinner";
 import { WaterWithIcons } from "./WaterWithIcons";
 import { HandleWater } from "@/features/handleWater";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "@/shared/lib";
 import { formatDateForApi } from "@/shared/lib/utils";
 
@@ -30,29 +30,22 @@ export const WaterTracker = (props: WaterTrackerProps) => {
 
   const { mutate, isPending } = useSetWaterLog();
 
-  const [localAmount, setLocalAmount] = useState<number>(0);
+  const [localAmount, setLocalAmount] = useState<number | null>(null);
   const debouncedAmount = useDebounce(localAmount, 5000);
-  const isInitialLoad = useRef(true);
 
   // Sync local amount with fetched data
   useEffect(() => {
-    if (waterLog) {
-      setLocalAmount(waterLog.amount || 0);
-    } else {
-      setLocalAmount(0);
+    if (!isLoadingWaterLog) {
+      setLocalAmount(waterLog?.amount ?? 0);
     }
-  }, [waterLog]);
+  }, [waterLog, isLoadingWaterLog]);
 
   // Update water log when debounced amount changes
   useEffect(() => {
-    if (isInitialLoad.current) {
-      isInitialLoad.current = false;
-      return;
-    }
+    if (debouncedAmount === null || isLoadingWaterLog) return;
 
-    if (isLoadingWaterLog) return;
+    const serverAmount = waterLog?.amount ?? 0;
 
-    const serverAmount = waterLog?.amount || 0;
     if (debouncedAmount === serverAmount) {
       return;
     }
@@ -60,7 +53,8 @@ export const WaterTracker = (props: WaterTrackerProps) => {
   }, [debouncedAmount, date, mutate, waterLog, isLoadingWaterLog]);
 
   const targetWater = targetWaterIntake;
-  const currentAmountForIcons = localAmount / WATER_PORTION_ML;
+  const safeLocalAmount = localAmount ?? 0;
+  const currentAmountForIcons = safeLocalAmount / WATER_PORTION_ML;
 
   const handleUpdate = (newAmount: number) => {
     const finalAmount = Math.max(0, newAmount);
@@ -94,7 +88,7 @@ export const WaterTracker = (props: WaterTrackerProps) => {
 
           <div className="mt-4 flex items-center justify-center gap-4">
             <HandleWater
-              currentAmount={localAmount}
+              currentAmount={safeLocalAmount}
               onUpdate={handleUpdate}
               isPending={isPending}
               waterPortion={WATER_PORTION_ML}
