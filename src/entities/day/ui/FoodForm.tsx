@@ -24,6 +24,8 @@ export const FoodForm = (props: FoodFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       mealType: undefined,
+      code: "",
+      image_url: "",
       name: "",
       calories: "",
       proteins: "",

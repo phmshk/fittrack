@@ -35,6 +35,7 @@ export const useProductSearch = () => {
     error: barcodeError,
   } = useGetProductByBarcode(scannedBarcode, BARCODE_PRODUCT_PARAMS);
 
+  console.log("BARCODE ERROR", barcodeError);
   const { tab } = useSearch({ from: "/_protectedRoutes/_addFood/addFood" });
 
   // useEffect for text-based search
