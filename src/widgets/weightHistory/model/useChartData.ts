@@ -75,12 +75,19 @@ export const useChartData = (data: WeightLog[], range: DaysRange) => {
       return aggregateDataByWeek(sortedData, i18n.language);
     }
 
-    return sortedData.map((entry) => ({
-      date: new Date(entry.date).toLocaleDateString(i18n.language, {
-        month: "short",
-        day: "numeric",
-      }),
-      weight: entry.weight,
+    const uniqueDayMap = new Map<string, number>();
+
+    sortedData.forEach((entry) => {
+      const formattedDate = new Date(entry.date).toLocaleDateString(
+        i18n.language,
+        { month: "short", day: "numeric" },
+      );
+      uniqueDayMap.set(formattedDate, entry.weight);
+    });
+
+    return Array.from(uniqueDayMap.entries()).map(([date, weight]) => ({
+      date,
+      weight,
     }));
-  }, [data, range]);
+  }, [data, range, i18n.language]);
 };
