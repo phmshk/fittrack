@@ -43,3 +43,19 @@ export const formatObjectForFirebase = (
 
   return flattened;
 };
+
+/**
+ *  Generates initials of user
+ * @param name Full Name
+ * @returns 1 or 2 letters (initials)
+ */
+export const getInitials = (name: string | undefined) => {
+  if (!name) return "U";
+  const nameParts = name.trim().split(/\s+/);
+  if (nameParts.length === 0) return "U";
+
+  if (nameParts.length > 1) {
+    return `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase();
+  }
+  return name[0].toUpperCase();
+};

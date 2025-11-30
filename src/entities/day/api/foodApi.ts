@@ -201,9 +201,9 @@ export const useAddFoodLog = () => {
       }
     },
 
-    onSettled: (_newLog, _error, _variables, onMutateResult) =>
+    onSettled: () =>
       queryClient.invalidateQueries({
-        queryKey: onMutateResult?.queryKey,
+        queryKey: foodKeys.lists(),
       }),
   });
 };
@@ -268,9 +268,9 @@ export const useUpdateFoodLog = () => {
       }
     },
 
-    onSettled: (_newLog, _error, _variables, onMutateResult) =>
+    onSettled: () =>
       queryClient.invalidateQueries({
-        queryKey: onMutateResult?.queryKey,
+        queryKey: foodKeys.lists(),
       }),
   });
 };
@@ -318,9 +318,9 @@ export const useDeleteFoodLog = () => {
       }
     },
     onSuccess: () => toast.success(t("common:notifications.deletionSuccess")),
-    onSettled: (_newLog, _error, _variables, onMutateResult) =>
+    onSettled: () =>
       queryClient.invalidateQueries({
-        queryKey: onMutateResult?.queryKey,
+        queryKey: foodKeys.lists(),
       }),
   });
 };
