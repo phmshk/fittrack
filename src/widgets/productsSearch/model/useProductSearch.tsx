@@ -1,5 +1,6 @@
-import { useGetFoodsByDateRange } from "@/entities/day";
+import { useGetFoodsByDateRange, type FoodLog } from "@/entities/day";
 import { useGetProductByBarcode, type Product } from "@/entities/product";
+import { normalizeLogToProduct } from "@/entities/product/lib/normalizeLogToProduct";
 import { useDebounce } from "@/shared/lib";
 import { useSearch } from "@tanstack/react-router";
 import { subDays } from "date-fns";
@@ -87,21 +88,9 @@ export const useProductSearch = () => {
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
       );
       const uniqueRecentProducts = new Map<string, Product>();
-      sortedHistory.forEach((food) => {
+      sortedHistory.forEach((food: FoodLog) => {
         if (!uniqueRecentProducts.has(food.name)) {
-          uniqueRecentProducts.set(food.name, {
-            product_name: food.name,
-            code: food.code,
-            nutriments: {
-              "energy-kcal_100g": food.calories,
-              proteins_100g: food.proteins,
-              fat_100g: food.fats,
-              "saturated-fat_100g": food.saturatedFats,
-              carbohydrates_100g: food.carbs,
-              sugars_100g: food.sugars,
-            },
-            image_url: food.image_url,
-          });
+          uniqueRecentProducts.set(food.name, normalizeLogToProduct(food));
         }
       });
       setRecentProducts(
