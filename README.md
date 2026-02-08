@@ -2,7 +2,7 @@
 
 FitTrack is a web application designed to help users track their daily food intake, monitor calories and macronutrients, and achieve their fitness goals. This project is inspired by popular apps like Lifesum and MyFitnessPal and is built as a portfolio piece to showcase modern frontend development practices.
 
-## 🚀 Live Demo
+## Live Demo
 
 You can try the live application here: **[\[ ➡️ Live Demo \]](https://fittrack-app-rt2cp.ondigitalocean.app/)**
 
@@ -16,7 +16,7 @@ Password: Password123!
 
 ---
 
-## 🔧 Running Locally
+## Running Locally
 
 This project can be run in two modes, controlled by an environment variable:
 
@@ -43,7 +43,7 @@ Email: test@example.com
 
 Password: password123
 
-## ✨ Key Features
+## Key Features
 
 - **Daily Calorie Tracking:** Easily log meals and see a real-time summary of your daily consumption.
 - **Macronutrient Monitoring:** Keep track of your protein, carbohydrate, and fat intake against your personal goals.
@@ -54,7 +54,7 @@ Password: password123
 - **Progress Visualization:** Interactive charts and graphs to visualize your progress over time.
 - **Responsive Design:** A clean, accessible, and mobile-first user interface.
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 This project is built with a modern, type-safe, and scalable technology stack, chosen to optimize developer experience and application performance.
 
@@ -68,7 +68,7 @@ This project is built with a modern, type-safe, and scalable technology stack, c
 - **Server State Management:** [TanStack Query](https://tanstack.com/query/) - Powerful asynchronous state management, server-state utilities and data fetching.
 - **API Mocking:** [Mock Service Worker (MSW)](https://mswjs.io/) - For developing and demonstrating features independent of a live backend.
 
-## 📂 Project Structure
+## Project Structure
 
 The codebase is organized following the **Feature-Sliced Design (FSD)** methodology. This architectural pattern helps in maintaining a clean, scalable, and well-structured application by dividing the code into layers and slices.
 
@@ -82,7 +82,7 @@ The codebase is organized following the **Feature-Sliced Design (FSD)** methodol
 
 This structure makes the project easy to navigate, maintain, and scale.
 
-## 🚀 Getting Started
+## Getting Started
 
 To run this project locally, follow these steps:
 
