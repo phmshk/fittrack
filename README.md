@@ -4,7 +4,7 @@ FitTrack is a web application designed to help users track their daily food inta
 
 ## Live Demo
 
-You can try the live application here: **[\[ ➡️ Live Demo \]](https://fittrack-app-rt2cp.ondigitalocean.app/)**
+You can try the live application here: **[\[ Live Demo \]](https://fittrack-c2xa5.ondigitalocean.app/)**
 
 Please note: This deployed version is connected to a live Firebase backend. To explore the app, you can register a new account or use testing one.
 
